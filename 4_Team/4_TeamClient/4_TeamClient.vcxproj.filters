@@ -22,6 +22,15 @@
     <Filter Include="02. Document">
       <UniqueIdentifier>{abbad3c5-af53-4cb0-be3f-abea84556ee9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Game">
+      <UniqueIdentifier>{c8b53e5a-89c0-4119-8ab9-e23756836c2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\00. MainGame">
+      <UniqueIdentifier>{b8291829-e299-4bdf-a49f-06ad502e1681}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\99. Header">
+      <UniqueIdentifier>{a4d6940f-befd-452f-b4d7-d502f887bbeb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -48,6 +57,24 @@
     <ClInclude Include="4_TeamClientDoc.h">
       <Filter>02. Document</Filter>
     </ClInclude>
+    <ClInclude Include="MainGame.h">
+      <Filter>03. Game\00. MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum.h">
+      <Filter>03. Game\99. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Include.h">
+      <Filter>03. Game\99. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Define.h">
+      <Filter>03. Game\99. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Struct.h">
+      <Filter>03. Game\99. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Functor.h">
+      <Filter>03. Game\99. Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="4_TeamClient.cpp">
@@ -64,6 +91,9 @@
     </ClCompile>
     <ClCompile Include="4_TeamClientDoc.cpp">
       <Filter>02. Document</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame.cpp">
+      <Filter>03. Game\00. MainGame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
