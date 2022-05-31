@@ -4,9 +4,11 @@
 
 CFortress::CFortress()
 {
+
 }
 
 
 CFortress::~CFortress()
 {
+
 }
