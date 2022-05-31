@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{0290603D-9DA8-464E-9EDC-BADF79070466}</ProjectGuid>
-    <RootNamespace>My4_TeamTool</RootNamespace>
+    <ProjectGuid>{7C2EAE23-6F7F-4540-A724-6EB4F9B37758}</ProjectGuid>
+    <RootNamespace>My4_TeamClient</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
     <Keyword>MFCProj</Keyword>
   </PropertyGroup>
@@ -185,18 +185,18 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="4_TeamTool.h" />
-    <ClInclude Include="4_TeamToolDoc.h" />
-    <ClInclude Include="4_TeamToolView.h" />
+    <ClInclude Include="4_TeamClient.h" />
+    <ClInclude Include="4_TeamClientDoc.h" />
+    <ClInclude Include="4_TeamClientView.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="4_TeamTool.cpp" />
-    <ClCompile Include="4_TeamToolDoc.cpp" />
-    <ClCompile Include="4_TeamToolView.cpp" />
+    <ClCompile Include="4_TeamClient.cpp" />
+    <ClCompile Include="4_TeamClientDoc.cpp" />
+    <ClCompile Include="4_TeamClientView.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -206,22 +206,17 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="4_TeamTool.rc" />
+    <ResourceCompile Include="4_TeamClient.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\My4_TeamTool.rc2" />
+    <None Include="res\My4_TeamClient.rc2" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\4_TeamTool.ico" />
-    <Image Include="res\4_TeamToolDoc.ico" />
+    <Image Include="res\4_TeamClient.ico" />
+    <Image Include="res\4_TeamClientDoc.ico" />
     <Image Include="res\Toolbar.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-  <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties RESOURCE_FILE="4_TeamTool.rc" />
-    </VisualStudio>
-  </ProjectExtensions>
 </Project>
