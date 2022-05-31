@@ -7,6 +7,7 @@
 #define MAX_LOADSTRING 100
 
 // 전역 변수:
+HWND	g_hWnd;
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
@@ -41,16 +42,44 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_TEAM_4));
 
     MSG msg;
+	msg.message = WM_NULL;
 
-    // 기본 메시지 루프입니다.
-    while (GetMessage(&msg, nullptr, 0, 0))
-    {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
-        {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-        }
-    }
+	//CMainGame*	pMainGame = new CMainGame;
+
+	//if (nullptr == pMainGame)
+	//	return FALSE;
+
+	//pMainGame->Initialize();
+
+	DWORD		dwOldTime = GetTickCount();
+
+	while (true)
+	{
+		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+		{
+			if (WM_QUIT == msg.message)
+				break;
+
+			if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+			{
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+		}
+
+		else
+		{
+			if (dwOldTime + 10 < GetTickCount())
+			{
+				//pMainGame->Update();
+				//pMainGame->Render();
+
+				dwOldTime = GetTickCount();
+			}
+		}
+	}
+
+	//Safe_Delete<CMainGame*>(pMainGame);
 
     return (int) msg.wParam;
 }
@@ -76,7 +105,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_TEAM_4));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_TEAM_4);
+    wcex.lpszMenuName   = nullptr;
     wcex.lpszClassName  = szWindowClass;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
@@ -96,18 +125,26 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
+   RECT rc{ 0, 0, WINCX, WINCY };
+
+   // 출력창의 최종 크기 = 원래 창 사이즈 + 기본 윈도우 창 설정 값 + 메뉴바 크기 고려 여부
+   AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+	   400, 300,  // 출력하고자 하는 창의 left와 top 좌표
+	   rc.right - rc.left,
+	   rc.bottom - rc.top, // 생성하고자 하는 창의 가로, 세로 사이즈
+	   nullptr, nullptr, hInstance, nullptr);
 
    if (!hWnd)
    {
-      return FALSE;
+	   return FALSE;
    }
+
+   g_hWnd = hWnd;
 
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
-
    return TRUE;
 }
 
