@@ -61,6 +61,9 @@
     <Filter Include="03. Game\98. Manager\03. SceneMgr">
       <UniqueIdentifier>{9ab14371-7772-4894-965a-978b27d9c8e2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Game\02. Scene\02.J">
+      <UniqueIdentifier>{c2083fa7-b42a-4cb0-b307-91086b697e23}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -123,6 +126,9 @@
     <ClInclude Include="Scene.h">
       <Filter>03. Game\02. Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Fortress.h">
+      <Filter>03. Game\02. Scene\02.J</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="4_TeamClient.cpp">
@@ -160,6 +166,9 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>03. Game\02. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Fortress.cpp">
+      <Filter>03. Game\02. Scene\02.J</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
