@@ -40,9 +40,6 @@
     <Filter Include="03. Game\02. Scene">
       <UniqueIdentifier>{0061209b-69dc-4d50-83d3-0f290679514c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. Game\02. Scene\00. F">
-      <UniqueIdentifier>{4f329c8e-edce-4b6c-b73b-a18ddf5f4425}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. Game\01. Obj\00. Player">
       <UniqueIdentifier>{5deb0b8d-a6cd-48de-a47e-5a62d66445bb}</UniqueIdentifier>
     </Filter>
@@ -60,6 +57,12 @@
     </Filter>
     <Filter Include="03. Game\98. Manager\03. SceneMgr">
       <UniqueIdentifier>{9ab14371-7772-4894-965a-978b27d9c8e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\02. Scene\01.Seni">
+      <UniqueIdentifier>{f3b53b74-aa3b-40d5-8426-4f6174ae106b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\02. Scene\00. Brawl Stars">
+      <UniqueIdentifier>{4f329c8e-edce-4b6c-b73b-a18ddf5f4425}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
