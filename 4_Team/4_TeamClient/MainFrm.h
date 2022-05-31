@@ -8,8 +8,10 @@ class CMainFrame : public CFrameWnd
 {
 	
 protected: // serialization에서만 만들어집니다.
-	CMainFrame();
 	DECLARE_DYNCREATE(CMainFrame)
+
+public:
+	CMainFrame();
 
 // 특성입니다.
 public:
@@ -38,6 +40,8 @@ protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	DECLARE_MESSAGE_MAP()
 
+public:
+	void MainLoop();
 };
 
 

@@ -97,3 +97,8 @@ void CMainFrame::Dump(CDumpContext& dc) const
 
 // CMainFrame 메시지 처리기
 
+
+
+void CMainFrame::MainLoop()
+{
+}

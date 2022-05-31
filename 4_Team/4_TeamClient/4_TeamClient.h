@@ -8,7 +8,7 @@
 #endif
 
 #include "resource.h"       // 주 기호입니다.
-
+#include "MainFrm.h"
 
 // CMy4_TeamClientApp:
 // 이 클래스의 구현에 대해서는 4_TeamClient.cpp을 참조하십시오.
@@ -18,7 +18,7 @@ class CMy4_TeamClientApp : public CWinAppEx
 {
 public:
 	CMy4_TeamClientApp();
-
+	CMainFrame* m_pFrame;
 
 // 재정의입니다.
 public:
@@ -29,6 +29,7 @@ public:
 	afx_msg void OnAppAbout();
 	DECLARE_MESSAGE_MAP()
 	virtual BOOL OnIdle(LONG lCount);
+	virtual int Run();
 };
 
 extern CMy4_TeamClientApp theApp;

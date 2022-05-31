@@ -40,6 +40,10 @@ CMy4_TeamToolView::~CMy4_TeamToolView()
 {
 }
 
+void CMy4_TeamToolView::Render()
+{
+}
+
 BOOL CMy4_TeamToolView::PreCreateWindow(CREATESTRUCT& cs)
 {
 	// TODO: CREATESTRUCT cs를 수정하여 여기에서
@@ -102,3 +106,12 @@ CMy4_TeamToolDoc* CMy4_TeamToolView::GetDocument() const // 디버그되지 않은 버전
 
 
 // CMy4_TeamToolView 메시지 처리기
+
+
+void CMy4_TeamToolView::OnInitialUpdate()
+{
+	m_bReady = TRUE;
+	CView::OnInitialUpdate();
+
+	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
+}

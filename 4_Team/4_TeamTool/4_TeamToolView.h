@@ -30,6 +30,7 @@ protected:
 // 구현입니다.
 public:
 	virtual ~CMy4_TeamToolView();
+	void	Render();
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
@@ -40,6 +41,11 @@ protected:
 // 생성된 메시지 맵 함수
 protected:
 	DECLARE_MESSAGE_MAP()
+public:
+	virtual void OnInitialUpdate();
+
+private:
+	bool m_bReady;
 };
 
 #ifndef _DEBUG  // 4_TeamToolView.cpp의 디버그 버전
