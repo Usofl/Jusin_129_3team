@@ -63,6 +63,8 @@
     </Filter>
     <Filter Include="03. Game\02. Scene\00. Brawl Stars">
       <UniqueIdentifier>{4f329c8e-edce-4b6c-b73b-a18ddf5f4425}</UniqueIdentifier>
+    <Filter Include="03. Game\02. Scene\02.J">
+      <UniqueIdentifier>{c2083fa7-b42a-4cb0-b307-91086b697e23}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -126,6 +128,9 @@
     <ClInclude Include="Scene.h">
       <Filter>03. Game\02. Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Fortress.h">
+      <Filter>03. Game\02. Scene\02.J</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="4_TeamClient.cpp">
@@ -163,6 +168,9 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>03. Game\02. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Fortress.cpp">
+      <Filter>03. Game\02. Scene\02.J</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

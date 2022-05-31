@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "MainGame.h"
+#include "SceneMgr.h"
 
 CMainGame::CMainGame()
 	: m_dwFPSTime(GetTickCount())
@@ -47,7 +48,7 @@ void CMainGame::Render(void)
 {
 	BitBlt(m_hDC, 0, 0, WINCX, WINCY, m_hBackDC, 0, 0, SRCCOPY);
 
-	//CSceneMgr::Get_Instance()->Render(hMemDC);
+	//SCENEMGR->Render(m_hDC);
 
 #ifdef _DEBUG
 	++m_iFPS;
@@ -70,6 +71,8 @@ void CMainGame::Release(void)
 	FreeConsole();
 
 #endif _DEBUG
+
+	SCENEMGR->Destroy_Instance();
 
 	ReleaseDC(g_hWnd, m_hDC);
 	ReleaseDC(g_hWnd, m_hBackDC);

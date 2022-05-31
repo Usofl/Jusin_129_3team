@@ -87,6 +87,14 @@ BOOL CMy4_TeamClientApp::InitInstance()
 	m_pMainWnd->ShowWindow(SW_SHOW);
 	m_pMainWnd->UpdateWindow();
 
+	RECT m_Rect = { 0, 0, WINCX, WINCY }; // 생성하고 싶은 사이즈를 RECT 변수에 초기화. 여기서는 1024x768로 설정하였다.
+	AdjustWindowRect(&m_Rect, WS_OVERLAPPEDWINDOW, FALSE);
+
+	int width = m_Rect.right - m_Rect.left;
+	int height = m_Rect.bottom - m_Rect.top;
+
+	m_pMainWnd->SetWindowPos(NULL, 0, 0, width, height, 0);
+
 	g_hWnd = m_pMainWnd->m_hWnd;
 
 	return TRUE;
