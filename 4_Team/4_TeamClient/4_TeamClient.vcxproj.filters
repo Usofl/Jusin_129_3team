@@ -22,15 +22,6 @@
     <Filter Include="02. Document">
       <UniqueIdentifier>{abbad3c5-af53-4cb0-be3f-abea84556ee9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="00. FrameWnd\00.Obj">
-      <UniqueIdentifier>{7adafc27-c587-400e-ba59-49ce7b2fb4b1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00. FrameWnd\00.Obj\01.Player">
-      <UniqueIdentifier>{9fec72fe-00cd-486e-bee7-953fd4e18e17}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="99.Header">
-      <UniqueIdentifier>{2e079e8d-e45d-4017-bcd5-96c891efcd1d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. Game">
       <UniqueIdentifier>{c8b53e5a-89c0-4119-8ab9-e23756836c2b}</UniqueIdentifier>
     </Filter>
@@ -39,6 +30,36 @@
     </Filter>
     <Filter Include="03. Game\99. Header">
       <UniqueIdentifier>{a4d6940f-befd-452f-b4d7-d502f887bbeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\98. Manager">
+      <UniqueIdentifier>{56cc5d83-afaa-4d40-8bad-07094109a9ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj">
+      <UniqueIdentifier>{1b65feae-7b0f-455a-a926-e2e6da4f55c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\02. Scene">
+      <UniqueIdentifier>{0061209b-69dc-4d50-83d3-0f290679514c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\02. Scene\00. F">
+      <UniqueIdentifier>{4f329c8e-edce-4b6c-b73b-a18ddf5f4425}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj\00. Player">
+      <UniqueIdentifier>{5deb0b8d-a6cd-48de-a47e-5a62d66445bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj\00. Player\00. F S P">
+      <UniqueIdentifier>{f87e2951-809c-4549-9219-72a30b9e4f1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\98. Manager\00. ScrollMgr">
+      <UniqueIdentifier>{8d65b7d1-ced8-4d1b-8293-6d1ee67451c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\98. Manager\01. KeyMgr">
+      <UniqueIdentifier>{182c6560-d040-4660-8725-9f113ef420a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\98. Manager\02. RenderMgr">
+      <UniqueIdentifier>{a255b892-b62a-4b98-8c5d-7d355c4431ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\98. Manager\03. SceneMgr">
+      <UniqueIdentifier>{9ab14371-7772-4894-965a-978b27d9c8e2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -66,15 +87,6 @@
     <ClInclude Include="4_TeamClientDoc.h">
       <Filter>02. Document</Filter>
     </ClInclude>
-    <ClInclude Include="Obj.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Define.h">
-      <Filter>99.Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Struct.h">
-      <Filter>99.Header</Filter>
-    </ClInclude>
     <ClInclude Include="MainGame.h">
       <Filter>03. Game\00. MainGame</Filter>
     </ClInclude>
@@ -93,6 +105,24 @@
     <ClInclude Include="Functor.h">
       <Filter>03. Game\99. Header</Filter>
     </ClInclude>
+    <ClInclude Include="Obj.h">
+      <Filter>03. Game\01. Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderMgr.h">
+      <Filter>03. Game\98. Manager\02. RenderMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyMgr.h">
+      <Filter>03. Game\98. Manager\01. KeyMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="ScrollMgr.h">
+      <Filter>03. Game\98. Manager\00. ScrollMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneMgr.h">
+      <Filter>03. Game\98. Manager\03. SceneMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>03. Game\02. Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="4_TeamClient.cpp">
@@ -110,11 +140,26 @@
     <ClCompile Include="4_TeamClientDoc.cpp">
       <Filter>02. Document</Filter>
     </ClCompile>
-    <ClCompile Include="Obj.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="MainGame.cpp">
       <Filter>03. Game\00. MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Obj.cpp">
+      <Filter>03. Game\01. Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderMgr.cpp">
+      <Filter>03. Game\98. Manager\02. RenderMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyMgr.cpp">
+      <Filter>03. Game\98. Manager\01. KeyMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="ScrollMgr.cpp">
+      <Filter>03. Game\98. Manager\00. ScrollMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneMgr.cpp">
+      <Filter>03. Game\98. Manager\03. SceneMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>03. Game\02. Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

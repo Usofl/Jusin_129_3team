@@ -15,6 +15,7 @@
 #define new DEBUG_NEW
 #endif
 
+HWND	g_hWnd;
 
 // CMy4_TeamClientApp
 
@@ -85,6 +86,9 @@ BOOL CMy4_TeamClientApp::InitInstance()
 	// 창 하나만 초기화되었으므로 이를 표시하고 업데이트합니다.
 	m_pMainWnd->ShowWindow(SW_SHOW);
 	m_pMainWnd->UpdateWindow();
+
+	g_hWnd = m_pMainWnd->m_hWnd;
+
 	return TRUE;
 }
 
@@ -156,6 +160,7 @@ int CMy4_TeamClientApp::Run()
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
 	MSG msg;
 	ZeroMemory(&msg, sizeof(msg));
+	DWORD dwTick = GetTickCount();
 
 	while (msg.message != WM_QUIT)
 	{
@@ -166,7 +171,11 @@ int CMy4_TeamClientApp::Run()
 		}
 		else
 		{
-			OnIdle(NULL);
+			if (dwTick + 10 < GetTickCount())
+			{
+				OnIdle(NULL);
+				dwTick = GetTickCount();
+			}
 		}
 	}
 

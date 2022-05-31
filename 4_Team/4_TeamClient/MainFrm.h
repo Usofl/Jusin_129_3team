@@ -3,6 +3,7 @@
 //
 
 #pragma once
+#include "MainGame.h"
 
 class CMainFrame : public CFrameWnd
 {
@@ -42,6 +43,9 @@ protected:
 
 public:
 	void MainLoop();
+
+private:
+	CMainGame m_MainGame;
 };
 
 

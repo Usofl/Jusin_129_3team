@@ -95,6 +95,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>d3d9.lib d3dx9.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>

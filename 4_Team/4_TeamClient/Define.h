@@ -7,4 +7,6 @@
 
 #define		PURE		= 0
 
+#define		VK_MAX		0xff
+
 extern HWND			g_hWnd;
