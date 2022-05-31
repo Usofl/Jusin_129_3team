@@ -22,6 +22,15 @@
     <Filter Include="02. Document">
       <UniqueIdentifier>{abbad3c5-af53-4cb0-be3f-abea84556ee9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. FrameWnd\00.Obj">
+      <UniqueIdentifier>{7adafc27-c587-400e-ba59-49ce7b2fb4b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. FrameWnd\00.Obj\01.Player">
+      <UniqueIdentifier>{9fec72fe-00cd-486e-bee7-953fd4e18e17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99.Header">
+      <UniqueIdentifier>{2e079e8d-e45d-4017-bcd5-96c891efcd1d}</UniqueIdentifier>
+    </Filter>
     <Filter Include="03. Game">
       <UniqueIdentifier>{c8b53e5a-89c0-4119-8ab9-e23756836c2b}</UniqueIdentifier>
     </Filter>
@@ -57,6 +66,15 @@
     <ClInclude Include="4_TeamClientDoc.h">
       <Filter>02. Document</Filter>
     </ClInclude>
+    <ClInclude Include="Obj.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Define.h">
+      <Filter>99.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Struct.h">
+      <Filter>99.Header</Filter>
+    </ClInclude>
     <ClInclude Include="MainGame.h">
       <Filter>03. Game\00. MainGame</Filter>
     </ClInclude>
@@ -91,6 +109,9 @@
     </ClCompile>
     <ClCompile Include="4_TeamClientDoc.cpp">
       <Filter>02. Document</Filter>
+    </ClCompile>
+    <ClCompile Include="Obj.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="MainGame.cpp">
       <Filter>03. Game\00. MainGame</Filter>
