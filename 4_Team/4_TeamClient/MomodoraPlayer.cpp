@@ -17,7 +17,7 @@ void CMomodoraPlayer::Initialize(void)
 	
 }
 
-int CMomodoraPlayer::Update(void)
+const int CMomodoraPlayer::Update(void)
 {
 	return OBJ_NOEVENT;
 }

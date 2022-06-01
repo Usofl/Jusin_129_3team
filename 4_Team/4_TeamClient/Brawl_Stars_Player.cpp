@@ -35,7 +35,7 @@ void CBrawl_Stars_Player::Initialize(void)
 
 }
 
-void CBrawl_Stars_Player::Update(void)
+const int CBrawl_Stars_Player::Update(void)
 {
 	//Key_Input();
 
@@ -81,6 +81,7 @@ void CBrawl_Stars_Player::Update(void)
 
 	// 앵글값을 0으로 초기화를 안 시키면 계속 회전함
 	m_fAngle = 0.f;*/
+	return 0;
 }
 
 void CBrawl_Stars_Player::Late_Update(void)

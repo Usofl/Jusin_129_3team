@@ -18,8 +18,9 @@ void CJunPlayer::Initialize(void)
 
 }
 
-void CJunPlayer::Update(void)
+const int CJunPlayer::Update(void)
 {
+	return 0;
 }
 
 void CJunPlayer::Late_Update(void)
