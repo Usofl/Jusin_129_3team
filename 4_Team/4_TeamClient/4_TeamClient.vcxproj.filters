@@ -64,6 +64,9 @@
     <Filter Include="03. Game\02. Scene\02.J">
       <UniqueIdentifier>{c2083fa7-b42a-4cb0-b307-91086b697e23}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Game\02. Scene\03. ZeldaScene">
+      <UniqueIdentifier>{dfeb208e-eb00-45c3-9de8-95387dacfe4d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -129,6 +132,9 @@
     <ClInclude Include="Fortress.h">
       <Filter>03. Game\02. Scene\02.J</Filter>
     </ClInclude>
+    <ClInclude Include="ZeldaScene.h">
+      <Filter>03. Game\02. Scene\03. ZeldaScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="4_TeamClient.cpp">
@@ -169,6 +175,9 @@
     </ClCompile>
     <ClCompile Include="Fortress.cpp">
       <Filter>03. Game\02. Scene\02.J</Filter>
+    </ClCompile>
+    <ClCompile Include="ZeldaScene.cpp">
+      <Filter>03. Game\02. Scene\03. ZeldaScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
