@@ -22,7 +22,7 @@ void CJunPlayer::Initialize(void)
 	Tank[2] = { 50.f,50.f,0.f };
 	Tank[3] = { -50.f,50.f,0.f };
 
-	m_HeadInfo.vPos = { 300.f,-50.f,0.f };
+	m_HeadInfo.vPos = { 50.f,-50.f,0.f };
 	TankHead[0] = { -1.f,-1.f,0.f };
 	TankHead[1] = { 1.f, -1.f,0.f };
 	TankHead[2] = { 1.f,1.f,0.f };
@@ -49,8 +49,8 @@ const int CJunPlayer::Update(void)
 	TankHead[1] = { 20.f, -20.f + m_HeadInfo.vPos.y,0.f };
 	TankHead[2] = { 20.f,20.f + m_HeadInfo.vPos.y,0.f };
 	TankHead[3] = { -20.f,20.f + m_HeadInfo.vPos.y,0.f };
-	Po = { m_HeadInfo.vPos.x, 0.f ,0.f };
-	Po_One = { 0.f, 0.f + m_HeadInfo.vPos.y,0.f };
+	Po = { 150.f, 0.f ,0.f };
+	Po_One = { 0.f, -50.f /*+ m_HeadInfo.vPos.y*/,0.f };
 
 
 
@@ -66,13 +66,15 @@ const int CJunPlayer::Update(void)
 	D3DXMatrixRotationZ(&m_HmatRotZ, m_fPoAngle);
 
 	D3DXMatrixTranslation(&m_matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
+	//D3DXMatrixTranslation(&m_HmatTrans, m_HeadInfo.vPos.x, 0.f, 0.f);
+	//D3DXMatrixTranslation(&m_matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
 	//D3DXMatrixTranslation(&m_matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y - 20.f, 0.f);
 
 	//D3DXMatrixTranslation(&m_matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
 	//D3DXMatrixTranslation(&m_HmatTrans, m_HeadInfo.vPos.x, m_HeadInfo.vPos.y, 0.f);
 
 	m_tInfo.matWorld = m_matScale * m_matRotZ * m_matTrans;
-	m_HeadInfo.matWorld = m_matScale * (m_matRotZ * m_HmatRotZ) * m_matTrans;
+	m_HeadInfo.matWorld = m_matScale *  m_matRotZ * m_HmatRotZ * m_matTrans ;
 	//m_HeadMat = m_HmatScale * m_HmatRotZ* m_HmatTrans;
 
 	for (int i = 0; i < 4; ++i)
@@ -121,6 +123,9 @@ void CJunPlayer::Render(HDC hDC)
 	
 	MoveToEx(hDC, (int)Po_One.x, (int)Po_One.y, nullptr);
 	LineTo(hDC, (int)Po.x , (int)Po.y);
+
+	/*MoveToEx(hDC, (int)m_tInfo.vPos.x, (int)m_tInfo.vPos.y, nullptr);
+	LineTo(hDC, (int)Po.x, (int)Po.y);*/
 }
 
 void CJunPlayer::Release(void)
@@ -147,6 +152,7 @@ void CJunPlayer::Key_Input(void)
 		D3DXVec3TransformNormal(&m_tInfo.vDir, &m_tInfo.vLook, &m_tInfo.matWorld);
 
 		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
+		//m_HeadInfo.vPos += m_tInfo.vDir * m_fSpeed;
 		//m_HeadInfo.vPos += m_tInfo.vDir * m_fSpeed;
 	}
 
