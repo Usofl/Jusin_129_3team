@@ -94,6 +94,9 @@
     <Filter Include="03. Game\01. Obj\01. Other_Object\03. Zelda_Obj\01. Zelda_Stone">
       <UniqueIdentifier>{efbcd501-3cb6-4ea7-af91-4b4882e65c61}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Game\01. Obj\01. Other_Object\03. Zelda_Obj\02. Zelda_Button">
+      <UniqueIdentifier>{11b469b7-79f7-49c1-800a-3814366f0700}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -201,6 +204,9 @@
     <ClInclude Include="Zelda_Stone.h">
       <Filter>03. Game\01. Obj\01. Other_Object\03. Zelda_Obj\01. Zelda_Stone</Filter>
     </ClInclude>
+    <ClInclude Include="Zelda_Button.h">
+      <Filter>03. Game\01. Obj\01. Other_Object\03. Zelda_Obj\02. Zelda_Button</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="4_TeamClient.cpp">
@@ -283,6 +289,9 @@
     </ClCompile>
     <ClCompile Include="Zelda_Stone.cpp">
       <Filter>03. Game\01. Obj\01. Other_Object\03. Zelda_Obj\01. Zelda_Stone</Filter>
+    </ClCompile>
+    <ClCompile Include="Zelda_Button.cpp">
+      <Filter>03. Game\01. Obj\01. Other_Object\03. Zelda_Obj\02. Zelda_Button</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
