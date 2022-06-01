@@ -17,9 +17,13 @@ CMainGame::~CMainGame()
 void CMainGame::Initialize(void)
 {
 	m_hDC = GetDC(g_hWnd);
+	m_hBackDC = GetDC(g_hWnd);
 	//m_hBackDC = CBmpMgr::Get_Instance()->Find_Image(L"Back");
 
+	//SCENEMGR->Scene_Change(SC_ZELDA);
+	//SCENEMGR->Scene_Change(SC_FORTRESS);
 	SCENEMGR->Scene_Change(SC_MOMO);
+	//SCENEMGR->Scene_Change(SC_BRAWL_STARS);
 
 #ifdef _DEBUG
 
@@ -38,6 +42,11 @@ void CMainGame::Initialize(void)
 
 void CMainGame::Update(void)
 {
+	ReleaseDC(g_hWnd, m_hDC);
+	ReleaseDC(g_hWnd, m_hBackDC);
+
+	m_hDC = GetDC(g_hWnd);
+	m_hBackDC = GetDC(g_hWnd);
 	SCENEMGR->Update();
 }
 
@@ -49,8 +58,8 @@ void CMainGame::Late_Update(void)
 void CMainGame::Render(void)
 {
 	BitBlt(m_hDC, 0, 0, WINCX, WINCY, m_hBackDC, 0, 0, SRCCOPY);
-
-	SCENEMGR->Render(m_hDC);
+	Rectangle(m_hBackDC, 0, 0, WINCX, WINCY);
+	SCENEMGR->Render(m_hBackDC);
 
 #ifdef _DEBUG
 	++m_iFPS;

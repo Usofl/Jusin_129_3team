@@ -1,12 +1,14 @@
 #pragma once
 #include "Scene.h"
-#include "ZeldaPlayer.h"
 
-class CZeldaScene : public CScene
+#include "Brawl_Stars_Player.h"
+
+class CBrawl_Stars_Scene :
+	public CScene
 {
 public:
-	CZeldaScene();
-	virtual ~CZeldaScene();
+	CBrawl_Stars_Scene();
+	virtual ~CBrawl_Stars_Scene();
 
 public:
 	// CScene을(를) 통해 상속됨
@@ -18,6 +20,6 @@ public:
 	virtual void Key_Input(void) override;
 
 private:
-	CZeldaPlayer* m_pPlayer;
+	CObj*	m_pBrawl_Stars_Player;
 };
 
