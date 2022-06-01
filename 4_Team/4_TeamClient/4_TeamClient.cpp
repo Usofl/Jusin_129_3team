@@ -171,6 +171,7 @@ int CMy4_TeamClientApp::Run()
 	ZeroMemory(&msg, sizeof(msg));
 	DWORD dwTick = GetTickCount();
 
+	
 	while (msg.message != WM_QUIT)
 	{
 		if (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
