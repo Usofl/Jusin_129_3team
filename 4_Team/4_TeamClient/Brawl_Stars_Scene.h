@@ -20,6 +20,9 @@ public:
 	virtual void Key_Input(void) override;
 
 private:
-	CObj*	m_pBrawl_Stars_Player;
+	list<CObj*> m_Brawl_List[BRAWL_END];
+
+	CBrawl_Stars_Player*	m_pBrawl_Stars_Player;
+	
 };
 
