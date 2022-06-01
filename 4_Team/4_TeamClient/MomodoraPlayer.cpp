@@ -96,4 +96,5 @@ void CMomodoraPlayer::Key_Input(void)
 		D3DXVec3TransformNormal(&m_tInfo.vDir, &m_vLookX, &m_tInfo.matWorld);
 		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
 	}
+
 }

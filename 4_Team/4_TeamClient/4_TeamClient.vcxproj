@@ -212,6 +212,7 @@
     <ClInclude Include="KeyMgr.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="MomoBullet.h" />
     <ClInclude Include="MomoDoraMgr.h" />
     <ClInclude Include="MomodoraPlayer.h" />
     <ClInclude Include="Obj.h" />
@@ -244,6 +245,7 @@
     <ClCompile Include="KeyMgr.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="MomoBullet.cpp" />
     <ClCompile Include="MomoDoraMgr.cpp" />
     <ClCompile Include="MomodoraPlayer.cpp" />
     <ClCompile Include="Obj.cpp" />
