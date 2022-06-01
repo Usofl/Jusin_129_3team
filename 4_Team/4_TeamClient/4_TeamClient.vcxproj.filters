@@ -40,14 +40,8 @@
     <Filter Include="03. Game\02. Scene">
       <UniqueIdentifier>{0061209b-69dc-4d50-83d3-0f290679514c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. Game\02. Scene\00. F">
-      <UniqueIdentifier>{4f329c8e-edce-4b6c-b73b-a18ddf5f4425}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. Game\01. Obj\00. Player">
       <UniqueIdentifier>{5deb0b8d-a6cd-48de-a47e-5a62d66445bb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03. Game\01. Obj\00. Player\00. F S P">
-      <UniqueIdentifier>{f87e2951-809c-4549-9219-72a30b9e4f1a}</UniqueIdentifier>
     </Filter>
     <Filter Include="03. Game\98. Manager\00. ScrollMgr">
       <UniqueIdentifier>{8d65b7d1-ced8-4d1b-8293-6d1ee67451c8}</UniqueIdentifier>
@@ -69,6 +63,18 @@
     </Filter>
     <Filter Include="03. Game\01. Obj\00. Player\03. ZeldaPlayer">
       <UniqueIdentifier>{47560078-f5b2-4493-874a-8b64bd6b241c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\02. Scene\00. Brawl_Stars_Scene">
+      <UniqueIdentifier>{4f329c8e-edce-4b6c-b73b-a18ddf5f4425}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj\00. Player\00. Brawl_Stars_Player">
+      <UniqueIdentifier>{f87e2951-809c-4549-9219-72a30b9e4f1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj\00. Player\01. Momodora">
+      <UniqueIdentifier>{2cca4868-4de7-4db9-8c2e-4d7e603cb21c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\02. Scene\01. Momodora">
+      <UniqueIdentifier>{30ae3ab7-2ef0-4ee9-bc74-4d61918ef20e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +153,21 @@
     <ClInclude Include="JunPlayer.h">
       <Filter>03. Game\02. Scene\02.J</Filter>
     </ClInclude>
+    <ClInclude Include="Brawl_Stars_Scene.h">
+      <Filter>03. Game\02. Scene\00. Brawl_Stars_Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Brawl_Stars_Player.h">
+      <Filter>03. Game\01. Obj\00. Player\00. Brawl_Stars_Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Momodora.h">
+      <Filter>03. Game\02. Scene\01. Momodora</Filter>
+    </ClInclude>
+    <ClInclude Include="MomodoraPlayer.h">
+      <Filter>03. Game\01. Obj\00. Player\01. Momodora</Filter>
+    </ClInclude>
+    <ClInclude Include="MomoDoraMgr.h">
+      <Filter>03. Game\01. Obj\00. Player\01. Momodora</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="4_TeamClient.cpp">
@@ -199,6 +220,21 @@
     </ClCompile>
     <ClCompile Include="JunPlayer.cpp">
       <Filter>03. Game\02. Scene\02.J</Filter>
+    </ClCompile>
+    <ClCompile Include="Brawl_Stars_Scene.cpp">
+      <Filter>03. Game\02. Scene\00. Brawl_Stars_Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Brawl_Stars_Player.cpp">
+      <Filter>03. Game\01. Obj\00. Player\00. Brawl_Stars_Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Momodora.cpp">
+      <Filter>03. Game\02. Scene\01. Momodora</Filter>
+    </ClCompile>
+    <ClCompile Include="MomodoraPlayer.cpp">
+      <Filter>03. Game\01. Obj\00. Player\01. Momodora</Filter>
+    </ClCompile>
+    <ClCompile Include="MomoDoraMgr.cpp">
+      <Filter>03. Game\01. Obj\00. Player\01. Momodora</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

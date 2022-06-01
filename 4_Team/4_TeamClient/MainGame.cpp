@@ -21,9 +21,9 @@ void CMainGame::Initialize(void)
 	//m_hBackDC = CBmpMgr::Get_Instance()->Find_Image(L"Back");
 
 	//SCENEMGR->Scene_Change(SC_ZELDA);
-
-	
-	SCENEMGR->Scene_Change(SC_FORTRESS);
+	//SCENEMGR->Scene_Change(SC_FORTRESS);
+	SCENEMGR->Scene_Change(SC_MOMO);
+	//SCENEMGR->Scene_Change(SC_BRAWL_STARS);
 
 #ifdef _DEBUG
 

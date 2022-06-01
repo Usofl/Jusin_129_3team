@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "SceneMgr.h"
 #include "ZeldaScene.h"
+#include "Brawl_Stars_Scene.h"
+#include "Momodora.h"
 
 CSceneMgr*	CSceneMgr::m_pInstance = nullptr;
 
@@ -31,6 +33,12 @@ void CSceneMgr::Scene_Change(const SCENEID& eID)
 		{
 		case SC_FORTRESS:
 			m_pScene[SC_FORTRESS] = new CFortress;
+			break;
+		case SC_BRAWL_STARS:
+			m_pScene[SC_BRAWL_STARS] = new CBrawl_Stars_Scene;
+			break;
+		case SC_MOMO:
+			m_pScene[SC_MOMO] = new CMomodora;
 			break;
 		}
 		m_pScene[m_eCurScene]->Initialize();

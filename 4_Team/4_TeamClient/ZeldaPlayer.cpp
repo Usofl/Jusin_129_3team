@@ -35,7 +35,7 @@ void CZeldaPlayer::Initialize(void)
 	m_fSpeed = 3.f;
 }
 
-void CZeldaPlayer::Update(void)
+const int CZeldaPlayer::Update(void)
 {
 	// 연산을 진행
 	Key_Input();
@@ -60,6 +60,7 @@ void CZeldaPlayer::Update(void)
 		//m_vDrawPoint[i].x = (m_vRectPoint[i].x * cosf(m_fRadian)) - (m_vRectPoint[i].y * -sinf(m_fRadian)) + m_tInfo.vPos.x;
 		//m_vDrawPoint[i].y = (m_vRectPoint[i].x * -sinf(m_fRadian)) + (m_vRectPoint[i].y * cosf(m_fRadian)) + m_tInfo.vPos.y;
 	}
+	return 0;
 }
 
 void CZeldaPlayer::Late_Update(void)

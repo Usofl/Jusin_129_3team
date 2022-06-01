@@ -20,7 +20,7 @@ void CJunPlayer::Initialize(void)
 	m_tInfo.vDir = { 1.f,0.f,0.f };
 }
 
-void CJunPlayer::Update(void)
+const int CJunPlayer::Update(void)
 {
 
 	if (iArray[0] < 500)
@@ -49,4 +49,8 @@ void CJunPlayer::Release(void)
 void CJunPlayer::Key_Input(void)
 {
 
+}
+
+void CJunPlayer::Key_Input(void)
+{
 }
