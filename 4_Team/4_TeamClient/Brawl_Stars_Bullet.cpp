@@ -14,8 +14,8 @@ CBrawl_Stars_Bullet::~CBrawl_Stars_Bullet()
 
 void CBrawl_Stars_Bullet::Initialize(void)
 {
-	m_tInfo.vPos = { 400.f ,300.f, 0.f };
-	m_tInfo.vDir = { 1.f, 0.f, 0.f };
+	m_tInfo.vPos = { 100.f ,100, 0.f };
+	m_tInfo.vLook = { 1.f, 0.f, 0.f };
 
 	m_tInfo_Bullet_Local[0].vPos = { -10.f , -10.f , 0.f };
 	m_tInfo_Bullet_Local[1].vPos = { +10.f , -10.f , 0.f };
@@ -23,27 +23,27 @@ void CBrawl_Stars_Bullet::Initialize(void)
 	m_tInfo_Bullet_Local[3].vPos = { -10.f , +10.f , 0.f };
 
 	m_fSpeed = 10.f;
+
 }
 
 const int CBrawl_Stars_Bullet::Update(void)
 {
-	D3DXMATRIX matTrans;
+
+	D3DXMatrixTranslation(&m_tMatInfo.matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
+	D3DXMatrixRotationZ(&m_tMatInfo.matRotZ, D3DXToRadian(m_fAngle));
+
+	m_tInfo.matWorld = m_tMatInfo.matScale * m_tMatInfo.matRotZ * m_tMatInfo.matTrans;
 
 	for (int i = 0; i < 4; ++i)
 	{
-		D3DXMatrixTranslation(&matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
-
-		m_tInfo.matWorld = matTrans;
-
 		D3DXVec3TransformCoord(&m_tInfo_Bullet_World[i].vPos, &m_tInfo_Bullet_Local[i].vPos, &m_tInfo.matWorld);
-
 	}
-	D3DXVec3TransformNormal(&m_tInfo.vDir, &m_tInfo.vDir, &m_tInfo.matWorld);
 
-	for (int i = 0; i < 4; ++i)
-	{
-		m_tInfo_Bullet_World[i].vPos += m_tInfo.vDir * m_fSpeed;
-	}
+	D3DXVec3TransformNormal(&m_tInfo.vDir, &m_tInfo.vLook, &m_tInfo.matWorld);
+
+
+	m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
+	
 
 	return 0;
 }

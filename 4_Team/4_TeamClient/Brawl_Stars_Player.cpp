@@ -48,37 +48,31 @@ const int CBrawl_Stars_Player::Update(void)
 
 	m_fAngle_Body += m_fAngle;
 
+	// 이동행렬 생성 인포의 포스x , y == 400 , 300 , 그리고 matTrans에 대입 == 위치값
+	D3DXMatrixTranslation(&m_tMatInfo.matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
+
+	// Z 중심축으로 대입된 앵글바디값을 RotZ 에 대입 == 방향, 앵글 값
+	D3DXMatrixRotationZ(&m_tMatInfo.matRotZ, D3DXToRadian(m_fAngle_Body));
+
+	// 월드 변환을 위한 행렬에 matRotZ 와 matTrans 곱한후에 더한다.
+	m_tInfo.matWorld = m_tMatInfo.matRotZ * m_tMatInfo.matTrans;
+
 	for (int i = 0; i < 4; ++i)
 	{
-		// 이동행렬 생성 인포의 포스x , y == 400 , 300 , 그리고 matTrans에 대입 == 위치값
-		D3DXMatrixTranslation(&m_tMatInfo.matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
-
-		// Z 중심축으로 대입된 앵글바디값을 RotZ 에 대입 == 방향, 앵글 값
-		D3DXMatrixRotationZ(&m_tMatInfo.matRotZ, D3DXToRadian(m_fAngle_Body));
-
-		// 월드 변환을 위한 행렬에 matRotZ 와 matTrans 곱한후에 더한다.
-		m_tInfo.matWorld = m_tMatInfo.matRotZ * m_tMatInfo.matTrans;
-
 		// 최종적인 위치벡터를 반환 해준다 (월드 변환을 위한 행렬에 인포타입 바디 로컬의 포스를 곱하기를 한후에 바디 월드의 포스에 대입 )
 		D3DXVec3TransformCoord(&m_tInfo_Body_World[i].vPos, &m_tInfo_Body_Local[i].vPos, &m_tInfo.matWorld);
 	}
+	// 포신의 앵글값 , 몸체의 앵글값을 더한 값을 matRotZ 에 대입
+	D3DXMatrixRotationZ(&m_tMatInfo.matRotZ, D3DXToRadian(m_fAngle_Body + m_fAngle_Posin));
+
+	// 월드 변환을 위한 행렬에 matRoz(앵글 값) * matTrans(이동행렬== 위치)
+	m_PosinWorld = m_tMatInfo.matRotZ * m_tMatInfo.matTrans;
 
 	for (int i = 0; i < 2; ++i)
 	{
-		// 인포의 포스 x , y 값을 이동행렬에 대입
-		D3DXMatrixTranslation(&m_tMatInfo.matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
-
-		// 포신의 앵글값 , 몸체의 앵글값을 더한 값을 matRotZ 에 대입
-		D3DXMatrixRotationZ(&m_tMatInfo.matRotZ, D3DXToRadian(m_fAngle_Body + m_fAngle_Posin));
-
-		// 월드 변환을 위한 행렬에 matRoz(앵글 값) * matTrans(이동행렬== 위치)
-		m_tInfo.matWorld = m_tMatInfo.matRotZ * m_tMatInfo.matTrans;
-
 		// 최종적인 위치 벡터를 반환 해준다 ( 월드 변환을 위한 행렬에 인포포신 로컬을 곱한후에 포신월드에 대입
-		D3DXVec3TransformCoord(&m_tInfo_Posin_World[i].vPos, &m_tInfo_Posin_Local[i].vPos, &m_tInfo.matWorld);
+		D3DXVec3TransformCoord(&m_tInfo_Posin_World[i].vPos, &m_tInfo_Posin_Local[i].vPos, &m_PosinWorld);
 	}
-	
-
 
 	// 앵글값을 0으로 초기화를 안 시키면 계속 회전함
 	m_fAngle = 0.f;
@@ -152,7 +146,7 @@ void CBrawl_Stars_Player::Key_Input(void)
 	}
 	if (GetAsyncKeyState(VK_SPACE))
 	{
-		m_pBullet->push_back(CBrawlFactory::Create_Brawl_Bullet(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y, m_fAngle_Posin));
+		m_pBullet->push_back(CBrawlFactory::Create_Brawl_Bullet(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y, m_fAngle_Body + m_fAngle_Posin));
 	}
 
 }

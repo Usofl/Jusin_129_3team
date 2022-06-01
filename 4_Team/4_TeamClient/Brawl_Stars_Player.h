@@ -39,6 +39,8 @@ private:
 	float		m_fSpeed;
 
 	list<CObj*>*	m_pBullet;
+
+	D3DXMATRIX		m_PosinWorld;
 	/*
 
 	D3DXVECTOR3		m_vPlayerPos;	// À§Ä¡ º¤ÅÍ
