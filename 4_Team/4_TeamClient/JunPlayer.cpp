@@ -34,3 +34,7 @@ void CJunPlayer::Render(HDC hDC)
 void CJunPlayer::Release(void)
 {
 }
+
+void CJunPlayer::Key_Input(void)
+{
+}
