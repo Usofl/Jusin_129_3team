@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "SceneMgr.h"
+#include "ZeldaScene.h"
 
 CSceneMgr*	CSceneMgr::m_pInstance = nullptr;
 
@@ -8,6 +9,11 @@ CSceneMgr::CSceneMgr()
 	, m_eCurScene(SC_END)
 	, m_ePreScene(SC_END)
 {
+	for (int i = SC_START; i < SC_END; ++i)
+	{
+		m_pScene[i] = nullptr;
+	}
+	m_pScene[SC_ZELDA] = new CZeldaScene;
 }
 
 CSceneMgr::~CSceneMgr()
