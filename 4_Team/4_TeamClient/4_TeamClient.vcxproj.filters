@@ -76,6 +76,21 @@
     <Filter Include="03. Game\02. Scene\01. Momodora">
       <UniqueIdentifier>{30ae3ab7-2ef0-4ee9-bc74-4d61918ef20e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Game\02. Scene\04. ZeldaEditScene">
+      <UniqueIdentifier>{e069d298-e6ac-4eca-9a69-4d466468867f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj\01. Other_Object">
+      <UniqueIdentifier>{25773140-11a0-47af-b3a5-7da332bd8de4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj\01. Other_Object\03. Zelda_Obj">
+      <UniqueIdentifier>{655f64a5-1569-4262-b76a-4747ed9dde37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj\01. Other_Object\03. Zelda_Obj\00. Zelda_Wall">
+      <UniqueIdentifier>{03b6e0b8-f11d-46ff-8265-c08434de340b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj\01. Other_Object\03. Zelda_Obj\01. Zelda_Stone">
+      <UniqueIdentifier>{efbcd501-3cb6-4ea7-af91-4b4882e65c61}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -168,6 +183,18 @@
     <ClInclude Include="MomoDoraMgr.h">
       <Filter>03. Game\01. Obj\00. Player\01. Momodora</Filter>
     </ClInclude>
+    <ClInclude Include="ZeldaEditScene.h">
+      <Filter>03. Game\02. Scene\04. ZeldaEditScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Zelda_Obj.h">
+      <Filter>03. Game\01. Obj\01. Other_Object\03. Zelda_Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="Zelda_Wall.h">
+      <Filter>03. Game\01. Obj\01. Other_Object\03. Zelda_Obj\00. Zelda_Wall</Filter>
+    </ClInclude>
+    <ClInclude Include="Zelda_Stone.h">
+      <Filter>03. Game\01. Obj\01. Other_Object\03. Zelda_Obj\01. Zelda_Stone</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="4_TeamClient.cpp">
@@ -235,6 +262,18 @@
     </ClCompile>
     <ClCompile Include="MomoDoraMgr.cpp">
       <Filter>03. Game\01. Obj\00. Player\01. Momodora</Filter>
+    </ClCompile>
+    <ClCompile Include="ZeldaEditScene.cpp">
+      <Filter>03. Game\02. Scene\04. ZeldaEditScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Zelda_Obj.cpp">
+      <Filter>03. Game\01. Obj\01. Other_Object\03. Zelda_Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="Zelda_Wall.cpp">
+      <Filter>03. Game\01. Obj\01. Other_Object\03. Zelda_Obj\00. Zelda_Wall</Filter>
+    </ClCompile>
+    <ClCompile Include="Zelda_Stone.cpp">
+      <Filter>03. Game\01. Obj\01. Other_Object\03. Zelda_Obj\01. Zelda_Stone</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

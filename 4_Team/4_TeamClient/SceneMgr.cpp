@@ -11,10 +11,9 @@ CSceneMgr::CSceneMgr()
 	, m_eCurScene(SC_END)
 	, m_ePreScene(SC_END)
 {
-	for (int i = SC_START; i < SC_END; ++i)
-	{
-		m_pScene[i] = nullptr;
-	}
+	m_pScene[SC_BRAWL_STARS] = new CBrawl_Stars_Scene;
+	m_pScene[SC_MOMO] = new CMomodora;
+	m_pScene[SC_FORTRESS] = new CFortress;
 	m_pScene[SC_ZELDA] = new CZeldaScene;
 }
 
@@ -29,18 +28,6 @@ void CSceneMgr::Scene_Change(const SCENEID& eID)
 	
 	if (m_ePreScene != m_eCurScene)
 	{
-		switch (m_eCurScene)
-		{
-		case SC_FORTRESS:
-			m_pScene[SC_FORTRESS] = new CFortress;
-			break;
-		case SC_BRAWL_STARS:
-			m_pScene[SC_BRAWL_STARS] = new CBrawl_Stars_Scene;
-			break;
-		case SC_MOMO:
-			m_pScene[SC_MOMO] = new CMomodora;
-			break;
-		}
 		m_pScene[m_eCurScene]->Initialize();
 		m_ePreScene = m_eCurScene;
 	}

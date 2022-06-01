@@ -224,8 +224,12 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Struct.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="ZeldaEditScene.h" />
     <ClInclude Include="ZeldaPlayer.h" />
     <ClInclude Include="ZeldaScene.h" />
+    <ClInclude Include="Zelda_Obj.h" />
+    <ClInclude Include="Zelda_Stone.h" />
+    <ClInclude Include="Zelda_Wall.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="4_TeamClient.cpp" />
@@ -253,8 +257,12 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="ZeldaEditScene.cpp" />
     <ClCompile Include="ZeldaPlayer.cpp" />
     <ClCompile Include="ZeldaScene.cpp" />
+    <ClCompile Include="Zelda_Obj.cpp" />
+    <ClCompile Include="Zelda_Stone.cpp" />
+    <ClCompile Include="Zelda_Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="4_TeamClient.rc" />

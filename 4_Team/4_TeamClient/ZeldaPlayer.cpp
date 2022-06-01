@@ -4,6 +4,8 @@
 #include "ScrollMgr.h"
 
 CZeldaPlayer::CZeldaPlayer()
+	: m_fSize(30.f)
+	, m_iHandSize(10)
 {
 	Initialize();
 }
@@ -20,17 +22,15 @@ void CZeldaPlayer::Initialize(void)
 	m_tInfo.vPos = { 400.f, 300.f, 0.f };
 	m_tInfo.vLook = { 0.f, -1.f, 0.f };
 
-	m_vRectPoint[0] = { -50.f, -50.f, 0.f };
-	m_vRectPoint[1] = { 50.f, -50.f, 0.f };
-	m_vRectPoint[2] = { 50.f, 50.f, 0.f };
-	m_vRectPoint[3] = { -50.f, 50.f, 0.f };
+	m_vPoint[ZELDA_LEFT_TOP] = { -m_fSize, -m_fSize, 0.f };
+	m_vPoint[ZELDA_RIGHT_TOP] = { m_fSize, -m_fSize, 0.f };
+	m_vPoint[ZELDA_RIGHT_BOTTOM] = { m_fSize, m_fSize, 0.f };
+	m_vPoint[ZELDA_LEFT_BOTTOM] = { -m_fSize, m_fSize, 0.f };
 
-	m_fAngle = 90.f;
+	m_vPoint[ZELDA_LEFT_HAND] = { -m_fSize * 1.5f, m_fSize * 0.5f, 0.f };
+	m_vPoint[ZELDA_RIGHT_HAND] = { m_fSize * 1.5f, m_fSize * 0.5f, 0.f };
 
-	for (int i = 0; i < 4; ++i)
-	{
-		m_vDrawPoint[i] = m_vRectPoint[i] + m_tInfo.vPos;
-	}
+	m_fAngle = D3DXToRadian(0.f);
 
 	m_fSpeed = 3.f;
 }
@@ -46,35 +46,51 @@ const int CZeldaPlayer::Update(void)
 	D3DXMatrixRotationZ(&m_tMatInfo.matRotZ, m_fAngle);
 
 	// 이동 행렬 생성 함수
-	D3DXMatrixTranslation(&m_tMatInfo.matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, m_tInfo.vPos.z);
+	D3DXMatrixTranslation(&m_tMatInfo.matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
 	
 	Update_Matrix();
 
-	for (int i = 0; i < 4; ++i)
+	for (int i = ZELDA_LEFT_TOP; i < ZELDA_END; ++i)
 	{
-		m_vDrawPoint[i].x = (m_vRectPoint[i].x * m_tInfo.matWorld._11) - (m_vRectPoint[i].y * -m_tInfo.matWorld._12);
-		m_vDrawPoint[i].y = (m_vRectPoint[i].x * m_tInfo.matWorld._21) + (m_vRectPoint[i].y * m_tInfo.matWorld._22);
-
-		m_vDrawPoint[i] += m_tInfo.vPos;
-
-		//m_vDrawPoint[i].x = (m_vRectPoint[i].x * cosf(m_fRadian)) - (m_vRectPoint[i].y * -sinf(m_fRadian)) + m_tInfo.vPos.x;
-		//m_vDrawPoint[i].y = (m_vRectPoint[i].x * -sinf(m_fRadian)) + (m_vRectPoint[i].y * cosf(m_fRadian)) + m_tInfo.vPos.y;
+		D3DXVec3TransformCoord(&m_vDrawPoint[i], &m_vPoint[i], &m_tInfo.matWorld);
 	}
-	return 0;
+
+	D3DXVec3TransformNormal(&m_tInfo.vDir, &m_tInfo.vLook, &m_tInfo.matWorld);
+
+	return OBJ_NOEVENT;
 }
 
 void CZeldaPlayer::Late_Update(void)
 {
 }
 
-void CZeldaPlayer::Render(HDC hDC)
+void CZeldaPlayer::Render(HDC _hDC)
 {
-	MoveToEx(hDC, (int)m_vDrawPoint[0].x, (int)m_vDrawPoint[0].y, nullptr);
-	for (int i = 1; i < 4; ++i)
+	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
+	MoveToEx(_hDC, (int)m_vDrawPoint[ZELDA_LEFT_TOP].x + iScrollX, (int)m_vDrawPoint[ZELDA_LEFT_TOP].y + iScrollY, nullptr);
+	
+	HPEN MyPen, OldPen;
+	MyPen = (HPEN)CreatePen(PS_SOLID, 2, RGB(255, 0, 0));
+	OldPen = (HPEN)::SelectObject(_hDC, (HGDIOBJ)MyPen);
+	
+	LineTo(_hDC, (int)m_vDrawPoint[ZELDA_RIGHT_TOP].x + iScrollX, (int)m_vDrawPoint[ZELDA_RIGHT_TOP].y + iScrollY);
+
+	SelectObject(_hDC, OldPen);
+	DeleteObject(MyPen);
+
+	for (int i = ZELDA_RIGHT_BOTTOM; i < 4; ++i)
 	{
-		LineTo(hDC, (int)m_vDrawPoint[i].x, (int)m_vDrawPoint[i].y);
+		LineTo(_hDC, (int)m_vDrawPoint[i].x + iScrollX, (int)m_vDrawPoint[i].y + iScrollY);
 	}
-	LineTo(hDC, (int)m_vDrawPoint[0].x, (int)m_vDrawPoint[0].y);
+	LineTo(_hDC, (int)m_vDrawPoint[ZELDA_LEFT_TOP].x + iScrollX, (int)m_vDrawPoint[ZELDA_LEFT_TOP].y + iScrollY);
+
+	Ellipse(_hDC, (int)m_vDrawPoint[ZELDA_LEFT_HAND].x - m_iHandSize + iScrollX, (int)m_vDrawPoint[ZELDA_LEFT_HAND].y - m_iHandSize + iScrollY
+		, (int)m_vDrawPoint[ZELDA_LEFT_HAND].x + m_iHandSize + iScrollX, (int)m_vDrawPoint[ZELDA_LEFT_HAND].y + m_iHandSize + iScrollY);
+
+	Ellipse(_hDC, (int)m_vDrawPoint[ZELDA_RIGHT_HAND].x - m_iHandSize + iScrollX, (int)m_vDrawPoint[ZELDA_RIGHT_HAND].y - m_iHandSize + iScrollY
+		, (int)m_vDrawPoint[ZELDA_RIGHT_HAND].x + m_iHandSize + iScrollX, (int)m_vDrawPoint[ZELDA_RIGHT_HAND].y + m_iHandSize + iScrollY);
 }
 
 void CZeldaPlayer::Release(void)
@@ -83,29 +99,47 @@ void CZeldaPlayer::Release(void)
 
 void CZeldaPlayer::Key_Input(void)
 {
-	//GetKeyState
 	if (KEYMGR->Key_Pressing(VK_LEFT))
 	{
-		//m_tInfo.vPos.x -= m_fSpeed;
-		m_fAngle += D3DXToRadian(3.f);
+		if (!KEYMGR->Key_Pressing(VK_DOWN) && !KEYMGR->Key_Pressing(VK_UP))
+		{
+			m_fAngle = D3DXToRadian(270.f);
+		}
+		else if (KEYMGR->Key_Pressing(VK_DOWN))
+		{
+			m_fAngle = D3DXToRadian(225.f);
+		}
+		else if (KEYMGR->Key_Pressing(VK_UP))
+		{
+			m_fAngle = D3DXToRadian(315.f);
+		}
+		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
 	}
-
-
-	if (KEYMGR->Key_Pressing(VK_RIGHT))
+	else if (KEYMGR->Key_Pressing(VK_RIGHT))
 	{
-		//	m_tInfo.vPos.x += m_fSpeed;
-		m_fAngle -= D3DXToRadian(3.f);
+		if (!KEYMGR->Key_Pressing(VK_DOWN) && !KEYMGR->Key_Pressing(VK_UP))
+		{
+			m_fAngle = D3DXToRadian(90.f);
+		}
+		else if (KEYMGR->Key_Pressing(VK_DOWN))
+		{
+			m_fAngle = D3DXToRadian(135.f);
+		}
+		else if (KEYMGR->Key_Pressing(VK_UP))
+		{
+			m_fAngle = D3DXToRadian(45.f);
+		}
+
+		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
 	}
-
-	if (KEYMGR->Key_Pressing(VK_UP))
+	else if (KEYMGR->Key_Pressing(VK_UP))
 	{
-		m_tInfo.vPos.x += m_fSpeed * cosf(m_fAngle);
-		m_tInfo.vPos.y -= m_fSpeed * sinf(m_fAngle);
+		m_fAngle = D3DXToRadian(0.f);
+		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
 	}
-
-	if (KEYMGR->Key_Pressing(VK_DOWN))
+	else if (KEYMGR->Key_Pressing(VK_DOWN))
 	{
-		m_tInfo.vPos.x -= m_fSpeed * cosf(m_fAngle);
-		m_tInfo.vPos.y += m_fSpeed * sinf(m_fAngle);
+		m_fAngle = D3DXToRadian(180.f);
+		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
 	}
 }

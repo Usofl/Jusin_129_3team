@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "MainGame.h"
 #include "SceneMgr.h"
+#include "KeyMgr.h"
+#include "RenderMgr.h"
+#include "ScrollMgr.h"
 
 CMainGame::CMainGame()
 	: m_dwFPSTime(GetTickCount())
@@ -18,11 +21,10 @@ void CMainGame::Initialize(void)
 {
 	m_hDC = GetDC(g_hWnd);
 	m_hBackDC = GetDC(g_hWnd);
-	//m_hBackDC = CBmpMgr::Get_Instance()->Find_Image(L"Back");
 
-	//SCENEMGR->Scene_Change(SC_ZELDA);
+	SCENEMGR->Scene_Change(SC_ZELDA);
 	//SCENEMGR->Scene_Change(SC_FORTRESS);
-	SCENEMGR->Scene_Change(SC_MOMO);
+	//SCENEMGR->Scene_Change(SC_MOMO);
 	//SCENEMGR->Scene_Change(SC_BRAWL_STARS);
 
 #ifdef _DEBUG
@@ -84,6 +86,9 @@ void CMainGame::Release(void)
 #endif _DEBUG
 
 	SCENEMGR->Destroy_Instance();
+	KEYMGR->Destroy_Instance();
+	SCROLLMGR->Destroy_Instance();
+	RENDERMGR->Destroy_Instance();
 
 	ReleaseDC(g_hWnd, m_hDC);
 	ReleaseDC(g_hWnd, m_hBackDC);

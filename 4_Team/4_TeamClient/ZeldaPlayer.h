@@ -11,14 +11,17 @@ public:
 	virtual void Initialize(void) override;
 	virtual const int Update(void) override;
 	virtual void Late_Update(void) override;
-	virtual void Render(HDC hDC) override;
+	virtual void Render(HDC _hDC) override;
 	virtual void Release(void) override;
 
 private:
 	virtual void Key_Input(void) override;
 
 private:
-	D3DXVECTOR3		m_vRectPoint[4];
-	D3DXVECTOR3		m_vDrawPoint[4];
+	float			m_fSize;
+	int				m_iHandSize;
+
+	D3DXVECTOR3		m_vPoint[ZELDA_END];
+	D3DXVECTOR3		m_vDrawPoint[ZELDA_END];
 };
 

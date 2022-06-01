@@ -3,7 +3,8 @@
 
 
 CObj::CObj()
-	: m_fAngle(0.f)
+	: m_eRender(RENDER_BACKGROUND)
+	, m_fAngle(0.f)
 {
 	ZeroMemory(&m_tInfo, sizeof(INFO));
 
