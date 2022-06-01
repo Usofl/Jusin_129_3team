@@ -61,6 +61,9 @@
     <Filter Include="03. Game\02. Scene\03. ZeldaScene">
       <UniqueIdentifier>{dfeb208e-eb00-45c3-9de8-95387dacfe4d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Game\01. Obj\00. Player\03. ZeldaPlayer">
+      <UniqueIdentifier>{47560078-f5b2-4493-874a-8b64bd6b241c}</UniqueIdentifier>
+    </Filter>
     <Filter Include="03. Game\02. Scene\00. Brawl_Stars_Scene">
       <UniqueIdentifier>{4f329c8e-edce-4b6c-b73b-a18ddf5f4425}</UniqueIdentifier>
     </Filter>
@@ -138,6 +141,12 @@
     <ClInclude Include="Player.h">
       <Filter>03. Game\01. Obj\00. Player</Filter>
     </ClInclude>
+    <ClInclude Include="ZeldaPlayer.h">
+      <Filter>03. Game\01. Obj\00. Player\03. ZeldaPlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="JunPlayer.h">
+      <Filter>03. Game\02. Scene\02.J</Filter>
+    </ClInclude>
     <ClInclude Include="Brawl_Stars_Scene.h">
       <Filter>03. Game\02. Scene\00. Brawl_Stars_Scene</Filter>
     </ClInclude>
@@ -190,6 +199,12 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>03. Game\01. Obj\00. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="ZeldaPlayer.cpp">
+      <Filter>03. Game\01. Obj\00. Player\03. ZeldaPlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="JunPlayer.cpp">
+      <Filter>03. Game\02. Scene\02.J</Filter>
     </ClCompile>
     <ClCompile Include="Brawl_Stars_Scene.cpp">
       <Filter>03. Game\02. Scene\00. Brawl_Stars_Scene</Filter>

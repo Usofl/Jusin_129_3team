@@ -1,7 +1,8 @@
 #pragma once
 #include "Scene.h"
-class CZeldaScene :
-	public CScene
+#include "ZeldaPlayer.h"
+
+class CZeldaScene : public CScene
 {
 public:
 	CZeldaScene();
@@ -15,5 +16,8 @@ public:
 	virtual void Render(HDC _hDC) override;
 	virtual void Release(void) override;
 	virtual void Key_Input(void) override;
+
+private:
+	CZeldaPlayer* m_pPlayer;
 };
 

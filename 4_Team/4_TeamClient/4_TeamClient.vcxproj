@@ -207,6 +207,7 @@
     <ClInclude Include="Fortress.h" />
     <ClInclude Include="Functor.h" />
     <ClInclude Include="Include.h" />
+    <ClInclude Include="JunPlayer.h" />
     <ClInclude Include="KeyMgr.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="MainGame.h" />
@@ -220,6 +221,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Struct.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="ZeldaPlayer.h" />
     <ClInclude Include="ZeldaScene.h" />
   </ItemGroup>
   <ItemGroup>
@@ -229,6 +231,7 @@
     <ClCompile Include="Brawl_Stars_Player.cpp" />
     <ClCompile Include="Brawl_Stars_Scene.cpp" />
     <ClCompile Include="Fortress.cpp" />
+    <ClCompile Include="JunPlayer.cpp" />
     <ClCompile Include="KeyMgr.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="MainGame.cpp" />
@@ -244,6 +247,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="ZeldaPlayer.cpp" />
     <ClCompile Include="ZeldaScene.cpp" />
   </ItemGroup>
   <ItemGroup>
