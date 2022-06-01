@@ -1,5 +1,7 @@
 #pragma once
 #include "Scene.h"
+#include "MomodoraPlayer.h"
+
 class CMomodora :
 	public CScene
 {
@@ -14,5 +16,8 @@ public:
 	virtual void Render(HDC _hDC) override;
 	virtual void Release(void) override;
 	virtual void Key_Input(void) override;
+
+private:
+	CMomodoraPlayer*	m_pPlayer;
 };
 
