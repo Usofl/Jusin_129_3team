@@ -201,6 +201,7 @@
     <ClInclude Include="Fortress.h" />
     <ClInclude Include="Functor.h" />
     <ClInclude Include="Include.h" />
+    <ClInclude Include="JunPlayer.h" />
     <ClInclude Include="KeyMgr.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="MainGame.h" />
@@ -221,6 +222,7 @@
     <ClCompile Include="4_TeamClientDoc.cpp" />
     <ClCompile Include="4_TeamClientView.cpp" />
     <ClCompile Include="Fortress.cpp" />
+    <ClCompile Include="JunPlayer.cpp" />
     <ClCompile Include="KeyMgr.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="MainGame.cpp" />

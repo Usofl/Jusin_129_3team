@@ -18,6 +18,8 @@ void CMainGame::Initialize(void)
 {
 	m_hDC = GetDC(g_hWnd);
 	//m_hBackDC = CBmpMgr::Get_Instance()->Find_Image(L"Back");
+	
+	SCENEMGR->Scene_Change(SC_FORTRESS);
 
 #ifdef _DEBUG
 
@@ -36,19 +38,21 @@ void CMainGame::Initialize(void)
 
 void CMainGame::Update(void)
 {
-	//SCENEMGR->Update();
+	ReleaseDC(g_hWnd, m_hDC);
+	m_hDC = GetDC(g_hWnd);
+	SCENEMGR->Update();
 }
 
 void CMainGame::Late_Update(void)
 {
-	//SCENEMGR->Late_Update();
+	SCENEMGR->Late_Update();
 }
 
 void CMainGame::Render(void)
 {
 	BitBlt(m_hDC, 0, 0, WINCX, WINCY, m_hBackDC, 0, 0, SRCCOPY);
-
-	//SCENEMGR->Render(m_hDC);
+	
+	SCENEMGR->Render(m_hDC);
 
 #ifdef _DEBUG
 	++m_iFPS;

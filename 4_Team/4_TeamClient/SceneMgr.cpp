@@ -18,12 +18,19 @@ CSceneMgr::~CSceneMgr()
 void CSceneMgr::Scene_Change(const SCENEID& eID)
 {
 	m_eCurScene = eID;
-
+	
 	if (m_ePreScene != m_eCurScene)
 	{
+		switch (m_eCurScene)
+		{
+		case SC_FORTRESS:
+			m_pScene[SC_FORTRESS] = new CFortress;
+			break;
+		}
 		m_pScene[m_eCurScene]->Initialize();
 		m_ePreScene = m_eCurScene;
 	}
+	
 }
 
 void CSceneMgr::Update(void)
