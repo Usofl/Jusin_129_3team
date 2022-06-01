@@ -28,5 +28,7 @@ private:
 	D3DXVECTOR3 vHeadPos;
 	INFO	m_HeadInfo;
 	D3DXMATRIX m_HeadMat;
+private:
+	float m_fPoAngle;
 };
 

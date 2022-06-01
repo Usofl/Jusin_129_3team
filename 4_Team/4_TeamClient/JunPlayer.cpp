@@ -22,7 +22,7 @@ void CJunPlayer::Initialize(void)
 	Tank[2] = { 50.f,50.f,0.f };
 	Tank[3] = { -50.f,50.f,0.f };
 
-	m_HeadInfo.vPos = { 0.f,-50.f,0.f };
+	m_HeadInfo.vPos = { 300.f,-50.f,0.f };
 	TankHead[0] = { -1.f,-1.f,0.f };
 	TankHead[1] = { 1.f, -1.f,0.f };
 	TankHead[2] = { 1.f,1.f,0.f };
@@ -34,6 +34,7 @@ void CJunPlayer::Initialize(void)
 
 	m_tInfo.vLook = { 1.f,0.f,0.f };
 	m_fAngle = 0.f;
+	m_fPoAngle = 0.f;
 	m_fSpeed = 5.f;
 	
 }
@@ -48,7 +49,7 @@ const int CJunPlayer::Update(void)
 	TankHead[1] = { 20.f, -20.f + m_HeadInfo.vPos.y,0.f };
 	TankHead[2] = { 20.f,20.f + m_HeadInfo.vPos.y,0.f };
 	TankHead[3] = { -20.f,20.f + m_HeadInfo.vPos.y,0.f };
-	Po = { 100.f, 0.f + m_HeadInfo.vPos.y,0.f };
+	Po = { m_HeadInfo.vPos.x, 0.f ,0.f };
 	Po_One = { 0.f, 0.f + m_HeadInfo.vPos.y,0.f };
 
 
@@ -62,13 +63,14 @@ const int CJunPlayer::Update(void)
 	//D3DXMatrixScaling(&m_HmatScale, 20.f, 20.f, 0);
 
 	D3DXMatrixRotationZ(&m_matRotZ, m_fAngle);
-	//D3DXMatrixRotationZ(&m_HmatRotZ, m_fAngle);
+	D3DXMatrixRotationZ(&m_HmatRotZ, m_fPoAngle);
 
 	D3DXMatrixTranslation(&m_matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
 	//D3DXMatrixTranslation(&m_matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
 	//D3DXMatrixTranslation(&m_HmatTrans, m_HeadInfo.vPos.x, m_HeadInfo.vPos.y, 0.f);
 
 	m_tInfo.matWorld = m_matScale * m_matRotZ * m_matTrans;
+	m_HeadInfo.matWorld = m_matScale * m_matRotZ * m_HmatRotZ * m_matTrans;
 	//m_HeadMat = m_HmatScale * m_HmatRotZ* m_HmatTrans;
 
 	for (int i = 0; i < 4; ++i)
@@ -77,9 +79,9 @@ const int CJunPlayer::Update(void)
 		D3DXVec3TransformCoord(&TankHead[i], &TankHead[i], &m_tInfo.matWorld);
 	}
 
-	D3DXVec3TransformCoord(&Po, &Po, &m_tInfo.matWorld);
+	
 	D3DXVec3TransformCoord(&Po_One, &Po_One, &m_tInfo.matWorld);
-
+	D3DXVec3TransformCoord(&Po, &Po, &m_HeadInfo.matWorld);
 	//m_tInfo.matWorld =  *D3DXMatrixInverse(&m_matRotZ, 0, &m_matRotZ);
 
 	//for (int i = 0; i < 4; ++i)
@@ -152,6 +154,18 @@ void CJunPlayer::Key_Input(void)
 
 		m_tInfo.vPos -= m_tInfo.vDir * m_fSpeed;
 	}
+
+	if (KEYMGR->Key_Pressing('A'))
+	{
+		m_fPoAngle -= D3DXToRadian(3.f);
+	}
+
+	if (KEYMGR->Key_Pressing('D'))
+	{
+		m_fPoAngle += D3DXToRadian(3.f);
+	}
+
+
 	/*if (KEYMGR->Key_Pressing(VK_DOWN))
 	{
 		m_fAngle += D3DXToRadian(3.f);
