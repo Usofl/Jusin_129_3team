@@ -40,6 +40,5 @@ public:
 
 private:
 	static CMomoDoraMgr*			m_pInstance;
-	list<CObj*>				m_RenderSort[RENDER_END];
 };
 
