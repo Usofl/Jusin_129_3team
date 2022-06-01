@@ -204,6 +204,8 @@
     <ClInclude Include="KeyMgr.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="MomoDoraMgr.h" />
+    <ClInclude Include="MomodoraPlayer.h" />
     <ClInclude Include="Obj.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RenderMgr.h" />
@@ -211,6 +213,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneMgr.h" />
     <ClInclude Include="ScrollMgr.h" />
+    <ClInclude Include="Momodora.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Struct.h" />
     <ClInclude Include="targetver.h" />
@@ -224,12 +227,15 @@
     <ClCompile Include="KeyMgr.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="MomoDoraMgr.cpp" />
+    <ClCompile Include="MomodoraPlayer.cpp" />
     <ClCompile Include="Obj.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RenderMgr.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneMgr.cpp" />
     <ClCompile Include="ScrollMgr.cpp" />
+    <ClCompile Include="Momodora.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

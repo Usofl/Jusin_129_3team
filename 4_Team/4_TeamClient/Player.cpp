@@ -15,8 +15,9 @@ void CPlayer::Initialize(void)
 {
 }
 
-void CPlayer::Update(void)
+int CPlayer::Update(void)
 {
+	return 0;
 }
 
 void CPlayer::Late_Update(void)
