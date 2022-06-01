@@ -66,11 +66,13 @@ const int CJunPlayer::Update(void)
 	D3DXMatrixRotationZ(&m_HmatRotZ, m_fPoAngle);
 
 	D3DXMatrixTranslation(&m_matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
+	//D3DXMatrixTranslation(&m_matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y - 20.f, 0.f);
+
 	//D3DXMatrixTranslation(&m_matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
 	//D3DXMatrixTranslation(&m_HmatTrans, m_HeadInfo.vPos.x, m_HeadInfo.vPos.y, 0.f);
 
 	m_tInfo.matWorld = m_matScale * m_matRotZ * m_matTrans;
-	m_HeadInfo.matWorld = m_matScale * m_matRotZ * m_HmatRotZ * m_matTrans;
+	m_HeadInfo.matWorld = m_matScale * (m_matRotZ * m_HmatRotZ) * m_matTrans;
 	//m_HeadMat = m_HmatScale * m_HmatRotZ* m_HmatTrans;
 
 	for (int i = 0; i < 4; ++i)
