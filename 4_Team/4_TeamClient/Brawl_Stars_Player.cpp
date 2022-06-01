@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Brawl_Stars_Player.h"
+#include "BrawlFactory.h"
 
 
 CBrawl_Stars_Player::CBrawl_Stars_Player()
@@ -37,9 +38,9 @@ void CBrawl_Stars_Player::Initialize(void)
 
 const int CBrawl_Stars_Player::Update(void)
 {
-	//Key_Input();
+	Key_Input();
 
-	/*D3DXMatrixRotationZ(&m_tMatInfo.matRotZ, D3DXToRadian(m_fAngle));
+	D3DXMatrixRotationZ(&m_tMatInfo.matRotZ, D3DXToRadian(m_fAngle));
 
 	m_tInfo.matWorld = m_tMatInfo.matRotZ;
 
@@ -76,11 +77,12 @@ const int CBrawl_Stars_Player::Update(void)
 		// 최종적인 위치 벡터를 반환 해준다 ( 월드 변환을 위한 행렬에 인포포신 로컬을 곱한후에 포신월드에 대입
 		D3DXVec3TransformCoord(&m_tInfo_Posin_World[i].vPos, &m_tInfo_Posin_Local[i].vPos, &m_tInfo.matWorld);
 	}
-
+	
 
 
 	// 앵글값을 0으로 초기화를 안 시키면 계속 회전함
-	m_fAngle = 0.f;*/
+	m_fAngle = 0.f;
+
 	return 0;
 }
 
@@ -90,32 +92,30 @@ void CBrawl_Stars_Player::Late_Update(void)
 
 void CBrawl_Stars_Player::Render(HDC hDC)
 {
-	MoveToEx(hDC, m_tInfo_Body_World[0].vPos.x, m_tInfo_Body_World[0].vPos.y, nullptr);
+	MoveToEx(hDC, (int)m_tInfo_Body_World[0].vPos.x, (int)m_tInfo_Body_World[0].vPos.y, nullptr);
 	for (int i = 0; i < 4; ++i)
 	{
-		LineTo(hDC, m_tInfo_Body_World[i].vPos.x, m_tInfo_Body_World[i].vPos.y);
+		LineTo(hDC, (int)m_tInfo_Body_World[i].vPos.x, (int)m_tInfo_Body_World[i].vPos.y);
 	}
-	LineTo(hDC, m_tInfo_Body_World[0].vPos.x, m_tInfo_Body_World[0].vPos.y);
-
+	LineTo(hDC, (int)m_tInfo_Body_World[0].vPos.x, (int)m_tInfo_Body_World[0].vPos.y);
+	
 	// 인포값의 원
-	Ellipse(hDC, m_tInfo.vPos.x - 25, m_tInfo.vPos.y - 25, m_tInfo.vPos.x + 25, m_tInfo.vPos.y + 25);
+	Ellipse(hDC, (int)m_tInfo.vPos.x - 25, (int)m_tInfo.vPos.y - 25, (int)m_tInfo.vPos.x + 25, (int)m_tInfo.vPos.y + 25);
 
 	// 전면부를 나타내는 조그마한 점 2개
-	Ellipse(hDC, m_tInfo_Body_World[1].vPos.x - 5, m_tInfo_Body_World[1].vPos.y - 5, m_tInfo_Body_World[1].vPos.x + 5, m_tInfo_Body_World[1].vPos.y + 5);
-	Ellipse(hDC, m_tInfo_Body_World[2].vPos.x - 5, m_tInfo_Body_World[2].vPos.y - 5, m_tInfo_Body_World[2].vPos.x + 5, m_tInfo_Body_World[2].vPos.y + 5);
+	Ellipse(hDC, (int)m_tInfo_Body_World[1].vPos.x - 5, (int)m_tInfo_Body_World[1].vPos.y - 5, (int)m_tInfo_Body_World[1].vPos.x + 5, (int)m_tInfo_Body_World[1].vPos.y + 5);
+	Ellipse(hDC, (int)m_tInfo_Body_World[2].vPos.x - 5, (int)m_tInfo_Body_World[2].vPos.y - 5, (int)m_tInfo_Body_World[2].vPos.x + 5, (int)m_tInfo_Body_World[2].vPos.y + 5);
 
 	// 포신
-	MoveToEx(hDC, m_tInfo_Posin_World[0].vPos.x, m_tInfo_Posin_World[0].vPos.y, nullptr);
-	LineTo(hDC, m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
+	MoveToEx(hDC, (int)m_tInfo_Posin_World[0].vPos.x, (int)m_tInfo_Posin_World[0].vPos.y, nullptr);
+	LineTo(hDC, (int)m_tInfo_Posin_World[1].vPos.x, (int)m_tInfo_Posin_World[1].vPos.y);
 }
 
 void CBrawl_Stars_Player::Release(void)
 {
 }
 
-void CBrawl_Stars_Player::Shoot_Bullet(void)
-{
-}
+
 
 void CBrawl_Stars_Player::Key_Input(void)
 {
@@ -144,11 +144,15 @@ void CBrawl_Stars_Player::Key_Input(void)
 	}
 	if (GetAsyncKeyState('Z'))
 	{
-		m_fAngle_Posin += 5.f;
+		m_fAngle_Posin -= 5.f;
 	}
 	if (GetAsyncKeyState('C'))
 	{
-		m_fAngle_Posin -= 5.f;
+		m_fAngle_Posin += 5.f;
+	}
+	if (GetAsyncKeyState(VK_SPACE))
+	{
+		m_pBullet->push_back(CBrawlFactory::Create_Brawl_Bullet(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y, m_fAngle_Posin));
 	}
 
 }

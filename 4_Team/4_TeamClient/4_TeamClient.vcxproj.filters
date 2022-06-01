@@ -67,14 +67,17 @@
     <Filter Include="03. Game\02. Scene\00. Brawl_Stars_Scene">
       <UniqueIdentifier>{4f329c8e-edce-4b6c-b73b-a18ddf5f4425}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. Game\01. Obj\00. Player\00. Brawl_Stars_Player">
-      <UniqueIdentifier>{f87e2951-809c-4549-9219-72a30b9e4f1a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. Game\01. Obj\00. Player\01. Momodora">
       <UniqueIdentifier>{2cca4868-4de7-4db9-8c2e-4d7e603cb21c}</UniqueIdentifier>
     </Filter>
     <Filter Include="03. Game\02. Scene\01. Momodora">
       <UniqueIdentifier>{30ae3ab7-2ef0-4ee9-bc74-4d61918ef20e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj\00. Player\00.Brawl_Stars">
+      <UniqueIdentifier>{06af57ca-0612-47a4-8a5d-58b562a8bb12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj\00. Player\00.Brawl_Stars\00. Brawl_Stars_Player">
+      <UniqueIdentifier>{f87e2951-809c-4549-9219-72a30b9e4f1a}</UniqueIdentifier>
     </Filter>
     <Filter Include="03. Game\02. Scene\04. ZeldaEditScene">
       <UniqueIdentifier>{e069d298-e6ac-4eca-9a69-4d466468867f}</UniqueIdentifier>
@@ -172,7 +175,7 @@
       <Filter>03. Game\02. Scene\00. Brawl_Stars_Scene</Filter>
     </ClInclude>
     <ClInclude Include="Brawl_Stars_Player.h">
-      <Filter>03. Game\01. Obj\00. Player\00. Brawl_Stars_Player</Filter>
+      <Filter>03. Game\01. Obj\00. Player\00.Brawl_Stars\00. Brawl_Stars_Player</Filter>
     </ClInclude>
     <ClInclude Include="Momodora.h">
       <Filter>03. Game\02. Scene\01. Momodora</Filter>
@@ -182,6 +185,9 @@
     </ClInclude>
     <ClInclude Include="MomoDoraMgr.h">
       <Filter>03. Game\01. Obj\00. Player\01. Momodora</Filter>
+    </ClInclude>
+    <ClInclude Include="Brawl_Stars_Bullet.h">
+      <Filter>03. Game\01. Obj\00. Player\00.Brawl_Stars\00. Brawl_Stars_Player</Filter>
     </ClInclude>
     <ClInclude Include="ZeldaEditScene.h">
       <Filter>03. Game\02. Scene\04. ZeldaEditScene</Filter>
@@ -252,7 +258,7 @@
       <Filter>03. Game\02. Scene\00. Brawl_Stars_Scene</Filter>
     </ClCompile>
     <ClCompile Include="Brawl_Stars_Player.cpp">
-      <Filter>03. Game\01. Obj\00. Player\00. Brawl_Stars_Player</Filter>
+      <Filter>03. Game\01. Obj\00. Player\00.Brawl_Stars\00. Brawl_Stars_Player</Filter>
     </ClCompile>
     <ClCompile Include="Momodora.cpp">
       <Filter>03. Game\02. Scene\01. Momodora</Filter>
@@ -262,6 +268,9 @@
     </ClCompile>
     <ClCompile Include="MomoDoraMgr.cpp">
       <Filter>03. Game\01. Obj\00. Player\01. Momodora</Filter>
+    </ClCompile>
+    <ClCompile Include="Brawl_Stars_Bullet.cpp">
+      <Filter>03. Game\01. Obj\00. Player\00.Brawl_Stars\00. Brawl_Stars_Player</Filter>
     </ClCompile>
     <ClCompile Include="ZeldaEditScene.cpp">
       <Filter>03. Game\02. Scene\04. ZeldaEditScene</Filter>

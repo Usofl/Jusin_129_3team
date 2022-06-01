@@ -200,6 +200,7 @@
     <ClInclude Include="4_TeamClient.h" />
     <ClInclude Include="4_TeamClientDoc.h" />
     <ClInclude Include="4_TeamClientView.h" />
+    <ClInclude Include="Brawl_Stars_Bullet.h" />
     <ClInclude Include="Brawl_Stars_Player.h" />
     <ClInclude Include="Brawl_Stars_Scene.h" />
     <ClInclude Include="Define.h" />
@@ -235,6 +236,7 @@
     <ClCompile Include="4_TeamClient.cpp" />
     <ClCompile Include="4_TeamClientDoc.cpp" />
     <ClCompile Include="4_TeamClientView.cpp" />
+    <ClCompile Include="Brawl_Stars_Bullet.cpp" />
     <ClCompile Include="Brawl_Stars_Player.cpp" />
     <ClCompile Include="Brawl_Stars_Scene.cpp" />
     <ClCompile Include="Fortress.cpp" />
