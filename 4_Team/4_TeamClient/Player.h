@@ -11,15 +11,15 @@ public:
 	
 
 	
-	virtual void Initialize(void) override;
+	virtual void Initialize(void) PURE;
 
-	virtual void Update(void) override;
+	virtual void Update(void) PURE;
 
-	virtual void Late_Update(void) override;
+	virtual void Late_Update(void) PURE;
 
-	virtual void Render(HDC hDC) override;
+	virtual void Render(HDC hDC) PURE;
 
-	virtual void Release(void) override;
+	virtual void Release(void) PURE;
 
 };
 

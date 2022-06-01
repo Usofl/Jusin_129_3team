@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "SceneMgr.h"
+#include "Brawl_Stars_Scene.h"
 
 CSceneMgr*	CSceneMgr::m_pInstance = nullptr;
 
@@ -21,6 +22,13 @@ void CSceneMgr::Scene_Change(const SCENEID& eID)
 
 	if (m_ePreScene != m_eCurScene)
 	{
+
+		switch (m_eCurScene)
+		{
+		case SC_BRAWL_STARS:
+			m_pScene[SC_BRAWL_STARS] = new CBrawl_Stars_Scene;
+			break;
+		}
 		m_pScene[m_eCurScene]->Initialize();
 		m_ePreScene = m_eCurScene;
 	}

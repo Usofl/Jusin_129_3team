@@ -40,14 +40,8 @@
     <Filter Include="03. Game\02. Scene">
       <UniqueIdentifier>{0061209b-69dc-4d50-83d3-0f290679514c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. Game\02. Scene\00. F">
-      <UniqueIdentifier>{4f329c8e-edce-4b6c-b73b-a18ddf5f4425}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. Game\01. Obj\00. Player">
       <UniqueIdentifier>{5deb0b8d-a6cd-48de-a47e-5a62d66445bb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03. Game\01. Obj\00. Player\00. F S P">
-      <UniqueIdentifier>{f87e2951-809c-4549-9219-72a30b9e4f1a}</UniqueIdentifier>
     </Filter>
     <Filter Include="03. Game\98. Manager\00. ScrollMgr">
       <UniqueIdentifier>{8d65b7d1-ced8-4d1b-8293-6d1ee67451c8}</UniqueIdentifier>
@@ -66,6 +60,12 @@
     </Filter>
     <Filter Include="03. Game\02. Scene\03. ZeldaScene">
       <UniqueIdentifier>{dfeb208e-eb00-45c3-9de8-95387dacfe4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\02. Scene\00. Brawl_Stars_Scene">
+      <UniqueIdentifier>{4f329c8e-edce-4b6c-b73b-a18ddf5f4425}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj\00. Player\00. Brawl_Stars_Player">
+      <UniqueIdentifier>{f87e2951-809c-4549-9219-72a30b9e4f1a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -138,6 +138,12 @@
     <ClInclude Include="Player.h">
       <Filter>03. Game\01. Obj\00. Player</Filter>
     </ClInclude>
+    <ClInclude Include="Brawl_Stars_Scene.h">
+      <Filter>03. Game\02. Scene\00. Brawl_Stars_Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Brawl_Stars_Player.h">
+      <Filter>03. Game\01. Obj\00. Player\00. Brawl_Stars_Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="4_TeamClient.cpp">
@@ -184,6 +190,12 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>03. Game\01. Obj\00. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Brawl_Stars_Scene.cpp">
+      <Filter>03. Game\02. Scene\00. Brawl_Stars_Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Brawl_Stars_Player.cpp">
+      <Filter>03. Game\01. Obj\00. Player\00. Brawl_Stars_Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -32,23 +32,24 @@ void CMainGame::Initialize(void)
 
 #endif _DEBUG
 
+	SCENEMGR->Scene_Change(SC_BRAWL_STARS);
 }
 
 void CMainGame::Update(void)
 {
-	//SCENEMGR->Update();
+	SCENEMGR->Update();
 }
 
 void CMainGame::Late_Update(void)
 {
-	//SCENEMGR->Late_Update();
+	SCENEMGR->Late_Update();
 }
 
 void CMainGame::Render(void)
 {
 	BitBlt(m_hDC, 0, 0, WINCX, WINCY, m_hBackDC, 0, 0, SRCCOPY);
 
-	//SCENEMGR->Render(m_hDC);
+	SCENEMGR->Render(m_hDC);
 
 #ifdef _DEBUG
 	++m_iFPS;
