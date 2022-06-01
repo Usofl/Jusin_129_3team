@@ -129,6 +129,9 @@
     <ClInclude Include="Fortress.h">
       <Filter>03. Game\02. Scene\02.J</Filter>
     </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>03. Game\01. Obj\00. Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="4_TeamClient.cpp">
@@ -169,6 +172,9 @@
     </ClCompile>
     <ClCompile Include="Fortress.cpp">
       <Filter>03. Game\02. Scene\02.J</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>03. Game\01. Obj\00. Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
