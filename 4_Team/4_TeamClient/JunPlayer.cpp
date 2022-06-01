@@ -4,13 +4,13 @@
 
 CJunPlayer::CJunPlayer()
 {
-
+	Initialize();
 }
 
 
 CJunPlayer::~CJunPlayer()
 {
-
+	Release();
 }
 
 void CJunPlayer::Initialize(void)
@@ -104,21 +104,21 @@ void CJunPlayer::Render(HDC hDC)
 	/*MoveToEx(hDC, 0, 0, nullptr);
 	LineTo(hDC,300, 500);*/
 
-	MoveToEx(hDC, Tank[0].x, Tank[0].y,nullptr);
-	LineTo(hDC, Tank[1].x, Tank[1].y);
-	LineTo(hDC, Tank[2].x, Tank[2].y);
-	LineTo(hDC, Tank[3].x, Tank[3].y);
-	LineTo(hDC, Tank[0].x, Tank[0].y);
+	MoveToEx(hDC, (int)Tank[0].x, (int)Tank[0].y,nullptr);
+	LineTo(hDC, (int)Tank[1].x, (int)Tank[1].y);
+	LineTo(hDC, (int)Tank[2].x, (int)Tank[2].y);
+	LineTo(hDC, (int)Tank[3].x, (int)Tank[3].y);
+	LineTo(hDC, (int)Tank[0].x, (int)Tank[0].y);
 
 
-	MoveToEx(hDC, TankHead[0].x, TankHead[0].y, nullptr);
-	LineTo(hDC,TankHead[1].x, TankHead[1].y);
-	LineTo(hDC, TankHead[2].x, TankHead[2].y);
-	LineTo(hDC, TankHead[3].x, TankHead[3].y);
-	LineTo(hDC, TankHead[0].x, TankHead[0].y);
+	MoveToEx(hDC, (int)TankHead[0].x, (int)TankHead[0].y, nullptr);
+	LineTo(hDC, (int)TankHead[1].x, (int)TankHead[1].y);
+	LineTo(hDC, (int)TankHead[2].x, (int)TankHead[2].y);
+	LineTo(hDC, (int)TankHead[3].x, (int)TankHead[3].y);
+	LineTo(hDC, (int)TankHead[0].x, (int)TankHead[0].y);
 	
-	MoveToEx(hDC, Po_One.x, Po_One.y, nullptr);
-	LineTo(hDC, Po.x , Po.y);
+	MoveToEx(hDC, (int)Po_One.x, (int)Po_One.y, nullptr);
+	LineTo(hDC, (int)Po.x , (int)Po.y);
 }
 
 void CJunPlayer::Release(void)

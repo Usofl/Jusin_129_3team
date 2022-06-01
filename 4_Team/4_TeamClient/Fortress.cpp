@@ -3,18 +3,21 @@
 
 
 CFortress::CFortress()
+	: JunPlayer(nullptr)
 {
 }
 
-
 CFortress::~CFortress()
 {
+	Release();
 }
 
 void CFortress::Initialize(void)
 {
-	JunPlayer = new CJunPlayer;
-	JunPlayer->Initialize();
+	if (nullptr == JunPlayer)
+	{
+		JunPlayer = new CJunPlayer;
+	}
 	//RenderList.
 }
 
@@ -43,7 +46,7 @@ void CFortress::Render(HDC _hDC)
 
 void CFortress::Release(void)
 {
-	JunPlayer->Release();
+	Safe_Delete<CJunPlayer*>(JunPlayer);
 }
 
 void CFortress::Key_Input(void)

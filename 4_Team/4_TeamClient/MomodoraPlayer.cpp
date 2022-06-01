@@ -63,7 +63,7 @@ void CMomodoraPlayer::Render(HDC _hDC)
 
 	}
 
-	LineTo(_hDC, m_vPoint[0].x, m_vPoint[0].y);
+	LineTo(_hDC, (int)m_vPoint[0].x, (int)m_vPoint[0].y);
 
 }
 
