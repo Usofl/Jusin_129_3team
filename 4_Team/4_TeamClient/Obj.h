@@ -18,6 +18,10 @@ public:
 	virtual		void	Render(HDC hDC)		PURE;
 	virtual		void	Release(void)		PURE;
 
+	inline const RENDERID& Get_RenderID(void) { return m_eRender; }
+
+	void Update_Matrix(void);
+
 protected:
 	INFO		m_tInfo;
 	MATINFO		m_tMatInfo;

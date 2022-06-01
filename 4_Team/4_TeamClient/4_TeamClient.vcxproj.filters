@@ -67,6 +67,9 @@
     <Filter Include="03. Game\02. Scene\03. ZeldaScene">
       <UniqueIdentifier>{dfeb208e-eb00-45c3-9de8-95387dacfe4d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Game\01. Obj\00. Player\03. ZeldaPlayer">
+      <UniqueIdentifier>{47560078-f5b2-4493-874a-8b64bd6b241c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -138,6 +141,9 @@
     <ClInclude Include="Player.h">
       <Filter>03. Game\01. Obj\00. Player</Filter>
     </ClInclude>
+    <ClInclude Include="ZeldaPlayer.h">
+      <Filter>03. Game\01. Obj\00. Player\03. ZeldaPlayer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="4_TeamClient.cpp">
@@ -184,6 +190,9 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>03. Game\01. Obj\00. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="ZeldaPlayer.cpp">
+      <Filter>03. Game\01. Obj\00. Player\03. ZeldaPlayer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
