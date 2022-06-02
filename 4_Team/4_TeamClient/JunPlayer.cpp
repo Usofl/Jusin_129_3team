@@ -145,6 +145,7 @@ void CJunPlayer::Render(HDC hDC)
 	MoveToEx(hDC, (int)Po_One.x, (int)Po_One.y, nullptr);
 	LineTo(hDC, (int)Po.x , (int)Po.y);
 
+
 	/*MoveToEx(hDC, (int)m_tInfo.vPos.x, (int)m_tInfo.vPos.y, nullptr);
 	LineTo(hDC, (int)Po.x, (int)Po.y);*/
 }

@@ -25,9 +25,9 @@ private:
 	/*LINEPOINT TempLine = { 50,100 };
 	LINEPOINT TempLine2 = { 270,100 };*/
 
-	LINE TempLine;
+	LINE m_Line;
 	
-	CLine TempL = {};
+	//CLine TempL = {};
 	
 	//Line Temp;
 	int iArray[5];

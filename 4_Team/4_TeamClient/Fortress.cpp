@@ -23,6 +23,8 @@ void CFortress::Initialize(void)
 
 	BulletList = (JunPlayer->Get_BulletList());
 
+	m_Line.tLPoint = { 0.f,0.f };
+	m_Line.tRPoint = { 300.f,0.f };
 	/*LINE TempPo[3]{};
 	TempPo[0].tLPoint = { 300,50 };
 	TempPo[0].tRPoint = { 300,200 };
@@ -42,11 +44,10 @@ void CFortress::Initialize(void)
 		CLineMgr::Get_Instance()->Create_Line(&LineArray[i]);
 	}*/
 
-	
-	TempLine.tLPoint = { 100,50 };
-	TempLine.tRPoint = { 300,200 };
-	TempL = { TempLine.tLPoint,TempLine.tRPoint };
-	LINEMGR->Create_Line(&TempL);
+	LINEMGR->Create_Line(0, 500, 200, 500);
+	LINEMGR->Create_Line(200, 500, 300, 200);
+	LINEMGR->Create_Line(300, 200, 500, 400);
+	LINEMGR->Create_Line(500,400,800,200);
 	//CLineMgr::Get_Instance()->
 		
 	/*for (int i = 0; 6 > i; ++i)*/
@@ -69,8 +70,13 @@ void CFortress::Late_Update(void)
 	JunPlayer->Late_Update();
 	for (auto& iter : *BulletList)
 	{
-		iter->Update();
+		iter->Late_Update();
 	}
+	float fX = JunPlayer->Get_Info().vPos.x;
+	float* fY = JunPlayer->Get_InfoY();
+	if (LINEMGR->Collision_Line(fX, fY))
+		JunPlayer->Set_Angle(LINEMGR->Collision_JunLine(fX, fY));
+		
 }
 
 void CFortress::Render(HDC _hDC)

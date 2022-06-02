@@ -64,6 +64,41 @@ bool CLineMgr::Collision_Line(float& _fX, float* pY)
 	return true;
 }
 
+float CLineMgr::Collision_JunLine(float & _fX, float * pY)
+{
+	if (m_LineList.empty())
+		return false;
+
+	CLine*		pTarget = nullptr;
+
+	for (auto& iter : m_LineList)
+	{
+		if (_fX >= iter->Get_Info().tLPoint.fX &&
+			_fX <= iter->Get_Info().tRPoint.fX)
+		{
+			pTarget = iter;
+		}
+	}
+
+	if (!pTarget)
+		return false;
+
+	float	x1 = pTarget->Get_Info().tLPoint.fX;
+	float	x2 = pTarget->Get_Info().tRPoint.fX;
+
+	float	y1 = pTarget->Get_Info().tLPoint.fY;
+	float	y2 = pTarget->Get_Info().tRPoint.fY;
+
+	D3DXVECTOR3 vTemp = { 1.f,0.f,0.f };
+	D3DXVECTOR3 vTemp2 = { x2 - x1 ,y2 - y1,0.f };
+	
+	*pY = (((y2 - y1) / (x2 - x1)) * (_fX - x1)) + y1;
+	//D3DXVec3Normalize(&vTemp, &vTemp);
+	D3DXVec3Normalize(&vTemp2, &vTemp2);
+	return acosf(D3DXVec3Dot(&vTemp, &vTemp2));
+	//return 0.0f;
+}
+
 void CLineMgr::Load_Line()
 {
 	HANDLE		hFile = CreateFile(L"../Data/Line.dat",			// 파일 경로와 이름 명시
@@ -102,4 +137,18 @@ void CLineMgr::Load_Line()
 	CloseHandle(hFile);
 
 	MessageBox(g_hWnd, _T("Load 완료"), _T("성공"), MB_OK);
+}
+
+void CLineMgr::Create_Line(int _x, int _y, int _x2, int _y2)
+{
+	
+	m_Line.tLPoint = { (float)_x,(float)_y };
+	m_Line.tRPoint = { (float)_x2,(float)_y2 };
+	m_CLine = new CLine;
+	*m_CLine = { m_Line.tLPoint,m_Line.tRPoint };
+	m_LineList.push_back(m_CLine
+	);
+	m_Line.tLPoint = { 0.f,0.f };
+	m_Line.tRPoint = { 0.f,0.f };
+	m_CLine = nullptr;
 }

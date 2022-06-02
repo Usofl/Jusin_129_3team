@@ -17,7 +17,11 @@ public:
 
 public:
 	list<CJunBullet*>* Get_BulletList(void) { return &BulletList; };
-	
+	INFO* Get_InfoJun(void) { return &m_tInfo; };
+	float* Get_InfoY(void) { return &m_tInfo.vPos.y; };
+	void Set_Angle(float _f) {
+		m_fAngle = D3DXToRadian(_f);
+	}
 private:
 	virtual void Key_Input(void) override;
 private:
