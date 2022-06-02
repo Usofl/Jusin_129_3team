@@ -207,6 +207,8 @@
     <ClInclude Include="Brawl_Stars_Scene.h" />
     <ClInclude Include="Device.h" />
     <ClInclude Include="Fortress.h" />
+    <ClInclude Include="MomoAbstractFactory.h" />
+    <ClInclude Include="MomoGun.h" />
     <ClInclude Include="JunBullet.h" />
     <ClInclude Include="JunPlayer.h" />
     <ClInclude Include="KeyMgr.h" />
@@ -215,6 +217,8 @@
     <ClInclude Include="MomoBullet.h" />
     <ClInclude Include="MomoDoraMgr.h" />
     <ClInclude Include="MomodoraPlayer.h" />
+    <ClInclude Include="MomoSword.h" />
+    <ClInclude Include="Momo_Obj.h" />
     <ClInclude Include="Obj.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RenderMgr.h" />
@@ -242,6 +246,7 @@
     <ClCompile Include="Brawl_Stars_Scene.cpp" />
     <ClCompile Include="Device.cpp" />
     <ClCompile Include="Fortress.cpp" />
+    <ClCompile Include="MomoGun.cpp" />
     <ClCompile Include="JunBullet.cpp" />
     <ClCompile Include="JunPlayer.cpp" />
     <ClCompile Include="KeyMgr.cpp" />
@@ -250,6 +255,8 @@
     <ClCompile Include="MomoBullet.cpp" />
     <ClCompile Include="MomoDoraMgr.cpp" />
     <ClCompile Include="MomodoraPlayer.cpp" />
+    <ClCompile Include="MomoSword.cpp" />
+    <ClCompile Include="Momo_Obj.cpp" />
     <ClCompile Include="Obj.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RenderMgr.cpp" />

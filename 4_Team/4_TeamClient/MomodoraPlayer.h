@@ -1,7 +1,7 @@
 #pragma once
-#include "Player.h"
+#include "Momo_Obj.h"
 class CMomodoraPlayer :
-	public CPlayer
+	public CMomo_Obj
 {
 public:
 	CMomodoraPlayer();
@@ -14,7 +14,7 @@ public:
 	virtual void Render(HDC _hDC) override;
 	virtual void Release(void) override;
 
-	virtual void Key_Input(void) override;
+	void Key_Input(void);
 
 private:
 	D3DXVECTOR3		m_vPoint[4];

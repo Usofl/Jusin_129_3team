@@ -1,12 +1,12 @@
 #pragma once
 #include "Momo_Obj.h"
-class CMomoBullet :
+class CMomoSword :
 	public CMomo_Obj
 {
 public:
-	CMomoBullet();
-	virtual ~CMomoBullet();
-	
+	CMomoSword();
+	virtual ~CMomoSword();
+
 public:
 	virtual void Initialize(void) override;
 	virtual const int Update(void) override;
