@@ -4,6 +4,7 @@
 #include "KeyMgr.h"
 #include "RenderMgr.h"
 #include "ScrollMgr.h"
+#include "Device.h"
 
 CMainGame::CMainGame()
 	: m_dwFPSTime(GetTickCount())
@@ -26,7 +27,13 @@ void CMainGame::Initialize(void)
 	//SCENEMGR->Scene_Change(SC_ZELDA_EDIT);
 	//SCENEMGR->Scene_Change(SC_FORTRESS);
 	//SCENEMGR->Scene_Change(SC_MOMO);
-	SCENEMGR->Scene_Change(SC_BRAWL_STARS);
+	//SCENEMGR->Scene_Change(SC_BRAWL_STARS);
+
+	if (FAILED(CDevice::Get_Instance()->Initialize()))
+	{
+		AfxMessageBox(L"m_pDevice 생성 실패");
+		return;
+	}
 
 #ifdef _DEBUG
 
@@ -45,7 +52,6 @@ void CMainGame::Initialize(void)
 
 void CMainGame::Update(void)
 {
-	
 	ReleaseDC(g_hWnd, m_hDC);
 	ReleaseDC(g_hWnd, m_hBackDC);
 
@@ -61,6 +67,8 @@ void CMainGame::Late_Update(void)
 
 void CMainGame::Render(void)
 {
+	CDevice::Get_Instance()->Render_Begin();
+
 	BitBlt(m_hDC, 0, 0, WINCX, WINCY, m_hBackDC, 0, 0, SRCCOPY);
 	Rectangle(m_hBackDC, 0, 0, WINCX, WINCY);
 	SCENEMGR->Render(m_hBackDC);
@@ -77,6 +85,8 @@ void CMainGame::Render(void)
 		m_dwFPSTime = GetTickCount();
 	}
 #endif _DEBUG
+
+	CDevice::Get_Instance()->Render_End();
 }
 
 void CMainGame::Release(void)
@@ -91,6 +101,7 @@ void CMainGame::Release(void)
 	KEYMGR->Destroy_Instance();
 	SCROLLMGR->Destroy_Instance();
 	RENDERMGR->Destroy_Instance();
+	CDevice::Get_Instance()->Destroy_Instance();
 
 	ReleaseDC(g_hWnd, m_hDC);
 	ReleaseDC(g_hWnd, m_hBackDC);

@@ -100,6 +100,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../Header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -204,11 +205,8 @@
     <ClInclude Include="Brawl_Stars_Bullet.h" />
     <ClInclude Include="Brawl_Stars_Player.h" />
     <ClInclude Include="Brawl_Stars_Scene.h" />
-    <ClInclude Include="Define.h" />
-    <ClInclude Include="Enum.h" />
+    <ClInclude Include="Device.h" />
     <ClInclude Include="Fortress.h" />
-    <ClInclude Include="Functor.h" />
-    <ClInclude Include="Include.h" />
     <ClInclude Include="JunBullet.h" />
     <ClInclude Include="JunPlayer.h" />
     <ClInclude Include="KeyMgr.h" />
@@ -226,7 +224,6 @@
     <ClInclude Include="ScrollMgr.h" />
     <ClInclude Include="Momodora.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="Struct.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="ZeldaEditScene.h" />
     <ClInclude Include="ZeldaPlayer.h" />
@@ -243,6 +240,7 @@
     <ClCompile Include="Brawl_Stars_Bullet.cpp" />
     <ClCompile Include="Brawl_Stars_Player.cpp" />
     <ClCompile Include="Brawl_Stars_Scene.cpp" />
+    <ClCompile Include="Device.cpp" />
     <ClCompile Include="Fortress.cpp" />
     <ClCompile Include="JunBullet.cpp" />
     <ClCompile Include="JunPlayer.cpp" />

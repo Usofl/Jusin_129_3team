@@ -28,9 +28,6 @@
     <Filter Include="03. Game\00. MainGame">
       <UniqueIdentifier>{b8291829-e299-4bdf-a49f-06ad502e1681}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. Game\99. Header">
-      <UniqueIdentifier>{a4d6940f-befd-452f-b4d7-d502f887bbeb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. Game\98. Manager">
       <UniqueIdentifier>{56cc5d83-afaa-4d40-8bad-07094109a9ca}</UniqueIdentifier>
     </Filter>
@@ -109,6 +106,9 @@
     <Filter Include="03. Game\01. Obj\01. Other_Object\01.Momo_Obj">
       <UniqueIdentifier>{3b8bd7b0-b2b5-44c2-882f-e2a0fcccaa25}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Game\98. Manager\04. Device">
+      <UniqueIdentifier>{b24231b7-cd74-42aa-92cc-8137d5e7efa6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -137,21 +137,6 @@
     </ClInclude>
     <ClInclude Include="MainGame.h">
       <Filter>03. Game\00. MainGame</Filter>
-    </ClInclude>
-    <ClInclude Include="Enum.h">
-      <Filter>03. Game\99. Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Include.h">
-      <Filter>03. Game\99. Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Define.h">
-      <Filter>03. Game\99. Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Struct.h">
-      <Filter>03. Game\99. Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Functor.h">
-      <Filter>03. Game\99. Header</Filter>
     </ClInclude>
     <ClInclude Include="Obj.h">
       <Filter>03. Game\01. Obj</Filter>
@@ -227,6 +212,9 @@
     </ClInclude>
     <ClInclude Include="MomoBullet.h">
       <Filter>03. Game\01. Obj\01. Other_Object\01.Momo_Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="Device.h">
+      <Filter>03. Game\98. Manager\04. Device</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -319,6 +307,9 @@
     </ClCompile>
     <ClCompile Include="MomoBullet.cpp">
       <Filter>03. Game\01. Obj\01. Other_Object\01.Momo_Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="Device.cpp">
+      <Filter>03. Game\98. Manager\04. Device</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
