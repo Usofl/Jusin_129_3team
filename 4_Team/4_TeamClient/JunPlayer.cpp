@@ -51,19 +51,20 @@ const int CJunPlayer::Update(void)
 	TankHead[1] = { 20.f, -20.f + m_HeadInfo.vPos.y,0.f };
 	TankHead[2] = { 20.f,20.f + m_HeadInfo.vPos.y,0.f };
 	TankHead[3] = { -20.f,20.f + m_HeadInfo.vPos.y,0.f };*/
-	TankHead[0] = { -20.f,-20.f ,0.f };
-	TankHead[1] = { 20.f, -20.f  ,0.f };
-	TankHead[2] = { 20.f,20.f  ,0.f };
-	TankHead[3] = { -20.f,20.f,0.f };
+
+	TankHead[0] = { -20.f,-50.f-20.f ,0.f };
+	TankHead[1] = { 20.f, -50.f-20.f  ,0.f };
+	TankHead[2] = { 20.f,-50.f + 20.f  ,0.f };
+	TankHead[3] = { -20.f,-50.f +20.f,0.f };
 	Po = { 80.f, 0.f ,0.f };
-	Po_One = { 0.f,-50.f,0.f };
+	
 
 
 
 
 	
 	Key_Input();
-	
+	Po_One = { 0, -50.f,0.f };
 
 	D3DXMatrixScaling(&m_matScale, 1.f, 1.f, 0);
 
@@ -72,8 +73,11 @@ const int CJunPlayer::Update(void)
 	D3DXMatrixRotationZ(&m_HmatRotZ, m_fPoAngle);
 
 	D3DXMatrixTranslation(&m_matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
-	D3DXMatrixTranslation(&m_HmatTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
+	D3DXMatrixTranslation(&m_HmatTrans, m_tInfo.vPos.x, Po_One.y, 0.f);
 
+
+	//m_tInfo.matWorld = m_matScale * m_matRotZ;
+	//D3DXVec3TransformCoord(&Po_One, &Po_One, &m_tInfo.matWorld);
 
 	m_tInfo.matWorld = m_matScale * m_matRotZ * m_matTrans;
 	m_HeadInfo.matWorld = m_matScale * m_HmatRotZ * m_HmatTrans;
@@ -126,6 +130,7 @@ void CJunPlayer::Render(HDC hDC)
 	LineTo(hDC, (int)TankHead[0].x, (int)TankHead[0].y);
 	
 	Ellipse(hDC, Po_One.x - 25, Po_One.y - 25, Po_One.x + 25, Po_One.y + 25);
+	MoveToEx(hDC, (int)Po_One.x, (int)Po_One.y, nullptr);
 	LineTo(hDC, (int)Po.x , (int)Po.y);
 
 	/*MoveToEx(hDC, (int)m_tInfo.vPos.x, (int)m_tInfo.vPos.y, nullptr);
@@ -142,7 +147,7 @@ void CJunPlayer::Key_Input(void)
 	if (KEYMGR->Key_Pressing(VK_LEFT))
 	{
 		
-		m_fPoAngle -= D3DXToRadian(3.f);
+		//m_fPoAngle -= D3DXToRadian(3.f);
 		m_fAngle -= D3DXToRadian(3.f);
 		//m_fPoAngle += D3DXToRadian(3.f);
 
@@ -151,7 +156,7 @@ void CJunPlayer::Key_Input(void)
 
 	if (KEYMGR->Key_Pressing(VK_RIGHT))
 	{
-		m_fPoAngle += D3DXToRadian(3.f);
+		//m_fPoAngle += D3DXToRadian(3.f);
 		m_fAngle += D3DXToRadian(3.f);
 		//m_fPoAngle -= D3DXToRadian(3.f);
 
