@@ -31,5 +31,7 @@ public:
 
 		return pBrawl_Bullet;
 	}
+
+	
 };
 

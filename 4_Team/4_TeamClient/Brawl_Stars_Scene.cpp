@@ -22,34 +22,54 @@ void CBrawl_Stars_Scene::Initialize(void)
 		m_pBrawl_Stars_Player->Set_BulletList(&m_Brawl_List[BRAWL_BULLET]);
 	}
 
-	//m_Brawl_List[BRAWL_INFO].push_back(CBrawlFactory::Create_Brawl_Player());
-	//dynamic_cast<CBrawl_Stars_Player*>(m_Brawl_List[BRAWL_INFO].front())->Set_BulletList(&m_Brawl_List[BRAWL_BULLET]);
+	if (!m_pBrawl_Stars_Monster)
+	{
+		m_pBrawl_Stars_Monster = new CBrawl_Stars_Monster;
+		m_pBrawl_Stars_Monster->Initialize();
+	}
 }
 
 void CBrawl_Stars_Scene::Update(void)
 {
 	m_pBrawl_Stars_Player->Update();
+	m_pBrawl_Stars_Monster->Update();
 
 	for (int i = 0; i < BRAWL_END; ++i)
 	{
 		for (auto& iter = m_Brawl_List[i].begin();
 			iter != m_Brawl_List[i].end(); )
 		{
-			(*iter)->Update();
+			int iResult = (*iter)->Update();
 
-			++iter;
+			if(OBJ_DEAD == iResult)
+			{
+				Safe_Delete<CObj*>(*iter);
+				iter = m_Brawl_List[i].erase(iter);
+			}
+			else
+			{
+				++iter;
+			}
 		}
 	}
 }
 
 void CBrawl_Stars_Scene::Late_Update(void)
 {
+	m_pBrawl_Stars_Player->Late_Update();
+	m_pBrawl_Stars_Monster->Late_Update();
+	for (int i = 0; i < BRAWL_END; ++i)
+	{
+		for (auto& iter : m_Brawl_List[i])
+			iter->Late_Update();
+	}
 }
 
 void CBrawl_Stars_Scene::Render(HDC _hDC)
 {
 	Rectangle(_hDC, 0, 0, WINCX, WINCY);
 
+	m_pBrawl_Stars_Monster->Render(_hDC);
 	m_pBrawl_Stars_Player->Render(_hDC);
 
 	for (int i = 0; i < BRAWL_END; ++i)
@@ -61,6 +81,7 @@ void CBrawl_Stars_Scene::Render(HDC _hDC)
 
 void CBrawl_Stars_Scene::Release(void)
 {
+	Safe_Delete<CBrawl_Stars_Monster*>(m_pBrawl_Stars_Monster);
 	Safe_Delete<CBrawl_Stars_Player*>(m_pBrawl_Stars_Player);
 	for (int i = 0; i < BRAWL_END; ++i)
 	{

@@ -70,12 +70,6 @@
     <Filter Include="03. Game\02. Scene\01. Momodora">
       <UniqueIdentifier>{30ae3ab7-2ef0-4ee9-bc74-4d61918ef20e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. Game\01. Obj\00. Player\00.Brawl_Stars">
-      <UniqueIdentifier>{06af57ca-0612-47a4-8a5d-58b562a8bb12}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03. Game\01. Obj\00. Player\00.Brawl_Stars\00. Brawl_Stars_Player">
-      <UniqueIdentifier>{f87e2951-809c-4549-9219-72a30b9e4f1a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. Game\02. Scene\04. ZeldaEditScene">
       <UniqueIdentifier>{e069d298-e6ac-4eca-9a69-4d466468867f}</UniqueIdentifier>
     </Filter>
@@ -91,9 +85,6 @@
     <Filter Include="03. Game\01. Obj\01. Other_Object\03. Zelda_Obj\01. Zelda_Stone">
       <UniqueIdentifier>{efbcd501-3cb6-4ea7-af91-4b4882e65c61}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. Game\01. Obj\00. Player\00.Brawl_Stars\01. Brawl_Stars_Bullet">
-      <UniqueIdentifier>{9f381b01-b517-4bfa-9a59-2d297459765a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. Game\97. Factory">
       <UniqueIdentifier>{c8243be7-c861-4897-bf9f-abd78617bfc0}</UniqueIdentifier>
     </Filter>
@@ -108,6 +99,30 @@
     </Filter>
     <Filter Include="03. Game\98. Manager\04. Device">
       <UniqueIdentifier>{b24231b7-cd74-42aa-92cc-8137d5e7efa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj\01. Other_Object\00. Brawl_Obj">
+      <UniqueIdentifier>{d8c99e9e-e316-42d9-a148-9e146b4278fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj\01. Other_Object\00. Brawl_Obj\00. Brawl_Stars_Monster">
+      <UniqueIdentifier>{706c6d0d-dec1-43c8-81e3-720e07f6373c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj\00. Player\00. Brawl_Stars">
+      <UniqueIdentifier>{06af57ca-0612-47a4-8a5d-58b562a8bb12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj\00. Player\00. Brawl_Stars\00. Brawl_Stars_Player">
+      <UniqueIdentifier>{f87e2951-809c-4549-9219-72a30b9e4f1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj\00. Player\00. Brawl_Stars\01. Brawl_Stars_Bullet">
+      <UniqueIdentifier>{9f381b01-b517-4bfa-9a59-2d297459765a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj\01. Other_Object\00. Brawl_Obj\01. Brawl_Stars_Block">
+      <UniqueIdentifier>{4822b057-e117-4c71-939e-3e617e7fd17f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj\01. Other_Object\00. Brawl_Obj\01. Brawl_Stars_Block\BlockMgr">
+      <UniqueIdentifier>{3e5df066-7229-484e-86a5-6f80fcd1c28c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj\01. Other_Object\00. Brawl_Obj\00. Brawl_Stars_Monster\00. Brawl_Monster_Bullet">
+      <UniqueIdentifier>{6086e29e-ac7d-4b00-a9f0-45fef6d625d4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -172,7 +187,7 @@
       <Filter>03. Game\02. Scene\00. Brawl_Stars_Scene</Filter>
     </ClInclude>
     <ClInclude Include="Brawl_Stars_Player.h">
-      <Filter>03. Game\01. Obj\00. Player\00.Brawl_Stars\00. Brawl_Stars_Player</Filter>
+      <Filter>03. Game\01. Obj\00. Player\00. Brawl_Stars\00. Brawl_Stars_Player</Filter>
     </ClInclude>
     <ClInclude Include="Momodora.h">
       <Filter>03. Game\02. Scene\01. Momodora</Filter>
@@ -196,7 +211,7 @@
       <Filter>03. Game\01. Obj\01. Other_Object\03. Zelda_Obj\01. Zelda_Stone</Filter>
     </ClInclude>
     <ClInclude Include="Brawl_Stars_Bullet.h">
-      <Filter>03. Game\01. Obj\00. Player\00.Brawl_Stars\01. Brawl_Stars_Bullet</Filter>
+      <Filter>03. Game\01. Obj\00. Player\00. Brawl_Stars\01. Brawl_Stars_Bullet</Filter>
     </ClInclude>
     <ClInclude Include="BrawlFactory.h">
       <Filter>03. Game\97. Factory</Filter>
@@ -215,6 +230,18 @@
     </ClInclude>
     <ClInclude Include="Device.h">
       <Filter>03. Game\98. Manager\04. Device</Filter>
+    </ClInclude>
+    <ClInclude Include="Brawl_Stars_Monster.h">
+      <Filter>03. Game\01. Obj\01. Other_Object\00. Brawl_Obj\00. Brawl_Stars_Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Brawl_Stars_Block.h">
+      <Filter>03. Game\01. Obj\01. Other_Object\00. Brawl_Obj\01. Brawl_Stars_Block</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockMgr.h">
+      <Filter>03. Game\01. Obj\01. Other_Object\00. Brawl_Obj\01. Brawl_Stars_Block\BlockMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Brawl_Monster_Bullet.h">
+      <Filter>03. Game\01. Obj\01. Other_Object\00. Brawl_Obj\00. Brawl_Stars_Monster\00. Brawl_Monster_Bullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -270,7 +297,7 @@
       <Filter>03. Game\02. Scene\00. Brawl_Stars_Scene</Filter>
     </ClCompile>
     <ClCompile Include="Brawl_Stars_Player.cpp">
-      <Filter>03. Game\01. Obj\00. Player\00.Brawl_Stars\00. Brawl_Stars_Player</Filter>
+      <Filter>03. Game\01. Obj\00. Player\00. Brawl_Stars\00. Brawl_Stars_Player</Filter>
     </ClCompile>
     <ClCompile Include="Momodora.cpp">
       <Filter>03. Game\02. Scene\01. Momodora</Filter>
@@ -294,7 +321,7 @@
       <Filter>03. Game\01. Obj\01. Other_Object\03. Zelda_Obj\01. Zelda_Stone</Filter>
     </ClCompile>
     <ClCompile Include="Brawl_Stars_Bullet.cpp">
-      <Filter>03. Game\01. Obj\00. Player\00.Brawl_Stars\01. Brawl_Stars_Bullet</Filter>
+      <Filter>03. Game\01. Obj\00. Player\00. Brawl_Stars\01. Brawl_Stars_Bullet</Filter>
     </ClCompile>
     <ClCompile Include="JunPlayer.cpp">
       <Filter>03. Game\01. Obj\00. Player\02.ForPlayer</Filter>
@@ -310,6 +337,18 @@
     </ClCompile>
     <ClCompile Include="Device.cpp">
       <Filter>03. Game\98. Manager\04. Device</Filter>
+    </ClCompile>
+    <ClCompile Include="Brawl_Stars_Monster.cpp">
+      <Filter>03. Game\01. Obj\01. Other_Object\00. Brawl_Obj\00. Brawl_Stars_Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Brawl_Stars_Block.cpp">
+      <Filter>03. Game\01. Obj\01. Other_Object\00. Brawl_Obj\01. Brawl_Stars_Block</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockMgr.cpp">
+      <Filter>03. Game\01. Obj\01. Other_Object\00. Brawl_Obj\01. Brawl_Stars_Block\BlockMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Brawl_Monster_Bullet.cpp">
+      <Filter>03. Game\01. Obj\01. Other_Object\00. Brawl_Obj\00. Brawl_Stars_Monster\00. Brawl_Monster_Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

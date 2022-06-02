@@ -24,23 +24,25 @@ public:
 	void		Key_Input(void);
 	
 private:
-	float		m_fAngle_Body;
-	float		m_fAngle_Posin;
-
 	INFO		m_tInfo_Body_Local[4];
 	INFO		m_tInfo_Body_World[4];
 
 	INFO		m_tInfo_Posin_Local[2];
 	INFO		m_tInfo_Posin_World[2];
 
-	INFO		m_tInfo_Bullet_Local[4];
-	INFO		m_tInfo_Bullet_World[4];
-
-	float		m_fSpeed;
-
-	list<CObj*>*	m_pBullet;
 
 	D3DXMATRIX		m_PosinWorld;
+
+private:
+	float		m_fSpeed;
+
+	float		m_fAngle_Body;
+	float		m_fAngle_Posin;
+	
+	DWORD		m_dwShoot_Bullet;
+
+	std::list<CObj*>*	m_pBullet;
+
 	/*
 
 	D3DXVECTOR3		m_vPlayerPos;	// À§Ä¡ º¤ÅÍ

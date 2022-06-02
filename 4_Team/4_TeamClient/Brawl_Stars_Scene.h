@@ -2,6 +2,7 @@
 #include "Scene.h"
 
 #include "Brawl_Stars_Player.h"
+#include "Brawl_Stars_Monster.h"
 
 class CBrawl_Stars_Scene :
 	public CScene
@@ -20,9 +21,13 @@ public:
 	virtual void Key_Input(void) override;
 
 private:
-	list<CObj*> m_Brawl_List[BRAWL_END];
+	std::list<CObj*> m_Brawl_List[BRAWL_END];
 
 	CBrawl_Stars_Player*	m_pBrawl_Stars_Player;
+
+	CBrawl_Stars_Monster*	m_pBrawl_Stars_Monster;
+
+	
 	
 };
 

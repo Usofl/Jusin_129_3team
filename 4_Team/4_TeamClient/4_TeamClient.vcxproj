@@ -201,8 +201,12 @@
     <ClInclude Include="4_TeamClient.h" />
     <ClInclude Include="4_TeamClientDoc.h" />
     <ClInclude Include="4_TeamClientView.h" />
+    <ClInclude Include="BlockMgr.h" />
     <ClInclude Include="BrawlFactory.h" />
+    <ClInclude Include="Brawl_Monster_Bullet.h" />
+    <ClInclude Include="Brawl_Stars_Block.h" />
     <ClInclude Include="Brawl_Stars_Bullet.h" />
+    <ClInclude Include="Brawl_Stars_Monster.h" />
     <ClInclude Include="Brawl_Stars_Player.h" />
     <ClInclude Include="Brawl_Stars_Scene.h" />
     <ClInclude Include="Device.h" />
@@ -237,7 +241,11 @@
     <ClCompile Include="4_TeamClient.cpp" />
     <ClCompile Include="4_TeamClientDoc.cpp" />
     <ClCompile Include="4_TeamClientView.cpp" />
+    <ClCompile Include="BlockMgr.cpp" />
+    <ClCompile Include="Brawl_Monster_Bullet.cpp" />
+    <ClCompile Include="Brawl_Stars_Block.cpp" />
     <ClCompile Include="Brawl_Stars_Bullet.cpp" />
+    <ClCompile Include="Brawl_Stars_Monster.cpp" />
     <ClCompile Include="Brawl_Stars_Player.cpp" />
     <ClCompile Include="Brawl_Stars_Scene.cpp" />
     <ClCompile Include="Device.cpp" />

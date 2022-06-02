@@ -23,11 +23,11 @@ void CMainGame::Initialize(void)
 	m_hDC = GetDC(g_hWnd);
 	m_hBackDC = GetDC(g_hWnd);
 
-	SCENEMGR->Scene_Change(SC_ZELDA);
+	//SCENEMGR->Scene_Change(SC_ZELDA);
 	//SCENEMGR->Scene_Change(SC_ZELDA_EDIT);
 	//SCENEMGR->Scene_Change(SC_FORTRESS);
 	//SCENEMGR->Scene_Change(SC_MOMO);
-	//SCENEMGR->Scene_Change(SC_BRAWL_STARS);
+	SCENEMGR->Scene_Change(SC_BRAWL_STARS);
 
 	if (FAILED(CDevice::Get_Instance()->Initialize()))
 	{

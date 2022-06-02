@@ -4,7 +4,7 @@
 
 
 CBrawl_Stars_Player::CBrawl_Stars_Player()
-	:m_fSpeed(3.f)
+	:m_fSpeed(3.f) , m_dwShoot_Bullet(GetTickCount())
 {
 }
 
@@ -27,7 +27,6 @@ void CBrawl_Stars_Player::Initialize(void)
 
 	// 로컬 포신
 	m_tInfo_Posin_Local[0].vPos = { 0.f , 0.f, 0.f };
-	// 월드 포신
 	m_tInfo_Posin_Local[1].vPos = { 100.f , 0.f, 0.f };
 
 	m_fAngle = 0.f;
@@ -62,6 +61,8 @@ const int CBrawl_Stars_Player::Update(void)
 		// 최종적인 위치벡터를 반환 해준다 (월드 변환을 위한 행렬에 인포타입 바디 로컬의 포스를 곱하기를 한후에 바디 월드의 포스에 대입 )
 		D3DXVec3TransformCoord(&m_tInfo_Body_World[i].vPos, &m_tInfo_Body_Local[i].vPos, &m_tInfo.matWorld);
 	}
+
+
 	// 포신의 앵글값 , 몸체의 앵글값을 더한 값을 matRotZ 에 대입
 	D3DXMatrixRotationZ(&m_tMatInfo.matRotZ, D3DXToRadian(m_fAngle_Body + m_fAngle_Posin));
 
@@ -146,7 +147,12 @@ void CBrawl_Stars_Player::Key_Input(void)
 	}
 	if (GetAsyncKeyState(VK_SPACE))
 	{
-		m_pBullet->push_back(CBrawlFactory::Create_Brawl_Bullet(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y, m_fAngle_Body + m_fAngle_Posin));
+		if (m_dwShoot_Bullet + 500 <= GetTickCount())
+		{
+			m_pBullet->push_back(CBrawlFactory::Create_Brawl_Bullet(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y, m_fAngle_Body + m_fAngle_Posin));
+
+			m_dwShoot_Bullet = GetTickCount();
+		}
 	}
 
 }

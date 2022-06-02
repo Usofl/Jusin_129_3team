@@ -27,6 +27,7 @@ protected:
 	MATINFO		m_tMatInfo;
 
 	float		m_fAngle;
+	bool		m_bDead;
 
 	RENDERID	m_eRender;
 };

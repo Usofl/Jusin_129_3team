@@ -28,5 +28,6 @@ public:
 private:
 	INFO		m_tInfo_Bullet_Local[4];
 	INFO		m_tInfo_Bullet_World[4];
+
 };
 
