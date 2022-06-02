@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "JunPlayer.h"
 #include "JunBullet.h"
+#include "LineMgr.h"
 class CFortress :
 	public CScene
 {
@@ -18,8 +19,17 @@ public:
 	virtual void Key_Input(void) override;
 private:
 	CJunPlayer * JunPlayer;
+	CJunBullet * JunBullet;
 	list<CObj*> RenderList;
-	list<CJunBullet*> BulletList;
+	list<CJunBullet*>* BulletList;
+	/*LINEPOINT TempLine = { 50,100 };
+	LINEPOINT TempLine2 = { 270,100 };*/
+
+	LINE TempLine;
 	
+	CLine TempL = {};
+	
+	//Line Temp;
+	int iArray[5];
 };
 

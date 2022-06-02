@@ -2,7 +2,7 @@
 #include "JunPlayer.h"
 #include "KeyMgr.h"
 
-CJunPlayer::CJunPlayer()
+CJunPlayer::CJunPlayer():m_iAngleCount(0)
 {
 	Initialize();
 }
@@ -37,12 +37,13 @@ void CJunPlayer::Initialize(void)
 	m_fAngle = 0.f;
 	m_fPoAngle = 0.f;
 	m_fSpeed = 5.f;
+	OriPo_Dir = { 1.f,0.f,0.f };
 	
 }
 
 const int CJunPlayer::Update(void)
 {
-	float BeforePoAngle = m_fPoAngle ;
+	//float BeforePoAngle = m_fPoAngle ;
 	Tank[0] = { -50.f,-30.f,0.f };
 	Tank[1] = { 50.f, -30.f,0.f };
 	Tank[2] = { 50.f,30.f,0.f };
@@ -62,25 +63,23 @@ const int CJunPlayer::Update(void)
 
 
 
-	
-	Key_Input();
 	Po_One = { 0, -50.f,0.f };
+
+	Key_Input();
+	
 
 	D3DXMatrixScaling(&m_matScale, 1.f, 1.f, 0);
 
 
 	D3DXMatrixRotationZ(&m_matRotZ, m_fAngle);
-	D3DXMatrixRotationZ(&m_HmatRotZ, m_fPoAngle);
 
 	D3DXMatrixTranslation(&m_matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
-	D3DXMatrixTranslation(&m_HmatTrans, m_tInfo.vPos.x, Po_One.y, 0.f);
 
 
 	//m_tInfo.matWorld = m_matScale * m_matRotZ;
 	//D3DXVec3TransformCoord(&Po_One, &Po_One, &m_tInfo.matWorld);
 
 	m_tInfo.matWorld = m_matScale * m_matRotZ * m_matTrans;
-	m_HeadInfo.matWorld = m_matScale * m_HmatRotZ * m_HmatTrans;
 
 	
 
@@ -93,16 +92,26 @@ const int CJunPlayer::Update(void)
 
 	D3DXVec3TransformCoord(&Po_One, &Po_One, &m_tInfo.matWorld);
 	
+	D3DXMatrixRotationZ(&m_HmatRotZ, m_fPoAngle);
+	D3DXMatrixTranslation(&m_HmatTrans, Po_One.x, Po_One.y, 0.f);
+
+	m_HeadInfo.matWorld = m_matScale * m_HmatRotZ * m_HmatTrans;
+
 	D3DXVec3TransformCoord(&Po, &Po, &m_HeadInfo.matWorld);
 
-	if (KEYMGR->Key_Down(VK_SPACE))
+	D3DXVec3TransformNormal(&Po_Dir, &OriPo_Dir, &m_HeadInfo.matWorld);
+
+	if (KEYMGR->Key_Up(VK_SPACE))
 	{
+
 		Bullet = new CJunBullet;
-		Bullet->Set_Pos_Angle(Po.x, Po.y, m_fAngle);
-		BulletList.push_back(Bullet);
+		Bullet->Initialize();
+		Bullet->Set_Pos_Dir(Po.x, Po.y, Po_Dir);
+ 		BulletList.push_back(Bullet);
+		int i = 5;
 	}
 	
-	return 0;
+ 	return 0;
 }
 
 void CJunPlayer::Late_Update(void)
@@ -128,8 +137,11 @@ void CJunPlayer::Render(HDC hDC)
 	LineTo(hDC, (int)TankHead[2].x, (int)TankHead[2].y);
 	LineTo(hDC, (int)TankHead[3].x, (int)TankHead[3].y);
 	LineTo(hDC, (int)TankHead[0].x, (int)TankHead[0].y);
-	
-	Ellipse(hDC, Po_One.x - 25, Po_One.y - 25, Po_One.x + 25, Po_One.y + 25);
+	Ellipse(hDC, (int)TankHead[1].x - 5, (int)TankHead[1].y - 5, (int)TankHead[1].x + 5, (int)TankHead[1].y + 5);
+
+
+
+	Ellipse(hDC, (int)Po_One.x - 5, (int)Po_One.y - 5, (int)Po_One.x + 5, (int)Po_One.y + 5);
 	MoveToEx(hDC, (int)Po_One.x, (int)Po_One.y, nullptr);
 	LineTo(hDC, (int)Po.x , (int)Po.y);
 
@@ -147,7 +159,7 @@ void CJunPlayer::Key_Input(void)
 	if (KEYMGR->Key_Pressing(VK_LEFT))
 	{
 		
-		//m_fPoAngle -= D3DXToRadian(3.f);
+		m_fPoAngle -= D3DXToRadian(3.f);
 		m_fAngle -= D3DXToRadian(3.f);
 		//m_fPoAngle += D3DXToRadian(3.f);
 
@@ -156,7 +168,7 @@ void CJunPlayer::Key_Input(void)
 
 	if (KEYMGR->Key_Pressing(VK_RIGHT))
 	{
-		//m_fPoAngle += D3DXToRadian(3.f);
+		m_fPoAngle += D3DXToRadian(3.f);
 		m_fAngle += D3DXToRadian(3.f);
 		//m_fPoAngle -= D3DXToRadian(3.f);
 
@@ -165,16 +177,12 @@ void CJunPlayer::Key_Input(void)
 	if (KEYMGR->Key_Pressing(VK_UP))
 	{
 		D3DXVec3TransformNormal(&m_tInfo.vDir, &m_tInfo.vLook, &m_tInfo.matWorld);
-
 		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
-		//m_HeadInfo.vPos += m_tInfo.vDir * m_fSpeed;
-		//m_HeadInfo.vPos += m_tInfo.vDir * m_fSpeed;
 	}
 
 	if (KEYMGR->Key_Pressing(VK_DOWN))
 	{
 		D3DXVec3TransformNormal(&m_tInfo.vDir, &m_tInfo.vLook, &m_tInfo.matWorld);
-
 		m_tInfo.vPos -= m_tInfo.vDir * m_fSpeed;
 	}
 

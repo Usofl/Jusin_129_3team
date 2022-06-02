@@ -109,6 +109,9 @@
     <Filter Include="03. Game\98. Manager\04. Device">
       <UniqueIdentifier>{b24231b7-cd74-42aa-92cc-8137d5e7efa6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Game\98. Manager\05.LineMgr">
+      <UniqueIdentifier>{cff18bf5-6afc-4854-a449-1510ff07a831}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -216,6 +219,12 @@
     <ClInclude Include="Device.h">
       <Filter>03. Game\98. Manager\04. Device</Filter>
     </ClInclude>
+    <ClInclude Include="LineMgr.h">
+      <Filter>03. Game\98. Manager\05.LineMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Line.h">
+      <Filter>03. Game\98. Manager\05.LineMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="4_TeamClient.cpp">
@@ -310,6 +319,12 @@
     </ClCompile>
     <ClCompile Include="Device.cpp">
       <Filter>03. Game\98. Manager\04. Device</Filter>
+    </ClCompile>
+    <ClCompile Include="LineMgr.cpp">
+      <Filter>03. Game\98. Manager\05.LineMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Line.cpp">
+      <Filter>03. Game\98. Manager\05.LineMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
