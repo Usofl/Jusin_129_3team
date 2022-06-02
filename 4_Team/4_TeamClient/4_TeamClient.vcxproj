@@ -200,6 +200,7 @@
     <ClInclude Include="4_TeamClient.h" />
     <ClInclude Include="4_TeamClientDoc.h" />
     <ClInclude Include="4_TeamClientView.h" />
+    <ClInclude Include="BrawlFactory.h" />
     <ClInclude Include="Brawl_Stars_Bullet.h" />
     <ClInclude Include="Brawl_Stars_Player.h" />
     <ClInclude Include="Brawl_Stars_Scene.h" />
