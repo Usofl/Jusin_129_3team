@@ -27,9 +27,9 @@ void CMainGame::Initialize(void)
 	//SCENEMGR->Scene_Change(SC_ZELDA_EDIT);
 	SCENEMGR->Scene_Change(SC_FLASHMAN);
 	//SCENEMGR->Scene_Change(SC_FORTRESS);
-	//SCENEMGR->Scene_Change(SC_MOMO);
-	SCENEMGR->Scene_Change(SC_BRAWL_STARS);
-
+	SCENEMGR->Scene_Change(SC_MOMO);
+	//SCENEMGR->Scene_Change(SC_BRAWL_STARS);
+	 
 	if (FAILED(CDevice::Get_Instance()->Initialize()))
 	{
 		AfxMessageBox(L"m_pDevice 생성 실패");

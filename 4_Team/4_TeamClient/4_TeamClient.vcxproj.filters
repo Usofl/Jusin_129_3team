@@ -142,6 +142,9 @@
     <Filter Include="03. Game\01. Obj\01. Other_Object\00. Brawl_Obj\00. Brawl_Stars_Monster\00. Brawl_Monster_Bullet">
       <UniqueIdentifier>{6086e29e-ac7d-4b00-a9f0-45fef6d625d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Game\01. Obj\01. Other_Object\01.Momo_Obj\00. Weapon">
+      <UniqueIdentifier>{6cb8f9b6-32dc-4b71-8d64-05f46ed8325a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -213,9 +216,6 @@
     <ClInclude Include="MomodoraPlayer.h">
       <Filter>03. Game\01. Obj\00. Player\01. Momodora</Filter>
     </ClInclude>
-    <ClInclude Include="MomoDoraMgr.h">
-      <Filter>03. Game\01. Obj\00. Player\01. Momodora</Filter>
-    </ClInclude>
     <ClInclude Include="ZeldaEditScene.h">
       <Filter>03. Game\02. Scene\04. ZeldaEditScene</Filter>
     </ClInclude>
@@ -243,11 +243,26 @@
     <ClInclude Include="Zelda_Button.h">
       <Filter>03. Game\01. Obj\01. Other_Object\03. Zelda_Obj\02. Zelda_Button</Filter>
     </ClInclude>
-    <ClInclude Include="MomoBullet.h">
-      <Filter>03. Game\01. Obj\01. Other_Object\01.Momo_Obj</Filter>
-    </ClInclude>
     <ClInclude Include="Device.h">
       <Filter>03. Game\98. Manager\04. Device</Filter>
+    </ClInclude>
+    <ClInclude Include="MomoBullet.h">
+      <Filter>03. Game\01. Obj\01. Other_Object\01.Momo_Obj\00. Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="MomoGun.h">
+      <Filter>03. Game\01. Obj\01. Other_Object\01.Momo_Obj\00. Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="MomoSword.h">
+      <Filter>03. Game\01. Obj\01. Other_Object\01.Momo_Obj\00. Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Momo_Obj.h">
+      <Filter>03. Game\01. Obj\01. Other_Object\01.Momo_Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="MomoDoraMgr.h">
+      <Filter>03. Game\01. Obj\01. Other_Object\01.Momo_Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="MomoAbstractFactory.h">
+      <Filter>03. Game\01. Obj\01. Other_Object\01.Momo_Obj</Filter>
     </ClInclude>
     <ClInclude Include="ZeldaFactory.h">
       <Filter>03. Game\97. Factory\03. ZeldaFactory</Filter>
@@ -341,9 +356,6 @@
     <ClCompile Include="MomodoraPlayer.cpp">
       <Filter>03. Game\01. Obj\00. Player\01. Momodora</Filter>
     </ClCompile>
-    <ClCompile Include="MomoDoraMgr.cpp">
-      <Filter>03. Game\01. Obj\00. Player\01. Momodora</Filter>
-    </ClCompile>
     <ClCompile Include="ZeldaEditScene.cpp">
       <Filter>03. Game\02. Scene\04. ZeldaEditScene</Filter>
     </ClCompile>
@@ -368,11 +380,23 @@
     <ClCompile Include="Zelda_Button.cpp">
       <Filter>03. Game\01. Obj\01. Other_Object\03. Zelda_Obj\02. Zelda_Button</Filter>
     </ClCompile>
-    <ClCompile Include="MomoBullet.cpp">
-      <Filter>03. Game\01. Obj\01. Other_Object\01.Momo_Obj</Filter>
-    </ClCompile>
     <ClCompile Include="Device.cpp">
       <Filter>03. Game\98. Manager\04. Device</Filter>
+    </ClCompile>
+    <ClCompile Include="MomoBullet.cpp">
+      <Filter>03. Game\01. Obj\01. Other_Object\01.Momo_Obj\00. Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="MomoGun.cpp">
+      <Filter>03. Game\01. Obj\01. Other_Object\01.Momo_Obj\00. Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="MomoSword.cpp">
+      <Filter>03. Game\01. Obj\01. Other_Object\01.Momo_Obj\00. Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Momo_Obj.cpp">
+      <Filter>03. Game\01. Obj\01. Other_Object\01.Momo_Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="MomoDoraMgr.cpp">
+      <Filter>03. Game\01. Obj\01. Other_Object\01.Momo_Obj</Filter>
     </ClCompile>
     <ClCompile Include="FlashmanPlayer.cpp">
       <Filter>03. Game\01. Obj\00. Player\04. FlashmanPlayer</Filter>

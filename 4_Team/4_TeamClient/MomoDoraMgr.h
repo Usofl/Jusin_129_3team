@@ -1,5 +1,5 @@
 #pragma once
-#include "Obj.h"
+#include "Momo_Obj.h"
 class CMomoDoraMgr
 {
 private:
@@ -7,16 +7,20 @@ private:
 	~CMomoDoraMgr();
 
 public:
-	void		Add_Object(MOMOID eID, CObj* pObj);
+	void		Add_Object(MOMOID eID, CMomo_Obj* pObj);
 	int			Update(void);
 	void		Late_Update(void);
 	void		Render(HDC hDC);
 	void		Release(void);
 
 	void		Delete_ID(MOMOID eID);
+	void		Weapon_Change(MOMO_WEAPONID _eID);
+
+
+	const INFO&		Get_Info(void) const { return m_tInfo; }
 
 private:
-	list<CObj*>	m_MomodoraList[MOMO_END];
+	list<CMomo_Obj*>	m_MomodoraList[MOMO_END];
 
 public:
 	static		CMomoDoraMgr*		Get_Instance(void)
@@ -38,7 +42,13 @@ public:
 		}
 	}
 
+protected:
+	INFO		m_tInfo;
+
 private:
 	static CMomoDoraMgr*			m_pInstance;
+	list<CMomo_Obj*>				m_RenderSort[RENDER_END];
+	MOMO_WEAPONID		m_eCurWeapon;  
+	MOMO_WEAPONID		m_ePreWeapon;
 };
 
