@@ -57,5 +57,6 @@ void ClassName::Destroy_Instance()						\
 #define SCENEMGR (CSceneMgr::Get_Instance())
 #define RENDERMGR (CRenderMgr::Get_Instance())
 #define MOMODORAMGR (CMomodoraMgr::Get_Instance())
+#define LINEMGR (CLineMgr::Get_Instance())
 
 extern HWND			g_hWnd;

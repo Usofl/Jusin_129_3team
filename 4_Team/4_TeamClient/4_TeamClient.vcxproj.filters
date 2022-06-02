@@ -100,6 +100,9 @@
     <Filter Include="03. Game\98. Manager\04. Device">
       <UniqueIdentifier>{b24231b7-cd74-42aa-92cc-8137d5e7efa6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Game\98. Manager\05.LineMgr">
+      <UniqueIdentifier>{cff18bf5-6afc-4854-a449-1510ff07a831}</UniqueIdentifier>
+    </Filter>
     <Filter Include="03. Game\97. Factory\03. ZeldaFactory">
       <UniqueIdentifier>{15a246aa-f667-4c51-b894-936245fe7d5d}</UniqueIdentifier>
     </Filter>
@@ -270,6 +273,12 @@
     <ClInclude Include="FlashmanPlayer.h">
       <Filter>03. Game\01. Obj\00. Player\04. FlashmanPlayer</Filter>
     </ClInclude>
+    <ClInclude Include="LineMgr.h">
+      <Filter>03. Game\98. Manager\05.LineMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Line.h">
+      <Filter>03. Game\98. Manager\05.LineMgr</Filter>
+    </ClInclude>
     <ClInclude Include="FlashmanBlue.h">
       <Filter>03. Game\01. Obj\00. Player\04. FlashmanPlayer\01. Blue</Filter>
     </ClInclude>
@@ -424,6 +433,12 @@
     </ClCompile>
     <ClCompile Include="Brawl_Monster_Bullet.cpp">
       <Filter>03. Game\01. Obj\01. Other_Object\00. Brawl_Obj\00. Brawl_Stars_Monster\00. Brawl_Monster_Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="LineMgr.cpp">
+      <Filter>03. Game\98. Manager\05.LineMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Line.cpp">
+      <Filter>03. Game\98. Manager\05.LineMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
