@@ -94,6 +94,9 @@
     <Filter Include="03. Game\01. Obj\01. Other_Object\03. Zelda_Obj\01. Zelda_Stone">
       <UniqueIdentifier>{efbcd501-3cb6-4ea7-af91-4b4882e65c61}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Game\01. Obj\00. Player\02.ForPlayer">
+      <UniqueIdentifier>{7c57f0c7-2d5d-4572-a770-54029035525b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -168,9 +171,6 @@
     <ClInclude Include="ZeldaPlayer.h">
       <Filter>03. Game\01. Obj\00. Player\03. ZeldaPlayer</Filter>
     </ClInclude>
-    <ClInclude Include="JunPlayer.h">
-      <Filter>03. Game\02. Scene\02.J</Filter>
-    </ClInclude>
     <ClInclude Include="Brawl_Stars_Scene.h">
       <Filter>03. Game\02. Scene\00. Brawl_Stars_Scene</Filter>
     </ClInclude>
@@ -200,6 +200,12 @@
     </ClInclude>
     <ClInclude Include="Zelda_Stone.h">
       <Filter>03. Game\01. Obj\01. Other_Object\03. Zelda_Obj\01. Zelda_Stone</Filter>
+    </ClInclude>
+    <ClInclude Include="JunPlayer.h">
+      <Filter>03. Game\01. Obj\00. Player\02.ForPlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="JunBullet.h">
+      <Filter>03. Game\02. Scene\02.J</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -251,9 +257,6 @@
     <ClCompile Include="ZeldaPlayer.cpp">
       <Filter>03. Game\01. Obj\00. Player\03. ZeldaPlayer</Filter>
     </ClCompile>
-    <ClCompile Include="JunPlayer.cpp">
-      <Filter>03. Game\02. Scene\02.J</Filter>
-    </ClCompile>
     <ClCompile Include="Brawl_Stars_Scene.cpp">
       <Filter>03. Game\02. Scene\00. Brawl_Stars_Scene</Filter>
     </ClCompile>
@@ -283,6 +286,12 @@
     </ClCompile>
     <ClCompile Include="Zelda_Stone.cpp">
       <Filter>03. Game\01. Obj\01. Other_Object\03. Zelda_Obj\01. Zelda_Stone</Filter>
+    </ClCompile>
+    <ClCompile Include="JunPlayer.cpp">
+      <Filter>03. Game\01. Obj\00. Player\02.ForPlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="JunBullet.cpp">
+      <Filter>03. Game\02. Scene\02.J</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

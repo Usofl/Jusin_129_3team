@@ -1,6 +1,7 @@
 #pragma once
 #include "Scene.h"
 #include "JunPlayer.h"
+#include "JunBullet.h"
 class CFortress :
 	public CScene
 {
@@ -18,5 +19,7 @@ public:
 private:
 	CJunPlayer * JunPlayer;
 	list<CObj*> RenderList;
+	list<CJunBullet*> BulletList;
+	
 };
 
