@@ -19,9 +19,13 @@ public:
 
 private:
 	virtual void Key_Input(void) override;
+	void OffSet(void);
 
 private:
-	float			m_fSize;
+	bool			m_bHold;
+
+	float			m_fXSize;
+	float			m_fYSize;
 	int				m_iHandSize;
 
 	D3DXVECTOR3		m_vPoint[ZELDA_END];
