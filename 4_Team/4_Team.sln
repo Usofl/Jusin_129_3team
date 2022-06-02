@@ -12,6 +12,13 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "4_TeamClient", "4_TeamClient\4_TeamClient.vcxproj", "{7C2EAE23-6F7F-4540-A724-6EB4F9B37758}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02. Header", "02. Header", "{BD503CD0-3A91-481A-953A-F3C7EAD25ECB}"
+	ProjectSection(SolutionItems) = preProject
+		Header\Define.h = Header\Define.h
+		Header\Enum.h = Header\Enum.h
+		Header\Functor.h = Header\Functor.h
+		Header\Include.h = Header\Include.h
+		Header\Struct.h = Header\Struct.h
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
