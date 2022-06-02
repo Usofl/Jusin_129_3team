@@ -1,40 +1,40 @@
 #include "stdafx.h"
-#include "Zelda_Wall.h"
+#include "Zelda_Button.h"
 #include "ScrollMgr.h"
 
 
-CZelda_Wall::CZelda_Wall()
+CZelda_Button::CZelda_Button()
 {
+	m_tInfo.vPos = { 400.f, 300.f, 0.f };
 }
 
-CZelda_Wall::CZelda_Wall(const float & _fX, const float & _fY)
+CZelda_Button::CZelda_Button(const float & _fX, const float & _fY)
 {
 	m_tInfo.vPos = { _fX, _fY, 0.f };
 }
 
 
-CZelda_Wall::~CZelda_Wall()
+CZelda_Button::~CZelda_Button()
 {
 }
 
-void CZelda_Wall::Initialize(void)
+void CZelda_Button::Initialize(void)
 {
 	m_eRender = RENDER_GAMEOBJECT;
 
 	m_fSize = 50.f;
 
-	m_tInfo.vPos = { 400.f, 300.f, 0.f };
 	m_tInfo.vLook = { 0.f, -1.f, 0.f };
 
-	m_vPoint[POINT_LEFT_TOP] = { -m_fSize, -m_fSize, 0.f };
-	m_vPoint[POINT_RIGHT_TOP] = { m_fSize, -m_fSize, 0.f };
-	m_vPoint[POINT_RIGHT_BOTTOM] = { m_fSize, m_fSize, 0.f };
-	m_vPoint[POINT_LEFT_BOTTOM] = { -m_fSize, m_fSize, 0.f };
+	m_vPoint[0] = { -m_fSize, -m_fSize, 0.f };
+	m_vPoint[1] = { m_fSize, -m_fSize, 0.f };
+	m_vPoint[2] = { m_fSize, m_fSize, 0.f };
+	m_vPoint[3] = { -m_fSize, m_fSize, 0.f };
 
 	m_fAngle = D3DXToRadian(0.f);
 }
 
-const int CZelda_Wall::Update(void)
+const int CZelda_Button::Update(void)
 {
 	// z축 회전 행렬 생성 함수
 	D3DXMatrixRotationZ(&m_tMatInfo.matRotZ, m_fAngle);
@@ -52,11 +52,11 @@ const int CZelda_Wall::Update(void)
 	return OBJ_NOEVENT;
 }
 
-void CZelda_Wall::Late_Update(void)
+void CZelda_Button::Late_Update(void)
 {
 }
 
-void CZelda_Wall::Render(HDC _hDC)
+void CZelda_Button::Render(HDC _hDC)
 {
 	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
@@ -77,6 +77,6 @@ void CZelda_Wall::Render(HDC _hDC)
 	DeleteObject(MyPen);
 }
 
-void CZelda_Wall::Release(void)
+void CZelda_Button::Release(void)
 {
 }

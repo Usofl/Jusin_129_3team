@@ -229,6 +229,7 @@
     <ClInclude Include="ZeldaEditScene.h" />
     <ClInclude Include="ZeldaPlayer.h" />
     <ClInclude Include="ZeldaScene.h" />
+    <ClInclude Include="Zelda_Button.h" />
     <ClInclude Include="Zelda_Obj.h" />
     <ClInclude Include="Zelda_Stone.h" />
     <ClInclude Include="Zelda_Wall.h" />
@@ -264,6 +265,7 @@
     <ClCompile Include="ZeldaEditScene.cpp" />
     <ClCompile Include="ZeldaPlayer.cpp" />
     <ClCompile Include="ZeldaScene.cpp" />
+    <ClCompile Include="Zelda_Button.cpp" />
     <ClCompile Include="Zelda_Obj.cpp" />
     <ClCompile Include="Zelda_Stone.cpp" />
     <ClCompile Include="Zelda_Wall.cpp" />

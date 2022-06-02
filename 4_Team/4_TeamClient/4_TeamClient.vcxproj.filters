@@ -94,6 +94,9 @@
     <Filter Include="03. Game\01. Obj\01. Other_Object\03. Zelda_Obj\01. Zelda_Stone">
       <UniqueIdentifier>{efbcd501-3cb6-4ea7-af91-4b4882e65c61}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Game\01. Obj\01. Other_Object\03. Zelda_Obj\02. Zelda_Button">
+      <UniqueIdentifier>{11b469b7-79f7-49c1-800a-3814366f0700}</UniqueIdentifier>
+    </Filter>
     <Filter Include="03. Game\01. Obj\01. Other_Object\01.Momo_Obj">
       <UniqueIdentifier>{3b8bd7b0-b2b5-44c2-882f-e2a0fcccaa25}</UniqueIdentifier>
     </Filter>
@@ -204,6 +207,9 @@
     <ClInclude Include="Zelda_Stone.h">
       <Filter>03. Game\01. Obj\01. Other_Object\03. Zelda_Obj\01. Zelda_Stone</Filter>
     </ClInclude>
+    <ClInclude Include="Zelda_Button.h">
+      <Filter>03. Game\01. Obj\01. Other_Object\03. Zelda_Obj\02. Zelda_Button</Filter>
+    </ClInclude>
     <ClInclude Include="MomoBullet.h">
       <Filter>03. Game\01. Obj\01. Other_Object\01.Momo_Obj</Filter>
     </ClInclude>
@@ -289,6 +295,9 @@
     </ClCompile>
     <ClCompile Include="Zelda_Stone.cpp">
       <Filter>03. Game\01. Obj\01. Other_Object\03. Zelda_Obj\01. Zelda_Stone</Filter>
+    </ClCompile>
+    <ClCompile Include="Zelda_Button.cpp">
+      <Filter>03. Game\01. Obj\01. Other_Object\03. Zelda_Obj\02. Zelda_Button</Filter>
     </ClCompile>
     <ClCompile Include="MomoBullet.cpp">
       <Filter>03. Game\01. Obj\01. Other_Object\01.Momo_Obj</Filter>

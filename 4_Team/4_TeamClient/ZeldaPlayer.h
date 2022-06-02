@@ -3,6 +3,9 @@
 
 class CZeldaPlayer : public CPlayer
 {
+private:
+	enum VERTEX { ZELDA_LEFT_TOP, ZELDA_RIGHT_TOP, ZELDA_RIGHT_BOTTOM, ZELDA_LEFT_BOTTOM, ZELDA_LEFT_HAND, ZELDA_RIGHT_HAND, ZELDA_END };
+
 public:
 	CZeldaPlayer();
 	virtual ~CZeldaPlayer();
