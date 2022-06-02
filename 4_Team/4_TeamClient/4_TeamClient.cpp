@@ -93,7 +93,6 @@ BOOL CMy4_TeamClientApp::InitInstance()
 	int width = m_Rect.right - m_Rect.left;
 	int height = m_Rect.bottom - m_Rect.top;
 
-
 	m_pMainWnd->SetWindowPos(NULL, 0, 0, width, height, 0);
 
 	g_hWnd = m_pMainWnd->m_hWnd;

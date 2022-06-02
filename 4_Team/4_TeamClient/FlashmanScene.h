@@ -20,7 +20,8 @@ private:
 
 private:
 	CFlashmanPlayer*	m_pPlayer[FLASHMAN_END];
-	FLASHMAN_PLAYERID	m_eFlashMan_id;
+	FLASHMAN_PLAYERID	m_ePreFlashMan_id;
+	FLASHMAN_PLAYERID	m_eCurFlashMan_id;
 
 	D3DXVECTOR3			m_vFeildLine[2];
 };

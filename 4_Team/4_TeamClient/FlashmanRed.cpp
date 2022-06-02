@@ -15,7 +15,7 @@ CFlashmanRed::~CFlashmanRed()
 void CFlashmanRed::Initialize(void)
 {
 	m_fSize = 30.f;
-	m_fJumpPower = 10.f;
+	m_fJumpPower = 15.f;
 
 	m_tInfo.vPos = { 400.f, 300.f, 0.f };
 	m_tInfo.vLook = { 1.f, 0.f, 0.f };
@@ -39,28 +39,38 @@ void CFlashmanRed::Initialize(void)
 
 	m_fAngle = 0.f;
 
-	m_fSpeed = 3.f;
+	m_fSpeed = 5.f;
 }
 
 const int CFlashmanRed::Update(void)
 {
 	// 연산을 진행
-	Key_Input();
 
 	//m_tInfo.vPos += m_tInfo.vDir;
 
 	switch (m_eCurState)
 	{
+	case CFlashmanPlayer::CHANGE:
+		Change();
+		ChangeJumping();
+		break;
+
 	case CFlashmanPlayer::IDLE:
+		Key_Input();
 		break;
 	case CFlashmanPlayer::WALK:
+		Key_Input();
 		break;
+	
 	case CFlashmanPlayer::JUMPING:
+		Key_Input();
 		Jumping();
 		break;
 	case CFlashmanPlayer::ATTACK1:
+		Key_Input();
 		break;
 	case CFlashmanPlayer::ATTACK2:
+		Key_Input();
 		break;
 	}
 

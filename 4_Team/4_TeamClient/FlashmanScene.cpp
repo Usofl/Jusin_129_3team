@@ -7,7 +7,8 @@
 #include "RenderMgr.h"
 
 CFlashmanScene::CFlashmanScene()
-	: m_eFlashMan_id(FLASHMAN_RED)
+	: m_eCurFlashMan_id(FLASHMAN_RED)
+	, m_ePreFlashMan_id(FLASHMAN_YELLOW)
 {
 	for (int i = FLASHMAN_RED; i < FLASHMAN_END; ++i)
 	{
@@ -44,13 +45,27 @@ void CFlashmanScene::Initialize(void)
 
 void CFlashmanScene::Update(void)
 {
-	m_pPlayer[m_eFlashMan_id]->Update();
+	Key_Input();
+
+	m_pPlayer[m_eCurFlashMan_id]->Update();
+
+	if (!(m_pPlayer[m_ePreFlashMan_id]->Get_Info().vPos.x <= 0) || !(m_pPlayer[m_ePreFlashMan_id]->Get_Info().vPos.x >= WINCX))
+	{
+		m_pPlayer[m_ePreFlashMan_id]->Update();
+	}
+
 }
 
 void CFlashmanScene::Late_Update(void)
 {
-	m_pPlayer[m_eFlashMan_id]->Late_Update();
-	RENDERMGR->Add_Render_Obj(m_pPlayer[m_eFlashMan_id]);
+	m_pPlayer[m_eCurFlashMan_id]->Late_Update();
+	RENDERMGR->Add_Render_Obj(m_pPlayer[m_eCurFlashMan_id]);
+
+	if (!(m_pPlayer[m_ePreFlashMan_id]->Get_Info().vPos.x <= 0) || !(m_pPlayer[m_ePreFlashMan_id]->Get_Info().vPos.x >= WINCX))
+	{
+		m_pPlayer[m_ePreFlashMan_id]->Late_Update();
+		RENDERMGR->Add_Render_Obj(m_pPlayer[m_ePreFlashMan_id]);
+	}
 }
 
 void CFlashmanScene::Render(HDC _hDC)
@@ -73,16 +88,21 @@ void CFlashmanScene::Key_Input(void)
 {
 	if (KEYMGR->Key_Up('C'))
 	{
-		switch (m_eFlashMan_id)
+		m_ePreFlashMan_id = m_eCurFlashMan_id;
+		m_pPlayer[m_eCurFlashMan_id]->Set_State(CFlashmanPlayer::CHANGE);
+		switch (m_eCurFlashMan_id)
 		{
 		case FLASHMAN_RED:
-			m_eFlashMan_id = FLASHMAN_BLUE;
+			m_eCurFlashMan_id = FLASHMAN_BLUE;
+			m_pPlayer[m_eCurFlashMan_id]->Set_State(CFlashmanPlayer::IDLE);
 			break;
 		case FLASHMAN_BLUE:
-			m_eFlashMan_id = FLASHMAN_YELLOW;
+			m_eCurFlashMan_id = FLASHMAN_YELLOW;
+			m_pPlayer[m_eCurFlashMan_id]->Set_State(CFlashmanPlayer::IDLE);
 			break;
 		case FLASHMAN_YELLOW:
-			m_eFlashMan_id = FLASHMAN_RED;
+			m_eCurFlashMan_id = FLASHMAN_RED;
+			m_pPlayer[m_eCurFlashMan_id]->Set_State(CFlashmanPlayer::IDLE);
 			break;
 		}
 	}

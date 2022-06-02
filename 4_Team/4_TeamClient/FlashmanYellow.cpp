@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "FlashmanYellow.h"
+#include "KeyMgr.h"
 
 
 CFlashmanYellow::CFlashmanYellow()
@@ -17,7 +18,7 @@ void CFlashmanYellow::Initialize(void)
 {
 	m_fSize = 30.f;
 
-	m_tInfo.vPos = { 400.f, 300.f, 0.f };
+	m_tInfo.vPos = { 0.f, 300.f, 0.f };
 	m_tInfo.vLook = { 0.f, -1.f, 0.f };
 
 	m_vPoint[POINT_HEAD] = { 0.f, -m_fSize * 1.5f, 0.f };
@@ -42,9 +43,37 @@ void CFlashmanYellow::Initialize(void)
 const int CFlashmanYellow::Update(void)
 {
 	// 연산을 진행
-	Key_Input();
 
 	//m_tInfo.vPos += m_tInfo.vDir;
+
+	switch (m_eCurState)
+	{
+	case CFlashmanPlayer::CHANGE:
+		Change();
+		ChangeJumping();
+		break;
+
+	case CFlashmanPlayer::IDLE:
+		Key_Input();
+		break;
+	case CFlashmanPlayer::WALK:
+		Key_Input();
+		break;
+
+	case CFlashmanPlayer::JUMPING:
+		Key_Input();
+		Jumping();
+		break;
+	case CFlashmanPlayer::ATTACK1:
+		Key_Input();
+		break;
+	case CFlashmanPlayer::ATTACK2:
+		Key_Input();
+		break;
+	}
+
+	m_tInfo.vLook = { m_fScale, 0.f, 0.f };
+	D3DXMatrixScaling(&m_tMatInfo.matScale, m_fScale, 1.f, 1.f);
 
 	// z축 회전 행렬 생성 함수
 	D3DXMatrixRotationZ(&m_tMatInfo.matRotZ, m_fAngle);
@@ -66,6 +95,7 @@ const int CFlashmanYellow::Update(void)
 
 void CFlashmanYellow::Late_Update(void)
 {
+	Fallen();
 }
 
 void CFlashmanYellow::Render(HDC _hDC)
@@ -106,4 +136,20 @@ void CFlashmanYellow::Release(void)
 
 void CFlashmanYellow::Key_Input(void)
 {
+	if (KEYMGR->Key_Pressing(VK_LEFT))
+	{
+		m_fScale = -1.f;
+		m_tInfo.vPos -= m_tInfo.vDir * m_fSpeed;
+	}
+
+	else if (KEYMGR->Key_Pressing(VK_RIGHT))
+	{
+		m_fScale = 1.f;
+		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
+	}
+
+	if (KEYMGR->Key_Pressing(VK_SPACE))
+	{
+		m_eCurState = JUMPING;
+	}
 }

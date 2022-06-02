@@ -3,14 +3,14 @@
 class CFlashmanPlayer :
 	public CPlayer
 {
-protected:
+public:
 	enum POINT {POINT_HEAD, POINT_NECK, POINT_GROIN, 
 		POINT_LEFT_KNEE, POINT_LEFT_FOOT,
 		POINT_RIGHT_KNEE, POINT_RIGHT_FOOT,
 		POINT_LEFT_ELBOW, POINT_LEFT_HAND,
 		POINT_RIGHT_ELBOW, POINT_RIGHT_HAND, POINT_END};
 
-	enum STATE {IDLE, WALK, JUMPING,ATTACK1, ATTACK2, END};
+	enum STATE {IDLE, WALK, JUMPING, CHANGE, ATTACK1, ATTACK2, END};
 
 public:
 	CFlashmanPlayer();
@@ -23,10 +23,14 @@ public:
 	virtual void Render(HDC hDC) PURE;
 	virtual void Release(void) PURE;
 
+	inline void Set_State(const STATE& _State) { m_eCurState = _State; }
+
 protected:
 	virtual void Key_Input(void) PURE;
 	void	Fallen(void);
 	void	Jumping(void);
+	void	Change(void);
+	void	ChangeJumping(void);
 
 protected:
 	bool			m_bAir;
