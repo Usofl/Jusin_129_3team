@@ -1,5 +1,6 @@
 #pragma once
 #include "Player.h"
+#include "JunBullet.h"
 class CJunPlayer :
 	public CPlayer
 {
@@ -14,7 +15,8 @@ public:
 	virtual void Render(HDC hDC) override;
 	virtual void Release(void) override;
 
-
+public:
+	list<CJunBullet*>* Get_BulletList(void) { return &BulletList; };
 	
 private:
 	virtual void Key_Input(void) override;
@@ -30,5 +32,7 @@ private:
 	D3DXMATRIX m_HeadMat;
 private:
 	float m_fPoAngle;
+	CJunBullet* Bullet;
+	list<CJunBullet*>BulletList;
 };
 
