@@ -100,6 +100,24 @@
     <Filter Include="03. Game\98. Manager\04. Device">
       <UniqueIdentifier>{b24231b7-cd74-42aa-92cc-8137d5e7efa6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Game\97. Factory\03. ZeldaFactory">
+      <UniqueIdentifier>{15a246aa-f667-4c51-b894-936245fe7d5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj\00. Player\04. FlashmanPlayer">
+      <UniqueIdentifier>{f458c7a7-27cf-4b76-bfaa-ead544b0941f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj\00. Player\04. FlashmanPlayer\00. Red">
+      <UniqueIdentifier>{fe93fc1f-f894-4760-a7ee-696432f4b11d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj\00. Player\04. FlashmanPlayer\01. Blue">
+      <UniqueIdentifier>{ef280b15-ebcd-4db7-bf64-aee3f458ba88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj\00. Player\04. FlashmanPlayer\02. Yellow">
+      <UniqueIdentifier>{8ba47234-e0d2-462e-a83c-38e271128e73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\02. Scene\05. FlashmanScene">
+      <UniqueIdentifier>{f8985378-5fcb-4708-85d9-9826deca60e7}</UniqueIdentifier>
+    </Filter>
     <Filter Include="03. Game\01. Obj\01. Other_Object\00. Brawl_Obj">
       <UniqueIdentifier>{d8c99e9e-e316-42d9-a148-9e146b4278fd}</UniqueIdentifier>
     </Filter>
@@ -231,6 +249,24 @@
     <ClInclude Include="Device.h">
       <Filter>03. Game\98. Manager\04. Device</Filter>
     </ClInclude>
+    <ClInclude Include="ZeldaFactory.h">
+      <Filter>03. Game\97. Factory\03. ZeldaFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="FlashmanPlayer.h">
+      <Filter>03. Game\01. Obj\00. Player\04. FlashmanPlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="FlashmanBlue.h">
+      <Filter>03. Game\01. Obj\00. Player\04. FlashmanPlayer\01. Blue</Filter>
+    </ClInclude>
+    <ClInclude Include="FlashmanRed.h">
+      <Filter>03. Game\01. Obj\00. Player\04. FlashmanPlayer\00. Red</Filter>
+    </ClInclude>
+    <ClInclude Include="FlashmanYellow.h">
+      <Filter>03. Game\01. Obj\00. Player\04. FlashmanPlayer\02. Yellow</Filter>
+    </ClInclude>
+    <ClInclude Include="FlashmanScene.h">
+      <Filter>03. Game\02. Scene\05. FlashmanScene</Filter>
+    </ClInclude>
     <ClInclude Include="Brawl_Stars_Monster.h">
       <Filter>03. Game\01. Obj\01. Other_Object\00. Brawl_Obj\00. Brawl_Stars_Monster</Filter>
     </ClInclude>
@@ -337,6 +373,21 @@
     </ClCompile>
     <ClCompile Include="Device.cpp">
       <Filter>03. Game\98. Manager\04. Device</Filter>
+    </ClCompile>
+    <ClCompile Include="FlashmanPlayer.cpp">
+      <Filter>03. Game\01. Obj\00. Player\04. FlashmanPlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="FlashmanBlue.cpp">
+      <Filter>03. Game\01. Obj\00. Player\04. FlashmanPlayer\01. Blue</Filter>
+    </ClCompile>
+    <ClCompile Include="FlashmanRed.cpp">
+      <Filter>03. Game\01. Obj\00. Player\04. FlashmanPlayer\00. Red</Filter>
+    </ClCompile>
+    <ClCompile Include="FlashmanYellow.cpp">
+      <Filter>03. Game\01. Obj\00. Player\04. FlashmanPlayer\02. Yellow</Filter>
+    </ClCompile>
+    <ClCompile Include="FlashmanScene.cpp">
+      <Filter>03. Game\02. Scene\05. FlashmanScene</Filter>
     </ClCompile>
     <ClCompile Include="Brawl_Stars_Monster.cpp">
       <Filter>03. Game\01. Obj\01. Other_Object\00. Brawl_Obj\00. Brawl_Stars_Monster</Filter>

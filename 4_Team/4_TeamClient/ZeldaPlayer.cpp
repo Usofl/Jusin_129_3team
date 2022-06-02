@@ -4,7 +4,9 @@
 #include "ScrollMgr.h"
 
 CZeldaPlayer::CZeldaPlayer()
-	: m_fSize(30.f)
+	: m_bHold(false)
+	, m_fXSize(30.f)
+	, m_fYSize(30.f)
 	, m_iHandSize(10)
 {
 	Initialize();
@@ -22,13 +24,13 @@ void CZeldaPlayer::Initialize(void)
 	m_tInfo.vPos = { 400.f, 300.f, 0.f };
 	m_tInfo.vLook = { 0.f, -1.f, 0.f };
 
-	m_vPoint[ZELDA_LEFT_TOP] = { -m_fSize, -m_fSize, 0.f };
-	m_vPoint[ZELDA_RIGHT_TOP] = { m_fSize, -m_fSize, 0.f };
-	m_vPoint[ZELDA_RIGHT_BOTTOM] = { m_fSize, m_fSize, 0.f };
-	m_vPoint[ZELDA_LEFT_BOTTOM] = { -m_fSize, m_fSize, 0.f };
+	m_vPoint[ZELDA_LEFT_TOP] = { -m_fXSize, -m_fYSize, 0.f };
+	m_vPoint[ZELDA_RIGHT_TOP] = { m_fXSize, -m_fYSize, 0.f };
+	m_vPoint[ZELDA_RIGHT_BOTTOM] = { m_fXSize, m_fYSize, 0.f };
+	m_vPoint[ZELDA_LEFT_BOTTOM] = { -m_fXSize, m_fYSize, 0.f };
 
-	m_vPoint[ZELDA_LEFT_HAND] = { -m_fSize * 1.5f, m_fSize * 0.5f, 0.f };
-	m_vPoint[ZELDA_RIGHT_HAND] = { m_fSize * 1.5f, m_fSize * 0.5f, 0.f };
+	m_vPoint[ZELDA_LEFT_HAND] = { -m_fXSize * 1.5f, m_fYSize * 0.3f, 0.f };
+	m_vPoint[ZELDA_RIGHT_HAND] = { m_fXSize * 1.5f, m_fYSize * 0.3f, 0.f };
 
 	m_fAngle = D3DXToRadian(0.f);
 
@@ -56,12 +58,15 @@ const int CZeldaPlayer::Update(void)
 	}
 
 	D3DXVec3TransformNormal(&m_tInfo.vDir, &m_tInfo.vLook, &m_tInfo.matWorld);
+	
+	OffSet();
 
 	return OBJ_NOEVENT;
 }
 
 void CZeldaPlayer::Late_Update(void)
 {
+
 }
 
 void CZeldaPlayer::Render(HDC _hDC)
@@ -99,6 +104,15 @@ void CZeldaPlayer::Release(void)
 
 void CZeldaPlayer::Key_Input(void)
 {
+	if (KEYMGR->Key_Pressing('A'))
+	{
+		m_bHold = true;
+	}
+	else
+	{
+		m_bHold = false;
+	}
+
 	if (KEYMGR->Key_Pressing(VK_LEFT))
 	{
 		if (!KEYMGR->Key_Pressing(VK_DOWN) && !KEYMGR->Key_Pressing(VK_UP))
@@ -141,5 +155,36 @@ void CZeldaPlayer::Key_Input(void)
 	{
 		m_fAngle = D3DXToRadian(180.f);
 		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
+	}
+
+}
+
+void CZeldaPlayer::OffSet(void)
+{
+	int		iOffSetX = WINCX >> 1;
+	int		iOffSetY = WINCY >> 1;
+	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+	int		iItvX = 150;
+	int		iItvY = 150;
+
+	if (iOffSetX + iItvX < m_tInfo.vPos.x + iScrollX)
+	{
+		CScrollMgr::Get_Instance()->Plus_ScrollX(-m_fSpeed);
+	}
+	
+	if (iOffSetY - iItvY > m_tInfo.vPos.y + iScrollY)
+	{
+		CScrollMgr::Get_Instance()->Plus_ScrollY(m_fSpeed);
+	}
+	
+	if (iOffSetY + iItvY < m_tInfo.vPos.y + iScrollY)
+	{
+		CScrollMgr::Get_Instance()->Plus_ScrollY(-m_fSpeed);
+	}
+	
+	if (iOffSetX - iItvX > m_tInfo.vPos.x + iScrollX)
+	{
+		CScrollMgr::Get_Instance()->Plus_ScrollX(m_fSpeed);
 	}
 }

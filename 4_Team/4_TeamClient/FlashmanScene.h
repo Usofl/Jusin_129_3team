@@ -1,12 +1,12 @@
 #pragma once
 #include "Scene.h"
-#include "Zelda_Obj.h"
+#include "FlashmanPlayer.h"
 
-class CZeldaEditScene : public CScene
+class CFlashmanScene : public CScene
 {
 public:
-	CZeldaEditScene();
-	virtual ~CZeldaEditScene();
+	CFlashmanScene();
+	virtual ~CFlashmanScene();
 
 	// CScene을(를) 통해 상속됨
 	virtual void Initialize(void) override;
@@ -19,10 +19,10 @@ private:
 	virtual void Key_Input(void) override;
 
 private:
-	float m_fSpeed;
-	POINT					m_pt;
-	CZelda_Obj*				m_pZelda_Obj;
-	std::vector<CZelda_Obj*> m_vecZelda_Obj[ZELDAOBJ_END];
-	ZELDA_OBJID				m_Zelda_Obj_Id;
+	CFlashmanPlayer*	m_pPlayer[FLASHMAN_END];
+	FLASHMAN_PLAYERID	m_ePreFlashMan_id;
+	FLASHMAN_PLAYERID	m_eCurFlashMan_id;
+
+	D3DXVECTOR3			m_vFeildLine[2];
 };
 

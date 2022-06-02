@@ -4,7 +4,7 @@ class CZelda_Stone : public CZelda_Obj
 {
 public:
 	CZelda_Stone();
-	CZelda_Stone(const float& _fX, const float& _fY);
+	CZelda_Stone(const float& _fX, const float& _fY, const float& _fCX, const float& _fCY);
 	virtual ~CZelda_Stone();
 
 public:

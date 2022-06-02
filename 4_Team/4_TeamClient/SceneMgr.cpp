@@ -4,6 +4,7 @@
 #include "Brawl_Stars_Scene.h"
 #include "Momodora.h"
 #include "ZeldaEditScene.h"
+#include "FlashmanScene.h"
 
 CSceneMgr*	CSceneMgr::m_pInstance = nullptr;
 
@@ -17,6 +18,7 @@ CSceneMgr::CSceneMgr()
 	m_pScene[SC_FORTRESS] = new CFortress;
 	m_pScene[SC_ZELDA] = new CZeldaScene;
 	m_pScene[SC_ZELDA_EDIT] = new CZeldaEditScene;
+	m_pScene[SC_FLASHMAN] = new CFlashmanScene;
 }
 
 CSceneMgr::~CSceneMgr()

@@ -210,6 +210,11 @@
     <ClInclude Include="Brawl_Stars_Player.h" />
     <ClInclude Include="Brawl_Stars_Scene.h" />
     <ClInclude Include="Device.h" />
+    <ClInclude Include="FlashmanBlue.h" />
+    <ClInclude Include="FlashmanPlayer.h" />
+    <ClInclude Include="FlashmanRed.h" />
+    <ClInclude Include="FlashmanScene.h" />
+    <ClInclude Include="FlashmanYellow.h" />
     <ClInclude Include="Fortress.h" />
     <ClInclude Include="JunBullet.h" />
     <ClInclude Include="JunPlayer.h" />
@@ -230,6 +235,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="ZeldaEditScene.h" />
+    <ClInclude Include="ZeldaFactory.h" />
     <ClInclude Include="ZeldaPlayer.h" />
     <ClInclude Include="ZeldaScene.h" />
     <ClInclude Include="Zelda_Button.h" />
@@ -249,6 +255,11 @@
     <ClCompile Include="Brawl_Stars_Player.cpp" />
     <ClCompile Include="Brawl_Stars_Scene.cpp" />
     <ClCompile Include="Device.cpp" />
+    <ClCompile Include="FlashmanBlue.cpp" />
+    <ClCompile Include="FlashmanPlayer.cpp" />
+    <ClCompile Include="FlashmanRed.cpp" />
+    <ClCompile Include="FlashmanScene.cpp" />
+    <ClCompile Include="FlashmanYellow.cpp" />
     <ClCompile Include="Fortress.cpp" />
     <ClCompile Include="JunBullet.cpp" />
     <ClCompile Include="JunPlayer.cpp" />
