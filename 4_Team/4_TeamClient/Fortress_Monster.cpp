@@ -17,6 +17,8 @@ CFortress_Monster::~CFortress_Monster()
 
 void CFortress_Monster::Initialize(void)
 {
+	m_eRender = RENDER_GAMEOBJECT;
+
 	srand(unsigned(time(NULL)));
 
 	m_tInfo.vPos = { 600.f , 400.f , 0.f };
@@ -109,9 +111,6 @@ void CFortress_Monster::Render(HDC hDC)
 	// Æ÷½Å
 	MoveToEx(hDC, (int)m_tInfo_Posin_World[0].vPos.x, (int)m_tInfo_Posin_World[0].vPos.y, nullptr);
 	LineTo(hDC, (int)m_tInfo_Posin_World[1].vPos.x, (int)m_tInfo_Posin_World[1].vPos.y);
-
-
-
 }
 
 void CFortress_Monster::Release(void)
@@ -131,7 +130,7 @@ void CFortress_Monster::Shoot_Bullet()
 
 	if (m_dwShootCount + 1000 < GetTickCount())
 	{
-		m_fRandom = rand() % 90;
+		m_fRandom = (float)(rand() % 90);
 		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 		Fortress_Monster_Bullet->Initialize();
 		m_fAngle_Posin = m_fRandom;
@@ -143,6 +142,10 @@ void CFortress_Monster::Shoot_Bullet()
 			m_pMonster_Bullet.push_back(Fortress_Monster_Bullet);
 
 			m_dwShootDelay = 0;
+		}
+		else
+		{
+			Safe_Delete<CFortress_Monster_Bullet*>(Fortress_Monster_Bullet);
 		}
 
 

@@ -217,6 +217,7 @@
     <ClInclude Include="FlashmanYellow.h" />
     <ClInclude Include="Fortress.h" />
     <ClInclude Include="FortressFactory.h" />
+    <ClInclude Include="Fortress_Bullet_Effect.h" />
     <ClInclude Include="Fortress_Monster.h" />
     <ClInclude Include="Fortress_Monster_Bullet.h" />
     <ClInclude Include="MomoAbstractFactory.h" />
@@ -274,6 +275,7 @@
     <ClCompile Include="FlashmanScene.cpp" />
     <ClCompile Include="FlashmanYellow.cpp" />
     <ClCompile Include="Fortress.cpp" />
+    <ClCompile Include="Fortress_Bullet_Effect.cpp" />
     <ClCompile Include="Fortress_Monster.cpp" />
     <ClCompile Include="Fortress_Monster_Bullet.cpp" />
     <ClCompile Include="MomoGun.cpp" />
