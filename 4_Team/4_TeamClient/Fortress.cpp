@@ -18,42 +18,17 @@ void CFortress::Initialize(void)
 	if (nullptr == JunPlayer)
 	{
 		JunPlayer = new CJunPlayer;
-		
 	}
 
 	BulletList = (JunPlayer->Get_BulletList());
-
 	m_Line.tLPoint = { 0.f,0.f };
 	m_Line.tRPoint = { 300.f,0.f };
-	/*LINE TempPo[3]{};
-	TempPo[0].tLPoint = { 300,50 };
-	TempPo[0].tRPoint = { 300,200 };
-	TempPo[1].tLPoint = { 300,50 };
-	TempPo[1].tRPoint = { 300,200 };
-	TempPo[2].tLPoint = { 300,50 };
-	TempPo[2].tRPoint = { 300,200 };
-
-	CLine LineArray[3];*/
-	//for (int i = 0; 3 > i; ++i)
-	//{
-	//	LineArray[i] = { TempPo[i].tLPoint ,TempPo[i].tRPoint };
-	//}
-
-	/*for (int i = 0; 3 > i; ++i)
-	{
-		CLineMgr::Get_Instance()->Create_Line(&LineArray[i]);
-	}*/
-
+	
 	LINEMGR->Create_Line(0, 500, 200, 500);
 	LINEMGR->Create_Line(200, 500, 300, 200);
 	LINEMGR->Create_Line(300, 200, 500, 400);
 	LINEMGR->Create_Line(500,400,800,200);
-	//CLineMgr::Get_Instance()->
-		
-	/*for (int i = 0; 6 > i; ++i)*/
-	//LineArray =  TempLine,TempLine2 ;
-	
-	//RenderList.
+
 }
 
 void CFortress::Update(void)
@@ -76,7 +51,6 @@ void CFortress::Late_Update(void)
 	float* fY = JunPlayer->Get_InfoY();
 	if (LINEMGR->Collision_Line(fX, fY))
 		JunPlayer->Set_Angle(LINEMGR->Collision_JunLine(fX, fY));
-		
 }
 
 void CFortress::Render(HDC _hDC)

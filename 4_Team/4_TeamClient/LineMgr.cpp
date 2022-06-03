@@ -95,7 +95,8 @@ float CLineMgr::Collision_JunLine(float & _fX, float * pY)
 	*pY = (((y2 - y1) / (x2 - x1)) * (_fX - x1)) + y1;
 	//D3DXVec3Normalize(&vTemp, &vTemp);
 	D3DXVec3Normalize(&vTemp2, &vTemp2);
-	return acosf(D3DXVec3Dot(&vTemp, &vTemp2));
+	float Temp = D3DXToRadian(acosf(D3DXVec3Dot(&vTemp, &vTemp2)));
+	return 41.f;
 	//return 0.0f;
 }
 
