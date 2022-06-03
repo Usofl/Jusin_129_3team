@@ -26,7 +26,6 @@ void CFortress::Initialize(void)
 		FortressMonster->Initialize();
 	}
 
-	Monster_Bullet_List = (*FortressMonster->Get_BulletList());
 	m_Line.tLPoint = { 0.f,0.f };
 	m_Line.tRPoint = { 300.f,0.f };
 	

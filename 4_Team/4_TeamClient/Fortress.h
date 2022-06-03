@@ -25,6 +25,10 @@ public:
 		return &JunBulletList;
 	};
 
+	list<CFortress_Monster_Bullet*>* Get_Monster_Bullet_List(void) {
+		return &Monster_Bullet_List;
+	};
+
 private:
 	CJunPlayer * JunPlayer;
 	CJunBullet * JunBullet;
@@ -37,8 +41,6 @@ private:
 	//static list<CJunBullet*>* BulletList;
 	/*LINEPOINT TempLine = { 50,100 };
 	LINEPOINT TempLine2 = { 270,100 };*/
-
-	
 
 	LINE m_Line;
 	//CLine TempL = {};

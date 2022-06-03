@@ -1,8 +1,7 @@
 #include "stdafx.h"
 #include "Fortress_Monster.h"
 #include "FortressFactory.h"
-#include <time.h>
-
+#include "SceneMgr.h"
 
 CFortress_Monster::CFortress_Monster()
 	:m_fSpeed(5.f), m_fRandom(0), m_dwShootCount(GetTickCount()), m_dwShootDelay(GetTickCount())
@@ -139,7 +138,7 @@ void CFortress_Monster::Shoot_Bullet()
 		{
 			Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin + m_fAngle_Body);
 			Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
-			m_pMonster_Bullet.push_back(Fortress_Monster_Bullet);
+			static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
 
 			m_dwShootDelay = 0;
 		}

@@ -19,9 +19,6 @@ public:
 public:
 	void			Shoot_Bullet();
 
-
-	list<CFortress_Monster_Bullet*>* Get_BulletList(void) { return &m_pMonster_Bullet; };
-
 private:
 	INFO			m_tInfo_Body_Local[4];
 	INFO			m_tInfo_Body_World[4];
@@ -43,9 +40,6 @@ private:
 	DWORD			m_dwShootDelay;
 	D3DXMATRIX		m_PosinWorld;
 
-
-
 	CFortress_Monster_Bullet*	Fortress_Monster_Bullet;
-	list<CFortress_Monster_Bullet*>	m_pMonster_Bullet;
 };
 

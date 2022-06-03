@@ -75,7 +75,8 @@ void CFortress_Bullet_Effect::Late_Update(void)
 
 void CFortress_Bullet_Effect::Render(HDC hDC)
 {
-	Ellipse(hDC, m_tInfo.vPos.x - m_iSize, m_tInfo.vPos.y - m_iSize, m_tInfo.vPos.x + m_iSize, m_tInfo.vPos.y + m_iSize);
+	Ellipse(hDC, (int)m_tInfo.vPos.x - m_iSize, (int)m_tInfo.vPos.y - m_iSize,
+		(int)m_tInfo.vPos.x + m_iSize, (int)m_tInfo.vPos.y + m_iSize);
 }
 
 void CFortress_Bullet_Effect::Release(void)
