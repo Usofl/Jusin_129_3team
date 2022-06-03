@@ -17,6 +17,7 @@ public:
 	virtual void Render(HDC _hDC) override;
 	virtual void Release(void) override;
 	virtual void Key_Input(void) override;
+
 private:
 	CJunPlayer * JunPlayer;
 	CJunBullet * JunBullet;
@@ -26,7 +27,6 @@ private:
 	LINEPOINT TempLine2 = { 270,100 };*/
 
 	LINE m_Line;
-	
 	//CLine TempL = {};
 	
 	//Line Temp;

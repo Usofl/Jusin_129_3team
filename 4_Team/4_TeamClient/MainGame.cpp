@@ -25,8 +25,8 @@ void CMainGame::Initialize(void)
 
 	//SCENEMGR->Scene_Change(SC_ZELDA);
 	//SCENEMGR->Scene_Change(SC_ZELDA_EDIT);
-	//SCENEMGR->Scene_Change(SC_FORTRESS);
-	SCENEMGR->Scene_Change(SC_FLASHMAN);
+	SCENEMGR->Scene_Change(SC_FORTRESS);
+	//SCENEMGR->Scene_Change(SC_FLASHMAN);
 	//SCENEMGR->Scene_Change(SC_MOMO);
 	//SCENEMGR->Scene_Change(SC_BRAWL_STARS);
 	 
