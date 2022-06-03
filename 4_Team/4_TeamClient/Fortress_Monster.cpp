@@ -64,6 +64,7 @@ const int CFortress_Monster::Update(void)
 		D3DXVec3TransformCoord(&m_tInfo_Body_World[i].vPos, &m_tInfo_Body_Local[i].vPos, &m_tInfo.matWorld);
 	}
 
+	
 
 	// 포신의 앵글값 , 몸체의 앵글값을 더한 값을 matRotZ 에 대입
 	D3DXMatrixRotationZ(&m_tMatInfo.matRotZ, D3DXToRadian(m_fAngle_Body + m_fAngle_Posin));
@@ -148,8 +149,5 @@ void CFortress_Monster::Shoot_Bullet()
 		m_dwShootCount = GetTickCount();
 	}
 
-	if (GetAsyncKeyState('Z'))
-	{
-		m_fAngle_Posin += 1.f;
-	}
+
 }
