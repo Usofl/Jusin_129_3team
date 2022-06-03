@@ -17,6 +17,7 @@ CFlashmanPlayer::CFlashmanPlayer()
 
 CFlashmanPlayer::~CFlashmanPlayer()
 {
+	
 }
 
 void CFlashmanPlayer::Fallen(void)
