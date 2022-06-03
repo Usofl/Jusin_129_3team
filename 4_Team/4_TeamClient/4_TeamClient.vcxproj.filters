@@ -154,6 +154,18 @@
     <Filter Include="03. Game\01. Obj\01. Other_Object\04. Flashman_Obj\00. Waepon">
       <UniqueIdentifier>{cb7e6887-fe19-4ce2-9f05-d9125a0e6c63}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Game\98. Manager\06. TextureMgr">
+      <UniqueIdentifier>{5b9e2722-0016-40e7-b42e-867b67e93e8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\98. Manager\06. TextureMgr\00. Texture">
+      <UniqueIdentifier>{a83c47df-9a26-4532-b2fa-ff90603b7533}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\98. Manager\06. TextureMgr\00. Texture\00. Single">
+      <UniqueIdentifier>{47a27a34-6f0e-4e41-9ba6-28c46381db65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\98. Manager\06. TextureMgr\00. Texture\01. Multi">
+      <UniqueIdentifier>{6880b040-734d-4ca7-9c43-4959d8cb4bfa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -309,6 +321,18 @@
     <ClInclude Include="Brawl_Monster_Bullet.h">
       <Filter>03. Game\01. Obj\01. Other_Object\00. Brawl_Obj\00. Brawl_Stars_Monster\00. Brawl_Monster_Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="TextureMgr.h">
+      <Filter>03. Game\98. Manager\06. TextureMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>03. Game\98. Manager\06. TextureMgr\00. Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiTexture.h">
+      <Filter>03. Game\98. Manager\06. TextureMgr\00. Texture\01. Multi</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleTexture.h">
+      <Filter>03. Game\98. Manager\06. TextureMgr\00. Texture\00. Single</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="4_TeamClient.cpp">
@@ -445,6 +469,18 @@
     </ClCompile>
     <ClCompile Include="Line.cpp">
       <Filter>03. Game\98. Manager\05.LineMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureMgr.cpp">
+      <Filter>03. Game\98. Manager\06. TextureMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>03. Game\98. Manager\06. TextureMgr\00. Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiTexture.cpp">
+      <Filter>03. Game\98. Manager\06. TextureMgr\00. Texture\01. Multi</Filter>
+    </ClCompile>
+    <ClCompile Include="SingleTexture.cpp">
+      <Filter>03. Game\98. Manager\06. TextureMgr\00. Texture\00. Single</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

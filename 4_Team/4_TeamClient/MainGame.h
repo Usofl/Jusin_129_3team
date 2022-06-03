@@ -1,4 +1,7 @@
 #pragma once
+#include "Device.h"
+#include "SingleTexture.h"
+#include "MultiTexture.h"
 class CMainGame
 {
 public:
@@ -15,6 +18,7 @@ public:
 private:
 	HDC		m_hDC;
 	HDC		m_hBackDC;
+	HDC		m_hGroundDC;
 
 	TCHAR		m_szFPS[64];
 	int			m_iFPS;

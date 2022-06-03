@@ -15,8 +15,8 @@ CSceneMgr::CSceneMgr()
 {
 	m_pScene[SC_BRAWL_STARS] = new CBrawl_Stars_Scene;
 	m_pScene[SC_MOMO] = new CMomodora;
-	m_pScene[SC_FORTRESS] = nullptr;
-	//m_pScene[SC_FORTRESS] = new CFortress;
+	//m_pScene[SC_FORTRESS] = nullptr;
+	m_pScene[SC_FORTRESS] = new CFortress;
 	m_pScene[SC_ZELDA] = new CZeldaScene;
 	m_pScene[SC_ZELDA_EDIT] = new CZeldaEditScene;
 	m_pScene[SC_FLASHMAN] = new CFlashmanScene;
