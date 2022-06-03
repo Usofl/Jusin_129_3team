@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "JunBullet.h"
+#include "ScrollMgr.h"
 #include "KeyMgr.h"
 
 CJunBullet::CJunBullet()
@@ -77,6 +78,10 @@ void CJunBullet::Render(HDC hDC)
 	case BULLET_END:
 		break;
 	}
+	int	iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int	iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
+	Ellipse(hDC, (int)m_tInfo.vPos.x - 10 + iScrollX, (int)m_tInfo.vPos.y - 10 + iScrollY, (int)m_tInfo.vPos.x + 10 + iScrollX, (int)m_tInfo.vPos.y + 10 + iScrollY);
 }
 
 void CJunBullet::Release(void)
