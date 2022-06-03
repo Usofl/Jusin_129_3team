@@ -19,6 +19,8 @@ public:
 public:
 	void			Shoot_Bullet();
 
+	void Set_Angle(float _f) {	m_fAngle = (_f);}
+
 private:
 	INFO			m_tInfo_Body_Local[4];
 	INFO			m_tInfo_Body_World[4];
@@ -35,6 +37,8 @@ private:
 		
 	float			m_fAngle_Body;
 	float			m_fAngle_Posin;
+
+	bool			m_bShoot;
 
 	DWORD			m_dwShootCount;
 	DWORD			m_dwShootDelay;

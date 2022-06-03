@@ -1,10 +1,12 @@
 #include "stdafx.h"
 #include "Fortress_Monster.h"
 #include "FortressFactory.h"
+#include "ScrollMgr.h"
 #include "SceneMgr.h"
 
+
 CFortress_Monster::CFortress_Monster()
-	:m_fSpeed(5.f), m_fRandom(0), m_dwShootCount(GetTickCount()), m_dwShootDelay(GetTickCount())
+	:m_bShoot(true), m_fSpeed(5.f), m_fRandom(0), m_dwShootCount(GetTickCount()), m_dwShootDelay(GetTickCount())
 {
 }
 
@@ -48,7 +50,6 @@ const int CFortress_Monster::Update(void)
 
 	D3DXVec3TransformNormal(&m_tInfo.vDir, &m_tInfo.vDir, &m_tInfo.matWorld);
 
-	m_fAngle_Body += m_fAngle;
 
 	// 이동행렬 생성 인포의 포스x , y == 400 , 300 , 그리고 matTrans에 대입 == 위치값
 	D3DXMatrixTranslation(&m_tMatInfo.matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
@@ -65,8 +66,6 @@ const int CFortress_Monster::Update(void)
 		D3DXVec3TransformCoord(&m_tInfo_Body_World[i].vPos, &m_tInfo_Body_Local[i].vPos, &m_tInfo.matWorld);
 	}
 
-	
-
 	// 포신의 앵글값 , 몸체의 앵글값을 더한 값을 matRotZ 에 대입
 	D3DXMatrixRotationZ(&m_tMatInfo.matRotZ, D3DXToRadian(m_fAngle_Body + m_fAngle_Posin));
 
@@ -78,6 +77,7 @@ const int CFortress_Monster::Update(void)
 		// 최종적인 위치 벡터를 반환 해준다 ( 월드 변환을 위한 행렬에 인포포신 로컬을 곱한후에 포신월드에 대입
 		D3DXVec3TransformCoord(&m_tInfo_Posin_World[i].vPos, &m_tInfo_Posin_Local[i].vPos, &m_PosinWorld);
 	}
+
 	Shoot_Bullet();
 
 	// 앵글값을 0으로 초기화를 안 시키면 계속 회전함
@@ -93,24 +93,27 @@ void CFortress_Monster::Late_Update(void)
 
 void CFortress_Monster::Render(HDC hDC)
 {
-	MoveToEx(hDC, (int)m_tInfo_Body_World[0].vPos.x, (int)m_tInfo_Body_World[0].vPos.y, nullptr);
+	int		iScrollX = (int)SCROLLMGR->Get_ScrollX();
+	int		iScrollY = (int)SCROLLMGR->Get_ScrollY();
+
+	MoveToEx(hDC, (int)m_tInfo_Body_World[0].vPos.x + iScrollX, (int)m_tInfo_Body_World[0].vPos.y + iScrollY, nullptr);
 	for (int i = 0; i < 4; ++i)
 	{
-		LineTo(hDC, (int)m_tInfo_Body_World[i].vPos.x, (int)m_tInfo_Body_World[i].vPos.y);
+		LineTo(hDC, (int)m_tInfo_Body_World[i].vPos.x + iScrollX, (int)m_tInfo_Body_World[i].vPos.y + iScrollY);
 	}
-	LineTo(hDC, (int)m_tInfo_Body_World[0].vPos.x, (int)m_tInfo_Body_World[0].vPos.y);
+	LineTo(hDC, (int)m_tInfo_Body_World[0].vPos.x + iScrollX, (int)m_tInfo_Body_World[0].vPos.y + iScrollY);
 
 	// 인포값의 원
-	Ellipse(hDC, (int)m_tInfo.vPos.x - 55, (int)m_tInfo.vPos.y - 15, (int)m_tInfo.vPos.x + 5, (int)m_tInfo.vPos.y + 45);
-	Ellipse(hDC, (int)m_tInfo.vPos.x + 25, (int)m_tInfo.vPos.y + 25, (int)m_tInfo.vPos.x + 45, (int)m_tInfo.vPos.y + 45);
+	//Ellipse(hDC, (int)m_tInfo.vPos.x - 55, (int)m_tInfo.vPos.y - 15, (int)m_tInfo.vPos.x + 5, (int)m_tInfo.vPos.y + 45);
+	//Ellipse(hDC, (int)m_tInfo.vPos.x + 25, (int)m_tInfo.vPos.y + 25, (int)m_tInfo.vPos.x + 45, (int)m_tInfo.vPos.y + 45);
 
 	// 전면부를 나타내는 조그마한 점 2개
-	Ellipse(hDC, (int)m_tInfo_Body_World[0].vPos.x - 5, (int)m_tInfo_Body_World[0].vPos.y - 5, (int)m_tInfo_Body_World[0].vPos.x + 5, (int)m_tInfo_Body_World[0].vPos.y + 5);
+	Ellipse(hDC, (int)m_tInfo_Body_World[0].vPos.x + iScrollX - 5, (int)m_tInfo_Body_World[0].vPos.y + iScrollY - 5, (int)m_tInfo_Body_World[0].vPos.x + iScrollX + 5, (int)m_tInfo_Body_World[0].vPos.y + iScrollY + 5);
 	
 
 	// 포신
-	MoveToEx(hDC, (int)m_tInfo_Posin_World[0].vPos.x, (int)m_tInfo_Posin_World[0].vPos.y, nullptr);
-	LineTo(hDC, (int)m_tInfo_Posin_World[1].vPos.x, (int)m_tInfo_Posin_World[1].vPos.y);
+	MoveToEx(hDC, (int)m_tInfo_Posin_World[0].vPos.x + iScrollX, (int)m_tInfo_Posin_World[0].vPos.y +iScrollY, nullptr);
+	LineTo(hDC, (int)m_tInfo_Posin_World[1].vPos.x + iScrollX, (int)m_tInfo_Posin_World[1].vPos.y + iScrollY);
 }
 
 void CFortress_Monster::Release(void)
@@ -128,20 +131,27 @@ void CFortress_Monster::Shoot_Bullet()
 		m_dwCount = GetTickCount();
 	}*/
 
-	if (m_dwShootCount + 1000 < GetTickCount())
+	/*if (m_dwShootCount + 1000 < GetTickCount())
 	{
 		m_fRandom = (float)(rand() % 90);
 		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 		Fortress_Monster_Bullet->Initialize();
-		m_fAngle_Posin = m_fRandom;
-
-		if (m_dwShootDelay + 1100 < GetTickCount())
+		if (m_fAngle_Posin < m_fRandom)
+		{
+			++m_fAngle_Posin;
+		}
+		else if (m_fAngle > m_fRandom)
+		{
+			--m_fAngle_Posin;
+		}
+	
+		if (m_dwShootDelay + 5000 < GetTickCount())
 		{
 			Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin + m_fAngle_Body);
 			Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
 			static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
 
-			m_dwShootDelay = 0;
+			m_dwShootDelay = GetTickCount();
 		}
 		else
 		{
@@ -150,7 +160,37 @@ void CFortress_Monster::Shoot_Bullet()
 
 
 		m_dwShootCount = GetTickCount();
+	}*/
+
+	if (m_bShoot == true)
+	{
+		m_fRandom = (float)(rand() % 91) + 1;
+		m_bShoot = false;
+	}
+	if (m_fAngle_Posin < m_fRandom)
+	{
+		++m_fAngle_Posin;
+		if (m_fAngle_Posin > m_fRandom)
+		{
+			m_fAngle_Posin = m_fRandom;
+			if (m_fAngle_Posin == m_fRandom)
+			{
+				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin + m_fAngle_Body);
+				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
+				static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+				m_bShoot = true;
+			}
+		}
+	}
+	else if (m_fAngle_Posin > m_fRandom)
+	{
+		--m_fAngle_Posin;
+		if (m_fAngle_Posin < m_fRandom)
+		{
+			m_fAngle_Posin = m_fRandom;
+		}
 	}
 
 
 }
+// 난수값을 받고 rnad 값이 포신값보다 작으면 ++포신각도 같아지면 멈추고, 총알 쏘고-> 다른 난수값을 받으면 포신값보다 작으면 내려가고 같아지면 총알 쏘고

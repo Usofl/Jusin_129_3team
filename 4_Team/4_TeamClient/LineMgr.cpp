@@ -156,6 +156,47 @@ const float CLineMgr::Collision_JunLine(float & _fX, float * pY)
 	return Temp;
 }
 
+const float CLineMgr::Collision_Monster_Line(float & _fX, float * pY)
+{
+	if (m_LineList.empty())
+		return false;
+
+	CLine*		pTarget = nullptr;
+
+	for (auto& iter : m_LineList)
+	{
+		if (_fX >= iter->Get_Info().tLPoint.fX &&
+			_fX <= iter->Get_Info().tRPoint.fX)
+		{
+			pTarget = iter;
+		}
+	}
+
+	if (!pTarget)
+		return false;
+
+	float	x1 = pTarget->Get_Info().tLPoint.fX;
+	float	x2 = pTarget->Get_Info().tRPoint.fX;
+
+	float	y1 = pTarget->Get_Info().tLPoint.fY;
+	float	y2 = pTarget->Get_Info().tRPoint.fY;
+
+	D3DXVECTOR3 vTemp = { 1.f,0.f,0.f };
+	D3DXVECTOR3 vTemp2 = { x2 - x1 ,y2 - y1,0.f };
+	
+	*pY = (((y2 - y1) / (x2 - x1)) * (_fX - x1)) + y1;
+	//D3DXVec3Normalize(&vTemp, &vTemp);
+	D3DXVec3Normalize(&vTemp2, &vTemp2);
+	float Temp = acosf(D3DXVec3Dot(&vTemp, &vTemp2));
+
+	if (y1 > y2)
+	{
+		Temp *= -1.f;
+	}
+
+	return Temp;
+}
+
 void CLineMgr::Load_Line()
 {
 	HANDLE		hFile = CreateFile(L"../Data/Line.dat",			// 파일 경로와 이름 명시
