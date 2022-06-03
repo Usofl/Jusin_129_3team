@@ -3,6 +3,7 @@
 #include "JunPlayer.h"
 #include "JunBullet.h"
 #include "Fortress_Monster.h"
+#include "Fortress_Bullet_Effect.h"
 #include "LineMgr.h"
 class CFortress :
 	public CScene
@@ -24,19 +25,22 @@ public:
 		return &JunBulletList;
 	};
 
+	list<CFortress_Monster_Bullet*>* Get_Monster_Bullet_List(void) {
+		return &Monster_Bullet_List;
+	};
+
 private:
 	CJunPlayer * JunPlayer;
 	CJunBullet * JunBullet;
 	CFortress_Monster * FortressMonster;
 
-	list<CObj*> RenderList;
 	list<CJunBullet*> JunBulletList;
-	list<CFortress_Monster_Bullet*>* Monster_Bullet_List;
+	list<CFortress_Bullet_Effect*> m_list_Bullet_Effect;
+	list<CFortress_Monster_Bullet*> Monster_Bullet_List;
+
 	//static list<CJunBullet*>* BulletList;
 	/*LINEPOINT TempLine = { 50,100 };
 	LINEPOINT TempLine2 = { 270,100 };*/
-
-	
 
 	LINE m_Line;
 	//CLine TempL = {};

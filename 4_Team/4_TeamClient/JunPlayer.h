@@ -1,8 +1,7 @@
 #pragma once
 #include "Player.h"
 #include "JunBullet.h"
-class CJunPlayer :
-	public CPlayer
+class CJunPlayer : public CPlayer
 {
 public:
 	CJunPlayer();

@@ -2,6 +2,7 @@
 
 #include "Fortress_Monster.h"
 #include "Fortress_Monster_Bullet.h"
+#include "Fortress_Bullet_Effect.h"
 
 class CFortressFactory
 {
@@ -32,6 +33,13 @@ public:
 		pFortress_Bullet->Set_Angle(_fAngle);
 
 		return pFortress_Bullet;
+	}
+
+	static	CFortress_Bullet_Effect*	Create_Fortress_Bullet_Effect(const float& _fX, const float& _fY)
+	{
+		CFortress_Bullet_Effect*	Fortress_Bullet_Effect = new CFortress_Bullet_Effect(_fX, _fY);
+
+		return Fortress_Bullet_Effect;
 	}
 };
 

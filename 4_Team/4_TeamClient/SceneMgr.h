@@ -36,9 +36,8 @@ public:
 	}
 
 public:
-	CScene*	Get_ForScene(void) {
-		return m_pScene[SC_FORTRESS];
-	};
+	inline CScene*&	Get_Scene(const SCENEID& _SceneID) { return m_pScene[_SceneID]; }
+
 private:
 	static CSceneMgr*		m_pInstance;
 	CScene*					m_pScene[SC_END];

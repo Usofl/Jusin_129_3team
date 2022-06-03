@@ -63,6 +63,7 @@
 #include <algorithm>
 #include <Functional>
 #include <string>
+#include <random>
 
 #include <d3d9.h>
 #include <d3dx9.h>
@@ -73,3 +74,5 @@
 #pragma comment(lib, "d3dx9.lib")*/
 
 using namespace std;
+
+const int Random_Num(const int& _min, const int& _max);
