@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "JunBullet.h"
-
+#include "ScrollMgr.h"
 
 CJunBullet::CJunBullet()
 {
@@ -48,7 +48,10 @@ void CJunBullet::Late_Update(void)
 
 void CJunBullet::Render(HDC hDC)
 {
-	Ellipse(hDC, (int)m_tInfo.vPos.x - 10, (int)m_tInfo.vPos.y - 10, (int)m_tInfo.vPos.x + 10, (int)m_tInfo.vPos.y + 10);	
+	int	iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int	iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
+	Ellipse(hDC, (int)m_tInfo.vPos.x - 10 + iScrollX, (int)m_tInfo.vPos.y - 10 + iScrollY, (int)m_tInfo.vPos.x + 10 + iScrollX, (int)m_tInfo.vPos.y + 10 + iScrollY);
 }
 
 void CJunBullet::Release(void)

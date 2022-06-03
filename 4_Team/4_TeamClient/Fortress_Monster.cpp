@@ -2,6 +2,7 @@
 #include "Fortress_Monster.h"
 #include "FortressFactory.h"
 #include "SceneMgr.h"
+#include "ScrollMgr.h"
 
 CFortress_Monster::CFortress_Monster()
 	:m_fSpeed(5.f), m_fRandom(0), m_dwShootCount(GetTickCount()), m_dwShootDelay(GetTickCount())
@@ -93,24 +94,27 @@ void CFortress_Monster::Late_Update(void)
 
 void CFortress_Monster::Render(HDC hDC)
 {
-	MoveToEx(hDC, (int)m_tInfo_Body_World[0].vPos.x, (int)m_tInfo_Body_World[0].vPos.y, nullptr);
+	int	iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int	iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
+	MoveToEx(hDC, (int)m_tInfo_Body_World[0].vPos.x + iScrollX, (int)m_tInfo_Body_World[0].vPos.y + iScrollY, nullptr);
 	for (int i = 0; i < 4; ++i)
 	{
-		LineTo(hDC, (int)m_tInfo_Body_World[i].vPos.x, (int)m_tInfo_Body_World[i].vPos.y);
+		LineTo(hDC, (int)m_tInfo_Body_World[i].vPos.x + iScrollX, (int)m_tInfo_Body_World[i].vPos.y + iScrollY);
 	}
-	LineTo(hDC, (int)m_tInfo_Body_World[0].vPos.x, (int)m_tInfo_Body_World[0].vPos.y);
+	LineTo(hDC, (int)m_tInfo_Body_World[0].vPos.x + iScrollX, (int)m_tInfo_Body_World[0].vPos.y + iScrollY);
 
 	// 인포값의 원
-	Ellipse(hDC, (int)m_tInfo.vPos.x - 55, (int)m_tInfo.vPos.y - 15, (int)m_tInfo.vPos.x + 5, (int)m_tInfo.vPos.y + 45);
-	Ellipse(hDC, (int)m_tInfo.vPos.x + 25, (int)m_tInfo.vPos.y + 25, (int)m_tInfo.vPos.x + 45, (int)m_tInfo.vPos.y + 45);
+	Ellipse(hDC, (int)m_tInfo.vPos.x - 55 + iScrollX, (int)m_tInfo.vPos.y - 15 + iScrollY, (int)m_tInfo.vPos.x + 5 + iScrollX, (int)m_tInfo.vPos.y + 45 + iScrollY);
+	Ellipse(hDC, (int)m_tInfo.vPos.x + 25 + iScrollX, (int)m_tInfo.vPos.y + 25 + iScrollY, (int)m_tInfo.vPos.x + 45 + iScrollX, (int)m_tInfo.vPos.y + 45 + iScrollY);
 
 	// 전면부를 나타내는 조그마한 점 2개
-	Ellipse(hDC, (int)m_tInfo_Body_World[0].vPos.x - 5, (int)m_tInfo_Body_World[0].vPos.y - 5, (int)m_tInfo_Body_World[0].vPos.x + 5, (int)m_tInfo_Body_World[0].vPos.y + 5);
+	Ellipse(hDC, (int)m_tInfo_Body_World[0].vPos.x - 5 + iScrollX, (int)m_tInfo_Body_World[0].vPos.y - 5 + iScrollY, (int)m_tInfo_Body_World[0].vPos.x + 5 + iScrollX, (int)m_tInfo_Body_World[0].vPos.y + 5 + iScrollY);
 	
 
 	// 포신
-	MoveToEx(hDC, (int)m_tInfo_Posin_World[0].vPos.x, (int)m_tInfo_Posin_World[0].vPos.y, nullptr);
-	LineTo(hDC, (int)m_tInfo_Posin_World[1].vPos.x, (int)m_tInfo_Posin_World[1].vPos.y);
+	MoveToEx(hDC, (int)m_tInfo_Posin_World[0].vPos.x + iScrollX, (int)m_tInfo_Posin_World[0].vPos.y + iScrollY, nullptr);
+	LineTo(hDC, (int)m_tInfo_Posin_World[1].vPos.x + iScrollX, (int)m_tInfo_Posin_World[1].vPos.y + iScrollY);
 }
 
 void CFortress_Monster::Release(void)
