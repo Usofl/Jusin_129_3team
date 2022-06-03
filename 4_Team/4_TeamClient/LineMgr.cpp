@@ -81,34 +81,44 @@ bool CLineMgr::Collision_DeLine(float _fX, float _fY)
 	for (auto iter = m_LineList.begin(); iter != m_LineList.end(); )
 	{
 		bool bX = false, bY = false;
-		/*if (_fX >= (*iter)->Get_Info().tLPoint.fX - 10.f && _fX <= (*iter)->Get_Info().tRPoint.fX + 10.f)
+		
+
+		if (_fX >= (*iter)->Get_Info().tLPoint.fX - 10 &&
+			_fX <= (*iter)->Get_Info().tRPoint.fX + 10 ||
+			_fX >= (*iter)->Get_Info().tRPoint.fX + 10 &&
+			_fX <= (*iter)->Get_Info().tLPoint.fX - 10)
 		{
-			bool bX = true;
+			bX	= true;
 		}
-		else if (_fX <= (*iter)->Get_Info().tLPoint.fX - 10.f && _fX >= (*iter)->Get_Info().tRPoint.fX + 10.f)
+
+		if ((_fY <= (*iter)->Get_Info().tLPoint.fY +10 &&
+			_fY >= (*iter)->Get_Info().tRPoint.fY - 10) ||(
+			_fY <= (*iter)->Get_Info().tRPoint.fY - 10 &&
+			_fY >= (*iter)->Get_Info().tLPoint.fY + 10))
 		{
-			bool bX = true;
+			bY = true;
 		}
-		if (_fY <= (*iter)->Get_Info().tLPoint.fY +10.f && _fY >= (*iter)->Get_Info().tRPoint.fY - 10.f)
-		{
-			bool bY = true;
-		}
-		else if (_fY >= (*iter)->Get_Info().tLPoint.fY + 10.f && _fY <= (*iter)->Get_Info().tRPoint.fY - 10.f)
-		{
-			bool bY = true;
-		}*/
 
 		// 이전 인포랑 현재 인포 저장해서 그 사이에 있으면 충돌되게끔
-		//L포가  R포보다 작다 생각한 기준이라 반대 경우가 거의 안먹는 듯 
-		if ((_fX >= (*iter)->Get_Info().tLPoint.fX &&
-			_fX <= (*iter)->Get_Info().tRPoint.fX) && (_fY  <= (*iter)->Get_Info().tLPoint.fY &&
-				_fY  >= (*iter)->Get_Info().tRPoint.fY))
-		/*if(bX&&bY)*/
+		////L포가  R포보다 작다 생각한 기준이라 반대 경우가 거의 안먹는 듯 
+		//if ((_fX >= (*iter)->Get_Info().tLPoint.fX && 
+		//	_fX <= (*iter)->Get_Info().tRPoint.fX) && (_fY  <= (*iter)->Get_Info().tLPoint.fY &&
+		//		_fY  >= (*iter)->Get_Info().tRPoint.fY))
+		if(bX&&bY)
 		{
 			Safe_Delete(*iter);
 			(iter) = m_LineList.erase((iter));
 			return true;
 		}
+
+	/*	else if ((_fX >= (*iter)->Get_Info().tLPoint.fX &&
+			_fX <= (*iter)->Get_Info().tRPoint.fX) && (_fY <= (*iter)->Get_Info().tRPoint.fY &&
+				_fY >= (*iter)->Get_Info().tLPoint.fY))
+		{
+			Safe_Delete(*iter);
+			(iter) = m_LineList.erase((iter));
+			return true;
+		}*/
 
 		/*else if ()
 		{
