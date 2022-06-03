@@ -17,7 +17,10 @@ public:
 
 private:
 	bool m_bDead;
+
 	int m_iSize;
+	int m_iRed;
+
 	float m_fAngle;
 	float m_fTime;
 	float m_fGravity;

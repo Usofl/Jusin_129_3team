@@ -16,8 +16,9 @@ CFortress_Bullet_Effect::CFortress_Bullet_Effect()
 CFortress_Bullet_Effect::CFortress_Bullet_Effect(const float & _fX, const float & _fY)
 	: m_bDead(false)
 	, m_iSize(Random_Num(5, 20))
+	, m_iRed(Random_Num(150, 255))
 	, m_fAngle(D3DXToRadian((float)Random_Num(-60, 60)))
-	, m_fPower((float)Random_Num(15, 20))
+	, m_fPower((float)Random_Num(10, 15))
 	, m_fTime(0.f)
 	, m_fGravity((float)Random_Num(4, 8))
 {
@@ -75,8 +76,16 @@ void CFortress_Bullet_Effect::Late_Update(void)
 
 void CFortress_Bullet_Effect::Render(HDC hDC)
 {
+	HBRUSH MyBrush, OldBrush;
+	MyBrush = (HBRUSH)CreateSolidBrush(RGB(m_iRed, 30, 30));
+	OldBrush = (HBRUSH)SelectObject(hDC, MyBrush);
+
 	Ellipse(hDC, (int)m_tInfo.vPos.x - m_iSize, (int)m_tInfo.vPos.y - m_iSize,
 		(int)m_tInfo.vPos.x + m_iSize, (int)m_tInfo.vPos.y + m_iSize);
+
+	SelectObject(hDC, OldBrush);
+	DeleteObject(MyBrush);
+
 }
 
 void CFortress_Bullet_Effect::Release(void)

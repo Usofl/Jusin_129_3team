@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Fortress.h"
 #include "RenderMgr.h"
+#include "FortressFactory.h"
 
 CFortress::CFortress()
 	: JunPlayer(nullptr)
@@ -52,9 +53,17 @@ void CFortress::Update(void)
 		iter->Update();
 	}
 
-	for (auto& iter : m_list_Bullet_Effect)
+	for (auto iter = m_list_Bullet_Effect.begin(); iter != m_list_Bullet_Effect.end();)
 	{
-		iter->Update();
+		if(OBJ_DEAD == (*iter)->Update())
+		{
+			Safe_Delete(*iter);
+			(iter) = m_list_Bullet_Effect.erase((iter));
+		}
+		else
+		{
+			iter++;
+		}
 	}
 }
 
@@ -75,11 +84,18 @@ void CFortress::Late_Update(void)
 		float fY = (*iter)->Get_Info().vPos.y;
 		if (LINEMGR->Collision_DeLine(fX, fY))
 		{
+			int num = Random_Num(5, 10);
+			for (int i = 0; i < num; ++i)
+			{
+				m_list_Bullet_Effect.push_back(CFortressFactory::Create_Fortress_Bullet_Effect((*iter)->Get_Info().vPos.x, (*iter)->Get_Info().vPos.y));
+			}
+
 			Safe_Delete(*iter);
 			(iter) = JunBulletList.erase((iter));
 		}
 		else
 		{
+			RENDERMGR->Add_Render_Obj(*iter);
 			iter++;
 		}
 			//iter->Set_Pos(1000.f, 1000.f);
