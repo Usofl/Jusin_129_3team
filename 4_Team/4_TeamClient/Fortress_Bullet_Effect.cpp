@@ -6,6 +6,7 @@ CFortress_Bullet_Effect::CFortress_Bullet_Effect()
 	: m_bDead(false)
 	, m_iSize(0)
 	, m_fAngle(0.f)
+	, m_iRed(0)
 	, m_fPower(0.f)
 	, m_fTime(0.f)
 	, m_fGravity(0.f)
@@ -16,7 +17,7 @@ CFortress_Bullet_Effect::CFortress_Bullet_Effect()
 CFortress_Bullet_Effect::CFortress_Bullet_Effect(const float & _fX, const float & _fY)
 	: m_bDead(false)
 	, m_iSize(Random_Num(5, 20))
-	, m_iRed(Random_Num(150, 255))
+	, m_iRed(Random_Num(150, 200))
 	, m_fAngle(D3DXToRadian((float)Random_Num(-60, 60)))
 	, m_fPower((float)Random_Num(10, 15))
 	, m_fTime(0.f)
@@ -85,7 +86,6 @@ void CFortress_Bullet_Effect::Render(HDC hDC)
 
 	SelectObject(hDC, OldBrush);
 	DeleteObject(MyBrush);
-
 }
 
 void CFortress_Bullet_Effect::Release(void)
