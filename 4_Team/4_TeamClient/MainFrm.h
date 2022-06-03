@@ -24,6 +24,8 @@ public:
 public:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 
+	CMainGame& Get_MainGame(void) { return m_MainGame; }
+
 // 구현입니다.
 public:
 	virtual ~CMainFrame();

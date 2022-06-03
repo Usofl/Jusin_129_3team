@@ -93,11 +93,11 @@ void CFortress::Release(void)
 {
 
 	Safe_Delete<CJunPlayer*>(JunPlayer);
-	/*for (auto& iter : *BulletList)
-	{
-		iter->Release();
-	}
-*/
+	//for (auto& iter : *BulletList)
+	//{
+	//	iter->Release();
+	//}
+
 }
 
 void CFortress::Key_Input(void)

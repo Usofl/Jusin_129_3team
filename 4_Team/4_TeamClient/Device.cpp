@@ -4,7 +4,9 @@
 IMPLEMENT_SINGLETON(CDevice)
 
 CDevice::CDevice()
-	: m_pSDK(nullptr), m_pDevice(nullptr)
+	: m_pSDK(nullptr)
+	, m_pDevice(nullptr)
+	, m_pSprite(nullptr)
 {
 }
 
@@ -16,6 +18,7 @@ CDevice::~CDevice()
 
 HRESULT CDevice::Initialize(void)
 {
+
 	// 장치 초기화 과정
 
 	// 1. 렌더링 장치를 생성하고 조사할 객체 생성
@@ -77,14 +80,22 @@ HRESULT CDevice::Initialize(void)
 		return E_FAIL;
 	}
 
-	//return E_FAIL;
-	//return S_FALSE;
+	// 스프라이트 객체 생성
+
+	if (FAILED(D3DXCreateSprite(m_pDevice, &m_pSprite)))
+	{
+		AfxMessageBox(L"CreateSprite Failed");
+		return E_FAIL;
+	}
 
 	return S_OK;
 }
 
 void CDevice::Release(void)
 {
+	if (nullptr != m_pSprite)
+		m_pSprite->Release();
+
 	if (nullptr != m_pDevice)
 		m_pDevice->Release();
 
@@ -108,11 +119,18 @@ void CDevice::Render_Begin(void)
 			 // 여기서부터 후면 버퍼에 그린다.
 	m_pDevice->BeginScene();
 
+	// 2D 이미지를 그릴 수 있도록 장치에게 알림(현재 렌더링 옵션)
+	// 현재 렌더링 옵션은 알파 테스트가 유효한 상태에서 알파 블렌딩을 사용하겠다는 옵션
+	m_pSprite->Begin(D3DXSPRITE_ALPHABLEND);
+
 }
 
 
 void CDevice::Render_End(HWND hWnd)
 {
+
+	m_pSprite->End();
+
 	// 여기까지가 후면 버퍼에 다 그린 시점
 	m_pDevice->EndScene();
 

@@ -37,3 +37,11 @@ typedef	struct	tagLineInfo
 	tagLineInfo(LINEPOINT& tLeft, LINEPOINT& tRight) : tLPoint(tLeft), tRPoint(tRight) {	}
 
 }LINE;
+
+typedef struct tagTexture
+{
+	LPDIRECT3DTEXTURE9		pTexture;   // 컴 객체
+
+	D3DXIMAGE_INFO			tImgInfo;	// 구조체
+
+}TEXINFO;
