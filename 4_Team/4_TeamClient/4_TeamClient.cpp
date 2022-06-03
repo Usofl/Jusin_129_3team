@@ -10,6 +10,7 @@
 #include "4_TeamClientDoc.h"
 #include "4_TeamClientView.h"
 #include "MainFrm.h"
+#include "Device.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -96,6 +97,8 @@ BOOL CMy4_TeamClientApp::InitInstance()
 	m_pMainWnd->SetWindowPos(NULL, 0, 0, width, height, 0);
 
 	g_hWnd = m_pMainWnd->m_hWnd;
+
+	m_pFrame->Get_MainGame().Initialize();
 
 	return TRUE;
 }

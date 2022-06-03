@@ -5,6 +5,7 @@
 #include "RenderMgr.h"
 #include "ScrollMgr.h"
 #include "Device.h"
+#include "TextureMgr.h"
 
 CMainGame::CMainGame()
 	: m_dwFPSTime(GetTickCount())
@@ -26,13 +27,19 @@ void CMainGame::Initialize(void)
 	//SCENEMGR->Scene_Change(SC_ZELDA);
 	//SCENEMGR->Scene_Change(SC_ZELDA_EDIT);
 	SCENEMGR->Scene_Change(SC_FORTRESS);
-//	SCENEMGR->Scene_Change(SC_FLASHMAN);
+	//SCENEMGR->Scene_Change(SC_FLASHMAN);
 	//SCENEMGR->Scene_Change(SC_MOMO);
 	//SCENEMGR->Scene_Change(SC_BRAWL_STARS);
 	 
-	if (FAILED(CDevice::Get_Instance()->Initialize()))
+	if (FAILED(DEVICE->Initialize()))
 	{
 		AfxMessageBox(L"m_pDevice 생성 실패");
+		return;
+	}
+
+	if (FAILED(TEXTUREMGR->InsertTexture(L"../Texture/Back.png", TEX_SINGLE, L"Back")))
+	{
+		AfxMessageBox(L"Back Image Insert failed");
 		return;
 	}
 
@@ -53,11 +60,6 @@ void CMainGame::Initialize(void)
 
 void CMainGame::Update(void)
 {
-	ReleaseDC(g_hWnd, m_hDC);
-	ReleaseDC(g_hWnd, m_hBackDC);
-
-	m_hDC = GetDC(g_hWnd);
-	m_hBackDC = GetDC(g_hWnd);
 	SCENEMGR->Update();
 }
 
@@ -68,11 +70,46 @@ void CMainGame::Late_Update(void)
 
 void CMainGame::Render(void)
 {
-	CDevice::Get_Instance()->Render_Begin();
+	D3DXMATRIX		matWorld, matScale, matRotZ, matTrans;
 
-	BitBlt(m_hDC, 0, 0, WINCX, WINCY, m_hBackDC, 0, 0, SRCCOPY);
+	D3DXMatrixIdentity(&matWorld);
+	D3DXMatrixScaling(&matScale, 1.f, 1.f, 1.f);
+	D3DXMatrixRotationZ(&matRotZ, 0.f);
+	D3DXMatrixTranslation(&matTrans, 400.f, 300.f, 0.f);
+
+	matWorld = matScale * matRotZ * matTrans;
+
+	DEVICE->Get_Sprite()->SetTransform(&matWorld);
+
+	const TEXINFO*		pTexInfo = TEXTUREMGR->Get_Texture(L"Back");
+
+	float		fX = pTexInfo->tImgInfo.Width / 2.f;
+	float		fY = pTexInfo->tImgInfo.Height / 2.f;
+
+	m_hDC = GetDC(g_hWnd);
+	m_hBackDC = CreateCompatibleDC(m_hDC);
+	HBITMAP m_hBackBit = CreateCompatibleBitmap(m_hDC, WINCX, WINCY);
+	HBITMAP m_hOldBackBit = (HBITMAP)SelectObject(m_hBackDC, m_hBackBit);
+
 	Rectangle(m_hBackDC, 0, 0, WINCX, WINCY);
 	SCENEMGR->Render(m_hBackDC);
+
+	BitBlt(m_hDC, 0, 0, WINCX, WINCY, m_hBackDC, 0, 0, SRCCOPY);
+
+	SelectObject(m_hBackDC, m_hOldBackBit); //DC에 원래 설정을 돌려줍니다.
+	DeleteDC(m_hBackDC);  // 메모리를 반환합니다.
+	DeleteObject(m_hBackBit); // 메모리를 반환합니다.
+	ReleaseDC(g_hWnd, m_hDC);
+
+	//DEVICE->Render_Begin();
+
+	//DEVICE->Get_Sprite()->Draw(pTexInfo->pTexture,	// 그리고자 하는 텍스처
+	//	nullptr, // 출력할 이미지 영역에 대한 rect 포인터, null인 경우 이미지의 0, 0 기준으로 출력
+	//	&D3DXVECTOR3(fX, fY, 0.f), // 출력할 이미지 중심 축에 대한 vec3 구조체 포인터, null인 경우 0, 0이 중심 좌표
+	//	nullptr, // 위치 좌표에 대한 vec3 구조체 포인터, null인 경우 스크린 상 0,0 좌표에 출력
+	//	D3DCOLOR_ARGB(255, 255, 255, 255)); //출력할 원본 이미지와 섞을 색상 값, 출력 시 섞은 색상이 반영, 0xffffffff를 넘겨주면 원본 색상 유지된 상태로 출력
+
+	//DEVICE->Render_End();
 
 #ifdef _DEBUG
 	++m_iFPS;
@@ -86,8 +123,6 @@ void CMainGame::Render(void)
 		m_dwFPSTime = GetTickCount();
 	}
 #endif _DEBUG
-
-	CDevice::Get_Instance()->Render_End();
 }
 
 void CMainGame::Release(void)
@@ -102,8 +137,9 @@ void CMainGame::Release(void)
 	KEYMGR->Destroy_Instance();
 	SCROLLMGR->Destroy_Instance();
 	RENDERMGR->Destroy_Instance();
-	CDevice::Get_Instance()->Destroy_Instance();
+	TEXTUREMGR->Destroy_Instance();
+	DEVICE->Destroy_Instance();
 
 	ReleaseDC(g_hWnd, m_hDC);
-	ReleaseDC(g_hWnd, m_hBackDC);
+	ReleaseDC(g_hWnd, m_hBackDC); 
 }

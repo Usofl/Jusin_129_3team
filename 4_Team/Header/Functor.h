@@ -55,18 +55,22 @@ public:
 
 class CTag_Finder
 {
+private:
+	const TCHAR*	m_pStr;
+
 public:
-	CTag_Finder(char* pTag) : m_pTag(pTag) {}
+	CTag_Finder(const TCHAR* pStr)
+		: m_pStr(pStr)
+	{
+
+	}
 
 public:
 	template<typename T>
-	bool operator()(T& Pair)
+	bool	operator()(T& Pair)
 	{
-		return !strcmp(Pair.first, m_pTag);
+		return !lstrcmp(m_pStr, Pair.first.c_str());
 	}
-
-private:
-	char*		m_pTag;
 };
 
 static D3DXVECTOR3		Get_Mouse(void)

@@ -66,8 +66,6 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//EnableDocking(CBRS_ALIGN_ANY);
 	//DockControlBar(&m_wndToolBar);
 
-	m_MainGame.Initialize();
-
 	return 0;
 }
 
@@ -109,5 +107,6 @@ void CMainFrame::MainLoop()
 {
 	m_MainGame.Update();
 	m_MainGame.Late_Update();
+
 	m_MainGame.Render();
 }

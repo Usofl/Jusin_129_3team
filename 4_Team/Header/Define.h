@@ -52,11 +52,14 @@ void ClassName::Destroy_Instance()						\
 }
 
 
-#define KEYMGR (CKeyMgr::Get_Instance())
-#define SCROLLMGR (CScrollMgr::Get_Instance())
-#define SCENEMGR (CSceneMgr::Get_Instance())
-#define RENDERMGR (CRenderMgr::Get_Instance())
+#define KEYMGR		(CKeyMgr::Get_Instance())
+#define SCROLLMGR	(CScrollMgr::Get_Instance())
+#define SCENEMGR	(CSceneMgr::Get_Instance())
+#define RENDERMGR	(CRenderMgr::Get_Instance())
 #define MOMODORAMGR (CMomodoraMgr::Get_Instance())
-#define LINEMGR (CLineMgr::Get_Instance())
+#define LINEMGR		(CLineMgr::Get_Instance())
+
+#define TEXTUREMGR	(CTextureMgr::Get_Instance())
+#define DEVICE		(CDevice::Get_Instance())
 
 extern HWND			g_hWnd;

@@ -216,6 +216,9 @@
     <ClInclude Include="FlashmanScene.h" />
     <ClInclude Include="FlashmanYellow.h" />
     <ClInclude Include="Fortress.h" />
+    <ClInclude Include="FortressFactory.h" />
+    <ClInclude Include="Fortress_Monster.h" />
+    <ClInclude Include="Fortress_Monster_Bullet.h" />
     <ClInclude Include="MomoAbstractFactory.h" />
     <ClInclude Include="MomoGun.h" />
     <ClInclude Include="JunBullet.h" />
@@ -230,6 +233,7 @@
     <ClInclude Include="MomodoraPlayer.h" />
     <ClInclude Include="MomoSword.h" />
     <ClInclude Include="Momo_Obj.h" />
+    <ClInclude Include="MultiTexture.h" />
     <ClInclude Include="Obj.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RenderMgr.h" />
@@ -238,8 +242,11 @@
     <ClInclude Include="SceneMgr.h" />
     <ClInclude Include="ScrollMgr.h" />
     <ClInclude Include="Momodora.h" />
+    <ClInclude Include="SingleTexture.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="TextureMgr.h" />
     <ClInclude Include="ZeldaEditScene.h" />
     <ClInclude Include="ZeldaFactory.h" />
     <ClInclude Include="ZeldaPlayer.h" />
@@ -267,6 +274,8 @@
     <ClCompile Include="FlashmanScene.cpp" />
     <ClCompile Include="FlashmanYellow.cpp" />
     <ClCompile Include="Fortress.cpp" />
+    <ClCompile Include="Fortress_Monster.cpp" />
+    <ClCompile Include="Fortress_Monster_Bullet.cpp" />
     <ClCompile Include="MomoGun.cpp" />
     <ClCompile Include="JunBullet.cpp" />
     <ClCompile Include="JunPlayer.cpp" />
@@ -280,6 +289,7 @@
     <ClCompile Include="MomodoraPlayer.cpp" />
     <ClCompile Include="MomoSword.cpp" />
     <ClCompile Include="Momo_Obj.cpp" />
+    <ClCompile Include="MultiTexture.cpp" />
     <ClCompile Include="Obj.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RenderMgr.cpp" />
@@ -287,12 +297,15 @@
     <ClCompile Include="SceneMgr.cpp" />
     <ClCompile Include="ScrollMgr.cpp" />
     <ClCompile Include="Momodora.cpp" />
+    <ClCompile Include="SingleTexture.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="TextureMgr.cpp" />
     <ClCompile Include="ZeldaEditScene.cpp" />
     <ClCompile Include="ZeldaPlayer.cpp" />
     <ClCompile Include="ZeldaScene.cpp" />

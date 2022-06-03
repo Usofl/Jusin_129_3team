@@ -20,28 +20,34 @@ void CFortress::Initialize(void)
 		JunPlayer = new CJunPlayer;
 	}
 
-	//JunBulletList = (JunPlayer->Get_BulletList());
+	if (nullptr == FortressMonster)
+	{
+		FortressMonster = new CFortress_Monster;
+		FortressMonster->Initialize();
+
+	}
+	Monster_Bullet_List = (FortressMonster->Get_BulletList());
 	m_Line.tLPoint = { 0.f,0.f };
 	m_Line.tRPoint = { 300.f,0.f };
 	
-	/*LINEMGR->Create_Line(0, 500, 200, 500);
-	LINEMGR->Create_Line(200, 500, 300, 200);
-	LINEMGR->Create_Line(300, 200, 500, 400);
-	LINEMGR->Create_Line(500,400,800,200);*/
-	LINEMGR->Create_Line(0, 500, 150, 480);
-	LINEMGR->Create_Line(150, 480, 300, 450);
-	LINEMGR->Create_Line(300, 450, 330, 430);
-	LINEMGR->Create_Line(330, 430, 350, 410);
-	LINEMGR->Create_Line(350, 410, 370, 400);
-	LINEMGR->Create_Line(370, 400, 500, 390);
-	LINEMGR->Create_Line(500, 390, 800, 350);
-
+	LINEMGR->Create_Line(0, 600, 150, 580);
+	LINEMGR->Create_Line(150, 580, 300, 550);
+	LINEMGR->Create_Line(300, 550, 330, 530);
+	LINEMGR->Create_Line(330, 530, 350, 510);
+	LINEMGR->Create_Line(350, 510, 370, 500);
+	LINEMGR->Create_Line(370, 500, 500, 490);
+	LINEMGR->Create_Line(500, 490,800,450);
 }
 
 void CFortress::Update(void)
 {
 	JunPlayer->Update();
+	FortressMonster->Update();
 	for (auto& iter : JunBulletList)
+	{
+		iter->Update();
+	}
+	for (auto& iter : *Monster_Bullet_List)
 	{
 		iter->Update();
 	}
@@ -50,7 +56,12 @@ void CFortress::Update(void)
 void CFortress::Late_Update(void)
 {
 	JunPlayer->Late_Update();
+	FortressMonster->Late_Update();
 	for (auto& iter : JunBulletList)
+	{
+		iter->Late_Update();
+	}
+	for (auto& iter : *Monster_Bullet_List)
 	{
 		iter->Late_Update();
 	}
@@ -68,13 +79,27 @@ void CFortress::Late_Update(void)
 void CFortress::Render(HDC _hDC)
 {
 	
-
+	FortressMonster->Render(_hDC);
 	JunPlayer->Render(_hDC);
 	for (auto& iter : JunBulletList)
 	{
 		iter->Render(_hDC);
 	}
+	for (auto& iter : *Monster_Bullet_List)
+	{
+		iter->Render(_hDC);
+	}
 	LINEMGR->Render(_hDC);
+
+	//UI ¿¹Á¤
+	RECT rc1 = { 0, 0, 1024, 110 };
+	RECT rc2 = { 0, 658, 1024, 768 };
+
+	InvertRect(_hDC, &rc1);
+	InvertRect(_hDC, &rc2);
+
+	//Rectangle(_hDC, 0, 0, 1024, 110);
+	//Rectangle(_hDC, 0, 658, 1024, 768);
 
 	/*for (int i = 0; 6 > i; ++i)
 	{
@@ -100,6 +125,10 @@ void CFortress::Release(void)
 
 		iter = JunBulletList.erase(iter);
 	}
+	for (auto& iter : *Monster_Bullet_List)
+	{
+		iter->Release();
+	}
 
 }
 
@@ -107,3 +136,4 @@ void CFortress::Key_Input(void)
 {
 
 }
+
