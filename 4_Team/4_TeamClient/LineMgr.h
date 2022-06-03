@@ -13,7 +13,7 @@ public:
 	void		Release(void);
 
 	bool		Collision_Line(float& _fX, float* pY);
-	float		Collision_JunLine(float& _fX, float* pY);
+	const float Collision_JunLine(float& _fX, float* pY);
 	void		Load_Line();
 	void		Create_Line(int _x, int _y, int _x2, int _y2);
 		

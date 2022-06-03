@@ -16,14 +16,18 @@ public:
 	virtual void Release(void) override;
 
 public:
-	list<CJunBullet*>* Get_BulletList(void) { return &BulletList; };
+	//list<CJunBullet*>* Get_BulletList(void) { return &BulletList; };
 	INFO* Get_InfoJun(void) { return &m_tInfo; };
 	float* Get_InfoY(void) { return &m_tInfo.vPos.y; };
 	void Set_Angle(float _f) {
-		m_fAngle = D3DXToRadian(_f);
+		m_fAngle = (_f);
 	}
+	const bool Get_NextLine(void) { return m_bNextLine; };
+	void Set_NextLine(bool _b) { m_bNextLine = _b; };
 private:
 	virtual void Key_Input(void) override;
+private:
+	void Shoot(void);
 private:
 	D3DXVECTOR3 Tank[4];
 	D3DXVECTOR3 TankHead[4];
@@ -38,8 +42,11 @@ private:
 	D3DXMATRIX m_HeadMat;
 private:
 	int m_iAngleCount;
-	float m_fPoAngle;
+	float m_fPoAngle; 
+	float BeforeAngle;
+	float m_fShootPower;
+	bool  m_bNextLine;
 	CJunBullet* Bullet;
-	list<CJunBullet*>BulletList;
+	//list<CJunBullet*> BulletList;
 };
 

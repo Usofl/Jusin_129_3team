@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "JunPlayer.h"
 #include "KeyMgr.h"
+#include "SceneMgr.h"
 
 CJunPlayer::CJunPlayer():m_iAngleCount(0)
 {
@@ -15,8 +16,10 @@ CJunPlayer::~CJunPlayer()
 
 void CJunPlayer::Initialize(void)
 {
+	
 	//m_tInfo.
 	//int iArray[4] = { 0,0,50,50 };
+	//SCENEMGR->Get_Instance()->
 	Tank[0] = { -50.f,-50.f,0.f };
 	Tank[1] = { 50.f, -50.f,0.f };
 	Tank[2] = { 50.f,50.f,0.f };
@@ -36,34 +39,42 @@ void CJunPlayer::Initialize(void)
 	m_tInfo.vLook = { 1.f,0.f,0.f };
 	m_fAngle = 0.f;
 	m_fPoAngle = 0.f;
+	BeforeAngle = m_fAngle;
 	m_fSpeed = 5.f;
 	OriPo_Dir = { 1.f,0.f,0.f };
+	m_fShootPower = 0.f;
 	
 }
 
 const int CJunPlayer::Update(void)
 {
-	//float BeforePoAngle = m_fPoAngle ;
-	Tank[0] = { -50.f,-30.f,0.f };
+	//float BeforeAngle = m_fAngle ;
+	/*Tank[0] = { -50.f,-30.f,0.f };
 	Tank[1] = { 50.f, -30.f,0.f };
 	Tank[2] = { 50.f,30.f,0.f };
-	Tank[3] = { -50.f,30.f,0.f };
+	Tank[3] = { -50.f,30.f,0.f };*/
+	Tank[0] = { -50.f,-30.f - 29.f,0.f };
+	Tank[1] = { 50.f, -30.f - 29.f,0.f };
+	Tank[2] = { 50.f,30.f - 29.f,0.f };
+	Tank[3] = { -50.f,30.f - 29.f,0.f };
 	/*TankHead[0] = { -20.f,-20.f + m_HeadInfo.vPos.y,0.f };
 	TankHead[1] = { 20.f, -20.f + m_HeadInfo.vPos.y,0.f };
 	TankHead[2] = { 20.f,20.f + m_HeadInfo.vPos.y,0.f };
 	TankHead[3] = { -20.f,20.f + m_HeadInfo.vPos.y,0.f };*/
 
-	TankHead[0] = { -20.f,-50.f-20.f ,0.f };
-	TankHead[1] = { 20.f, -50.f-20.f  ,0.f };
-	TankHead[2] = { 20.f,-50.f + 20.f  ,0.f };
-	TankHead[3] = { -20.f,-50.f +20.f,0.f };
+	TankHead[0] = { -20.f,-50.f-20.f - 29.f ,0.f };
+	TankHead[1] = { 20.f, -50.f-20.f - 29.f  ,0.f };
+	TankHead[2] = { 20.f,-50.f + 20.f - 29.f  ,0.f };
+	TankHead[3] = { -20.f,-50.f +20.f - 29.f,0.f };
 	Po = { 80.f, 0.f ,0.f };
 	
+	if (BeforeAngle != m_fAngle)
+	{
+		m_fPoAngle = m_fAngle;
+		BeforeAngle = m_fAngle;
+	}
 
-
-
-
-	Po_One = { 0, -50.f,0.f };
+	Po_One = { 0, -79.f,0.f };
 
 	Key_Input();
 	
@@ -99,16 +110,33 @@ const int CJunPlayer::Update(void)
 
 	D3DXVec3TransformCoord(&Po, &Po, &m_HeadInfo.matWorld);
 
-	D3DXVec3TransformNormal(&Po_Dir, &OriPo_Dir, &m_HeadInfo.matWorld);
+	//D3DXVec3TransformNormal(&Po_Dir, &OriPo_Dir, &m_HeadInfo.matWorld);
 
+	D3DXVECTOR3 TempVec1 = { Po.x - Po_One.x, Po.y - Po_One.y,0.f };
+	D3DXVECTOR3 TempVec2 = { 1.f,0.f,0.f };
+
+	D3DXVec3Normalize(&TempVec1, &TempVec1);
+	//float fTe = D3DXVec3Dot(&TempVec1, &TempVec2);
+	//D3DXVec3Normalize
+	if (KEYMGR->Key_Pressing(VK_SPACE))
+	{
+		m_fShootPower += 0.4f;
+	}
 	if (KEYMGR->Key_Up(VK_SPACE))
 	{
-
+		//fShootPower;
 		Bullet = new CJunBullet;
 		Bullet->Initialize();
-		Bullet->Set_Pos_Dir(Po.x, Po.y, Po_Dir);
- 		BulletList.push_back(Bullet);
-		int i = 5;
+		if (Po_One.x > Po.x)
+			Bullet->Set_Pos_Dir(Po.x, Po.y, TempVec1,-1, m_fShootPower);
+		//	Bullet->Set_Pos_Dir(Po.x, Po.y, Po_Dir ,-1);
+		else
+			Bullet->Set_Pos_Dir(Po.x, Po.y, TempVec1, 1, m_fShootPower);
+
+		dynamic_cast<CFortress*>(SCENEMGR->Get_Instance()->Get_ForScene())->Get_JunBulletList()->push_back(Bullet);
+		m_fShootPower = 0.f;
+		
+		//int i = 5;
 	}
 	
  	return 0;
@@ -160,41 +188,44 @@ void CJunPlayer::Key_Input(void)
 	if (KEYMGR->Key_Pressing(VK_LEFT))
 	{
 		
-		m_fPoAngle -= D3DXToRadian(3.f);
-		m_fAngle -= D3DXToRadian(3.f);
+		
+		//m_fAngle -= D3DXToRadian(3.f);
 		//m_fPoAngle += D3DXToRadian(3.f);
-
+		D3DXVec3TransformNormal(&m_tInfo.vDir, &m_tInfo.vLook, &m_tInfo.matWorld);
+		m_tInfo.vPos -= m_tInfo.vDir * m_fSpeed;
 		
 	}
 
 	if (KEYMGR->Key_Pressing(VK_RIGHT))
 	{
-		m_fPoAngle += D3DXToRadian(3.f);
-		m_fAngle += D3DXToRadian(3.f);
+		//m_fAngle += D3DXToRadian(3.f);
 		//m_fPoAngle -= D3DXToRadian(3.f);
-
+		D3DXVec3TransformNormal(&m_tInfo.vDir, &m_tInfo.vLook, &m_tInfo.matWorld);
+		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
+		
 	}
 
 	if (KEYMGR->Key_Pressing(VK_UP))
 	{
-		D3DXVec3TransformNormal(&m_tInfo.vDir, &m_tInfo.vLook, &m_tInfo.matWorld);
-		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
+		m_fPoAngle -= D3DXToRadian(3.f);
+
 	}
 
 	if (KEYMGR->Key_Pressing(VK_DOWN))
 	{
-		D3DXVec3TransformNormal(&m_tInfo.vDir, &m_tInfo.vLook, &m_tInfo.matWorld);
-		m_tInfo.vPos -= m_tInfo.vDir * m_fSpeed;
+		m_fPoAngle += D3DXToRadian(3.f);
+
+		
 	}
 
 	if (KEYMGR->Key_Pressing('A'))
 	{
-		m_fPoAngle -= D3DXToRadian(3.f);
+		//m_fPoAngle -= D3DXToRadian(3.f);
 	}
 
 	if (KEYMGR->Key_Pressing('D'))
 	{
-		m_fPoAngle += D3DXToRadian(3.f);
+		//m_fPoAngle += D3DXToRadian(3.f);
 	}
 
 	
@@ -203,5 +234,10 @@ void CJunPlayer::Key_Input(void)
 	{
 		m_fAngle += D3DXToRadian(3.f);
 	}*/
+}
+
+void CJunPlayer::Shoot(void)
+{
+
 }
 

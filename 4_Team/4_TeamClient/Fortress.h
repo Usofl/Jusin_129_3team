@@ -17,11 +17,18 @@ public:
 	virtual void Render(HDC _hDC) override;
 	virtual void Release(void) override;
 	virtual void Key_Input(void) override;
+
+public:
+	list<CJunBullet*>* Get_JunBulletList(void) {
+		return &JunBulletList;
+	};
+
 private:
 	CJunPlayer * JunPlayer;
 	CJunBullet * JunBullet;
 	list<CObj*> RenderList;
-	list<CJunBullet*>* BulletList;
+	list<CJunBullet*> JunBulletList;
+	//static list<CJunBullet*>* BulletList;
 	/*LINEPOINT TempLine = { 50,100 };
 	LINEPOINT TempLine2 = { 270,100 };*/
 

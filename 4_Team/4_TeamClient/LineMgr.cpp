@@ -64,7 +64,7 @@ bool CLineMgr::Collision_Line(float& _fX, float* pY)
 	return true;
 }
 
-float CLineMgr::Collision_JunLine(float & _fX, float * pY)
+const float CLineMgr::Collision_JunLine(float & _fX, float * pY)
 {
 	if (m_LineList.empty())
 		return false;
@@ -95,9 +95,14 @@ float CLineMgr::Collision_JunLine(float & _fX, float * pY)
 	*pY = (((y2 - y1) / (x2 - x1)) * (_fX - x1)) + y1;
 	//D3DXVec3Normalize(&vTemp, &vTemp);
 	D3DXVec3Normalize(&vTemp2, &vTemp2);
-	float Temp = D3DXToRadian(acosf(D3DXVec3Dot(&vTemp, &vTemp2)));
-	return 41.f;
-	//return 0.0f;
+	float Temp = acosf(D3DXVec3Dot(&vTemp, &vTemp2));
+
+	if (y1 > y2)
+	{
+		Temp *= -1.f;
+	}
+
+	return Temp;
 }
 
 void CLineMgr::Load_Line()

@@ -35,6 +35,10 @@ public:
 		}
 	}
 
+public:
+	CScene*	Get_ForScene(void) {
+		return m_pScene[SC_FORTRESS];
+	};
 private:
 	static CSceneMgr*		m_pInstance;
 	CScene*					m_pScene[SC_END];
