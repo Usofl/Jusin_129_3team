@@ -148,6 +148,12 @@
     <Filter Include="03. Game\01. Obj\01. Other_Object\01.Momo_Obj\00. Weapon">
       <UniqueIdentifier>{6cb8f9b6-32dc-4b71-8d64-05f46ed8325a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Game\01. Obj\01. Other_Object\04. Flashman_Obj">
+      <UniqueIdentifier>{6f15ad58-b260-406c-a6e2-401601c6ceec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj\01. Other_Object\04. Flashman_Obj\00. Waepon">
+      <UniqueIdentifier>{cb7e6887-fe19-4ce2-9f05-d9125a0e6c63}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

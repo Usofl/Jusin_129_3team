@@ -21,7 +21,7 @@ CFlashmanPlayer::~CFlashmanPlayer()
 
 void CFlashmanPlayer::Fallen(void)
 {
-	if (m_tInfo.vPos.y + m_vPoint[POINT_LEFT_FOOT].y >= (WINCY - 100))
+	if (m_vDrawPoint[POINT_LEFT_FOOT].y >= (WINCY - 100))
 	{
 		m_fJumpTime = 0.f;
 		if (m_eCurState != CHANGE || m_tInfo.vPos.x <= 0 || m_tInfo.vPos.x >= WINCX)
@@ -30,12 +30,31 @@ void CFlashmanPlayer::Fallen(void)
 		}
 		m_tInfo.vPos.y = (WINCY - 100) - m_vPoint[POINT_LEFT_FOOT].y;
 		m_bAir = false;
+
+		// z축 회전 행렬 생성 함수
+		D3DXMatrixRotationZ(&m_tMatInfo.matRotZ, m_fAngle);
+
+		// 이동 행렬 생성 함수
+		D3DXMatrixTranslation(&m_tMatInfo.matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
+
+		Update_Matrix();
+
+		for (int i = POINT_HEAD; i < POINT_END; ++i)
+		{
+			D3DXVec3TransformCoord(&m_vDrawPoint[i], &m_vPoint[i], &m_tInfo.matWorld);
+		}
+
+		D3DXVec3TransformNormal(&m_tInfo.vDir, &m_tInfo.vLook, &m_tInfo.matWorld);
+
+		return;
 	}
 	else
 	{
 		m_fJumpTime += 0.1f;
 		m_tInfo.vPos.y += (0.5f * 3.8f * (m_fJumpTime * m_fJumpTime));
 		m_bAir = true;
+		
+		return;
 	}
 }
 
