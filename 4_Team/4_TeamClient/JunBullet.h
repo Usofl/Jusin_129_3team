@@ -32,5 +32,7 @@ private:
 	int m_iBulletDir;
 	BULLET_ID m_BulletID;
 	D3DXVECTOR3 vSu;
+	D3DXVECTOR3 m_vDpDir;
+	D3DXMATRIX		m_matScale, m_matRotZ, m_matTrans;
 };
 

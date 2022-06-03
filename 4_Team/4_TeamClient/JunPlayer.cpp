@@ -69,14 +69,14 @@ const int CJunPlayer::Update(void)
 	TankHead[3] = { -20.f,-50.f +20.f - 29.f,0.f };
 	Po = { 80.f, 0.f ,0.f };
 	
+
 	if (BeforeAngle != m_fAngle)
 	{
 		if (m_fAngle < BeforeAngle)
 			m_fPoAngle -= (BeforeAngle - m_fAngle);
 		else
 			m_fPoAngle += (m_fAngle - BeforeAngle);
-		/*else
-			m_fPoAngle += (BeforeAngle - m_fAngle);*/
+		
 		BeforeAngle = m_fAngle;
 	}
 
@@ -135,9 +135,10 @@ const int CJunPlayer::Update(void)
 		Bullet->Initialize();
 		if (Po_One.x > Po.x)
 			Bullet->Set_Pos_Dir(Po.x, Po.y, TempVec1,-1, m_fShootPower);
-
+		
 		else
 			Bullet->Set_Pos_Dir(Po.x, Po.y, TempVec1, 1, m_fShootPower);
+
 
 		Bullet->Set_BulletID(BULLET_BASIC);
 		static_cast<CFortress*>(SCENEMGR->Get_Instance()->Get_Scene(SC_FORTRESS))->Get_JunBulletList()->push_back(Bullet);

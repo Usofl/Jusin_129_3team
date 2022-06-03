@@ -19,7 +19,7 @@
 #define		DIAMOND			0x02		// -> 0010
 #define		SAPPHIRE		0x04		// -> 0100
 
-
+#define		NORMALVECTOR_X  { 1.f,0.f,0.f }
 
 #define ERR_MSG(message)								\
 ::MessageBox(nullptr, message, L"error", MB_OK)
