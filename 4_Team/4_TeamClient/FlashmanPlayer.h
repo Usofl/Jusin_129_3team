@@ -23,6 +23,8 @@ public:
 	virtual void Render(HDC hDC) PURE;
 	virtual void Release(void) PURE;
 
+
+	inline const STATE& Get_State(void) { return m_eCurState; }
 	inline void Set_State(const STATE& _State) { m_eCurState = _State; }
 
 protected:

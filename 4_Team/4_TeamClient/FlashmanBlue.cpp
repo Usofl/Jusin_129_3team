@@ -17,7 +17,7 @@ void CFlashmanBlue::Initialize(void)
 {
 	m_fSize = 30.f;
 
-	m_tInfo.vPos = { 0.f, 300.f, 0.f };
+	m_tInfo.vPos = { -50.f, 300.f, 0.f };
 	m_tInfo.vLook = { 0.f, -1.f, 0.f };
 
 	m_vPoint[POINT_HEAD] = { 0.f, -m_fSize * 1.5f, 0.f };
@@ -45,29 +45,24 @@ const int CFlashmanBlue::Update(void)
 
 	//m_tInfo.vPos += m_tInfo.vDir;
 
+	Key_Input();
+
 	switch (m_eCurState)
 	{
 	case CFlashmanPlayer::CHANGE:
 		Change();
 		ChangeJumping();
 		break;
-
 	case CFlashmanPlayer::IDLE:
-		Key_Input();
 		break;
 	case CFlashmanPlayer::WALK:
-		Key_Input();
 		break;
-
 	case CFlashmanPlayer::JUMPING:
-		Key_Input();
 		Jumping();
 		break;
 	case CFlashmanPlayer::ATTACK1:
-		Key_Input();
 		break;
 	case CFlashmanPlayer::ATTACK2:
-		Key_Input();
 		break;
 	}
 

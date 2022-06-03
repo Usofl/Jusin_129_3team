@@ -49,7 +49,8 @@ void CFlashmanScene::Update(void)
 
 	m_pPlayer[m_eCurFlashMan_id]->Update();
 
-	if (!(m_pPlayer[m_ePreFlashMan_id]->Get_Info().vPos.x <= 0) || !(m_pPlayer[m_ePreFlashMan_id]->Get_Info().vPos.x >= WINCX))
+	//if (!(m_pPlayer[m_ePreFlashMan_id]->Get_Info().vPos.x <= 0) || !(m_pPlayer[m_ePreFlashMan_id]->Get_Info().vPos.x >= WINCX))
+	if(m_pPlayer[m_ePreFlashMan_id]->Get_State() == CFlashmanPlayer::CHANGE)
 	{
 		m_pPlayer[m_ePreFlashMan_id]->Update();
 	}
@@ -61,7 +62,8 @@ void CFlashmanScene::Late_Update(void)
 	m_pPlayer[m_eCurFlashMan_id]->Late_Update();
 	RENDERMGR->Add_Render_Obj(m_pPlayer[m_eCurFlashMan_id]);
 
-	if (!(m_pPlayer[m_ePreFlashMan_id]->Get_Info().vPos.x <= 0) || !(m_pPlayer[m_ePreFlashMan_id]->Get_Info().vPos.x >= WINCX))
+	//if (!(m_pPlayer[m_ePreFlashMan_id]->Get_Info().vPos.x <= 0) || !(m_pPlayer[m_ePreFlashMan_id]->Get_Info().vPos.x >= WINCX))
+	if (m_pPlayer[m_ePreFlashMan_id]->Get_State() == CFlashmanPlayer::CHANGE)
 	{
 		m_pPlayer[m_ePreFlashMan_id]->Late_Update();
 		RENDERMGR->Add_Render_Obj(m_pPlayer[m_ePreFlashMan_id]);
