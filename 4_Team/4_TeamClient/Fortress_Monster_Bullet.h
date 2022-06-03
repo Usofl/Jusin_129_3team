@@ -22,8 +22,6 @@ public:
 	}
 	void		Set_Angle(const float& _fAngle) { m_fAngle = _fAngle; }
 
-
-
 private:
 	INFO		m_tInfo_Bullet_Local[4];
 	INFO		m_tInfo_Bullet_World[4];

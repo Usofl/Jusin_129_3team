@@ -16,7 +16,7 @@ CJunPlayer::~CJunPlayer()
 
 void CJunPlayer::Initialize(void)
 {
-	
+	m_eRender = RENDER_GAMEOBJECT;
 	//m_tInfo.
 	//int iArray[4] = { 0,0,50,50 };
 	//SCENEMGR->Get_Instance()->

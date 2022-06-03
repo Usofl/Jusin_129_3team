@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Fortress.h"
-
+#include "RenderMgr.h"
 
 CFortress::CFortress()
 	: JunPlayer(nullptr)
@@ -24,9 +24,9 @@ void CFortress::Initialize(void)
 	{
 		FortressMonster = new CFortress_Monster;
 		FortressMonster->Initialize();
-
 	}
-	Monster_Bullet_List = (FortressMonster->Get_BulletList());
+
+	Monster_Bullet_List = (*FortressMonster->Get_BulletList());
 	m_Line.tLPoint = { 0.f,0.f };
 	m_Line.tRPoint = { 300.f,0.f };
 	
@@ -47,7 +47,12 @@ void CFortress::Update(void)
 	{
 		iter->Update();
 	}
-	for (auto& iter : *Monster_Bullet_List)
+	for (auto& iter : Monster_Bullet_List)
+	{
+		iter->Update();
+	}
+
+	for (auto& iter : m_list_Bullet_Effect)
 	{
 		iter->Update();
 	}
@@ -57,43 +62,52 @@ void CFortress::Late_Update(void)
 {
 	JunPlayer->Late_Update();
 	FortressMonster->Late_Update();
+
+	RENDERMGR->Add_Render_Obj(JunPlayer);
+	
+	RENDERMGR->Add_Render_Obj(FortressMonster);
+
 	for (auto& iter : JunBulletList)
 	{
 		iter->Late_Update();
+
+		RENDERMGR->Add_Render_Obj(iter);
 	}
-	for (auto& iter : *Monster_Bullet_List)
+
+	for (auto& iter : Monster_Bullet_List)
 	{
 		iter->Late_Update();
+
+		RENDERMGR->Add_Render_Obj(iter);
 	}
+
+	for (auto& iter : m_list_Bullet_Effect)
+	{
+		iter->Late_Update();
+
+		RENDERMGR->Add_Render_Obj(iter);
+	}
+
 	float fX = JunPlayer->Get_Info().vPos.x;
 	float fY = JunPlayer->Get_Info().vPos.y;
+
 	if (LINEMGR->Collision_Line(fX, &fY))
 	{
 		float fTemp = LINEMGR->Collision_JunLine(fX, &fY);
 		JunPlayer->Set_Angle(fTemp);
 		JunPlayer->Set_Pos(fX, fY);
-		
 	}
 }
 
 void CFortress::Render(HDC _hDC)
 {
-	
-	FortressMonster->Render(_hDC);
-	JunPlayer->Render(_hDC);
-	for (auto& iter : JunBulletList)
-	{
-		iter->Render(_hDC);
-	}
-	for (auto& iter : *Monster_Bullet_List)
-	{
-		iter->Render(_hDC);
-	}
+	RENDERMGR->Render(_hDC);
+
 	LINEMGR->Render(_hDC);
 
 	//UI ¿¹Á¤
-	RECT rc1 = { 0, 0, 1024, 110 };
-	RECT rc2 = { 0, 658, 1024, 768 };
+	RECT rc1 = { -100, 0, WINCX, 110 };
+	RECT rc2 = { -100, WINCY - 110, WINCX, WINCY };
 
 	InvertRect(_hDC, &rc1);
 	InvertRect(_hDC, &rc2);
@@ -118,6 +132,9 @@ void CFortress::Release(void)
 {
 
 	Safe_Delete<CJunPlayer*>(JunPlayer);
+	
+	Safe_Delete<CFortress_Monster*>(FortressMonster);
+
 	for (auto iter = JunBulletList.begin(); iter != JunBulletList.end();)
 	{
 		(*iter)->Release();
@@ -125,11 +142,24 @@ void CFortress::Release(void)
 
 		iter = JunBulletList.erase(iter);
 	}
-	for (auto& iter : *Monster_Bullet_List)
+
+	for (auto iter = Monster_Bullet_List.begin(); iter != Monster_Bullet_List.end();)
 	{
-		iter->Release();
+		(*iter)->Release();
+		Safe_Delete<CFortress_Monster_Bullet*>(*iter);
+
+		iter = Monster_Bullet_List.erase(iter);
 	}
 
+	for (auto iter = m_list_Bullet_Effect.begin(); iter != m_list_Bullet_Effect.end();)
+	{
+		(*iter)->Release();
+		Safe_Delete<CFortress_Bullet_Effect*>(*iter);
+
+		iter = m_list_Bullet_Effect.erase(iter);
+	}
+
+	LINEMGR->Destroy_Instance();
 }
 
 void CFortress::Key_Input(void)
