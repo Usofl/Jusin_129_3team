@@ -134,10 +134,11 @@ const int CJunPlayer::Update(void)
 		Bullet->Initialize();
 		if (Po_One.x > Po.x)
 			Bullet->Set_Pos_Dir(Po.x, Po.y, TempVec1,-1, m_fShootPower);
-		//	Bullet->Set_Pos_Dir(Po.x, Po.y, Po_Dir ,-1);
+
 		else
 			Bullet->Set_Pos_Dir(Po.x, Po.y, TempVec1, 1, m_fShootPower);
 
+		Bullet->Set_BulletID(BULLET_BASIC);
 		static_cast<CFortress*>(SCENEMGR->Get_Instance()->Get_Scene(SC_FORTRESS))->Get_JunBulletList()->push_back(Bullet);
 		m_fShootPower = 0.f;
 		

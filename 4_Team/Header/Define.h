@@ -19,6 +19,8 @@
 #define		DIAMOND			0x02		// -> 0010
 #define		SAPPHIRE		0x04		// -> 0100
 
+
+
 #define ERR_MSG(message)								\
 ::MessageBox(nullptr, message, L"error", MB_OK)
 
