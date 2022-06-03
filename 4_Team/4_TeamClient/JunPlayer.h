@@ -42,7 +42,8 @@ private:
 	D3DXMATRIX m_HeadMat;
 private:
 	int m_iAngleCount;
-	float m_fPoAngle; 
+	float m_fPoAngle;
+	float BeforePoAngle;
 	float BeforeAngle;
 	float m_fShootPower;
 	bool  m_bNextLine;

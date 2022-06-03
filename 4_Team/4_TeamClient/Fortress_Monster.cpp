@@ -86,6 +86,7 @@ const int CFortress_Monster::Update(void)
 
 void CFortress_Monster::Late_Update(void)
 {
+	
 }
 
 void CFortress_Monster::Render(HDC hDC)

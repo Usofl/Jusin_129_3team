@@ -64,6 +64,57 @@ bool CLineMgr::Collision_Line(float& _fX, float* pY)
 	return true;
 }
 
+bool CLineMgr::Collision_DeLine(float _fX, float _fY)
+{
+	// 직선의 방정식
+
+	// Y - y1 = ((y2 - y1) / (x2 - x1)) * X - x1
+	// Y  = (((y2 - y1) / (x2 - x1)) * (X - x1)) + y1
+
+	if (m_LineList.empty())
+		return false;
+
+	CLine*		pTarget = nullptr;
+
+	//pTarget = *m_LineList.begin();
+
+	for (auto iter = m_LineList.begin(); iter != m_LineList.end(); )
+	{
+		if ((_fX >= (*iter)->Get_Info().tLPoint.fX &&
+			_fX <= (*iter)->Get_Info().tRPoint.fX) && (_fY <= (*iter)->Get_Info().tLPoint.fY &&
+				_fY >= (*iter)->Get_Info().tRPoint.fY))
+		{
+			Safe_Delete(*iter);
+			(iter) = m_LineList.erase((iter));
+			return true;
+		}
+		else
+		{
+			++iter;
+		}
+
+		//	int i = 5;
+
+	}
+	//for (auto& iter : m_LineList)
+	//{
+	//	if ((_fX >= iter->Get_Info().tLPoint.fX &&
+	//		_fX <= iter->Get_Info().tRPoint.fX) && (_fY <= iter->Get_Info().tLPoint.fY &&
+	//		_fY >= iter->Get_Info().tRPoint.fY))
+	//	{
+	//		pTarget = iter;
+	//		/*&iter = m_LineList.erase(&iter);*/
+	//		
+	//	}
+	//}
+
+	if (!pTarget)
+		return false;
+
+	
+	
+	return true;
+}
 const float CLineMgr::Collision_JunLine(float & _fX, float * pY)
 {
 	if (m_LineList.empty())

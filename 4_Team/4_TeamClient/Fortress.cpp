@@ -24,8 +24,8 @@ void CFortress::Initialize(void)
 	{
 		FortressMonster = new CFortress_Monster;
 		FortressMonster->Initialize();
-
 	}
+
 	Monster_Bullet_List = (FortressMonster->Get_BulletList());
 	m_Line.tLPoint = { 0.f,0.f };
 	m_Line.tRPoint = { 300.f,0.f };
@@ -37,6 +37,7 @@ void CFortress::Initialize(void)
 	LINEMGR->Create_Line(350, 510, 370, 500);
 	LINEMGR->Create_Line(370, 500, 500, 490);
 	LINEMGR->Create_Line(500, 490,800,450);
+
 }
 
 void CFortress::Update(void)
@@ -57,13 +58,31 @@ void CFortress::Late_Update(void)
 {
 	JunPlayer->Late_Update();
 	FortressMonster->Late_Update();
-	for (auto& iter : JunBulletList)
+	for (auto iter = JunBulletList.begin(); iter != JunBulletList.end();)
 	{
-		iter->Late_Update();
+		(*iter)->Late_Update();
+		//if (FortressMonster->Get_Info().vPos.x < iter->Get_Info().vPos.x)
+		float fX = (*iter)->Get_Info().vPos.x;
+		float fY = (*iter)->Get_Info().vPos.y;
+		if (LINEMGR->Collision_DeLine(fX, fY))
+		{
+			Safe_Delete(*iter);
+			(iter) = JunBulletList.erase((iter));
+		}
+		else
+		{
+			iter++;
+		}
+			//iter->Set_Pos(1000.f, 1000.f);
 	}
 	for (auto& iter : *Monster_Bullet_List)
 	{
 		iter->Late_Update();
+		float fX = iter->Get_Info().vPos.x;
+		float fY = iter->Get_Info().vPos.y;
+		
+		
+		
 	}
 	float fX = JunPlayer->Get_Info().vPos.x;
 	float fY = JunPlayer->Get_Info().vPos.y;
@@ -74,6 +93,8 @@ void CFortress::Late_Update(void)
 		JunPlayer->Set_Pos(fX, fY);
 		
 	}
+
+	
 }
 
 void CFortress::Render(HDC _hDC)
@@ -118,6 +139,7 @@ void CFortress::Release(void)
 {
 
 	Safe_Delete<CJunPlayer*>(JunPlayer);
+	Safe_Delete<CFortress_Monster*>(FortressMonster);
 	for (auto iter = JunBulletList.begin(); iter != JunBulletList.end();)
 	{
 		(*iter)->Release();
@@ -127,7 +149,10 @@ void CFortress::Release(void)
 	}
 	for (auto& iter : *Monster_Bullet_List)
 	{
-		iter->Release();
+		/*iter->Release();
+		Safe_Delete<CFortress_Monster_Bullet*>(iter);*/
+
+		
 	}
 
 }

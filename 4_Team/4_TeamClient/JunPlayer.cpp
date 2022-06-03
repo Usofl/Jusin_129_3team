@@ -70,7 +70,12 @@ const int CJunPlayer::Update(void)
 	
 	if (BeforeAngle != m_fAngle)
 	{
-		m_fPoAngle = m_fAngle;
+		if (m_fAngle < BeforeAngle)
+			m_fPoAngle -= (BeforeAngle - m_fAngle);
+		else
+			m_fPoAngle += (m_fAngle - BeforeAngle);
+		/*else
+			m_fPoAngle += (BeforeAngle - m_fAngle);*/
 		BeforeAngle = m_fAngle;
 	}
 
