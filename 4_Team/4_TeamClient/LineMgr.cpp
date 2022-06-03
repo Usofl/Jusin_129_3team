@@ -64,7 +64,7 @@ bool CLineMgr::Collision_Line(float& _fX, float* pY)
 	return true;
 }
 
-bool CLineMgr::Collision_DeLine(float _fX, float _fY)
+bool CLineMgr::Collision_DeLine(const float& _fX, const float& _fY)
 {
 	// 직선의 방정식
 
@@ -196,7 +196,7 @@ void CLineMgr::Load_Line()
 	MessageBox(g_hWnd, _T("Load 완료"), _T("성공"), MB_OK);
 }
 
-void CLineMgr::Create_Line(int _x, int _y, int _x2, int _y2)
+void CLineMgr::Create_Line(const int& _x, const int& _y, const int& _x2, const int& _y2)
 {
 	
 	m_Line.tLPoint = { (float)_x,(float)_y };

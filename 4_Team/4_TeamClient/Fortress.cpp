@@ -112,11 +112,29 @@ void CFortress::Late_Update(void)
 			//iter->Set_Pos(1000.f, 1000.f);
 	}
 
-	for (auto& iter : Monster_Bullet_List)
+	for (auto iter = Monster_Bullet_List.begin(); iter != Monster_Bullet_List.end();)
 	{
-		iter->Late_Update();
+		(*iter)->Late_Update();
+		//if (FortressMonster->Get_Info().vPos.x < iter->Get_Info().vPos.x)
+		float fX = (*iter)->Get_Info().vPos.x;
+		float fY = (*iter)->Get_Info().vPos.y;
+		if (LINEMGR->Collision_DeLine(fX, fY))
+		{
+			int num = Random_Num(5, 10);
+			for (int i = 0; i < num; ++i)
+			{
+				m_list_Bullet_Effect.push_back(CFortressFactory::Create_Fortress_Bullet_Effect((*iter)->Get_Info().vPos.x, (*iter)->Get_Info().vPos.y));
+			}
 
-		RENDERMGR->Add_Render_Obj(iter);
+			Safe_Delete(*iter);
+			(iter) = Monster_Bullet_List.erase((iter));
+		}
+		else
+		{
+			RENDERMGR->Add_Render_Obj(*iter);
+			iter++;
+		}
+		//iter->Set_Pos(1000.f, 1000.f);
 	}
 
 	for (auto& iter : m_list_Bullet_Effect)
