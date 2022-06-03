@@ -25,6 +25,8 @@ public:
 	void Set_NextLine(bool _b) { m_bNextLine = _b; };
 private:
 	virtual void Key_Input(void) override;
+	void OffSet(void);
+
 private:
 	void Shoot(void);
 private:

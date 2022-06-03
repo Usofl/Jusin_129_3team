@@ -2,6 +2,7 @@
 #include "JunPlayer.h"
 #include "KeyMgr.h"
 #include "SceneMgr.h"
+#include "ScrollMgr.h"
 
 CJunPlayer::CJunPlayer():m_iAngleCount(0)
 {
@@ -82,7 +83,7 @@ const int CJunPlayer::Update(void)
 	Po_One = { 0, -79.f,0.f };
 
 	Key_Input();
-	
+	OffSet();
 
 	D3DXMatrixScaling(&m_matScale, 1.f, 1.f, 0);
 
@@ -247,3 +248,19 @@ void CJunPlayer::Shoot(void)
 
 }
 
+void CJunPlayer::OffSet(void)
+{
+	int		iOffSetX = WINCX >> 1;
+	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int		iItvX = 300;
+
+	if (iOffSetX + iItvX < m_tInfo.vPos.x + iScrollX)
+	{
+		CScrollMgr::Get_Instance()->Plus_ScrollX(-m_fSpeed);
+	}
+
+	if (iOffSetX - iItvX > m_tInfo.vPos.x + iScrollX)
+	{
+		CScrollMgr::Get_Instance()->Plus_ScrollX(m_fSpeed);
+	}
+}
