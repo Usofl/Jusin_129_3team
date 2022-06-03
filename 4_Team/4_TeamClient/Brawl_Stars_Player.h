@@ -38,6 +38,8 @@ private:
 
 	float		m_fAngle_Body;
 	float		m_fAngle_Posin;
+
+	float		m_iRandom;
 	
 	DWORD		m_dwShoot_Bullet;
 

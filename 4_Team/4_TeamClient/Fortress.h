@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "JunPlayer.h"
 #include "JunBullet.h"
+#include "Fortress_Monster.h"
 #include "LineMgr.h"
 class CFortress :
 	public CScene
@@ -20,10 +21,15 @@ public:
 private:
 	CJunPlayer * JunPlayer;
 	CJunBullet * JunBullet;
+	CFortress_Monster * FortressMonster;
+
 	list<CObj*> RenderList;
 	list<CJunBullet*>* BulletList;
+	list<CFortress_Monster_Bullet*>* Monster_Bullet_List;
 	/*LINEPOINT TempLine = { 50,100 };
 	LINEPOINT TempLine2 = { 270,100 };*/
+
+	
 
 	LINE m_Line;
 	

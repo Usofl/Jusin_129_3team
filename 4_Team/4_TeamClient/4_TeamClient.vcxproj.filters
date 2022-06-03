@@ -88,9 +88,6 @@
     <Filter Include="03. Game\97. Factory">
       <UniqueIdentifier>{c8243be7-c861-4897-bf9f-abd78617bfc0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. Game\01. Obj\00. Player\02.ForPlayer">
-      <UniqueIdentifier>{7c57f0c7-2d5d-4572-a770-54029035525b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. Game\01. Obj\01. Other_Object\03. Zelda_Obj\02. Zelda_Button">
       <UniqueIdentifier>{11b469b7-79f7-49c1-800a-3814366f0700}</UniqueIdentifier>
     </Filter>
@@ -153,6 +150,24 @@
     </Filter>
     <Filter Include="03. Game\01. Obj\01. Other_Object\04. Flashman_Obj\00. Waepon">
       <UniqueIdentifier>{cb7e6887-fe19-4ce2-9f05-d9125a0e6c63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj\01. Other_Object\02. Fortress_Obj">
+      <UniqueIdentifier>{ebab9d78-405d-4d93-a9fb-306dcb379de5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj\01. Other_Object\02. Fortress_Obj\00. Fortress_Monster">
+      <UniqueIdentifier>{1e1bddeb-a855-4b1f-b62d-0c7530f424bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj\00. Player\02. ForPlayer">
+      <UniqueIdentifier>{7c57f0c7-2d5d-4572-a770-54029035525b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj\01. Other_Object\02. Fortress_Obj\01. Fortress_Monster_Bullet">
+      <UniqueIdentifier>{6ee45655-c669-4591-8a3a-caf33313142f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\97. Factory\00. BrawlFactory">
+      <UniqueIdentifier>{a4526d20-78b1-44e4-b0aa-0301b3dc6277}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\97. Factory\02. FortressFactory">
+      <UniqueIdentifier>{d1c01ff8-b22e-4242-8e0e-f804915d2c55}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -240,11 +255,8 @@
     <ClInclude Include="Brawl_Stars_Bullet.h">
       <Filter>03. Game\01. Obj\00. Player\00. Brawl_Stars\01. Brawl_Stars_Bullet</Filter>
     </ClInclude>
-    <ClInclude Include="BrawlFactory.h">
-      <Filter>03. Game\97. Factory</Filter>
-    </ClInclude>
     <ClInclude Include="JunPlayer.h">
-      <Filter>03. Game\01. Obj\00. Player\02.ForPlayer</Filter>
+      <Filter>03. Game\01. Obj\00. Player\02. ForPlayer</Filter>
     </ClInclude>
     <ClInclude Include="JunBullet.h">
       <Filter>03. Game\02. Scene\02.J</Filter>
@@ -308,6 +320,18 @@
     </ClInclude>
     <ClInclude Include="Brawl_Monster_Bullet.h">
       <Filter>03. Game\01. Obj\01. Other_Object\00. Brawl_Obj\00. Brawl_Stars_Monster\00. Brawl_Monster_Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Fortress_Monster.h">
+      <Filter>03. Game\01. Obj\01. Other_Object\02. Fortress_Obj\00. Fortress_Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Fortress_Monster_Bullet.h">
+      <Filter>03. Game\01. Obj\01. Other_Object\02. Fortress_Obj\01. Fortress_Monster_Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="BrawlFactory.h">
+      <Filter>03. Game\97. Factory\00. BrawlFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="FortressFactory.h">
+      <Filter>03. Game\97. Factory\02. FortressFactory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -387,7 +411,7 @@
       <Filter>03. Game\01. Obj\00. Player\00. Brawl_Stars\01. Brawl_Stars_Bullet</Filter>
     </ClCompile>
     <ClCompile Include="JunPlayer.cpp">
-      <Filter>03. Game\01. Obj\00. Player\02.ForPlayer</Filter>
+      <Filter>03. Game\01. Obj\00. Player\02. ForPlayer</Filter>
     </ClCompile>
     <ClCompile Include="JunBullet.cpp">
       <Filter>03. Game\02. Scene\02.J</Filter>
@@ -445,6 +469,12 @@
     </ClCompile>
     <ClCompile Include="Line.cpp">
       <Filter>03. Game\98. Manager\05.LineMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Fortress_Monster.cpp">
+      <Filter>03. Game\01. Obj\01. Other_Object\02. Fortress_Obj\00. Fortress_Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Fortress_Monster_Bullet.cpp">
+      <Filter>03. Game\01. Obj\01. Other_Object\02. Fortress_Obj\01. Fortress_Monster_Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

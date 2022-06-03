@@ -20,6 +20,13 @@ void CFortress::Initialize(void)
 		JunPlayer = new CJunPlayer;
 	}
 
+	if (nullptr == FortressMonster)
+	{
+		FortressMonster = new CFortress_Monster;
+		FortressMonster->Initialize();
+
+	}
+	Monster_Bullet_List = (FortressMonster->Get_BulletList());
 	BulletList = (JunPlayer->Get_BulletList());
 	m_Line.tLPoint = { 0.f,0.f };
 	m_Line.tRPoint = { 300.f,0.f };
@@ -29,12 +36,19 @@ void CFortress::Initialize(void)
 	LINEMGR->Create_Line(300, 200, 500, 400);
 	LINEMGR->Create_Line(500,400,800,200);
 
+	
+
 }
 
 void CFortress::Update(void)
 {
 	JunPlayer->Update();
+	FortressMonster->Update();
 	for (auto& iter : *BulletList)
+	{
+		iter->Update();
+	}
+	for (auto& iter : *Monster_Bullet_List)
 	{
 		iter->Update();
 	}
@@ -43,7 +57,12 @@ void CFortress::Update(void)
 void CFortress::Late_Update(void)
 {
 	JunPlayer->Late_Update();
+	FortressMonster->Late_Update();
 	for (auto& iter : *BulletList)
+	{
+		iter->Late_Update();
+	}
+	for (auto& iter : *Monster_Bullet_List)
 	{
 		iter->Late_Update();
 	}
@@ -56,9 +75,13 @@ void CFortress::Late_Update(void)
 void CFortress::Render(HDC _hDC)
 {
 	
-
+	FortressMonster->Render(_hDC);
 	JunPlayer->Render(_hDC);
 	for (auto& iter : *BulletList)
+	{
+		iter->Render(_hDC);
+	}
+	for (auto& iter : *Monster_Bullet_List)
 	{
 		iter->Render(_hDC);
 	}
@@ -82,6 +105,10 @@ void CFortress::Release(void)
 
 	Safe_Delete<CJunPlayer*>(JunPlayer);
 	for (auto& iter : *BulletList)
+	{
+		iter->Release();
+	}
+	for (auto& iter : *Monster_Bullet_List)
 	{
 		iter->Release();
 	}
