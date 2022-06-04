@@ -1,6 +1,7 @@
 #pragma once
 #include "Obj.h"
 #include "Fortress_Monster_Bullet.h"
+#include "JunPlayer.h"
 
 class CFortress_Monster :
 	public CObj
@@ -17,9 +18,12 @@ public:
 	virtual void Release(void) override;
 
 public:
-	void			Shoot_Bullet();
+	void		Shoot_Bullet();
 
-	void Set_Angle(float _f) {	m_fAngle = (_f);}
+	void		Set_Angle(float _f) {	m_fAngle = (_f);}
+
+	void		Set_Turn(bool _Turn) { m_bMonster_Turn = _Turn; }
+	bool		Get_Turn() { return m_bMonster_Turn; }
 
 private:
 	INFO			m_tInfo_Body_Local[4];
@@ -38,7 +42,9 @@ private:
 	float			m_fAngle_Body;
 	float			m_fAngle_Posin;
 
+	bool			m_bRandom;
 	bool			m_bShoot;
+	bool			m_bMonster_Turn;
 
 	DWORD			m_dwShootCount;
 	DWORD			m_dwShootDelay;

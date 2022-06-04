@@ -1,6 +1,7 @@
 #pragma once
 #include "Player.h"
 #include "JunBullet.h"
+#include "Fortress_Monster.h"
 class CJunPlayer : public CPlayer
 {
 public:
@@ -23,6 +24,11 @@ public:
 	}
 	const bool Get_NextLine(void) { return m_bNextLine; };
 	void Set_NextLine(bool _b) { m_bNextLine = _b; };
+
+public:
+	void	Set_Turn(bool _Turn) { m_bPlayer_Turn = _Turn; }
+	bool	Get_Turn() { return m_bPlayer_Turn; }
+
 private:
 	virtual void Key_Input(void) override;
 	void OffSet(void);
@@ -48,7 +54,10 @@ private:
 	float BeforeAngle;
 	float m_fShootPower;
 	bool  m_bNextLine;
+
+	bool m_bPlayer_Turn;
 	CJunBullet* Bullet;
+
 	//list<CJunBullet*> BulletList;
 };
 

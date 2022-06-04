@@ -4,7 +4,9 @@
 #include "SceneMgr.h"
 #include "ScrollMgr.h"
 
-CJunPlayer::CJunPlayer():m_iAngleCount(0)
+CJunPlayer::CJunPlayer()
+	:m_iAngleCount(0) , m_bPlayer_Turn(true)
+
 {
 	Initialize();
 }
@@ -44,6 +46,7 @@ void CJunPlayer::Initialize(void)
 	m_fSpeed = 5.f;
 	OriPo_Dir = { 1.f,0.f,0.f };
 	m_fShootPower = 0.f;
+	
 	
 }
 
@@ -124,29 +127,34 @@ const int CJunPlayer::Update(void)
 	D3DXVec3Normalize(&TempVec1, &TempVec1);
 	//float fTe = D3DXVec3Dot(&TempVec1, &TempVec2);
 	//D3DXVec3Normalize
-	if (KEYMGR->Key_Pressing(VK_SPACE))
+
+	if (m_bPlayer_Turn == true)
 	{
-		m_fShootPower += 0.4f;
-	}
-	if (KEYMGR->Key_Up(VK_SPACE))
-	{
-		//fShootPower;
-		Bullet = new CJunBullet;
-		Bullet->Initialize();
-		if (Po_One.x > Po.x)
-			Bullet->Set_Pos_Dir(Po.x, Po.y, TempVec1,-1, m_fShootPower);
-		
-		else
-			Bullet->Set_Pos_Dir(Po.x, Po.y, TempVec1, 1, m_fShootPower);
+		if (KEYMGR->Key_Pressing(VK_SPACE))
+		{
+			m_fShootPower += 0.4f;
+		}
+		if (KEYMGR->Key_Up(VK_SPACE))
+		{
+			//fShootPower;
+			Bullet = new CJunBullet;
+			Bullet->Initialize();
+			if (Po_One.x > Po.x)
+				Bullet->Set_Pos_Dir(Po.x, Po.y, TempVec1, -1, m_fShootPower);
+
+			else
+				Bullet->Set_Pos_Dir(Po.x, Po.y, TempVec1, 1, m_fShootPower);
 
 
-		Bullet->Set_BulletID(BULLET_BASIC);
-		static_cast<CFortress*>(SCENEMGR->Get_Instance()->Get_Scene(SC_FORTRESS))->Get_JunBulletList()->push_back(Bullet);
-		m_fShootPower = 0.f;
+			Bullet->Set_BulletID(BULLET_BASIC);
+			static_cast<CFortress*>(SCENEMGR->Get_Instance()->Get_Scene(SC_FORTRESS))->Get_JunBulletList()->push_back(Bullet);
+			m_fShootPower = 0.f;
+
+
+			m_bPlayer_Turn = false;
 		
-		//int i = 5;
+		}
 	}
-	
  	return 0;
 }
 
