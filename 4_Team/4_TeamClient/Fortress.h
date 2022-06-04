@@ -39,7 +39,6 @@ private:
 	CJunPlayer * JunPlayer;
 	CJunBullet * JunBullet;
 	CFortress_Monster * FortressMonster;
-
 	list<CJunBullet*> JunBulletList;
 	list<CFortress_Bullet_Effect*> m_list_Bullet_Effect;
 	list<CFortress_Monster_Bullet*> Monster_Bullet_List;

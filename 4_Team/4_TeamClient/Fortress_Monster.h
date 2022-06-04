@@ -22,9 +22,6 @@ public:
 
 	void		Set_Angle(float _f) {	m_fAngle = (_f);}
 
-	void		Set_Turn(bool _Turn) { m_bMonster_Turn = _Turn; }
-	bool		Get_Turn() { return m_bMonster_Turn; }
-
 private:
 	INFO			m_tInfo_Body_Local[4];
 	INFO			m_tInfo_Body_World[4];
@@ -51,5 +48,7 @@ private:
 	D3DXMATRIX		m_PosinWorld;
 
 	CFortress_Monster_Bullet*	Fortress_Monster_Bullet;
+	CJunPlayer*		pJunPlayer;
+
 };
 

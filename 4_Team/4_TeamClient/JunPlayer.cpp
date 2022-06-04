@@ -55,6 +55,8 @@ void CJunPlayer::Initialize(void)
 	m_fTempPower = 0.f;
 	m_bMaxPower = true;
 	m_bGageRender = false;
+
+	SCENEMGR->Set_Player_Turn(true);
 }
 
 const int CJunPlayer::Update(void)
@@ -134,48 +136,57 @@ const int CJunPlayer::Update(void)
 	D3DXVec3Normalize(&TempVec1, &TempVec1);
 	//float fTe = D3DXVec3Dot(&TempVec1, &TempVec2);
 	//D3DXVec3Normalize
-	if (KEYMGR->Key_Pressing(VK_SPACE))
+
+	if (CSceneMgr::Get_Instance()->Get_Player_Turn() == true)
 	{
-		m_bGageRender = true;
-		if (m_bMaxPower)
+		if (KEYMGR->Key_Pressing(VK_SPACE))
 		{
-			m_fShootPower += 0.4f;
+			m_bGageRender = true;
+			if (m_bMaxPower)
+			{
+				m_fShootPower += 0.4f;
+			}
+			else
+			{
+				m_fShootPower -= 0.4f;
+			}
+			if (m_fShootPower >= 20.f)
+			{
+				m_bMaxPower = false;
+			}
+			else if (m_fShootPower <= 0.f)
+			{
+				m_bMaxPower = true;
+			}
+			m_fTempPower = m_fShootPower;
 		}
-		else
+		if (KEYMGR->Key_Up(VK_SPACE))
 		{
-			m_fShootPower -= 0.4f;
-		}
-		if (m_fShootPower >= 20.f)
-		{
-			m_bMaxPower = false;
-		}
-		else if(m_fShootPower <= 0.f)
-		{
-			m_bMaxPower = true;
-		}
-		m_fTempPower = m_fShootPower;
-	}
-	if (KEYMGR->Key_Up(VK_SPACE))
-	{
-		//fShootPower;
-		m_bGageRender = false;
-		Bullet = new CJunBullet;
-		Bullet->Initialize();
-		if (Po_One.x > Po.x)
-		{
-			Bullet->Set_Pos_Dir(Po.x, Po.y, TempVec1, -1, m_fShootPower);
-		}
-		//	Bullet->Set_Pos_Dir(Po.x, Po.y, Po_Dir ,-1);
-		else
-		{
-			Bullet->Set_Pos_Dir(Po.x, Po.y, TempVec1, 1, m_fShootPower);
+			//fShootPower;
+			m_bGageRender = false;
+			Bullet = new CJunBullet;
+			Bullet->Initialize();
+			if (Po_One.x > Po.x)
+			{
+				Bullet->Set_Pos_Dir(Po.x, Po.y, TempVec1, -1, m_fShootPower);
+			}
+			//	Bullet->Set_Pos_Dir(Po.x, Po.y, Po_Dir ,-1);
+			else
+			{
+				Bullet->Set_Pos_Dir(Po.x, Po.y, TempVec1, 1, m_fShootPower);
+			}
+
+			Bullet->Set_BulletID(BULLET_BASIC);
+			static_cast<CFortress*>(SCENEMGR->Get_Instance()->Get_Scene(SC_FORTRESS))->Get_JunBulletList()->push_back(Bullet);
+			m_fShootPower = 0.f;
+			m_fTempPower = 0.f;
+			//int i = 5;
+
+
+			CSceneMgr::Get_Instance()->Set_Monster_Turn(true);
+			CSceneMgr::Get_Instance()->Set_Player_Turn(false);
 		}
 
-		Bullet->Set_BulletID(BULLET_BASIC);
-		static_cast<CFortress*>(SCENEMGR->Get_Instance()->Get_Scene(SC_FORTRESS))->Get_JunBulletList()->push_back(Bullet);
-		m_fShootPower = 0.f;
-		m_fTempPower = 0.f;
-		//int i = 5;
 	}
  	return 0;
 }

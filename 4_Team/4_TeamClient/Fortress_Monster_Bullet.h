@@ -22,6 +22,8 @@ public:
 	}
 	void		Set_Angle(const float& _fAngle) { m_fAngle = _fAngle; }
 
+	void		Set_Player(CObj* pPlayer) { m_pPlayer = pPlayer; }
+
 private:
 	INFO		m_tInfo_Bullet_Local[4];
 	INFO		m_tInfo_Bullet_World[4];
@@ -31,5 +33,7 @@ private:
 
 	float		m_fAir_Shoot;
 	float		m_fShoot_Power;
+
+	CObj*		m_pPlayer = nullptr;
 };
 
