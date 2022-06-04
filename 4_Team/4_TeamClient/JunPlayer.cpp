@@ -14,8 +14,8 @@ CJunPlayer::CJunPlayer()
 	, m_fFallenTime(0.f)
 	, m_bNextLine(false)
 	, m_pBullet(nullptr)
-
 	, m_bPlayer_Turn(true)
+	, m_iHp(100)
 
 {
 	Initialize();
@@ -164,12 +164,13 @@ void CJunPlayer::Render(HDC hDC)
 	if (m_bGageRender && !m_pBullet)
 	{
 		Ellipse(hDC, (int)800/* + iScrollX*/, (int)(400 - (m_fTempPower * 10)) /*+ iScrollY*/, (int)850/* + iScrollX*/, (int)(450 - (m_fTempPower * 10))/*+ iScrollY*/);
+		Rectangle(hDC, (int)800/* + iScrollX*/, (int)195 /*+ iScrollY*/, (int)850/* + iScrollX*/, (int)200/*+ iScrollY*/);
+		Rectangle(hDC, (int)800/* + iScrollX*/, (int)450 /*+ iScrollY*/, (int)850/* + iScrollX*/, (int)445/*+ iScrollY*/);
+
 	}
 
 	//임시 게이지 보게 끔 만든 렉트
-	Rectangle(hDC, (int)800/* + iScrollX*/, (int)195 /*+ iScrollY*/, (int)850/* + iScrollX*/, (int)200/*+ iScrollY*/);
-	Rectangle(hDC, (int)800/* + iScrollX*/, (int)450 /*+ iScrollY*/, (int)850/* + iScrollX*/, (int)445/*+ iScrollY*/);
-
+	
 
 	/*MoveToEx(hDC, (int)m_tInfo.vPos.x, (int)m_tInfo.vPos.y, nullptr);
 	LineTo(hDC, (int)Po.x, (int)Po.y);*/
@@ -233,11 +234,14 @@ void CJunPlayer::Shoot(void)
 
 	if (KEYMGR->Key_Pressing(VK_SPACE))
 	{
+		
+
 		if (m_pBullet != nullptr)
 		{
 			return;
 		}
 		m_bGageRender = true;
+
 		if (m_bMaxPower)
 		{
 			m_fShootPower += 0.4f;

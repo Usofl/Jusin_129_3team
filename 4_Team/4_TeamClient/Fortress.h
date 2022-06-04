@@ -53,5 +53,7 @@ private:
 	
 	//Line Temp;
 	int iArray[5];
+	int iEnemyDamage;
+	int iPlayerDamage;
 };
 

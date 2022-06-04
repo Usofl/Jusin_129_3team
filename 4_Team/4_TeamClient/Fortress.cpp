@@ -9,6 +9,8 @@ CFortress::CFortress()
 	: JunPlayer(nullptr)
 	, m_pTarget(nullptr)
 	, JunBullet(nullptr)
+	, iEnemyDamage(50)
+	, iPlayerDamage(20)
 {
 
 }
@@ -43,10 +45,15 @@ void CFortress::Initialize(void)
 
 void CFortress::Update(void)
 {
-
-	JunPlayer->Update();
+	if (nullptr != JunPlayer)
+	{
+		JunPlayer->Update();
+	}
 	if (nullptr != FortressMonster)
-	FortressMonster->Update();
+	{
+		FortressMonster->Update();
+	}
+	
 	for (auto& iter : JunBulletList)
 	{
 		iter->Update();
@@ -77,8 +84,12 @@ void CFortress::Update(void)
 
 void CFortress::Late_Update(void)
 {
-	JunPlayer->Late_Update();
-	RENDERMGR->Add_Render_Obj(JunPlayer);
+	if (JunPlayer !=nullptr)
+	{
+		JunPlayer->Late_Update();
+		//RENDERMGR->Add_Render_Obj(JunPlayer);
+	}
+	
 
 	if (nullptr != FortressMonster)
 	{
@@ -105,6 +116,10 @@ void CFortress::Late_Update(void)
 				Safe_Delete(*iter);
 				(iter) = JunBulletList.erase((iter));
 				Safe_Delete<CFortress_Monster*>(FortressMonster);
+				if (nullptr == JunPlayer)
+				{
+					break;
+				}
 				JunPlayer->ReSet_Bullet(); // 삭제 했으니 플레이어의 총알 포인터 초기화 -> 현재는 총알 포인터가 Nullptr이면 새로 생성 못하게 끔 해놨음(한 발만 쏘게)
 
 				m_pTarget = JunPlayer;
@@ -122,45 +137,85 @@ void CFortress::Late_Update(void)
 		RENDERMGR->Add_Render_Obj(FortressMonster);
 	}
 
-	for (auto iter = JunBulletList.begin(); iter != JunBulletList.end();)
+	if (JunBulletList.size() > 0)
 	{
-		float fX = (*iter)->Get_Info().vPos.x;
-		float fY = (*iter)->Get_Info().vPos.y;
-		if (LINEMGR->Collision_DeLine(fX, fY))
+		for (auto iter = JunBulletList.begin(); iter != JunBulletList.end();)
 		{
-			int num = Random_Num(7, 10);
-			for (int i = 0; i < num; ++i)
+			float fX = (*iter)->Get_Info().vPos.x;
+			float fY = (*iter)->Get_Info().vPos.y;
+			/*if((*iter)->Get_Info)*/
+			if (LINEMGR->Collision_DeLine(fX, fY))
 			{
-				m_list_Bullet_Effect.push_back(CFortressFactory::Create_Fortress_Bullet_Effect((*iter)->Get_Info().vPos.x, (*iter)->Get_Info().vPos.y));
+				int num = Random_Num(7, 10);
+				for (int i = 0; i < num; ++i)
+				{
+					m_list_Bullet_Effect.push_back(CFortressFactory::Create_Fortress_Bullet_Effect((*iter)->Get_Info().vPos.x, (*iter)->Get_Info().vPos.y));
+				}
+				Safe_Delete(*iter);
+				(iter) = JunBulletList.erase((iter));
+				if (nullptr != JunPlayer)
+				{
+					JunPlayer->ReSet_Bullet(); // 삭제 했으니 플레이어의 총알 포인터 초기화 -> 현재는 총알 포인터가 Nullptr이면 새로 생성 못하게 끔 해놨음(한 발만 쏘게)
+					m_pTarget = JunPlayer;
+				}
+
 			}
-			Safe_Delete(*iter);
-			(iter) = JunBulletList.erase((iter));
-			JunPlayer->ReSet_Bullet(); // 삭제 했으니 플레이어의 총알 포인터 초기화 -> 현재는 총알 포인터가 Nullptr이면 새로 생성 못하게 끔 해놨음(한 발만 쏘게)
-
-			m_pTarget = JunPlayer;
-		}
-		else if (fY >= WINCY)
-		{
-			Safe_Delete(*iter);
-			(iter) = JunBulletList.erase((iter));
-
-			m_pTarget = JunPlayer;
-		}
-		else
-		{
-			RENDERMGR->Add_Render_Obj(*iter);
-			iter++;
+			else if (fY >= WINCY)
+			{
+				Safe_Delete(*iter);
+				(iter) = JunBulletList.erase((iter));
+				m_pTarget = JunPlayer;
+			}
+			else
+			{
+				RENDERMGR->Add_Render_Obj(*iter);
+				iter++;
+			}
 		}
 	}
 
 	
 
+	
+
 	for (auto iter = Monster_Bullet_List.begin(); iter != Monster_Bullet_List.end();)
 	{
+		if (JunPlayer == nullptr)
+		{
+			return;
+		}
+		
+		float fPlayerX = JunPlayer->Get_Info().vPos.x;
+		float fPlayerY = JunPlayer->Get_Info().vPos.y;
 		(*iter)->Late_Update();
 		//if (FortressMonster->Get_Info().vPos.x < iter->Get_Info().vPos.x)
 		float fX = (*iter)->Get_Info().vPos.x;
 		float fY = (*iter)->Get_Info().vPos.y;
+
+		bool bX = false, bY = false;
+
+		if (fPlayerX - 50.f <= fX && fPlayerX + 50.f >= fX )
+		{
+			bX = true;
+		}
+
+		if (fPlayerY - 60.f <= fY && fPlayerY + 30.f >= fY )
+		{
+			bY = true;
+		}
+		if (bX&&bY)
+		{
+			if (0 < JunPlayer->Get_Hp())
+			{
+				JunPlayer->Minus_Hp(iEnemyDamage);
+				JunPlayer->Get_Hp();
+				int i = 5;
+			}
+			else
+			{
+				Safe_Delete(JunPlayer);
+			}
+		}
 		if (LINEMGR->Collision_DeLine(fX, fY))
 		{
 			int num = Random_Num(7, 10);
@@ -187,8 +242,15 @@ void CFortress::Late_Update(void)
 		RENDERMGR->Add_Render_Obj(iter);
 	}
 
-	float fX = JunPlayer->Get_Info().vPos.x;
-	float fY = JunPlayer->Get_Info().vPos.y;
+	if (JunPlayer == nullptr)
+	{
+		return;
+	}
+
+		float fX = JunPlayer->Get_Info().vPos.x;
+		float fY = JunPlayer->Get_Info().vPos.y;
+	
+	
 
 	float fAngle(0.f);
 
@@ -217,6 +279,8 @@ void CFortress::Late_Update(void)
 		FortressMonster->Set_Angle(fSour);
 		FortressMonster->Set_Pos(fMonsterX, fMonsterY - 20);
 	}
+
+	RENDERMGR->Add_Render_Obj(JunPlayer);
 }
 
 void CFortress::Render(HDC _hDC)
@@ -379,8 +443,12 @@ void CFortress::OffSet(void)
 	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
+	
+		
+	
 	INFO	tTarget_Info = m_pTarget->Get_Info();
 	float	fSpeed = m_pTarget->Get_Speed();
+
 
 	int		iItvX = 200;
 	int		iItvY = 50;
