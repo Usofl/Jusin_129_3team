@@ -20,6 +20,8 @@ public:
 	virtual void Release(void) override;
 	virtual void Key_Input(void) override;
 
+	void LineMaker(void);
+
 public:
 	list<CJunBullet*>* Get_JunBulletList(void) {
 		return &JunBulletList;

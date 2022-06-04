@@ -30,25 +30,8 @@ void CFortress::Initialize(void)
 	m_Line.tLPoint = { 0.f,0.f };
 	m_Line.tRPoint = { 300.f,0.f };
 	
-	LINEMGR->Create_Line(0, 300, 100, 310);
-	LINEMGR->Create_Line(100, 310, 120, 320);
-	LINEMGR->Create_Line(120, 320, 140, 350);
-	LINEMGR->Create_Line(140, 350, 200, 500);
-	LINEMGR->Create_Line(200, 500, 210, 510);
-	LINEMGR->Create_Line(210, 510, 230, 530);
-	LINEMGR->Create_Line(230, 530, 250, 540);
-	LINEMGR->Create_Line(250, 540, 320, 550);
-	LINEMGR->Create_Line(320, 550, 410, 545);
-	LINEMGR->Create_Line(410, 545, 460, 540);
-	LINEMGR->Create_Line(460, 540, 520, 540);
-	LINEMGR->Create_Line(520, 540, 560, 545);
-	LINEMGR->Create_Line(560, 545, 650, 540);
-	LINEMGR->Create_Line(650, 540, 770, 515);
-	LINEMGR->Create_Line(770, 515, 810, 500);
-	LINEMGR->Create_Line(810, 500, 900, 480);
-	LINEMGR->Create_Line(900, 480, 920, 460);
-	LINEMGR->Create_Line(920, 460, 1000, 410);
-	LINEMGR->Create_Line(1000, 410, 1100, 405);
+	LineMaker();
+
 }
 
 void CFortress::Update(void)
@@ -235,5 +218,69 @@ void CFortress::Release(void)
 void CFortress::Key_Input(void)
 {
 
+}
+
+void CFortress::LineMaker(void)
+{
+	LINEMGR->Create_Line(0, 300, 100, 310);
+	LINEMGR->Create_Line(100, 310, 120, 320);
+	LINEMGR->Create_Line(120, 320, 140, 350);
+	LINEMGR->Create_Line(140, 350, 200, 500);
+	LINEMGR->Create_Line(200, 500, 210, 510);
+	LINEMGR->Create_Line(210, 510, 230, 530);
+	LINEMGR->Create_Line(230, 530, 250, 540);
+	LINEMGR->Create_Line(250, 540, 320, 550);
+	LINEMGR->Create_Line(320, 550, 410, 545);
+	LINEMGR->Create_Line(410, 545, 460, 540);
+	LINEMGR->Create_Line(460, 540, 520, 540);
+	LINEMGR->Create_Line(520, 540, 560, 545);
+	LINEMGR->Create_Line(560, 545, 650, 540);
+	LINEMGR->Create_Line(650, 540, 770, 515);
+	LINEMGR->Create_Line(770, 515, 810, 500);
+	LINEMGR->Create_Line(810, 500, 900, 480);
+	LINEMGR->Create_Line(900, 480, 920, 460);
+	LINEMGR->Create_Line(920, 460, 1000, 420);
+	LINEMGR->Create_Line(1000, 420, 1100, 405);
+	LINEMGR->Create_Line(1100, 405, 1130, 400);
+	LINEMGR->Create_Line(1130, 400, 1150, 395);
+	LINEMGR->Create_Line(1150, 395, 1200, 395);
+	LINEMGR->Create_Line(1200, 395, 1230, 400);
+	LINEMGR->Create_Line(1230, 400, 1290, 405);
+	LINEMGR->Create_Line(1290, 405, 1320, 415);
+	LINEMGR->Create_Line(1320, 415, 1400, 470);
+	LINEMGR->Create_Line(1400, 470, 1450, 510);
+	LINEMGR->Create_Line(1450, 510, 1500, 530);
+	LINEMGR->Create_Line(1500, 530, 1540, 550);
+	LINEMGR->Create_Line(1540, 550, 1570, 560);
+	LINEMGR->Create_Line(1570, 560, 1600, 570);
+	LINEMGR->Create_Line(1600, 570, 1650, 565);
+	LINEMGR->Create_Line(1650, 565, 1690, 560);
+	LINEMGR->Create_Line(1690, 560, 1730, 550);
+	LINEMGR->Create_Line(1730, 550, 1800, 550);
+	LINEMGR->Create_Line(1800, 550, 1870, 565);
+	LINEMGR->Create_Line(1870, 565, 1910, 570);
+	LINEMGR->Create_Line(1910, 570, 1930, 560);
+	LINEMGR->Create_Line(1930, 560, 1950, 550);
+	LINEMGR->Create_Line(1950, 550, 2000, 530);
+	LINEMGR->Create_Line(2000, 530, 2030, 525);
+	LINEMGR->Create_Line(2030, 525, 2070, 520);
+	LINEMGR->Create_Line(2070, 520, 2090, 510);
+	LINEMGR->Create_Line(2090, 510, 2130, 500);
+	LINEMGR->Create_Line(2130, 500, 2190, 500);
+	LINEMGR->Create_Line(2190, 500, 2230, 515);
+	LINEMGR->Create_Line(2230, 515, 2350, 540);
+	LINEMGR->Create_Line(2350, 540, 2440, 545);
+	LINEMGR->Create_Line(2440, 545, 2480, 540);
+	LINEMGR->Create_Line(2480, 540, 2520, 540);
+	LINEMGR->Create_Line(2520, 540, 2570, 545);
+	LINEMGR->Create_Line(2570, 545, 2680, 550);
+	LINEMGR->Create_Line(2680, 550, 2750, 540);
+	LINEMGR->Create_Line(2750, 540, 2770, 530);
+	LINEMGR->Create_Line(2770, 530, 2790, 510);
+	LINEMGR->Create_Line(2790, 510, 2800, 500);
+	LINEMGR->Create_Line(2800, 500, 2860, 350);
+	LINEMGR->Create_Line(2860, 350, 2880, 320);
+	LINEMGR->Create_Line(2880, 320, 2900, 310);
+	LINEMGR->Create_Line(2900, 310, 3000, 300);
 }
 
