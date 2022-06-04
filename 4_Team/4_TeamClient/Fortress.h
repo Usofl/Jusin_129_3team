@@ -20,6 +20,8 @@ public:
 	virtual void Release(void) override;
 	virtual void Key_Input(void) override;
 
+	void LineMaker(void);
+
 public:
 	const bool MonsterCollision_Check(float _fMonX, float _fMonY,float _fBulletX, float _fBulletY);
 	

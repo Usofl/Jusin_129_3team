@@ -184,6 +184,9 @@
     <Filter Include="03. Game\01. Obj\01. Other_Object\02. Fortress_Obj\02. Fortress_Bullet_Effect">
       <UniqueIdentifier>{2b174abb-0be0-45f1-9925-f07dd15f63ee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Game\01. Obj\01. Other_Object\02. Fortress_Obj\03. Fortress_UI">
+      <UniqueIdentifier>{cb66410c-b25d-405b-a425-d3393b06937e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -363,6 +366,9 @@
     <ClInclude Include="Fortress_Bullet_Effect.h">
       <Filter>03. Game\01. Obj\01. Other_Object\02. Fortress_Obj\02. Fortress_Bullet_Effect</Filter>
     </ClInclude>
+    <ClInclude Include="Fortress_HPBar.h">
+      <Filter>03. Game\01. Obj\01. Other_Object\02. Fortress_Obj\03. Fortress_UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="4_TeamClient.cpp">
@@ -520,6 +526,9 @@
     </ClCompile>
     <ClCompile Include="Fortress_Bullet_Effect.cpp">
       <Filter>03. Game\01. Obj\01. Other_Object\02. Fortress_Obj\02. Fortress_Bullet_Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Fortress_HPBar.cpp">
+      <Filter>03. Game\01. Obj\01. Other_Object\02. Fortress_Obj\03. Fortress_UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
