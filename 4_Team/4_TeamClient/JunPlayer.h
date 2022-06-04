@@ -34,16 +34,23 @@ public:
 
 private:
 	virtual void Key_Input(void) override;
-	void OffSet(void);
 
 	void Shoot(void);
+	void Fallen(void);
 
 private:
-	D3DXVECTOR3 Tank[4];
-	D3DXVECTOR3 TankHead[4];
+	D3DXVECTOR3 m_vLocalTank[4];
+	D3DXVECTOR3 m_vLocalTankHead[4];
 
-	D3DXVECTOR3 Po;
-	D3DXVECTOR3 Po_One;
+	D3DXVECTOR3 m_vTank[4];
+	D3DXVECTOR3 m_vTankHead[4];
+
+	D3DXVECTOR3 m_vPo_One;
+	D3DXVECTOR3 m_vLocal_Po_One;
+
+	D3DXVECTOR3 m_vPo;
+	D3DXVECTOR3 m_vLocal_Po;
+
 	D3DXVECTOR3 Po_Dir;
 	D3DXVECTOR3 OriPo_Dir;
 	

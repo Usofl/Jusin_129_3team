@@ -2,9 +2,13 @@
 #include "Fortress.h"
 #include "RenderMgr.h"
 #include "FortressFactory.h"
+#include "CameraMgr.h"
+#include "ScrollMgr.h"
 
 CFortress::CFortress()
 	: JunPlayer(nullptr)
+	, m_pTarget(nullptr)
+	, JunBullet(nullptr)
 {
 
 }
@@ -19,6 +23,7 @@ void CFortress::Initialize(void)
 	if (nullptr == JunPlayer)
 	{
 		JunPlayer = new CJunPlayer;
+		m_pTarget = JunPlayer;
 	}
 
 	if (nullptr == FortressMonster)
@@ -62,6 +67,8 @@ void CFortress::Update(void)
 			iter++;
 		}
 	}
+
+	OffSet();
 }
 
 void CFortress::Late_Update(void)
@@ -124,7 +131,13 @@ void CFortress::Late_Update(void)
 			(iter) = JunBulletList.erase((iter));
 			JunPlayer->ReSet_Bullet(); // 삭제 했으니 플레이어의 총알 포인터 초기화 -> 현재는 총알 포인터가 Nullptr이면 새로 생성 못하게 끔 해놨음(한 발만 쏘게)
 		}
+		else if (fY >= WINCY)
+		{
+			Safe_Delete(*iter);
+			(iter) = JunBulletList.erase((iter));
 
+			m_pTarget = JunPlayer;
+		}
 		else
 		{
 			RENDERMGR->Add_Render_Obj(*iter);
@@ -169,11 +182,17 @@ void CFortress::Late_Update(void)
 	float fX = JunPlayer->Get_Info().vPos.x;
 	float fY = JunPlayer->Get_Info().vPos.y;
 
-	if (LINEMGR->Collision_Line(fX, &fY))
+	float fAngle(0.f);
+
+	if (LINEMGR->Collision_JunLine(fX, fY, fAngle))
 	{
-		float fTemp = LINEMGR->Collision_JunLine(fX, &fY);
-		JunPlayer->Set_Angle(fTemp);
+		JunPlayer->Set_Angle(fAngle);
 		JunPlayer->Set_Pos(fX, fY);
+		JunPlayer->Set_State(CJunPlayer::IDLE);
+	}
+	else
+	{
+		JunPlayer->Set_State(CJunPlayer::FALLEN);
 	}
 
 	if (nullptr == FortressMonster)
@@ -197,6 +216,8 @@ void CFortress::Render(HDC _hDC)
 	RENDERMGR->Render(_hDC);
 
 	LINEMGR->Render(_hDC);
+
+	CAMERAMGR->CloseUP_DC(_hDC);
 
 	//UI 예정
 	RECT rc1 = { -100, 0, WINCX, 110 };
@@ -340,5 +361,40 @@ void CFortress::LineMaker(void)
 	LINEMGR->Create_Line(2860, 350, 2880, 320);
 	LINEMGR->Create_Line(2880, 320, 2900, 310);
 	LINEMGR->Create_Line(2900, 310, 3000, 300);
+}
+
+void CFortress::OffSet(void)
+{
+	int		iOffSetX = WINCX >> 1;
+	int		iOffSetY = WINCY >> 1;
+
+	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
+	INFO	tTarget_Info = m_pTarget->Get_Info();
+	float	fSpeed = m_pTarget->Get_Speed();
+
+	int		iItvX = 200;
+	int		iItvY = 50;
+
+	if (iOffSetX + iItvX <tTarget_Info.vPos.x + iScrollX)
+	{
+		SCROLLMGR->Plus_ScrollX(-tTarget_Info.vDir.x * fSpeed);
+	}
+
+	if (iOffSetX - iItvX > tTarget_Info.vPos.x + iScrollX)
+	{
+		SCROLLMGR->Plus_ScrollX(tTarget_Info.vDir.x * fSpeed);
+	}
+
+	if (iOffSetY - iItvY > tTarget_Info.vPos.y + iScrollY)
+	{
+		SCROLLMGR->Plus_ScrollY(fSpeed);
+	}
+
+	if (iOffSetY + iItvY < tTarget_Info.vPos.y + iScrollY)
+	{
+		SCROLLMGR->Plus_ScrollY(-fSpeed);
+	}
 }
 

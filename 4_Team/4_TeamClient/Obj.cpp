@@ -5,8 +5,11 @@
 CObj::CObj()
 	: m_eRender(RENDER_BACKGROUND)
 	, m_fAngle(0.f)
+	, m_fSpeed(0.f)
 {
 	ZeroMemory(&m_tInfo, sizeof(INFO));
+
+	m_tInfo.vDir = NORMALVECTOR_X;
 
 	// 항등행렬로 행렬을 초기화 하는 함수
 	D3DXMatrixIdentity(&m_tInfo.matWorld);
