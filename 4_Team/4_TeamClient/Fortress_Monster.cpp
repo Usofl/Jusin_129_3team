@@ -6,12 +6,15 @@
 
 
 CFortress_Monster::CFortress_Monster()
-	: m_bRandom(true)
-	, m_bShoot(true)
-	, m_bMonster_Turn(true)
-	, m_fRandom(0)
-	, m_dwShootCount(GetTickCount())
-	, m_dwShootDelay(GetTickCount())
+	:m_iHp(5),
+	m_iRandom_Move(0),
+	m_bRandom(true),
+	m_bRandom_Move(true),
+	m_bShoot(true),
+	m_bMonster_Turn(true), 
+	m_fSpeed(5.f), m_fRandom(0),
+	m_dwShootCount(GetTickCount()),
+	m_dwShootDelay(GetTickCount())
 	, Fortress_Monster_Bullet(nullptr)
 {
 }
@@ -81,7 +84,7 @@ const int CFortress_Monster::Update(void)
 		// 최종적인 위치 벡터를 반환 해준다 ( 월드 변환을 위한 행렬에 인포포신 로컬을 곱한후에 포신월드에 대입
 		D3DXVec3TransformCoord(&m_tInfo_Posin_World[i].vPos, &m_tInfo_Posin_Local[i].vPos, &m_PosinWorld);
 	}
-
+	Move();
 	Shoot_Bullet();
 
 	// 앵글값을 0으로 초기화를 안 시키면 계속 회전함
@@ -216,5 +219,81 @@ void CFortress_Monster::Shoot_Bullet()
 		}
 	}
 
+}
+void CFortress_Monster::Move()
+{
+	CFortress* pFortress = static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS));
+	if (pFortress->Get_Monster_Turn() == true)
+	{
+		if (m_bRandom == true)
+		{
+			m_fRandom = (float)(rand() % 3) + 3;
+			m_bRandom = false;
+		}
+		if (m_bRandom_Move == true)
+		{
+			m_iRandom_Move = (rand() % 2) + 1;
+			m_bRandom_Move = false;
+		}
+		switch (m_iHp)
+		{
+		case 4:
+			if (1 == m_iRandom_Move)
+			{
+				m_tInfo.vPos.x -= m_tInfo.vDir.x - 5;
+				m_bRandom = true;
+				m_bRandom_Move == true;
+			}
+			else if (2 == m_iRandom_Move)
+			{
+				m_tInfo.vPos.x += m_tInfo.vDir.x + 5;
+				m_bRandom = true;
+				m_bRandom_Move == true;
+			}
+			break;
+		case 3:
+			if (1 == m_iRandom_Move)
+			{
+				m_tInfo.vPos.x -= m_tInfo.vDir.x - 5;
+				m_bRandom = true;
+				m_bRandom_Move == true;
+			}
+			else if (2 == m_iRandom_Move)
+			{
+				m_tInfo.vPos.x += m_tInfo.vDir.x + 5;
+				m_bRandom = true;
+				m_bRandom_Move == true;
+			}
+			break;
+		case 2:
+			if (1 == m_iRandom_Move)
+			{
+				m_tInfo.vPos.x -= m_tInfo.vDir.x - 5;
+				m_bRandom = true;
+				m_bRandom_Move == true;
+			}
+			else if (2 == m_iRandom_Move)
+			{
+				m_tInfo.vPos.x += m_tInfo.vDir.x + 5;
+				m_bRandom = true;
+				m_bRandom_Move == true;
+			}
+			break;
+		case 1:
+			if (1 == m_iRandom_Move)
+			{
+				m_tInfo.vPos.x -= m_tInfo.vDir.x - 5;
+				m_bRandom = true;
+				m_bRandom_Move == true;
+			}
+			else if (2 == m_iRandom_Move)
+			{
+				m_tInfo.vPos.x += m_tInfo.vDir.x + 5;
+				m_bRandom = true;
+				m_bRandom_Move == true;
+			}
+			break;
+		}
+	}
 }
 // 난수값을 받고 rnad 값이 포신값보다 작으면 ++포신각도 같아지면 멈추고, 총알 쏘고-> 다른 난수값을 받으면 포신값보다 작으면 내려가고 같아지면 총알 쏘고
