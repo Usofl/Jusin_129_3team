@@ -2,7 +2,6 @@
 #include "Fortress_Monster_Bullet.h"
 #include "ScrollMgr.h"
 
-
 CFortress_Monster_Bullet::CFortress_Monster_Bullet()
 	:m_fShoot_Power(15.f), m_fAir_Shoot(0.f)
 {
@@ -71,8 +70,8 @@ void CFortress_Monster_Bullet::Late_Update(void)
 
 void CFortress_Monster_Bullet::Render(HDC hDC)
 {
-	int		iScrollX = (int)SCROLLMGR->Get_ScrollX();
-	int		iScrollY = (int)SCROLLMGR->Get_ScrollY();
+	int	iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int	iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
 	/*MoveToEx(hDC, (int)m_tInfo_Bullet_World[0].vPos.x, (int)m_tInfo_Bullet_World[0].vPos.y, nullptr);
 	for (int i = 0; i < 4; ++i)
@@ -81,7 +80,7 @@ void CFortress_Monster_Bullet::Render(HDC hDC)
 	}
 	LineTo(hDC, (int)m_tInfo_Bullet_World[0].vPos.x, (int)m_tInfo_Bullet_World[0].vPos.y);*/
 
-	Ellipse(hDC, (int)m_tInfo.vPos.x  + iScrollX - 10, (int)m_tInfo.vPos.y + iScrollY - 10, (int)m_tInfo.vPos.x + iScrollX + 10, (int)m_tInfo.vPos.y + iScrollY + 10);
+	Ellipse(hDC, (int)m_tInfo.vPos.x - 10 + iScrollX, (int)m_tInfo.vPos.y - 10 + iScrollY, (int)m_tInfo.vPos.x + 10 + iScrollX, (int)m_tInfo.vPos.y + 10 + iScrollY);
 }
 
 void CFortress_Monster_Bullet::Release(void)

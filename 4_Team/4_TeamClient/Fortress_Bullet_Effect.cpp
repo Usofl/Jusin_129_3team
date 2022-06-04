@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Fortress_Bullet_Effect.h"
+#include "ScrollMgr.h"
 
 
 CFortress_Bullet_Effect::CFortress_Bullet_Effect()
@@ -77,12 +78,15 @@ void CFortress_Bullet_Effect::Late_Update(void)
 
 void CFortress_Bullet_Effect::Render(HDC hDC)
 {
+	int	iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int	iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
 	HBRUSH MyBrush, OldBrush;
 	MyBrush = (HBRUSH)CreateSolidBrush(RGB(m_iRed, 30, 30));
 	OldBrush = (HBRUSH)SelectObject(hDC, MyBrush);
 
-	Ellipse(hDC, (int)m_tInfo.vPos.x - m_iSize, (int)m_tInfo.vPos.y - m_iSize,
-		(int)m_tInfo.vPos.x + m_iSize, (int)m_tInfo.vPos.y + m_iSize);
+	Ellipse(hDC, (int)m_tInfo.vPos.x - m_iSize + iScrollX, (int)m_tInfo.vPos.y - m_iSize + iScrollY,
+		(int)m_tInfo.vPos.x + m_iSize + iScrollX, (int)m_tInfo.vPos.y + m_iSize + iScrollY);
 
 	SelectObject(hDC, OldBrush);
 	DeleteObject(MyBrush);

@@ -69,14 +69,14 @@ const int CJunPlayer::Update(void)
 	TankHead[3] = { -20.f,-50.f +20.f - 29.f,0.f };
 	Po = { 80.f, 0.f ,0.f };
 	
+
 	if (BeforeAngle != m_fAngle)
 	{
 		if (m_fAngle < BeforeAngle)
 			m_fPoAngle -= (BeforeAngle - m_fAngle);
 		else
 			m_fPoAngle += (m_fAngle - BeforeAngle);
-		/*else
-			m_fPoAngle += (BeforeAngle - m_fAngle);*/
+		
 		BeforeAngle = m_fAngle;
 	}
 
@@ -135,10 +135,12 @@ const int CJunPlayer::Update(void)
 		Bullet->Initialize();
 		if (Po_One.x > Po.x)
 			Bullet->Set_Pos_Dir(Po.x, Po.y, TempVec1,-1, m_fShootPower);
-		//	Bullet->Set_Pos_Dir(Po.x, Po.y, Po_Dir ,-1);
+		
 		else
 			Bullet->Set_Pos_Dir(Po.x, Po.y, TempVec1, 1, m_fShootPower);
 
+
+		Bullet->Set_BulletID(BULLET_BASIC);
 		static_cast<CFortress*>(SCENEMGR->Get_Instance()->Get_Scene(SC_FORTRESS))->Get_JunBulletList()->push_back(Bullet);
 		m_fShootPower = 0.f;
 		
@@ -158,26 +160,28 @@ void CJunPlayer::Render(HDC hDC)
 	//Ellipse(hDC, iArray[0], iArray[1], iArray[2], iArray[3]);
 	/*MoveToEx(hDC, 0, 0, nullptr);
 	LineTo(hDC,300, 500);*/
-
-	MoveToEx(hDC, (int)Tank[0].x, (int)Tank[0].y,nullptr);
-	LineTo(hDC, (int)Tank[1].x, (int)Tank[1].y);
-	LineTo(hDC, (int)Tank[2].x, (int)Tank[2].y);
-	LineTo(hDC, (int)Tank[3].x, (int)Tank[3].y);
-	LineTo(hDC, (int)Tank[0].x, (int)Tank[0].y);
-
-
-	MoveToEx(hDC, (int)TankHead[0].x, (int)TankHead[0].y, nullptr);
-	LineTo(hDC, (int)TankHead[1].x, (int)TankHead[1].y);
-	LineTo(hDC, (int)TankHead[2].x, (int)TankHead[2].y);
-	LineTo(hDC, (int)TankHead[3].x, (int)TankHead[3].y);
-	LineTo(hDC, (int)TankHead[0].x, (int)TankHead[0].y);
-	Ellipse(hDC, (int)TankHead[1].x - 5, (int)TankHead[1].y - 5, (int)TankHead[1].x + 5, (int)TankHead[1].y + 5);
+	int	iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int	iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+	
+	MoveToEx(hDC, (int)Tank[0].x + iScrollX, (int)Tank[0].y + iScrollY,nullptr);
+	LineTo(hDC, (int)Tank[1].x + iScrollX, (int)Tank[1].y + iScrollY);
+	LineTo(hDC, (int)Tank[2].x + iScrollX, (int)Tank[2].y + iScrollY);
+	LineTo(hDC, (int)Tank[3].x + iScrollX, (int)Tank[3].y + iScrollY);
+	LineTo(hDC, (int)Tank[0].x + iScrollX, (int)Tank[0].y + iScrollY);
 
 
+	MoveToEx(hDC, (int)TankHead[0].x + iScrollX, (int)TankHead[0].y + iScrollY, nullptr);
+	LineTo(hDC, (int)TankHead[1].x + iScrollX, (int)TankHead[1].y + iScrollY);
+	LineTo(hDC, (int)TankHead[2].x + iScrollX, (int)TankHead[2].y + iScrollY);
+	LineTo(hDC, (int)TankHead[3].x + iScrollX, (int)TankHead[3].y + iScrollY);
+	LineTo(hDC, (int)TankHead[0].x + iScrollX, (int)TankHead[0].y + iScrollY);
+	Ellipse(hDC, (int)TankHead[1].x - 5 + iScrollX, (int)TankHead[1].y - 5 + iScrollY, (int)TankHead[1].x + 5 + iScrollX, (int)TankHead[1].y + 5 + iScrollY);
 
-	Ellipse(hDC, (int)Po_One.x - 5, (int)Po_One.y - 5, (int)Po_One.x + 5, (int)Po_One.y + 5);
-	MoveToEx(hDC, (int)Po_One.x, (int)Po_One.y, nullptr);
-	LineTo(hDC, (int)Po.x , (int)Po.y);
+
+
+	Ellipse(hDC, (int)Po_One.x - 5 + iScrollX, (int)Po_One.y - 5 + iScrollY, (int)Po_One.x + 5 + iScrollX, (int)Po_One.y + 5 + iScrollY);
+	MoveToEx(hDC, (int)Po_One.x + iScrollX, (int)Po_One.y + iScrollY, nullptr);
+	LineTo(hDC, (int)Po.x + iScrollX, (int)Po.y + iScrollY);
 
 
 	/*MoveToEx(hDC, (int)m_tInfo.vPos.x, (int)m_tInfo.vPos.y, nullptr);
@@ -193,13 +197,10 @@ void CJunPlayer::Key_Input(void)
 {
 	if (KEYMGR->Key_Pressing(VK_LEFT))
 	{
-		
-		
 		//m_fAngle -= D3DXToRadian(3.f);
 		//m_fPoAngle += D3DXToRadian(3.f);
 		D3DXVec3TransformNormal(&m_tInfo.vDir, &m_tInfo.vLook, &m_tInfo.matWorld);
 		m_tInfo.vPos -= m_tInfo.vDir * m_fSpeed;
-		
 	}
 
 	if (KEYMGR->Key_Pressing(VK_RIGHT))
@@ -208,20 +209,16 @@ void CJunPlayer::Key_Input(void)
 		//m_fPoAngle -= D3DXToRadian(3.f);
 		D3DXVec3TransformNormal(&m_tInfo.vDir, &m_tInfo.vLook, &m_tInfo.matWorld);
 		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
-		
 	}
 
 	if (KEYMGR->Key_Pressing(VK_UP))
 	{
 		m_fPoAngle -= D3DXToRadian(3.f);
-
 	}
 
 	if (KEYMGR->Key_Pressing(VK_DOWN))
 	{
 		m_fPoAngle += D3DXToRadian(3.f);
-
-		
 	}
 
 	if (KEYMGR->Key_Pressing('A'))
@@ -251,15 +248,17 @@ void CJunPlayer::OffSet(void)
 {
 	int		iOffSetX = WINCX >> 1;
 	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
 	int		iItvX = 300;
 
 	if (iOffSetX + iItvX < m_tInfo.vPos.x + iScrollX)
 	{
-		CScrollMgr::Get_Instance()->Plus_ScrollX(-m_fSpeed);
+		CScrollMgr::Get_Instance()->Plus_ScrollX(-m_tInfo.vDir.x * m_fSpeed);
 	}
 
 	if (iOffSetX - iItvX > m_tInfo.vPos.x + iScrollX)
 	{
-		CScrollMgr::Get_Instance()->Plus_ScrollX(m_fSpeed);
+		CScrollMgr::Get_Instance()->Plus_ScrollX(m_tInfo.vDir.x * m_fSpeed);
 	}
 }

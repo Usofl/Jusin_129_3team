@@ -71,6 +71,7 @@ void CFortress::Update(void)
 			Safe_Delete(*iter);
 			(iter) = m_list_Bullet_Effect.erase((iter));
 		}
+
 		else
 		{
 			iter++;

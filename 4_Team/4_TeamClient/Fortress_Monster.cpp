@@ -3,6 +3,7 @@
 #include "FortressFactory.h"
 #include "ScrollMgr.h"
 #include "SceneMgr.h"
+#include "ScrollMgr.h"
 
 
 CFortress_Monster::CFortress_Monster()
@@ -93,8 +94,8 @@ void CFortress_Monster::Late_Update(void)
 
 void CFortress_Monster::Render(HDC hDC)
 {
-	int		iScrollX = (int)SCROLLMGR->Get_ScrollX();
-	int		iScrollY = (int)SCROLLMGR->Get_ScrollY();
+	int	iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int	iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
 	MoveToEx(hDC, (int)m_tInfo_Body_World[0].vPos.x + iScrollX, (int)m_tInfo_Body_World[0].vPos.y + iScrollY, nullptr);
 	for (int i = 0; i < 4; ++i)
@@ -108,11 +109,11 @@ void CFortress_Monster::Render(HDC hDC)
 	//Ellipse(hDC, (int)m_tInfo.vPos.x + 25, (int)m_tInfo.vPos.y + 25, (int)m_tInfo.vPos.x + 45, (int)m_tInfo.vPos.y + 45);
 
 	// 전면부를 나타내는 조그마한 점 2개
-	Ellipse(hDC, (int)m_tInfo_Body_World[0].vPos.x + iScrollX - 5, (int)m_tInfo_Body_World[0].vPos.y + iScrollY - 5, (int)m_tInfo_Body_World[0].vPos.x + iScrollX + 5, (int)m_tInfo_Body_World[0].vPos.y + iScrollY + 5);
+	Ellipse(hDC, (int)m_tInfo_Body_World[0].vPos.x - 5 + iScrollX, (int)m_tInfo_Body_World[0].vPos.y - 5 + iScrollY, (int)m_tInfo_Body_World[0].vPos.x + 5 + iScrollX, (int)m_tInfo_Body_World[0].vPos.y + 5 + iScrollY);
 	
 
 	// 포신
-	MoveToEx(hDC, (int)m_tInfo_Posin_World[0].vPos.x + iScrollX, (int)m_tInfo_Posin_World[0].vPos.y +iScrollY, nullptr);
+	MoveToEx(hDC, (int)m_tInfo_Posin_World[0].vPos.x + iScrollX, (int)m_tInfo_Posin_World[0].vPos.y + iScrollY, nullptr);
 	LineTo(hDC, (int)m_tInfo_Posin_World[1].vPos.x + iScrollX, (int)m_tInfo_Posin_World[1].vPos.y + iScrollY);
 }
 
