@@ -188,6 +188,7 @@ void CFortress_Monster::Shoot_Bullet()
 		if (m_fAngle_Posin < m_fRandom)
 		{
 			m_fAngle_Posin = m_fRandom;
+			int A = 1;
 		}
 	}
 
