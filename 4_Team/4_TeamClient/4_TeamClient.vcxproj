@@ -210,6 +210,7 @@
     <ClInclude Include="Brawl_Stars_Monster.h" />
     <ClInclude Include="Brawl_Stars_Player.h" />
     <ClInclude Include="Brawl_Stars_Scene.h" />
+    <ClInclude Include="CameraMgr.h" />
     <ClInclude Include="Device.h" />
     <ClInclude Include="FlashmanBlue.h" />
     <ClInclude Include="FlashmanPlayer.h" />
@@ -270,6 +271,7 @@
     <ClCompile Include="Brawl_Stars_Monster.cpp" />
     <ClCompile Include="Brawl_Stars_Player.cpp" />
     <ClCompile Include="Brawl_Stars_Scene.cpp" />
+    <ClCompile Include="CameraMgr.cpp" />
     <ClCompile Include="Device.cpp" />
     <ClCompile Include="FlashmanBlue.cpp" />
     <ClCompile Include="FlashmanPlayer.cpp" />

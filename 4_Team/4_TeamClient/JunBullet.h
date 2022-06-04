@@ -17,22 +17,28 @@ public:
 public:
 	void Move(void);
 public:
-	inline void Set_Pos_Dir(float _x, float _y, D3DXVECTOR3 _vDir, int _iBullDir, float _fSpeed) {
-		m_tInfo.vPos.x = _x;  m_tInfo.vPos.y = _y; m_tInfo.vDir = _vDir; m_fAngle = D3DXVec3Dot(&m_tInfo.vDir, &vSu);
-		m_iBulletDir = _iBullDir; m_fSpeed = _fSpeed;
+	inline void Set_Pos_Dir(const float& _x, const float& _y, const D3DXVECTOR3& _vDir, const int& _iBullDir, const float& _fSpeed)
+	{
+		m_tInfo.vPos.x = _x;  
+		m_tInfo.vPos.y = _y; 
+		m_tInfo.vDir = _vDir; 
+		m_fAngle = D3DXVec3Dot(&m_tInfo.vDir, &vSu);
+		m_iBulletDir = _iBullDir;
+		m_fSpeed = _fSpeed;
 	}; //m_tInfo.vPos.x = _x;};
-	BULLET_ID Get_BulletID(void) { return m_BulletID; };
-	void      Set_BulletID(BULLET_ID _ID) { m_BulletID = _ID; };
+
+	inline BULLET_ID Get_BulletID(void) { return m_BulletID; };
+	inline void		 Set_BulletID(const BULLET_ID& _ID) { m_BulletID = _ID; };
 
 private:
 	D3DXVECTOR3 vPoint[4];
 	//D3DXVECTOR3 vDir;
-	float m_fSpeed;
 	float m_fTempTime;
 	int m_iBulletDir;
 	BULLET_ID m_BulletID;
 	D3DXVECTOR3 vSu;
 	D3DXVECTOR3 m_vDpDir;
 	D3DXMATRIX		m_matScale, m_matRotZ, m_matTrans;
+	CJunBullet* m_DpBullet[10];
 };
 

@@ -6,6 +6,7 @@
 #include "ScrollMgr.h"
 #include "Device.h"
 #include "TextureMgr.h"
+#include "CameraMgr.h"
 
 CMainGame::CMainGame()
 	: m_dwFPSTime(GetTickCount())
@@ -96,6 +97,7 @@ void CMainGame::Render(void)
 
 	BitBlt(m_hDC, 0, 0, WINCX, WINCY, m_hBackDC, 0, 0, SRCCOPY);
 
+
 	SelectObject(m_hBackDC, m_hOldBackBit); //DC에 원래 설정을 돌려줍니다.
 	DeleteDC(m_hBackDC);  // 메모리를 반환합니다.
 	DeleteObject(m_hBackBit); // 메모리를 반환합니다.
@@ -139,6 +141,7 @@ void CMainGame::Release(void)
 	RENDERMGR->Destroy_Instance();
 	TEXTUREMGR->Destroy_Instance();
 	DEVICE->Destroy_Instance();
+	CAMERAMGR->Destroy_Instance();
 
 	ReleaseDC(g_hWnd, m_hDC);
 	ReleaseDC(g_hWnd, m_hBackDC); 

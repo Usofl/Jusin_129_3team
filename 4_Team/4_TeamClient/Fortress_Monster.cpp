@@ -8,7 +8,7 @@
 CFortress_Monster::CFortress_Monster()
 	:m_bRandom(true),
 	m_bShoot(true),
-	m_bMonster_Turn(false), 
+	m_bMonster_Turn(true), 
 	m_fSpeed(5.f), m_fRandom(0),
 	m_dwShootCount(GetTickCount()),
 	m_dwShootDelay(GetTickCount())
