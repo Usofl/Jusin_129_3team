@@ -18,24 +18,25 @@ public:
 	virtual void Late_Update(void) override;
 	virtual void Render(HDC _hDC) override;
 	virtual void Release(void) override;
+
+private:
 	virtual void Key_Input(void) override;
 
 	void LineMaker(void);
+	void OffSet(void);
 
 public:
 	const bool MonsterCollision_Check(float _fMonX, float _fMonY,float _fBulletX, float _fBulletY);
 	
 public:
-	list<CJunBullet*>* Get_JunBulletList(void) {
-		return &JunBulletList;
-	};
+	inline list<CJunBullet*>* Get_JunBulletList(void) { return &JunBulletList;	};
+	inline list<CFortress_Monster_Bullet*>* Get_Monster_Bullet_List(void) { return &Monster_Bullet_List; };
 
-	list<CFortress_Monster_Bullet*>* Get_Monster_Bullet_List(void) {
-		return &Monster_Bullet_List;
-	};
-
+	inline void Set_Target(CObj* _pTarget) { m_pTarget = _pTarget; }
 
 private:
+	CObj* m_pTarget;
+	
 	CJunPlayer * JunPlayer;
 	CJunBullet * JunBullet;
 	CFortress_Monster * FortressMonster;

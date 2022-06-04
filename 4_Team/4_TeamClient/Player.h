@@ -15,9 +15,6 @@ public:
 
 protected:
 	virtual void Key_Input(void) PURE;
-
-protected:
-	float m_fSpeed;
 };
 
 

@@ -187,6 +187,9 @@
     <Filter Include="03. Game\01. Obj\01. Other_Object\02. Fortress_Obj\03. Fortress_UI">
       <UniqueIdentifier>{cb66410c-b25d-405b-a425-d3393b06937e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Game\98. Manager\07. CameraMgr">
+      <UniqueIdentifier>{429af77e-071b-47b9-8ab5-d427614268e8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -369,6 +372,9 @@
     <ClInclude Include="Fortress_HPBar.h">
       <Filter>03. Game\01. Obj\01. Other_Object\02. Fortress_Obj\03. Fortress_UI</Filter>
     </ClInclude>
+    <ClInclude Include="CameraMgr.h">
+      <Filter>03. Game\98. Manager\07. CameraMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="4_TeamClient.cpp">
@@ -529,6 +535,9 @@
     </ClCompile>
     <ClCompile Include="Fortress_HPBar.cpp">
       <Filter>03. Game\01. Obj\01. Other_Object\02. Fortress_Obj\03. Fortress_UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraMgr.cpp">
+      <Filter>03. Game\98. Manager\07. CameraMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -60,6 +60,7 @@ void ClassName::Destroy_Instance()						\
 #define RENDERMGR	(CRenderMgr::Get_Instance())
 #define MOMODORAMGR (CMomodoraMgr::Get_Instance())
 #define LINEMGR		(CLineMgr::Get_Instance())
+#define CAMERAMGR		(CCameraMgr::Get_Instance())
 
 #define TEXTUREMGR	(CTextureMgr::Get_Instance())
 #define DEVICE		(CDevice::Get_Instance())
