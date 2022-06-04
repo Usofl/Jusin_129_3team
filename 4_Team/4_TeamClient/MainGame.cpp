@@ -6,6 +6,7 @@
 #include "ScrollMgr.h"
 #include "Device.h"
 #include "TextureMgr.h"
+#include "CameraMgr.h"
 
 CMainGame::CMainGame()
 	: m_dwFPSTime(GetTickCount())
@@ -140,6 +141,7 @@ void CMainGame::Release(void)
 	RENDERMGR->Destroy_Instance();
 	TEXTUREMGR->Destroy_Instance();
 	DEVICE->Destroy_Instance();
+	CAMERAMGR->Destroy_Instance();
 
 	ReleaseDC(g_hWnd, m_hDC);
 	ReleaseDC(g_hWnd, m_hBackDC); 
