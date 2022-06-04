@@ -37,12 +37,12 @@ void CFortress_HPBar::Late_Update(void)
 
 void CFortress_HPBar::Render(HDC hDC)
 {
-	MoveToEx(hDC, (int)m_vHPPoint[0].vPos.x, (int)m_vHPPoint[0].vPos.y, nullptr);
+	MoveToEx(hDC, (int)m_vHPPoint[0].x, (int)m_vHPPoint[0].y, nullptr);
 	for (int i = 0; i < 4; ++i)
 	{
-		LineTo(hDC, (int)m_vHPPoint[i].vPos.x, (int)m_vHPPoint[i].vPos.y);
+		LineTo(hDC, (int)m_vHPPoint[i].x, (int)m_vHPPoint[i].y);
 	}
-	LineTo(hDC, (int)m_vHPPoint[0].vPos.x, (int)m_vHPPoint[0].vPos.y);
+	LineTo(hDC, (int)m_vHPPoint[0].x, (int)m_vHPPoint[0].y);
 }
 
 void CFortress_HPBar::Release(void)
