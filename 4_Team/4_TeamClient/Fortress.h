@@ -31,8 +31,12 @@ public:
 public:
 	inline list<CJunBullet*>* Get_JunBulletList(void) { return &JunBulletList;	};
 	inline list<CFortress_Monster_Bullet*>* Get_Monster_Bullet_List(void) { return &Monster_Bullet_List; };
+	inline const bool&	Get_Player_Turn() { return m_bPlayer_Turn; }
+	inline const bool&	Get_Monster_Turn() { return m_bMonster_Turn; }
 
 	inline void Set_Target(CObj* _pTarget) { m_pTarget = _pTarget; }
+	inline void	Set_Player_Turn(const bool& _bPTurn) { m_bPlayer_Turn = _bPTurn; }
+	inline void	Set_Monster_Turn(const bool& _bMTurn) { m_bMonster_Turn = _bMTurn; }
 
 private:
 	CObj* m_pTarget;
@@ -53,5 +57,8 @@ private:
 	
 	//Line Temp;
 	int iArray[5];
+
+	bool m_bPlayer_Turn;
+	bool m_bMonster_Turn;
 };
 

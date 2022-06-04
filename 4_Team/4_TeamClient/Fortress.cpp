@@ -9,6 +9,8 @@ CFortress::CFortress()
 	: JunPlayer(nullptr)
 	, m_pTarget(nullptr)
 	, JunBullet(nullptr)
+	, m_bPlayer_Turn(true)
+	, m_bMonster_Turn(false)
 {
 
 }

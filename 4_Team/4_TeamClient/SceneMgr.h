@@ -38,23 +38,12 @@ public:
 public:
 	inline CScene*&	Get_Scene(const SCENEID& _SceneID) { return m_pScene[_SceneID]; }
 
-	void	Set_Player_Turn(bool _PTurn) {   m_bPlayer_Turn = _PTurn; }
-	void	Set_Monster_Turn(bool _MTurn) {  m_bMonster_Turn = _MTurn; }
-
-	bool	&Get_Player_Turn() { return m_bPlayer_Turn; }
-	bool	&Get_Monster_Turn() { return m_bMonster_Turn; }
-
-
 private:
 	static CSceneMgr*		m_pInstance;
 	CScene*					m_pScene[SC_END];
 
 	SCENEID					m_eCurScene;
 	SCENEID					m_ePreScene;
-
-	bool					m_bPlayer_Turn;
-	bool					m_bMonster_Turn;
-
 };
 
 

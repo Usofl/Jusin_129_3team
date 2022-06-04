@@ -43,9 +43,6 @@ void CFortress_Monster::Initialize(void)
 	m_fAngle = 0.f;
 	m_fAngle_Body = 0.f;
 	m_fAngle_Posin = 0.f;
-
-	CSceneMgr::Get_Instance()->Set_Monster_Turn(false);
-
 }
 
 const int CFortress_Monster::Update(void)
@@ -167,7 +164,8 @@ void CFortress_Monster::Shoot_Bullet()
 
 		m_dwShootCount = GetTickCount();
 	}*/
-	if (CSceneMgr::Get_Instance()->Get_Monster_Turn() == true)
+	CFortress* pFortress = static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS));
+	if (pFortress-> Get_Monster_Turn() == true)
 	{
 		if (m_bRandom == true)
 		{
@@ -189,8 +187,8 @@ void CFortress_Monster::Shoot_Bullet()
 					Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
 					static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
 
-					CSceneMgr::Get_Instance()->Set_Monster_Turn(false);
-					CSceneMgr::Get_Instance()->Set_Player_Turn(true);
+					pFortress->Set_Monster_Turn(false);
+					pFortress->Set_Player_Turn(true);
 					m_bRandom = true;
 				}
 			}
@@ -209,8 +207,8 @@ void CFortress_Monster::Shoot_Bullet()
 					Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
 					static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
 
-					CSceneMgr::Get_Instance()->Set_Monster_Turn(false);
-					CSceneMgr::Get_Instance()->Set_Player_Turn(true);
+					pFortress->Set_Monster_Turn(false);
+					pFortress->Set_Player_Turn(true);
 					m_bRandom = true;
 				}
 			}
