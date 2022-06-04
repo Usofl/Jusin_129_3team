@@ -254,6 +254,7 @@ void CJunPlayer::Shoot(void)
 		}
 		m_fTempPower = m_fShootPower;
 	}
+
 	if (KEYMGR->Key_Up(VK_SPACE))
 	{
 		//fShootPower;
