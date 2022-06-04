@@ -205,7 +205,7 @@ void CFortress_Monster::Shoot_Bullet()
 					Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
 					Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
 					static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
-
+					int i = 0;
 					m_bRandom = true;
 				}
 			}
