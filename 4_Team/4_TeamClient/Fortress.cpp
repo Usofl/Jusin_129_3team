@@ -2,6 +2,7 @@
 #include "Fortress.h"
 #include "RenderMgr.h"
 #include "FortressFactory.h"
+#include "ScrollMgr.h"
 
 CFortress::CFortress()
 	: JunPlayer(nullptr)
@@ -47,6 +48,8 @@ void CFortress::Update(void)
 	{
 		iter->Update();
 	}
+
+	SCROLLMGR->Scroll_Lock_Fortress();
 
 	for (auto iter = m_list_Bullet_Effect.begin(); iter != m_list_Bullet_Effect.end();)
 	{

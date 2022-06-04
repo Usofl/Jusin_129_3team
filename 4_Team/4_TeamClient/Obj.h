@@ -26,6 +26,7 @@ public:
 	inline void Set_Angle(const float& _fAngle) { m_fAngle = _fAngle; }
 	inline void Set_Pos(const float& _fX, const float& _fY) { m_tInfo.vPos.x = _fX; m_tInfo.vPos.y = _fY; }
 	inline void Set_Dead(const bool& _bDead) { m_bDead = _bDead; }
+	inline void Set_Target(CObj* _pTarget) { m_pTarget = _pTarget; }
 
 protected:
 	INFO		m_tInfo;
@@ -35,4 +36,5 @@ protected:
 	bool		m_bDead;
 
 	RENDERID	m_eRender;
+	CObj*		m_pTarget;
 };

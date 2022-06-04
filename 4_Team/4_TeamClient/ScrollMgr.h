@@ -18,6 +18,7 @@ public:
 	inline void		Set_ScrollY(const float& _fY) { m_fScrollY = _fY; }
 
 	void			Main_Scroll_Lock(void);
+	void			Scroll_Lock_Fortress(void);
 
 public:
 	static		CScrollMgr*&		Get_Instance(void)
