@@ -127,6 +127,7 @@ void CFortress::Late_Update(void)
 					m_pTarget = JunPlayer;
 				}
 			}
+
 			else
 			{
 				iter++;
