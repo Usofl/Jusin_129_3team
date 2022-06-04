@@ -30,7 +30,9 @@ void CFortress::Initialize(void)
 	{
 		FortressMonster = new CFortress_Monster;
 		FortressMonster->Initialize();
+
 	}
+
 
 	m_Line.tLPoint = { 0.f,0.f };
 	m_Line.tRPoint = { 300.f,0.f };
@@ -53,6 +55,8 @@ void CFortress::Update(void)
 	{
 		iter->Update();
 	}
+
+	SCROLLMGR->Scroll_Lock_Fortress();
 
 	for (auto iter = m_list_Bullet_Effect.begin(); iter != m_list_Bullet_Effect.end();)
 	{

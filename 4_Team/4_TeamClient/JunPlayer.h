@@ -1,7 +1,6 @@
 #pragma once
 #include "Player.h"
 #include "JunBullet.h"
-#include "Fortress_Monster.h"
 class CJunPlayer : public CPlayer
 {
 public:
@@ -24,9 +23,6 @@ public:
 	inline void Set_NextLine(const bool& _bNextLine) { m_bNextLine = _bNextLine; };
 	inline void Set_State(const STATE& _eState) { m_eCurState = _eState; };
 
-public:
-	void	Set_Turn(bool _Turn) { m_bPlayer_Turn = _Turn; }
-	bool	Get_Turn() { return m_bPlayer_Turn; }
 
 public:
 	void    ReSet_Bullet(void) { m_pBullet = nullptr; };

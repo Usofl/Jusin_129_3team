@@ -172,9 +172,6 @@
     <Filter Include="03. Game\01. Obj\00. Player\02. ForPlayer">
       <UniqueIdentifier>{7c57f0c7-2d5d-4572-a770-54029035525b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. Game\01. Obj\01. Other_Object\02. Fortress_Obj\01. Fortress_Monster_Bullet">
-      <UniqueIdentifier>{6ee45655-c669-4591-8a3a-caf33313142f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. Game\97. Factory\00. BrawlFactory">
       <UniqueIdentifier>{a4526d20-78b1-44e4-b0aa-0301b3dc6277}</UniqueIdentifier>
     </Filter>
@@ -189,6 +186,9 @@
     </Filter>
     <Filter Include="03. Game\98. Manager\07. CameraMgr">
       <UniqueIdentifier>{429af77e-071b-47b9-8ab5-d427614268e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj\01. Other_Object\02. Fortress_Obj\01. Fortress_Monster_Bullet">
+      <UniqueIdentifier>{6ee45655-c669-4591-8a3a-caf33313142f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

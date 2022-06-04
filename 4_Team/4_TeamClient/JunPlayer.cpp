@@ -62,6 +62,8 @@ void CJunPlayer::Initialize(void)
 	m_fTempPower = 0.f;
 	m_bMaxPower = true;
 	m_bGageRender = false;
+
+	SCENEMGR->Set_Player_Turn(true);
 }
 
 const int CJunPlayer::Update(void)
@@ -161,7 +163,7 @@ void CJunPlayer::Render(HDC hDC)
 
 	if (m_bGageRender && !m_pBullet)
 	{
-		Ellipse(hDC, (int)800/* + iScrollX*/, (int)400 - (m_fTempPower * 10) /*+ iScrollY*/, (int)850/* + iScrollX*/, (int)450 - (m_fTempPower * 10)/*+ iScrollY*/);
+		Ellipse(hDC, (int)800/* + iScrollX*/, (int)(400 - (m_fTempPower * 10)) /*+ iScrollY*/, (int)850/* + iScrollX*/, (int)(450 - (m_fTempPower * 10))/*+ iScrollY*/);
 	}
 
 	//임시 게이지 보게 끔 만든 렉트
@@ -279,6 +281,9 @@ void CJunPlayer::Shoot(void)
 			FortressScene->Set_Target(FortressScene->Get_JunBulletList()->back());
 			m_fShootPower = 0.f;
 			m_fTempPower = 0.f;
+
+			CSceneMgr::Get_Instance()->Set_Monster_Turn(true);
+			CSceneMgr::Get_Instance()->Set_Player_Turn(false);
 		}
 
 		//int i = 5;
