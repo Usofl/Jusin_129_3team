@@ -17,7 +17,12 @@ void CFortress_HPBar::Initialize(void)
 	m_eRender = RENDER_UI;
 
 	m_tInfo.vPos = { 100.f, 658.f, 0.f };
+	m_tInfo.vDir = { 1.f, 0.f, 0.f };
 
+	m_vHPPoint[0] = { 50.f, 638.f, 0.f };
+	m_vHPPoint[1] = { 50.f, 678.f, 0.f };
+	m_vHPPoint[2] = { 250.f, 678.f, 0.f };
+	m_vHPPoint[3] = { 250.f, 638.f, 0.f };
 }
 
 const int CFortress_HPBar::Update(void)
@@ -32,7 +37,12 @@ void CFortress_HPBar::Late_Update(void)
 
 void CFortress_HPBar::Render(HDC hDC)
 {
-
+	MoveToEx(hDC, (int)m_vHPPoint[0].x, (int)m_vHPPoint[0].y, nullptr);
+	for (int i = 0; i < 4; ++i)
+	{
+		LineTo(hDC, (int)m_vHPPoint[i].x, (int)m_vHPPoint[i].y);
+	}
+	LineTo(hDC, (int)m_vHPPoint[0].x, (int)m_vHPPoint[0].y);
 }
 
 void CFortress_HPBar::Release(void)

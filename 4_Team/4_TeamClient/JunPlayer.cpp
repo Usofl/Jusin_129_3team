@@ -162,13 +162,12 @@ void CJunPlayer::Render(HDC hDC)
 	if (m_bGageRender && !m_pBullet)
 	{
 		Ellipse(hDC, (int)800/* + iScrollX*/, (int)(400 - (m_fTempPower * 10)) /*+ iScrollY*/, (int)850/* + iScrollX*/, (int)(450 - (m_fTempPower * 10))/*+ iScrollY*/);
-		Rectangle(hDC, (int)800/* + iScrollX*/, (int)195 /*+ iScrollY*/, (int)850/* + iScrollX*/, (int)200/*+ iScrollY*/);
-		Rectangle(hDC, (int)800/* + iScrollX*/, (int)450 /*+ iScrollY*/, (int)850/* + iScrollX*/, (int)445/*+ iScrollY*/);
-
 	}
 
 	//임시 게이지 보게 끔 만든 렉트
-	
+	Rectangle(hDC, (int)955/* + iScrollX*/, WINCY - (int)80 /*+ iScrollY*/, (int)960/* + iScrollX*/, WINCY - (int)30/*+ iScrollY*/);
+	Rectangle(hDC, (int)700/* + iScrollX*/, WINCY-(int)80 /*+ iScrollY*/, (int)705/* + iScrollX*/, WINCY-(int)30/*+ iScrollY*/);
+
 
 	/*MoveToEx(hDC, (int)m_tInfo.vPos.x, (int)m_tInfo.vPos.y, nullptr);
 	LineTo(hDC, (int)Po.x, (int)Po.y);*/
