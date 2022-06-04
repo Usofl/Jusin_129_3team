@@ -11,8 +11,7 @@ CFortress_Monster::CFortress_Monster()
 	m_bRandom(true),
 	m_bRandom_Move(true),
 	m_bShoot(true),
-	m_bMonster_Turn(true), 
-	m_fSpeed(5.f), m_fRandom(0),
+	m_bMonster_Turn(true), m_fRandom(0),
 	m_dwShootCount(GetTickCount()),
 	m_dwShootDelay(GetTickCount())
 	, Fortress_Monster_Bullet(nullptr)
@@ -84,8 +83,13 @@ const int CFortress_Monster::Update(void)
 		// 최종적인 위치 벡터를 반환 해준다 ( 월드 변환을 위한 행렬에 인포포신 로컬을 곱한후에 포신월드에 대입
 		D3DXVec3TransformCoord(&m_tInfo_Posin_World[i].vPos, &m_tInfo_Posin_Local[i].vPos, &m_PosinWorld);
 	}
-	Move();
-	Shoot_Bullet();
+
+	CFortress* pFortress = static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS));
+	if (pFortress->Get_Monster_Turn() == true && pFortress->Get_JunBulletList()->empty() && SCROLLMGR->Fix_Cheak(this))
+	{
+		Move();
+		Shoot_Bullet();
+	}
 
 	// 앵글값을 0으로 초기화를 안 시키면 계속 회전함
 	m_fAngle = 0.f;
@@ -169,131 +173,123 @@ void CFortress_Monster::Shoot_Bullet()
 		m_dwShootCount = GetTickCount();
 	}*/
 	CFortress* pFortress = static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS));
-	if (pFortress-> Get_Monster_Turn() == true && pFortress->Get_JunBulletList()->empty() && SCROLLMGR->Fix_Cheak(this))
+	if (m_bRandom == true)
 	{
-		if (m_bRandom == true)
-		{
-			m_fRandom = (float)(rand() % 91) + 1;
-			m_bRandom = false;
+		m_fRandom = (float)(rand() % 91) + 1;
+		m_bRandom = false;
 
-		}
-		if (m_fAngle_Posin <= m_fRandom)
+	}
+	if (m_fAngle_Posin <= m_fRandom)
+	{
+		++m_fAngle_Posin;
+		if (m_fAngle_Posin >= m_fRandom)
 		{
-			++m_fAngle_Posin;
-			if (m_fAngle_Posin >= m_fRandom)
+			m_fAngle_Posin = m_fRandom;
+			if (m_fAngle_Posin == m_fRandom)
 			{
-				m_fAngle_Posin = m_fRandom;
-				if (m_fAngle_Posin == m_fRandom)
-				{
-					Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
-					Fortress_Monster_Bullet->Initialize();
-					Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-					Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
-					static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+				Fortress_Monster_Bullet->Initialize();
+				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
+				static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
 
-					pFortress->Set_Monster_Turn(false);
-					pFortress->Set_Player_Turn(true);
-					m_bRandom = true;
-				}
-			}
-		}
-		else if (m_fAngle_Posin >= m_fRandom)
-		{
-			--m_fAngle_Posin;
-			if (m_fAngle_Posin <= m_fRandom)
-			{
-				m_fAngle_Posin = m_fRandom;
-				if (m_fAngle_Posin == m_fRandom)
-				{
-					Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
-					Fortress_Monster_Bullet->Initialize();
-					Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-					Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
-					static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
-
-					pFortress->Set_Monster_Turn(false);
-					pFortress->Set_Player_Turn(true);
-					m_bRandom = true;
-				}
+				pFortress->Set_Monster_Turn(false);
+				pFortress->Set_Player_Turn(true);
+				m_bRandom = true;
 			}
 		}
 	}
+	else if (m_fAngle_Posin >= m_fRandom)
+	{
+		--m_fAngle_Posin;
+		if (m_fAngle_Posin <= m_fRandom)
+		{
+			m_fAngle_Posin = m_fRandom;
+			if (m_fAngle_Posin == m_fRandom)
+			{
+				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+				Fortress_Monster_Bullet->Initialize();
+				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
+				static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
 
+				pFortress->Set_Monster_Turn(false);
+				pFortress->Set_Player_Turn(true);
+				m_bRandom = true;
+			}
+		}
+	}
 }
 void CFortress_Monster::Move()
 {
-	CFortress* pFortress = static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS));
-	if (pFortress->Get_Monster_Turn() == true)
+	if (m_bRandom == true)
 	{
-		if (m_bRandom == true)
+		m_fRandom = (float)(rand() % 3) + 3;
+		m_bRandom = false;
+	}
+	if (m_bRandom_Move == true)
+	{
+		m_iRandom_Move = (rand() % 2) + 1;
+		m_bRandom_Move = false;
+	}
+	switch (m_iHp)
+	{
+	case 4:
+		if (1 == m_iRandom_Move)
 		{
-			m_fRandom = (float)(rand() % 3) + 3;
-			m_bRandom = false;
+			m_tInfo.vPos.x -= m_tInfo.vDir.x - 5;
+			m_bRandom = true;
+			m_bRandom_Move = true;
 		}
-		if (m_bRandom_Move == true)
+		else if (2 == m_iRandom_Move)
 		{
-			m_iRandom_Move = (rand() % 2) + 1;
-			m_bRandom_Move = false;
+			m_tInfo.vPos.x += m_tInfo.vDir.x + 5;
+			m_bRandom = true;
+			m_bRandom_Move = true;
 		}
-		switch (m_iHp)
+		break;
+	case 3:
+		if (1 == m_iRandom_Move)
 		{
-		case 4:
-			if (1 == m_iRandom_Move)
-			{
-				m_tInfo.vPos.x -= m_tInfo.vDir.x - 5;
-				m_bRandom = true;
-				m_bRandom_Move == true;
-			}
-			else if (2 == m_iRandom_Move)
-			{
-				m_tInfo.vPos.x += m_tInfo.vDir.x + 5;
-				m_bRandom = true;
-				m_bRandom_Move == true;
-			}
-			break;
-		case 3:
-			if (1 == m_iRandom_Move)
-			{
-				m_tInfo.vPos.x -= m_tInfo.vDir.x - 5;
-				m_bRandom = true;
-				m_bRandom_Move == true;
-			}
-			else if (2 == m_iRandom_Move)
-			{
-				m_tInfo.vPos.x += m_tInfo.vDir.x + 5;
-				m_bRandom = true;
-				m_bRandom_Move == true;
-			}
-			break;
-		case 2:
-			if (1 == m_iRandom_Move)
-			{
-				m_tInfo.vPos.x -= m_tInfo.vDir.x - 5;
-				m_bRandom = true;
-				m_bRandom_Move == true;
-			}
-			else if (2 == m_iRandom_Move)
-			{
-				m_tInfo.vPos.x += m_tInfo.vDir.x + 5;
-				m_bRandom = true;
-				m_bRandom_Move == true;
-			}
-			break;
-		case 1:
-			if (1 == m_iRandom_Move)
-			{
-				m_tInfo.vPos.x -= m_tInfo.vDir.x - 5;
-				m_bRandom = true;
-				m_bRandom_Move == true;
-			}
-			else if (2 == m_iRandom_Move)
-			{
-				m_tInfo.vPos.x += m_tInfo.vDir.x + 5;
-				m_bRandom = true;
-				m_bRandom_Move == true;
-			}
-			break;
+			m_tInfo.vPos.x -= m_tInfo.vDir.x - 5;
+			m_bRandom = true;
+			m_bRandom_Move = true;
 		}
+		else if (2 == m_iRandom_Move)
+		{
+			m_tInfo.vPos.x += m_tInfo.vDir.x + 5;
+			m_bRandom = true;
+			m_bRandom_Move = true;
+		}
+		break;
+	case 2:
+		if (1 == m_iRandom_Move)
+		{
+			m_tInfo.vPos.x -= m_tInfo.vDir.x - 5;
+			m_bRandom = true;
+			m_bRandom_Move = true;
+		}
+		else if (2 == m_iRandom_Move)
+		{
+			m_tInfo.vPos.x += m_tInfo.vDir.x + 5;
+			m_bRandom = true;
+			m_bRandom_Move = true;
+		}
+		break;
+	case 1:
+		if (1 == m_iRandom_Move)
+		{
+			m_tInfo.vPos.x -= m_tInfo.vDir.x - 5;
+			m_bRandom = true;
+			m_bRandom_Move = true;
+		}
+		else if (2 == m_iRandom_Move)
+		{
+			m_tInfo.vPos.x += m_tInfo.vDir.x + 5;
+			m_bRandom = true;
+			m_bRandom_Move = true;
+		}
+		break;
 	}
 }
 // 난수값을 받고 rnad 값이 포신값보다 작으면 ++포신각도 같아지면 멈추고, 총알 쏘고-> 다른 난수값을 받으면 포신값보다 작으면 내려가고 같아지면 총알 쏘고

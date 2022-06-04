@@ -40,7 +40,6 @@ private:
 	int				m_iHp;
 	int				m_iRandom_Move;
 
-	float			m_fSpeed;
 	float			m_fRandom;
 		
 	float			m_fAngle_Body;
