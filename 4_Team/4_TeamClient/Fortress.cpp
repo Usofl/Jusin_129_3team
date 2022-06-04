@@ -122,7 +122,11 @@ void CFortress::Late_Update(void)
 				}
 				JunPlayer->ReSet_Bullet(); // 삭제 했으니 플레이어의 총알 포인터 초기화 -> 현재는 총알 포인터가 Nullptr이면 새로 생성 못하게 끔 해놨음(한 발만 쏘게)
 				
-				if (nullptr != JunPlayer)
+				if (nullptr != FortressMonster)
+				{
+					m_pTarget = FortressMonster;
+				}
+				else
 				{
 					m_pTarget = JunPlayer;
 				}
@@ -154,12 +158,10 @@ void CFortress::Late_Update(void)
 				{
 					m_list_Bullet_Effect.push_back(CFortressFactory::Create_Fortress_Bullet_Effect((*iter)->Get_Info().vPos.x, (*iter)->Get_Info().vPos.y));
 				}
+
 				Safe_Delete(*iter);
 				(iter) = JunBulletList.erase((iter));
-				if (nullptr != JunPlayer)
-				{
-					JunPlayer->ReSet_Bullet(); // 삭제 했으니 플레이어의 총알 포인터 초기화 -> 현재는 총알 포인터가 Nullptr이면 새로 생성 못하게 끔 해놨음(한 발만 쏘게)
-				}
+				JunPlayer->ReSet_Bullet(); // 삭제 했으니 플레이어의 총알 포인터 초기화 -> 현재는 총알 포인터가 Nullptr이면 새로 생성 못하게 끔 해놨음(한 발만 쏘게)
 
 				if (nullptr != FortressMonster)
 				{
@@ -175,6 +177,7 @@ void CFortress::Late_Update(void)
 			{
 				Safe_Delete(*iter);
 				(iter) = JunBulletList.erase((iter));
+				JunPlayer->ReSet_Bullet(); // 삭제 했으니 플레이어의 총알 포인터 초기화 -> 현재는 총알 포인터가 Nullptr이면 새로 생성 못하게 끔 해놨음(한 발만 쏘게)
 
 				if (nullptr != FortressMonster)
 				{
@@ -485,9 +488,6 @@ void CFortress::OffSet(void)
 	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
-	
-		
-	
 	INFO	tTarget_Info = m_pTarget->Get_Info();
 	float	fSpeed = m_pTarget->Get_Speed();
 
