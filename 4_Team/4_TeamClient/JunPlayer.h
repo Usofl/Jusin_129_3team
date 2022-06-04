@@ -61,7 +61,9 @@ private:
 	float m_fFallenTime;
 
 	bool  m_bNextLine;
-
+	bool  m_bMaxPower;
+	bool  m_bGageRender;
+	float  m_fTempPower;
 	CJunBullet* Bullet;
 	//list<CJunBullet*> BulletList;
 };

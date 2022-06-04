@@ -54,6 +54,7 @@ void CFortress::Initialize(void)
 void CFortress::Update(void)
 {
 	JunPlayer->Update();
+	if (nullptr != FortressMonster)
 	FortressMonster->Update();
 	for (auto& iter : JunBulletList)
 	{
@@ -82,16 +83,49 @@ void CFortress::Update(void)
 void CFortress::Late_Update(void)
 {
 	JunPlayer->Late_Update();
-	FortressMonster->Late_Update();
-
 	RENDERMGR->Add_Render_Obj(JunPlayer);
+
+	if (nullptr != FortressMonster)
+	{
+		FortressMonster->Late_Update();
+	}
+
+	float fMonsterX2 = 0, fMonsterY2 = 0;
+	if (nullptr != FortressMonster)
+	{
+		D3DXVECTOR3 vMonster = FortressMonster->Get_Info().vPos;
+		fMonsterX2 = vMonster.x;
+		fMonsterY2 = vMonster.y;
+	}
 	
-	RENDERMGR->Add_Render_Obj(FortressMonster);
+	//임시 총알 - 몬스터 충돌처리(몬스터 1마리 기준이라 추후 수정 필요)
+	if (fMonsterX2 != 0 && fMonsterY2 != 0)
+	{
+		for (auto iter = JunBulletList.begin(); iter != JunBulletList.end();)
+		{
+			(*iter)->Late_Update();
+
+			if (MonsterCollision_Check(fMonsterX2, fMonsterY2, (*iter)->Get_Info().vPos.x, (*iter)->Get_Info().vPos.y))
+			{
+				Safe_Delete(*iter);
+				(iter) = JunBulletList.erase((iter));
+				Safe_Delete<CFortress_Monster*>(FortressMonster);
+			}
+			else
+			{
+				iter++;
+			}
+		}
+	}
+
+	//총알 충돌 했으면 몬스터가 없을테니 렌더를 안하게 해서 오류 없애기
+	if (nullptr != FortressMonster)
+	{
+		RENDERMGR->Add_Render_Obj(FortressMonster);
+	}
 
 	for (auto iter = JunBulletList.begin(); iter != JunBulletList.end();)
 	{
-		(*iter)->Late_Update();
-		//if (FortressMonster->Get_Info().vPos.x < iter->Get_Info().vPos.x)
 		float fX = (*iter)->Get_Info().vPos.x;
 		float fY = (*iter)->Get_Info().vPos.y;
 		if (LINEMGR->Collision_DeLine(fX, fY))
@@ -101,17 +135,18 @@ void CFortress::Late_Update(void)
 			{
 				m_list_Bullet_Effect.push_back(CFortressFactory::Create_Fortress_Bullet_Effect((*iter)->Get_Info().vPos.x, (*iter)->Get_Info().vPos.y));
 			}
-
 			Safe_Delete(*iter);
 			(iter) = JunBulletList.erase((iter));
 		}
+
 		else
 		{
 			RENDERMGR->Add_Render_Obj(*iter);
 			iter++;
 		}
-			//iter->Set_Pos(1000.f, 1000.f);
 	}
+
+	
 
 	for (auto iter = Monster_Bullet_List.begin(); iter != Monster_Bullet_List.end();)
 	{
@@ -155,6 +190,11 @@ void CFortress::Late_Update(void)
 		JunPlayer->Set_Pos(fX, fY);
 	}
 
+	if (nullptr == FortressMonster)
+	{
+		return;
+	}
+
 	float fMonsterX = FortressMonster->Get_Info().vPos.x;
 	float fMonsterY = FortressMonster->Get_Info().vPos.y;
 
@@ -178,8 +218,11 @@ void CFortress::Render(HDC _hDC)
 
 	InvertRect(_hDC, &rc1);
 	InvertRect(_hDC, &rc2);
-	const TCHAR *str2 = TEXT("Beautiful Korea");
-	TextOut(_hDC, 100, 100, str2, _tcslen(str2));
+	/*const TCHAR *str2 = TEXT("45%d");
+	int i = 45;*/
+	//TextOut(_hDC, 100, 100, i"%d", _tcslen(str2));
+	//CString::Format()
+	
 	//Rectangle(_hDC, 0, 0, 1024, 110);
 	//Rectangle(_hDC, 0, 658, 1024, 768);
 
@@ -233,5 +276,18 @@ void CFortress::Release(void)
 void CFortress::Key_Input(void)
 {
 
+}
+
+const bool CFortress::MonsterCollision_Check(float _fMonsterX, float _fMonsterY, float _fBulletX, float _fBulletY)
+{
+	if ((_fMonsterX - 50 <= _fBulletX &&
+		_fMonsterX + 50 >= _fBulletX) &&
+		(_fMonsterY - 30 <= _fBulletY &&
+			_fMonsterY + 30 >= _fBulletY))
+	{
+		return true;
+	}
+
+	return false;
 }
 
