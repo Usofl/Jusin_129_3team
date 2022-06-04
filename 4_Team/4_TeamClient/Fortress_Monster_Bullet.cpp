@@ -49,15 +49,11 @@ const int CFortress_Monster_Bullet::Update(void)
 
 	D3DXVec3TransformNormal(&m_tInfo.vDir, &m_tInfo.vLook, &m_tInfo.matWorld);*/
 
-	
-
 	m_fAir_Shoot += 0.1f;
-
 
 	m_tInfo.vPos -= m_fSpeed * m_tInfo.vLook;
 	m_tInfo.vPos.y -= m_fShoot_Power * m_fAir_Shoot - 9.8f * m_fAir_Shoot * m_fAir_Shoot * 0.5f;
 	
-
 	return 0;
 }
 

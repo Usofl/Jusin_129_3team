@@ -19,8 +19,12 @@ public:
 
 public:
 	void		Shoot_Bullet();
+	void		Move();
 
 	void		Set_Angle(float _f) {	m_fAngle = (_f);}
+	
+	const int&		Get_Hp() { return m_iHp; }
+	void			Set_Hp(const int& _Hp) { m_iHp -= _Hp; }
 
 private:
 	INFO			m_tInfo_Body_Local[4];
@@ -33,6 +37,9 @@ private:
 	INFO			m_tInfo_Posin_World[2];
 
 private:
+	int				m_iHp;
+	int				m_iRandom_Move;
+
 	float			m_fSpeed;
 	float			m_fRandom;
 		
@@ -40,6 +47,7 @@ private:
 	float			m_fAngle_Posin;
 
 	bool			m_bRandom;
+	bool			m_bRandom_Move;
 	bool			m_bShoot;
 	bool			m_bMonster_Turn;
 
