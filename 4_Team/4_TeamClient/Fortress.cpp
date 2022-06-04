@@ -120,6 +120,7 @@ void CFortress::Late_Update(void)
 				{
 					Safe_Delete<CFortress_Monster*>(FortressMonster);
 				}
+
 				JunPlayer->ReSet_Bullet(); // 삭제 했으니 플레이어의 총알 포인터 초기화 -> 현재는 총알 포인터가 Nullptr이면 새로 생성 못하게 끔 해놨음(한 발만 쏘게)
 				
 				if (nullptr != FortressMonster)
