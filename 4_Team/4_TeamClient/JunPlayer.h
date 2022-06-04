@@ -27,10 +27,10 @@ public:
 public:
 	void    ReSet_Bullet(void) { m_pBullet = nullptr; };
 	CJunBullet* Get_Bullet(void) { return m_pBullet; };
-	void    Minus_Hp(int _iDamage) { m_iHp -= _iDamage; };
-	void    Plus_Hp(int _iHeal) { m_iHp += _iHeal; };
+	void    Minus_Hp(const int& _iDamage) { m_iHp -= _iDamage; };
+	void    Plus_Hp(const int& _iHeal) { m_iHp += _iHeal; };
 	void    Reset_Hp(void) { m_iHp = 100; };
-	const int&     const Get_Hp(void) { return m_iHp; };
+	const int& Get_Hp(void) { return m_iHp; };
 private:
 	virtual void Key_Input(void) override;
 

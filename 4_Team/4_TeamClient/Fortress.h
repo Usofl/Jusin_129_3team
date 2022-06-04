@@ -60,6 +60,7 @@ private:
 
 	bool m_bPlayer_Turn;
 	bool m_bMonster_Turn;
+
 	int iEnemyDamage;
 	int iPlayerDamage;
 };
