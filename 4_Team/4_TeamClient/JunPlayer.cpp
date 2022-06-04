@@ -13,6 +13,9 @@ CJunPlayer::CJunPlayer()
 	, m_fFallenTime(0.f)
 	, m_bNextLine(false)
 	, Bullet(nullptr)
+
+	, m_bPlayer_Turn(true)
+
 {
 	Initialize();
 }
@@ -174,7 +177,6 @@ const int CJunPlayer::Update(void)
 		m_fTempPower = 0.f;
 		//int i = 5;
 	}
-	
  	return 0;
 }
 

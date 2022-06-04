@@ -7,7 +7,12 @@
 
 
 CFortress_Monster::CFortress_Monster()
-	:m_bShoot(true), m_fSpeed(5.f), m_fRandom(0), m_dwShootCount(GetTickCount()), m_dwShootDelay(GetTickCount())
+	:m_bRandom(true),
+	m_bShoot(true),
+	m_bMonster_Turn(false), 
+	m_fSpeed(5.f), m_fRandom(0),
+	m_dwShootCount(GetTickCount()),
+	m_dwShootDelay(GetTickCount())
 {
 }
 
@@ -38,7 +43,6 @@ void CFortress_Monster::Initialize(void)
 	m_fAngle = 0.f;
 	m_fAngle_Body = 0.f;
 	m_fAngle_Posin = 0.f;
-
 
 
 }
@@ -162,37 +166,52 @@ void CFortress_Monster::Shoot_Bullet()
 
 		m_dwShootCount = GetTickCount();
 	}*/
-
-	if (m_bShoot == true)
+	if (m_bMonster_Turn == true)
 	{
-		m_fRandom = (float)(rand() % 91) + 1;
-		m_bShoot = false;
-	}
-	if (m_fAngle_Posin < m_fRandom)
-	{
-		++m_fAngle_Posin;
-		if (m_fAngle_Posin > m_fRandom)
+		if (m_bRandom == true)
 		{
-			m_fAngle_Posin = m_fRandom;
-			if (m_fAngle_Posin == m_fRandom)
+			m_fRandom = (float)(rand() % 91) + 1;
+			m_bRandom = false;
+
+		}
+		if (m_fAngle_Posin <= m_fRandom)
+		{
+			++m_fAngle_Posin;
+			if (m_fAngle_Posin >= m_fRandom)
 			{
-				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin + m_fAngle_Body);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
-				static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
-				m_bShoot = true;
+				m_fAngle_Posin = m_fRandom;
+				if (m_fAngle_Posin == m_fRandom)
+				{
+					Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+					Fortress_Monster_Bullet->Initialize();
+					Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+					Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
+					static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+
+					m_bRandom = true;
+				}
 			}
 		}
-	}
-	else if (m_fAngle_Posin > m_fRandom)
-	{
-		--m_fAngle_Posin;
-		if (m_fAngle_Posin < m_fRandom)
+		else if (m_fAngle_Posin >= m_fRandom)
 		{
-			m_fAngle_Posin = m_fRandom;
-			int A = 1;
+			--m_fAngle_Posin;
+			if (m_fAngle_Posin <= m_fRandom)
+			{
+				m_fAngle_Posin = m_fRandom;
+				if (m_fAngle_Posin == m_fRandom)
+				{
+					Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+					Fortress_Monster_Bullet->Initialize();
+					Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+					Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
+					static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+					int i = 0;
+					m_bRandom = true;
+				}
+			}
 		}
+		m_bMonster_Turn = false;
+
 	}
-
-
 }
 // 난수값을 받고 rnad 값이 포신값보다 작으면 ++포신각도 같아지면 멈추고, 총알 쏘고-> 다른 난수값을 받으면 포신값보다 작으면 내려가고 같아지면 총알 쏘고

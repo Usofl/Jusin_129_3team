@@ -34,6 +34,7 @@ public:
 		return &Monster_Bullet_List;
 	};
 
+
 private:
 	CJunPlayer * JunPlayer;
 	CJunBullet * JunBullet;
