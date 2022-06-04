@@ -83,18 +83,18 @@ bool CLineMgr::Collision_DeLine(float _fX, float _fY)
 		bool bX = false, bY = false;
 		
 
-		if (_fX >= (*iter)->Get_Info().tLPoint.fX - 10 &&
-			_fX <= (*iter)->Get_Info().tRPoint.fX + 10 ||
-			_fX >= (*iter)->Get_Info().tRPoint.fX + 10 &&
-			_fX <= (*iter)->Get_Info().tLPoint.fX - 10)
+		if ((_fX >= (*iter)->Get_Info().tLPoint.fX - 15 &&
+			_fX <= (*iter)->Get_Info().tRPoint.fX + 15) ||
+			(_fX >= (*iter)->Get_Info().tRPoint.fX + 15 &&
+			_fX <= (*iter)->Get_Info().tLPoint.fX - 15))
 		{
 			bX	= true;
 		}
 
-		if ((_fY <= (*iter)->Get_Info().tLPoint.fY +10 &&
-			_fY >= (*iter)->Get_Info().tRPoint.fY - 10) ||(
-			_fY <= (*iter)->Get_Info().tRPoint.fY - 10 &&
-			_fY >= (*iter)->Get_Info().tLPoint.fY + 10))
+		if ((_fY <= (*iter)->Get_Info().tLPoint.fY +15 &&
+			_fY >= (*iter)->Get_Info().tRPoint.fY - 15) ||(
+			_fY <= (*iter)->Get_Info().tRPoint.fY - 15 &&
+			_fY >= (*iter)->Get_Info().tLPoint.fY + 15))
 		{
 			bY = true;
 		}
