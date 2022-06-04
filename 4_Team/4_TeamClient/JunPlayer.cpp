@@ -62,8 +62,6 @@ void CJunPlayer::Initialize(void)
 	m_fTempPower = 0.f;
 	m_bMaxPower = true;
 	m_bGageRender = false;
-
-	SCENEMGR->Set_Player_Turn(true);
 }
 
 const int CJunPlayer::Update(void)
@@ -260,6 +258,7 @@ void CJunPlayer::Shoot(void)
 		}
 		m_fTempPower = m_fShootPower;
 	}
+
 	if (KEYMGR->Key_Up(VK_SPACE))
 	{
 		//fShootPower;
@@ -285,8 +284,8 @@ void CJunPlayer::Shoot(void)
 			m_fShootPower = 0.f;
 			m_fTempPower = 0.f;
 
-			CSceneMgr::Get_Instance()->Set_Monster_Turn(true);
-			CSceneMgr::Get_Instance()->Set_Player_Turn(false);
+			FortressScene->Set_Monster_Turn(true);
+			FortressScene->Set_Player_Turn(false);
 		}
 
 		//int i = 5;

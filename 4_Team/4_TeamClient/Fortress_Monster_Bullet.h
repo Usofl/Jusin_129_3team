@@ -15,19 +15,11 @@ public:
 	virtual void Release(void) override;
 
 public:
-	void		Set_Pos(const float& _fX, const float& _fY)
-	{
-		m_tInfo.vPos.x = _fX;
-		m_tInfo.vPos.y = _fY;
-	}
-	void		Set_Angle(const float& _fAngle) { m_fAngle = _fAngle; }
-
-	void		Set_Player(CObj* pPlayer) { m_pPlayer = pPlayer; }
+	inline void	Set_Player(CObj* pPlayer) { m_pPlayer = pPlayer; }
 
 private:
 	INFO		m_tInfo_Bullet_Local[4];
 	INFO		m_tInfo_Bullet_World[4];
-
 
 	float		m_fSpeed;
 
