@@ -6,12 +6,12 @@
 
 
 CFortress_Monster::CFortress_Monster()
-	:m_bRandom(true),
-	m_bShoot(true),
-	m_bMonster_Turn(true), 
-	m_fSpeed(5.f), m_fRandom(0),
-	m_dwShootCount(GetTickCount()),
-	m_dwShootDelay(GetTickCount())
+	: m_bRandom(true)
+	, m_bShoot(true)
+	, m_bMonster_Turn(true)
+	, m_fRandom(0)
+	, m_dwShootCount(GetTickCount())
+	, m_dwShootDelay(GetTickCount())
 	, Fortress_Monster_Bullet(nullptr)
 {
 }
@@ -40,6 +40,7 @@ void CFortress_Monster::Initialize(void)
 	m_tInfo_Posin_Local[0].vPos = { 0.f , 0.f, 0.f };
 	m_tInfo_Posin_Local[1].vPos = { -50.f , 0.f, 0.f };
 
+	m_fSpeed = 5.f;
 	m_fAngle = 0.f;
 	m_fAngle_Body = 0.f;
 	m_fAngle_Posin = 0.f;
@@ -165,7 +166,7 @@ void CFortress_Monster::Shoot_Bullet()
 		m_dwShootCount = GetTickCount();
 	}*/
 	CFortress* pFortress = static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS));
-	if (pFortress-> Get_Monster_Turn() == true)
+	if (pFortress-> Get_Monster_Turn() == true && pFortress->Get_JunBulletList()->empty() && SCROLLMGR->Fix_Cheak(this))
 	{
 		if (m_bRandom == true)
 		{

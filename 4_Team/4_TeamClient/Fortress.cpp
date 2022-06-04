@@ -22,6 +22,7 @@ CFortress::~CFortress()
 
 void CFortress::Initialize(void)
 {
+
 	if (nullptr == JunPlayer)
 	{
 		JunPlayer = new CJunPlayer;
@@ -35,20 +36,19 @@ void CFortress::Initialize(void)
 
 	}
 
-
 	m_Line.tLPoint = { 0.f,0.f };
 	m_Line.tRPoint = { 300.f,0.f };
-	
-	LineMaker();
 
+	LineMaker();
 }
 
 void CFortress::Update(void)
 {
+	SCROLLMGR->Scroll_Lock_Fortress();
 
 	JunPlayer->Update();
 	if (nullptr != FortressMonster)
-	FortressMonster->Update();
+		FortressMonster->Update();
 	for (auto& iter : JunBulletList)
 	{
 		iter->Update();
@@ -58,16 +58,13 @@ void CFortress::Update(void)
 		iter->Update();
 	}
 
-	SCROLLMGR->Scroll_Lock_Fortress();
-
 	for (auto iter = m_list_Bullet_Effect.begin(); iter != m_list_Bullet_Effect.end();)
 	{
-		if(OBJ_DEAD == (*iter)->Update())
+		if (OBJ_DEAD == (*iter)->Update())
 		{
 			Safe_Delete(*iter);
 			(iter) = m_list_Bullet_Effect.erase((iter));
 		}
-
 		else
 		{
 			iter++;
@@ -79,6 +76,7 @@ void CFortress::Update(void)
 
 void CFortress::Late_Update(void)
 {
+
 	JunPlayer->Late_Update();
 	RENDERMGR->Add_Render_Obj(JunPlayer);
 
@@ -87,16 +85,16 @@ void CFortress::Late_Update(void)
 		FortressMonster->Late_Update();
 	}
 
-	float fMonsterX2 = 0, fMonsterY2 = 0;
+	float fMonsterX2(0.f), fMonsterY2(0.f);
 	if (nullptr != FortressMonster)
 	{
 		D3DXVECTOR3 vMonster = FortressMonster->Get_Info().vPos;
 		fMonsterX2 = vMonster.x;
 		fMonsterY2 = vMonster.y;
 	}
-	
+
 	//임시 총알 - 몬스터 충돌처리(몬스터 1마리 기준이라 추후 수정 필요)
-	if (fMonsterX2 != 0 && fMonsterY2 != 0)
+	if (fMonsterX2 != 0.f && fMonsterY2 != 0.f)
 	{
 		for (auto iter = JunBulletList.begin(); iter != JunBulletList.end();)
 		{
@@ -108,8 +106,11 @@ void CFortress::Late_Update(void)
 				(iter) = JunBulletList.erase((iter));
 				Safe_Delete<CFortress_Monster*>(FortressMonster);
 				JunPlayer->ReSet_Bullet(); // 삭제 했으니 플레이어의 총알 포인터 초기화 -> 현재는 총알 포인터가 Nullptr이면 새로 생성 못하게 끔 해놨음(한 발만 쏘게)
-
-				m_pTarget = JunPlayer;
+				
+				if (nullptr != JunPlayer)
+				{
+					m_pTarget = JunPlayer;
+				}
 			}
 			else
 			{
@@ -139,14 +140,29 @@ void CFortress::Late_Update(void)
 			(iter) = JunBulletList.erase((iter));
 			JunPlayer->ReSet_Bullet(); // 삭제 했으니 플레이어의 총알 포인터 초기화 -> 현재는 총알 포인터가 Nullptr이면 새로 생성 못하게 끔 해놨음(한 발만 쏘게)
 
-			m_pTarget = JunPlayer;
+			if (FortressMonster)
+			{
+				m_pTarget = FortressMonster;
+			}
+			else
+			{
+				m_pTarget = JunPlayer;
+			}
 		}
 		else if (fY >= WINCY)
 		{
 			Safe_Delete(*iter);
 			(iter) = JunBulletList.erase((iter));
-
-			m_pTarget = JunPlayer;
+			JunPlayer->ReSet_Bullet(); // 삭제 했으니 플레이어의 총알 포인터 초기화 -> 현재는 총알 포인터가 Nullptr이면 새로 생성 못하게 끔 해놨음(한 발만 쏘게)
+			
+			if (nullptr != FortressMonster)
+			{
+				m_pTarget = FortressMonster;
+			}
+			else
+			{
+				m_pTarget = JunPlayer;
+			}
 		}
 		else
 		{
@@ -155,7 +171,7 @@ void CFortress::Late_Update(void)
 		}
 	}
 
-	
+
 
 	for (auto iter = Monster_Bullet_List.begin(); iter != Monster_Bullet_List.end();)
 	{
@@ -173,6 +189,29 @@ void CFortress::Late_Update(void)
 
 			Safe_Delete(*iter);
 			(iter) = Monster_Bullet_List.erase((iter));
+
+			if (nullptr != JunPlayer)
+			{
+				m_pTarget = JunPlayer;
+			}
+			else
+			{
+				m_pTarget = FortressMonster;
+			}
+		}
+		else if (fY >= WINCY)
+		{
+			Safe_Delete(*iter);
+			(iter) = Monster_Bullet_List.erase((iter));
+
+			if (nullptr != JunPlayer)
+			{
+				m_pTarget = JunPlayer;
+			}
+			else
+			{
+				m_pTarget = FortressMonster;
+			}
 		}
 		else
 		{
@@ -239,7 +278,7 @@ void CFortress::Render(HDC _hDC)
 	int i = 45;*/
 	//TextOut(_hDC, 100, 100, i"%d", _tcslen(str2));
 	//CString::Format()
-	
+
 	//Rectangle(_hDC, 0, 0, 1024, 110);
 	//Rectangle(_hDC, 0, 658, 1024, 768);
 
@@ -252,8 +291,8 @@ void CFortress::Render(HDC _hDC)
 	//LineArray[0].Render(_hDC);
 	/*MoveToEx(_hDC,., 320, nullptr);
 	LineTo(_hDC, 500, 320);*/
-	
-	
+
+
 }
 
 
@@ -261,7 +300,7 @@ void CFortress::Release(void)
 {
 
 	Safe_Delete<CJunPlayer*>(JunPlayer);
-	
+
 	Safe_Delete<CFortress_Monster*>(FortressMonster);
 
 	for (auto iter = JunBulletList.begin(); iter != JunBulletList.end();)
@@ -384,17 +423,17 @@ void CFortress::OffSet(void)
 	INFO	tTarget_Info = m_pTarget->Get_Info();
 	float	fSpeed = m_pTarget->Get_Speed();
 
-	int		iItvX = 200;
+	int		iItvX = 50;
 	int		iItvY = 50;
 
-	if (iOffSetX + iItvX <tTarget_Info.vPos.x + iScrollX)
+	if (iOffSetX + iItvX < tTarget_Info.vPos.x + iScrollX)
 	{
-		SCROLLMGR->Plus_ScrollX(-tTarget_Info.vDir.x * fSpeed);
+		SCROLLMGR->Plus_ScrollX(-fSpeed);
 	}
 
 	if (iOffSetX - iItvX > tTarget_Info.vPos.x + iScrollX)
 	{
-		SCROLLMGR->Plus_ScrollX(tTarget_Info.vDir.x * fSpeed);
+		SCROLLMGR->Plus_ScrollX(fSpeed);
 	}
 
 	if (iOffSetY - iItvY > tTarget_Info.vPos.y + iScrollY)

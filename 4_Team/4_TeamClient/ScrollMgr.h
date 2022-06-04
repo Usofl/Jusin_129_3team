@@ -1,6 +1,8 @@
 #pragma once
 #include "Include.h"
 
+class CObj;
+
 class CScrollMgr
 {
 private:
@@ -19,6 +21,8 @@ public:
 
 	void			Main_Scroll_Lock(void);
 	void			Scroll_Lock_Fortress(void);
+
+	const bool		Fix_Cheak(const CObj* _pTarget);
 
 public:
 	static		CScrollMgr*&		Get_Instance(void)

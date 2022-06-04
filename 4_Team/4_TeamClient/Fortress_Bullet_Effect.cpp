@@ -51,6 +51,11 @@ void CFortress_Bullet_Effect::Initialize(void)
 
 const int CFortress_Bullet_Effect::Update(void)
 {
+	if (m_bDead)
+	{
+		return OBJ_DEAD;
+	}
+
 	m_fTime += 0.1f;
 	m_tInfo.vPos.x += 2.f * sinf(m_fAngle) * m_tInfo.vLook.x;
 	m_tInfo.vPos.y -= m_fPower * m_fTime * sinf(m_fAngle) - (0.5f * 3.8f * (m_fTime * m_fTime));

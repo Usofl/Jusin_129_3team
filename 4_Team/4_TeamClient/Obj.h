@@ -22,7 +22,7 @@ public:
 	inline const INFO&		Get_Info(void) const { return m_tInfo; }
 	inline const MATINFO&	Get_Mat_Info(void) const { return m_tMatInfo; }
 	inline const bool&		Get_Dead(void)		{ return m_bDead; }
-	inline const float&		Get_Speed(void) { return m_fSpeed; }
+	inline const float&		Get_Speed(void) const { return m_fSpeed; }
 
 	inline void Set_Angle(const float& _fAngle) { m_fAngle = _fAngle; }
 	inline void Set_Pos(const float& _fX, const float& _fY) { m_tInfo.vPos.x = _fX; m_tInfo.vPos.y = _fY; }

@@ -33,7 +33,6 @@ private:
 	INFO			m_tInfo_Posin_World[2];
 
 private:
-	float			m_fSpeed;
 	float			m_fRandom;
 		
 	float			m_fAngle_Body;
