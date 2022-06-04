@@ -23,24 +23,32 @@ public:
 	}
 	const bool Get_NextLine(void) { return m_bNextLine; };
 	void Set_NextLine(bool _b) { m_bNextLine = _b; };
+
 private:
 	virtual void Key_Input(void) override;
 	void OffSet(void);
 
 private:
 	void Shoot(void);
+
 private:
 	D3DXVECTOR3 Tank[4];
 	D3DXVECTOR3 TankHead[4];
+
 	D3DXVECTOR3 Po;
 	D3DXVECTOR3 Po_One;
 	D3DXVECTOR3 Po_Dir;
 	D3DXVECTOR3 OriPo_Dir;
+	
 	D3DXMATRIX		m_matScale, m_matRotZ, m_matTrans;
 	D3DXMATRIX		m_HmatScale, m_HmatRotZ, m_HmatTrans;
+	
 	D3DXVECTOR3 vHeadPos;
+	
 	INFO	m_HeadInfo;
+	
 	D3DXMATRIX m_HeadMat;
+
 private:
 	int m_iAngleCount;
 	float m_fPoAngle;
