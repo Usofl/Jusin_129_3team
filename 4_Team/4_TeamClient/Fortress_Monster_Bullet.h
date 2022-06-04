@@ -1,6 +1,6 @@
 #pragma once
 #include "Obj.h"
-#include "JunPlayer.h"
+
 class CFortress_Monster_Bullet : public CObj
 {
 public:

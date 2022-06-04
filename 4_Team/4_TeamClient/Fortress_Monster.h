@@ -1,7 +1,7 @@
 #pragma once
 #include "Obj.h"
-#include "Fortress_Monster_Bullet.h"
 #include "JunPlayer.h"
+#include "Fortress_Monster_Bullet.h"
 
 class CFortress_Monster :
 	public CObj

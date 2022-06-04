@@ -3,7 +3,6 @@
 #include "FortressFactory.h"
 #include "ScrollMgr.h"
 #include "SceneMgr.h"
-#include "ScrollMgr.h"
 
 
 CFortress_Monster::CFortress_Monster()
@@ -13,6 +12,7 @@ CFortress_Monster::CFortress_Monster()
 	m_fSpeed(5.f), m_fRandom(0),
 	m_dwShootCount(GetTickCount()),
 	m_dwShootDelay(GetTickCount())
+	, Fortress_Monster_Bullet(nullptr)
 {
 }
 
