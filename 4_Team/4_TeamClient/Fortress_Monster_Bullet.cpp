@@ -3,7 +3,8 @@
 #include "ScrollMgr.h"
 
 CFortress_Monster_Bullet::CFortress_Monster_Bullet()
-	:m_fShoot_Power(15.f), m_fAir_Shoot(0.f)
+	: m_fShoot_Power(15.f)
+	, m_fAir_Shoot(0.f)
 {
 }
 

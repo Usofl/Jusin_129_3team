@@ -4,7 +4,15 @@
 #include "SceneMgr.h"
 #include "ScrollMgr.h"
 
-CJunPlayer::CJunPlayer():m_iAngleCount(0)
+CJunPlayer::CJunPlayer()
+	: m_iAngleCount(0)
+	, m_fPoAngle(0.f)
+	, BeforePoAngle(0.f)
+	, BeforeAngle(m_fAngle)
+	, m_fShootPower(0.f)
+	, m_fFallenTime(0.f)
+	, m_bNextLine(false)
+	, Bullet(nullptr)
 {
 	Initialize();
 }
@@ -38,13 +46,8 @@ void CJunPlayer::Initialize(void)
 	//m_tInfo.vDir = { 0.f,1.f,0.f };
 
 	m_tInfo.vLook = { 1.f,0.f,0.f };
-	m_fAngle = 0.f;
-	m_fPoAngle = 0.f;
-	BeforeAngle = m_fAngle;
 	m_fSpeed = 5.f;
 	OriPo_Dir = { 1.f,0.f,0.f };
-	m_fShootPower = 0.f;
-	
 }
 
 const int CJunPlayer::Update(void)
@@ -63,10 +66,10 @@ const int CJunPlayer::Update(void)
 	TankHead[2] = { 20.f,20.f + m_HeadInfo.vPos.y,0.f };
 	TankHead[3] = { -20.f,20.f + m_HeadInfo.vPos.y,0.f };*/
 
-	TankHead[0] = { -20.f,-50.f-20.f - 29.f ,0.f };
-	TankHead[1] = { 20.f, -50.f-20.f - 29.f  ,0.f };
-	TankHead[2] = { 20.f,-50.f + 20.f - 29.f  ,0.f };
-	TankHead[3] = { -20.f,-50.f +20.f - 29.f,0.f };
+	TankHead[0] = { -20.f, -50.f -20.f - 29.f ,0.f };
+	TankHead[1] = { 20.f, -50.f -20.f - 29.f ,0.f };
+	TankHead[2] = { 20.f,-50.f + 20.f - 29.f ,0.f };
+	TankHead[3] = { -20.f, -50.f + 20.f - 29.f ,0.f };
 	Po = { 80.f, 0.f ,0.f };
 	
 

@@ -96,7 +96,7 @@ void CFortress::Late_Update(void)
 		float fY = (*iter)->Get_Info().vPos.y;
 		if (LINEMGR->Collision_DeLine(fX, fY))
 		{
-			int num = Random_Num(5, 10);
+			int num = Random_Num(7, 10);
 			for (int i = 0; i < num; ++i)
 			{
 				m_list_Bullet_Effect.push_back(CFortressFactory::Create_Fortress_Bullet_Effect((*iter)->Get_Info().vPos.x, (*iter)->Get_Info().vPos.y));
@@ -121,7 +121,7 @@ void CFortress::Late_Update(void)
 		float fY = (*iter)->Get_Info().vPos.y;
 		if (LINEMGR->Collision_DeLine(fX, fY))
 		{
-			int num = Random_Num(5, 10);
+			int num = Random_Num(7, 10);
 			for (int i = 0; i < num; ++i)
 			{
 				m_list_Bullet_Effect.push_back(CFortressFactory::Create_Fortress_Bullet_Effect((*iter)->Get_Info().vPos.x, (*iter)->Get_Info().vPos.y));
@@ -164,8 +164,6 @@ void CFortress::Late_Update(void)
 		FortressMonster->Set_Angle(fSour);
 		FortressMonster->Set_Pos(fMonsterX, fMonsterY - 20);
 	}
-
-	
 }
 
 void CFortress::Render(HDC _hDC)

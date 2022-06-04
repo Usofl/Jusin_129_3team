@@ -12,12 +12,12 @@ public:
 	void		Render(HDC hDC);
 	void		Release(void);
 
-	bool		Collision_Line(float& _fX, float* pY);
-	const float Collision_JunLine(float& _fX, float* pY);
-	const float Collision_Monster_Line(float& _fX, float* pY);
+	bool		Collision_Line(float& _fX, float* _pY);
+	const float Collision_JunLine(float& _fX, float* _pY);
+	const float Collision_Monster_Line(float& _fX, float* _pY);
 	bool		Collision_DeLine(const float& _fX, const float& _fY);
 	void		Load_Line();
-	void		Create_Line(const int& _x, const int& _y, const int& _x2, const int& _y2);
+	void		Create_Line(const float& _fLX, const float& _fLY, const float& _fRX, const float& _fRY);
 		
 	
 public:

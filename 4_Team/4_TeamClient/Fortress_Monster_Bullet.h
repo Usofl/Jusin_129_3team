@@ -1,8 +1,7 @@
 #pragma once
 #include "Obj.h"
 #include "JunPlayer.h"
-class CFortress_Monster_Bullet :
-	public CObj
+class CFortress_Monster_Bullet : public CObj
 {
 public:
 	CFortress_Monster_Bullet();
@@ -33,6 +32,5 @@ private:
 
 	float		m_fAir_Shoot;
 	float		m_fShoot_Power;
-
 };
 

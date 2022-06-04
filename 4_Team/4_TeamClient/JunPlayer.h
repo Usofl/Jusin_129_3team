@@ -4,6 +4,8 @@
 class CJunPlayer : public CPlayer
 {
 public:
+	enum STATE {IDLE, FALLEN ,END};
+public:
 	CJunPlayer();
 	virtual ~CJunPlayer();
 
@@ -15,20 +17,16 @@ public:
 	virtual void Release(void) override;
 
 public:
-	//list<CJunBullet*>* Get_BulletList(void) { return &BulletList; };
-	INFO* Get_InfoJun(void) { return &m_tInfo; };
-	float* Get_InfoY(void) { return &m_tInfo.vPos.y; };
-	void Set_Angle(float _f) {
-		m_fAngle = (_f);
-	}
-	const bool Get_NextLine(void) { return m_bNextLine; };
-	void Set_NextLine(bool _b) { m_bNextLine = _b; };
+	inline const bool& Get_NextLine(void) { return m_bNextLine; };
+	inline const STATE& Get_State(void) { return m_eCurState; };
+
+	inline void Set_NextLine(const bool& _bNextLine) { m_bNextLine = _bNextLine; };
+	inline void Set_State(const STATE& _eState) { m_eCurState = _eState; };
 
 private:
 	virtual void Key_Input(void) override;
 	void OffSet(void);
 
-private:
 	void Shoot(void);
 
 private:
@@ -49,13 +47,21 @@ private:
 	
 	D3DXMATRIX m_HeadMat;
 
+	STATE			m_ePreState;
+	STATE			m_eCurState;
+
 private:
 	int m_iAngleCount;
+
 	float m_fPoAngle;
 	float BeforePoAngle;
 	float BeforeAngle;
 	float m_fShootPower;
+
+	float m_fFallenTime;
+
 	bool  m_bNextLine;
+
 	CJunBullet* Bullet;
 	//list<CJunBullet*> BulletList;
 };

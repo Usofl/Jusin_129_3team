@@ -40,6 +40,8 @@ bool CLineMgr::Collision_Line(float& _fX, float* pY)
 	if (m_LineList.empty())
 		return false;
 
+	float	x1(0.f), x2(0.f), y1(0.f), y2(0.f);
+
 	CLine*		pTarget = nullptr;
 
 	for (auto& iter : m_LineList)
@@ -47,18 +49,20 @@ bool CLineMgr::Collision_Line(float& _fX, float* pY)
 		if (_fX >= iter->Get_Info().tLPoint.fX &&
 			_fX <= iter->Get_Info().tRPoint.fX)
 		{
+			x1 = iter->Get_Info().tLPoint.fX;
+			x2 = iter->Get_Info().tRPoint.fX;
+
+			y1 = iter->Get_Info().tLPoint.fY;
+			y2 = iter->Get_Info().tRPoint.fY;
+
 			pTarget = iter;
+
+			break;
 		}
 	}
 
 	if (!pTarget)
 		return false;
-
-	float	x1 = pTarget->Get_Info().tLPoint.fX;
-	float	x2 = pTarget->Get_Info().tRPoint.fX;
-
-	float	y1 = pTarget->Get_Info().tLPoint.fY;
-	float	y2 = pTarget->Get_Info().tRPoint.fY;
 
 	*pY = (((y2 - y1) / (x2 - x1)) * (_fX - x1)) + y1;
 	return true;
@@ -81,20 +85,21 @@ bool CLineMgr::Collision_DeLine(const float& _fX, const float& _fY)
 	for (auto iter = m_LineList.begin(); iter != m_LineList.end(); )
 	{
 		bool bX = false, bY = false;
-		
 
-		if ((_fX >= (*iter)->Get_Info().tLPoint.fX - 20 &&
-			_fX <= (*iter)->Get_Info().tRPoint.fX + 20) ||
-			(_fX >= (*iter)->Get_Info().tRPoint.fX + 20 &&
-			_fX <= (*iter)->Get_Info().tLPoint.fX - 20))
+		float	LX = (*iter)->Get_Info().tLPoint.fX;
+		float	RX = (*iter)->Get_Info().tRPoint.fX;
+
+		float	LY = (*iter)->Get_Info().tLPoint.fY;
+		float	RY = (*iter)->Get_Info().tRPoint.fY;
+
+		float	pY(0.f);
+
+		if ((_fX >= LX - 20.f && _fX <= RX + 20.f) || (_fX >= RX + 20.f && _fX <= LX - 20.f))
 		{
 			bX	= true;
 		}
 
-		if ((_fY <= (*iter)->Get_Info().tLPoint.fY + 20 &&
-			_fY >= (*iter)->Get_Info().tRPoint.fY - 20) ||(
-			_fY <= (*iter)->Get_Info().tRPoint.fY - 20 &&
-			_fY >= (*iter)->Get_Info().tLPoint.fY + 20))
+		if ((_fY <= LY + 20.f && _fY >= RY - 20.f) || (_fY <= RY - 20.f && _fY >= LY + 20.f))
 		{
 			bY = true;
 		}
@@ -104,10 +109,31 @@ bool CLineMgr::Collision_DeLine(const float& _fX, const float& _fY)
 		//if ((_fX >= (*iter)->Get_Info().tLPoint.fX && 
 		//	_fX <= (*iter)->Get_Info().tRPoint.fX) && (_fY  <= (*iter)->Get_Info().tLPoint.fY &&
 		//		_fY  >= (*iter)->Get_Info().tRPoint.fY))
-		if(bX&&bY)
+
+		if (bX&&bY)
 		{
+			if (_fX - LX > 20.f && RX - _fX > 20.f)
+			{
+				pY = (((RY - LY) / (RX - LX)) * (_fX - 20.f - LX)) + LY;
+				Create_Line(LX, LY, _fX - 20.f, pY);
+
+				pY = (((RY - LY) / (RX - LX)) * (_fX + 20.f - LX)) + LY;
+				Create_Line(_fX + 20.f, pY, RX, RY);
+			}
+			else if (_fX - LX > 30.f)
+			{
+				pY = (((RY - LY) / (RX - LX)) * (_fX - 30.f - LX)) + LY;
+				Create_Line(LX, LY, _fX - 30.f, pY);
+			}
+			else if (RX - _fX > 30.f)
+			{
+				pY = (((RY - LY) / (RX - LX)) * (_fX + 30.f - LX)) + LY;
+				Create_Line(_fX + 30.f, pY, RX, RY);
+			}
+			
 			Safe_Delete(*iter);
 			(iter) = m_LineList.erase((iter));
+
 			return true;
 		}
 
@@ -271,16 +297,7 @@ void CLineMgr::Load_Line()
 	MessageBox(g_hWnd, _T("Load 완료"), _T("성공"), MB_OK);
 }
 
-void CLineMgr::Create_Line(const int& _x, const int& _y, const int& _x2, const int& _y2)
+void CLineMgr::Create_Line(const float& _fLX, const float& _fLY, const float& _fRX, const float& _fRY)
 {
-	
-	m_Line.tLPoint = { (float)_x,(float)_y };
-	m_Line.tRPoint = { (float)_x2,(float)_y2 };
-	m_CLine = new CLine;
-	*m_CLine = { m_Line.tLPoint,m_Line.tRPoint };
-	m_LineList.push_back(m_CLine
-	);
-	m_Line.tLPoint = { 0.f,0.f };
-	m_Line.tRPoint = { 0.f,0.f };
-	m_CLine = nullptr;
+	m_LineList.push_back(new CLine(LINEPOINT(_fLX, _fLY), LINEPOINT(_fRX, _fRY)));
 }
