@@ -28,6 +28,10 @@ public:
 	void	Set_Turn(bool _Turn) { m_bPlayer_Turn = _Turn; }
 	bool	Get_Turn() { return m_bPlayer_Turn; }
 
+public:
+	void    ReSet_Bullet(void) { m_pBullet = nullptr; };
+	CJunBullet* Get_Bullet(void) { return m_pBullet; };
+
 private:
 	virtual void Key_Input(void) override;
 	void OffSet(void);
@@ -70,7 +74,8 @@ private:
 	bool  m_bGageRender;
 	float  m_fTempPower;
 	bool m_bPlayer_Turn;
-	CJunBullet* Bullet;
+	CJunBullet* m_pBullet;
+
 
 	//list<CJunBullet*> BulletList;
 };

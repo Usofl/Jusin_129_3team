@@ -34,5 +34,6 @@ private:
 	D3DXVECTOR3 vSu;
 	D3DXVECTOR3 m_vDpDir;
 	D3DXMATRIX		m_matScale, m_matRotZ, m_matTrans;
+	CJunBullet* m_DpBullet[10];
 };
 

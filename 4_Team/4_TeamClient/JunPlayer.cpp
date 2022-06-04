@@ -12,7 +12,7 @@ CJunPlayer::CJunPlayer()
 	, m_fShootPower(0.f)
 	, m_fFallenTime(0.f)
 	, m_bNextLine(false)
-	, Bullet(nullptr)
+	, m_pBullet(nullptr)
 
 	, m_bPlayer_Turn(true)
 
@@ -136,6 +136,10 @@ const int CJunPlayer::Update(void)
 	//D3DXVec3Normalize
 	if (KEYMGR->Key_Pressing(VK_SPACE))
 	{
+		if (m_pBullet != nullptr)
+		{
+			return OBJ_NOEVENT;
+		}
 		m_bGageRender = true;
 		if (m_bMaxPower)
 		{
@@ -159,22 +163,26 @@ const int CJunPlayer::Update(void)
 	{
 		//fShootPower;
 		m_bGageRender = false;
-		Bullet = new CJunBullet;
-		Bullet->Initialize();
-		if (Po_One.x > Po.x)
+		if (m_pBullet == nullptr)
 		{
-			Bullet->Set_Pos_Dir(Po.x, Po.y, TempVec1, -1, m_fShootPower);
-		}
-		//	Bullet->Set_Pos_Dir(Po.x, Po.y, Po_Dir ,-1);
-		else
-		{
-			Bullet->Set_Pos_Dir(Po.x, Po.y, TempVec1, 1, m_fShootPower);
-		}
+			m_pBullet = new CJunBullet;
+			m_pBullet->Initialize();
+			if (Po_One.x > Po.x)
+			{
+				m_pBullet->Set_Pos_Dir(Po.x, Po.y, TempVec1, -1, m_fShootPower);
+			}
+			//	Bullet->Set_Pos_Dir(Po.x, Po.y, Po_Dir ,-1);
+			else
+			{
+				m_pBullet->Set_Pos_Dir(Po.x, Po.y, TempVec1, 1, m_fShootPower);
+			}
 
-		Bullet->Set_BulletID(BULLET_BASIC);
-		static_cast<CFortress*>(SCENEMGR->Get_Instance()->Get_Scene(SC_FORTRESS))->Get_JunBulletList()->push_back(Bullet);
-		m_fShootPower = 0.f;
-		m_fTempPower = 0.f;
+			m_pBullet->Set_BulletID(BULLET_BASIC);
+			static_cast<CFortress*>(SCENEMGR->Get_Instance()->Get_Scene(SC_FORTRESS))->Get_JunBulletList()->push_back(m_pBullet);
+			m_fShootPower = 0.f;
+			m_fTempPower = 0.f;
+		}
+		
 		//int i = 5;
 	}
  	return 0;
@@ -211,8 +219,15 @@ void CJunPlayer::Render(HDC hDC)
 	MoveToEx(hDC, (int)Po_One.x + iScrollX, (int)Po_One.y + iScrollY, nullptr);
 	LineTo(hDC, (int)Po.x + iScrollX, (int)Po.y + iScrollY);
 
-	if(m_bGageRender)
-	Rectangle(hDC, (int)800/* + iScrollX*/, (int)400 - (m_fTempPower * 10) /*+ iScrollY*/, (int)850/* + iScrollX*/, (int)450 - (m_fTempPower * 10)/*+ iScrollY*/);
+	if (m_bGageRender && !m_pBullet)
+	{
+		Ellipse(hDC, (int)800/* + iScrollX*/, (int)400 - (m_fTempPower * 10) /*+ iScrollY*/, (int)850/* + iScrollX*/, (int)450 - (m_fTempPower * 10)/*+ iScrollY*/);
+	}
+
+	//임시 게이지 보게 끔 만든 렉트
+	Rectangle(hDC, (int)800/* + iScrollX*/, (int)195 /*+ iScrollY*/, (int)850/* + iScrollX*/, (int)200/*+ iScrollY*/);
+	Rectangle(hDC, (int)800/* + iScrollX*/, (int)450 /*+ iScrollY*/, (int)850/* + iScrollX*/, (int)445/*+ iScrollY*/);
+
 
 	/*MoveToEx(hDC, (int)m_tInfo.vPos.x, (int)m_tInfo.vPos.y, nullptr);
 	LineTo(hDC, (int)Po.x, (int)Po.y);*/

@@ -2,6 +2,7 @@
 #include "JunBullet.h"
 #include "ScrollMgr.h"
 #include "KeyMgr.h"
+#include "SceneMgr.h"
 
 CJunBullet::CJunBullet()
 {
@@ -27,6 +28,11 @@ void CJunBullet::Initialize(void)
 	m_fAngle = 0.f;
 	m_fTempTime = 0.f;
 	int i = 5;
+	for (int i = 0; i < 10; ++i)
+	{
+		m_DpBullet[i] = nullptr;
+	}
+	
 }
 
 const int CJunBullet::Update(void)
@@ -61,26 +67,47 @@ const int CJunBullet::Update(void)
 void CJunBullet::Late_Update(void)
 {
 	if (KEYMGR->Key_Down('F'))
-		m_tInfo.vPos.y = 200.f;
+	{
+		D3DXVECTOR3 vTemp = { 0.3f,0.3f,0.f };
+		
+		/*for (int i = 0; 10 > i; ++i)
+		{
+			if (m_DpBullet[i] == nullptr)
+			{
+				m_DpBullet[i] = new CJunBullet;
+				m_DpBullet[i]->Initialize();
+				m_DpBullet[i]->Set_Pos_Dir(m_tInfo.vPos.x, m_tInfo.vPos.y, m_tInfo.vDir - (vTemp * i), -1, m_fSpeed);
+				m_DpBullet[i]->Update();
+				dynamic_cast<CFortress*>(SCENEMGR->Get_Instance()->Get_Scene(SC_FORTRESS))->Get_JunBulletList()->push_back(m_DpBullet[i]);
+			}
+			
+		}*/
+		//SCENEMGR->Get_Instance()->Get_Scene(SC_FORTRESS)
+		/*D3DXVECTOR3 vTemp2 = m_tInfo.vDir - vTemp;
+		D3DXVECTOR3 vTemp3 = m_tInfo.vDir + vTemp;*/
+		//m_BulletID = BULLET_DP;
+	}
 }
 
 void CJunBullet::Render(HDC hDC)
 {
 	//Ellipse(hDC, (int)m_tInfo.vPos.x - 10, (int)m_tInfo.vPos.y - 10, (int)m_tInfo.vPos.x + 10, (int)m_tInfo.vPos.y + 10);
+	int	iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int	iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 	switch (m_BulletID)
 	{
 	case BULLET_BASIC:
 		
 		break;
 	case BULLET_DP:
-
+		//테스트용 DP
+		//Ellipse(hDC, (int)m_tInfo.vPos.x - 10 + iScrollX + 100, (int)m_tInfo.vPos.y - 10 + iScrollY, (int)m_tInfo.vPos.x + 10 + iScrollX + 100, (int)m_tInfo.vPos.y + 10 + iScrollY);
 		break;
 	case BULLET_END:
 		break;
 	}
 
-	int	iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
-	int	iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+	
 
 	Ellipse(hDC, (int)m_tInfo.vPos.x - 10 + iScrollX, (int)m_tInfo.vPos.y - 10 + iScrollY, (int)m_tInfo.vPos.x + 10 + iScrollX, (int)m_tInfo.vPos.y + 10 + iScrollY);
 
@@ -103,7 +130,8 @@ void CJunBullet::Move(void)
 		m_tInfo.vPos.y += (0.5f * (9.8f) * m_fTempTime * m_fTempTime);
 		break;
 	case BULLET_DP:
-
+		m_tInfo.vPos += m_fSpeed* m_tInfo.vDir;
+		m_tInfo.vPos.y += (0.5f * (9.8f) * m_fTempTime * m_fTempTime);
 		break;
 	case BULLET_END:
 		break;

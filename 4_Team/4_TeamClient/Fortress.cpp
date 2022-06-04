@@ -36,6 +36,7 @@ void CFortress::Initialize(void)
 
 void CFortress::Update(void)
 {
+
 	JunPlayer->Update();
 	if (nullptr != FortressMonster)
 	FortressMonster->Update();
@@ -93,6 +94,7 @@ void CFortress::Late_Update(void)
 				Safe_Delete(*iter);
 				(iter) = JunBulletList.erase((iter));
 				Safe_Delete<CFortress_Monster*>(FortressMonster);
+				JunPlayer->ReSet_Bullet(); // 삭제 했으니 플레이어의 총알 포인터 초기화 -> 현재는 총알 포인터가 Nullptr이면 새로 생성 못하게 끔 해놨음(한 발만 쏘게)
 			}
 			else
 			{
@@ -120,6 +122,7 @@ void CFortress::Late_Update(void)
 			}
 			Safe_Delete(*iter);
 			(iter) = JunBulletList.erase((iter));
+			JunPlayer->ReSet_Bullet(); // 삭제 했으니 플레이어의 총알 포인터 초기화 -> 현재는 총알 포인터가 Nullptr이면 새로 생성 못하게 끔 해놨음(한 발만 쏘게)
 		}
 
 		else
@@ -221,6 +224,7 @@ void CFortress::Render(HDC _hDC)
 	
 	
 }
+
 
 void CFortress::Release(void)
 {
