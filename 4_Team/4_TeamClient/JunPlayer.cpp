@@ -44,7 +44,9 @@ void CJunPlayer::Initialize(void)
 	m_fSpeed = 5.f;
 	OriPo_Dir = { 1.f,0.f,0.f };
 	m_fShootPower = 0.f;
-	
+	m_fTempPower = 0.f;
+	m_bMaxPower = true;
+	m_bGageRender = false;
 }
 
 const int CJunPlayer::Update(void)
@@ -126,11 +128,29 @@ const int CJunPlayer::Update(void)
 	//D3DXVec3Normalize
 	if (KEYMGR->Key_Pressing(VK_SPACE))
 	{
-		m_fShootPower += 0.4f;
+		m_bGageRender = true;
+		if (m_bMaxPower)
+		{
+			m_fShootPower += 0.4f;
+		}
+		else
+		{
+			m_fShootPower -= 0.4f;
+		}
+		if (m_fShootPower >= 20.f)
+		{
+			m_bMaxPower = false;
+		}
+		else if(m_fShootPower <= 0.f)
+		{
+			m_bMaxPower = true;
+		}
+		m_fTempPower = m_fShootPower;
 	}
 	if (KEYMGR->Key_Up(VK_SPACE))
 	{
 		//fShootPower;
+		m_bGageRender = false;
 		Bullet = new CJunBullet;
 		Bullet->Initialize();
 		if (Po_One.x > Po.x)
@@ -143,11 +163,10 @@ const int CJunPlayer::Update(void)
 			Bullet->Set_Pos_Dir(Po.x, Po.y, TempVec1, 1, m_fShootPower);
 		}
 
-
 		Bullet->Set_BulletID(BULLET_BASIC);
 		static_cast<CFortress*>(SCENEMGR->Get_Instance()->Get_Scene(SC_FORTRESS))->Get_JunBulletList()->push_back(Bullet);
 		m_fShootPower = 0.f;
-		
+		m_fTempPower = 0.f;
 		//int i = 5;
 	}
 	
@@ -184,6 +203,9 @@ void CJunPlayer::Render(HDC hDC)
 	Ellipse(hDC, (int)Po_One.x - 5 + iScrollX, (int)Po_One.y - 5 + iScrollY, (int)Po_One.x + 5 + iScrollX, (int)Po_One.y + 5 + iScrollY);
 	MoveToEx(hDC, (int)Po_One.x + iScrollX, (int)Po_One.y + iScrollY, nullptr);
 	LineTo(hDC, (int)Po.x + iScrollX, (int)Po.y + iScrollY);
+
+	if(m_bGageRender)
+	Rectangle(hDC, (int)800/* + iScrollX*/, (int)400 - (m_fTempPower * 10) /*+ iScrollY*/, (int)850/* + iScrollX*/, (int)450 - (m_fTempPower * 10)/*+ iScrollY*/);
 
 	/*MoveToEx(hDC, (int)m_tInfo.vPos.x, (int)m_tInfo.vPos.y, nullptr);
 	LineTo(hDC, (int)Po.x, (int)Po.y);*/

@@ -21,6 +21,9 @@ public:
 	virtual void Key_Input(void) override;
 
 public:
+	const bool MonsterCollision_Check(float _fMonX, float _fMonY,float _fBulletX, float _fBulletY);
+	
+public:
 	list<CJunBullet*>* Get_JunBulletList(void) {
 		return &JunBulletList;
 	};
