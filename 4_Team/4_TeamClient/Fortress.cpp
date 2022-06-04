@@ -155,6 +155,16 @@ void CFortress::Late_Update(void)
 		JunPlayer->Set_Pos(fX, fY);
 	}
 
+	float fMonsterX = FortressMonster->Get_Info().vPos.x;
+	float fMonsterY = FortressMonster->Get_Info().vPos.y;
+
+	if (LINEMGR->Collision_Line(fMonsterX, &fMonsterY))
+	{
+		float fSour = LINEMGR->Collision_Monster_Line(fMonsterX, &fMonsterY);
+		FortressMonster->Set_Angle(fSour);
+		FortressMonster->Set_Pos(fMonsterX, fMonsterY - 20);
+	}
+
 	
 }
 

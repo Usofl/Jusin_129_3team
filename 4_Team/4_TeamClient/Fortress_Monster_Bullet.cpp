@@ -3,7 +3,7 @@
 #include "ScrollMgr.h"
 
 CFortress_Monster_Bullet::CFortress_Monster_Bullet()
-	:m_fShoot_Power(10.f), m_fAir_Shoot(0.f)
+	:m_fShoot_Power(15.f), m_fAir_Shoot(0.f)
 {
 }
 
@@ -23,7 +23,7 @@ void CFortress_Monster_Bullet::Initialize(void)
 	m_tInfo_Bullet_Local[2].vPos = { +10.f , +10.f , 0.f };
 	m_tInfo_Bullet_Local[3].vPos = { -10.f , +10.f , 0.f };*/
 
-	m_fSpeed = 5.f;
+	m_fSpeed = 8.f;
 
 	m_bDead = false;
 }
@@ -54,7 +54,7 @@ const int CFortress_Monster_Bullet::Update(void)
 
 
 	m_tInfo.vPos -= m_fSpeed * m_tInfo.vLook;
-	m_tInfo.vPos.y -= m_fShoot_Power * m_fAir_Shoot - 9.8f * m_fAir_Shoot * m_fAir_Shoot * 0.5f;
+	m_tInfo.vPos.y += 9.8f * m_fAir_Shoot * m_fAir_Shoot * 0.5f;
 	
 
 	return 0;
