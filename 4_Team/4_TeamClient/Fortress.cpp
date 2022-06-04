@@ -162,8 +162,11 @@ void CFortress::Render(HDC _hDC)
 
 	InvertRect(_hDC, &rc1);
 	InvertRect(_hDC, &rc2);
-	const TCHAR *str2 = TEXT("Beautiful Korea");
-	TextOut(_hDC, 100, 100, str2, _tcslen(str2));
+	const TCHAR *str2 = TEXT("45%d");
+	int i = 45;
+	//TextOut(_hDC, 100, 100, i"%d", _tcslen(str2));
+	//CString::Format()
+	
 	//Rectangle(_hDC, 0, 0, 1024, 110);
 	//Rectangle(_hDC, 0, 658, 1024, 768);
 
