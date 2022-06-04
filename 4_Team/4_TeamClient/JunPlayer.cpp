@@ -251,15 +251,17 @@ void CJunPlayer::OffSet(void)
 {
 	int		iOffSetX = WINCX >> 1;
 	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
 	int		iItvX = 300;
 
 	if (iOffSetX + iItvX < m_tInfo.vPos.x + iScrollX)
 	{
-		CScrollMgr::Get_Instance()->Plus_ScrollX(-m_fSpeed);
+		CScrollMgr::Get_Instance()->Plus_ScrollX(-m_tInfo.vDir.x * m_fSpeed);
 	}
 
 	if (iOffSetX - iItvX > m_tInfo.vPos.x + iScrollX)
 	{
-		CScrollMgr::Get_Instance()->Plus_ScrollX(m_fSpeed);
+		CScrollMgr::Get_Instance()->Plus_ScrollX(m_tInfo.vDir.x * m_fSpeed);
 	}
 }
