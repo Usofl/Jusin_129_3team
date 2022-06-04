@@ -101,7 +101,7 @@ const int CJunPlayer::Update(void)
 	}
 
 	D3DXVec3TransformCoord(&m_vPo_One, &m_vLocal_Po_One, &m_tInfo.matWorld);
-	
+
 	D3DXMatrixRotationZ(&m_HmatRotZ, m_fPoAngle);
 	D3DXMatrixTranslation(&m_HmatTrans, m_vPo_One.x, m_vPo_One.y, 0.f);
 
@@ -125,7 +125,7 @@ const int CJunPlayer::Update(void)
 		break;
 	}
 
- 	return 0;
+	return 0;
 }
 
 void CJunPlayer::Late_Update(void)
@@ -140,8 +140,8 @@ void CJunPlayer::Render(HDC hDC)
 	LineTo(hDC,300, 500);*/
 	int	iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 	int	iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
-	
-	MoveToEx(hDC, (int)m_vTank[0].x + iScrollX, (int)m_vTank[0].y + iScrollY,nullptr);
+
+	MoveToEx(hDC, (int)m_vTank[0].x + iScrollX, (int)m_vTank[0].y + iScrollY, nullptr);
 	LineTo(hDC, (int)m_vTank[1].x + iScrollX, (int)m_vTank[1].y + iScrollY);
 	LineTo(hDC, (int)m_vTank[2].x + iScrollX, (int)m_vTank[2].y + iScrollY);
 	LineTo(hDC, (int)m_vTank[3].x + iScrollX, (int)m_vTank[3].y + iScrollY);
@@ -231,13 +231,10 @@ void CJunPlayer::Shoot(void)
 
 	if (KEYMGR->Key_Pressing(VK_SPACE))
 	{
-		float Magnify = CAMERAMGR->Get_Magnify();
-
-		if (0.1f >= Magnify)
+		if (m_pBullet != nullptr)
 		{
-			CAMERAMGR->Set_Magnify(Magnify + 0.001f);
+			return;
 		}
-
 		m_bGageRender = true;
 		if (m_bMaxPower)
 		{
@@ -259,27 +256,30 @@ void CJunPlayer::Shoot(void)
 	}
 	if (KEYMGR->Key_Up(VK_SPACE))
 	{
-		CAMERAMGR->Set_Magnify(0.f);
-
 		//fShootPower;
 		m_bGageRender = false;
-		m_pBullet = new CJunBullet;
-		m_pBullet->Initialize();
-		if (m_vPo_One.x > m_vPo.x)
+		if (m_pBullet == nullptr)
 		{
-			m_pBullet->Set_Pos_Dir(m_vPo.x, m_vPo.y, TempVec1, -1, m_fShootPower);
+			m_pBullet = new CJunBullet;
+			m_pBullet->Initialize();
+			if (m_vPo_One.x > m_vPo.x)
+			{
+				m_pBullet->Set_Pos_Dir(m_vPo.x, m_vPo.y, TempVec1, -1, m_fShootPower);
+			}
+			//	Bullet->Set_Pos_Dir(Po.x, Po.y, Po_Dir ,-1);
+			else
+			{
+				m_pBullet->Set_Pos_Dir(m_vPo.x, m_vPo.y, TempVec1, 1, m_fShootPower);
+			}
+
+			CFortress* FortressScene = static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS));
+			m_pBullet->Set_BulletID(BULLET_BASIC);
+			FortressScene->Get_JunBulletList()->push_back(m_pBullet);
+			FortressScene->Set_Target(FortressScene->Get_JunBulletList()->back());
+			m_fShootPower = 0.f;
+			m_fTempPower = 0.f;
 		}
-		//	Bullet->Set_Pos_Dir(Po.x, Po.y, Po_Dir ,-1);
-		else
-		{
-			m_pBullet->Set_Pos_Dir(m_vPo.x, m_vPo.y, TempVec1, 1, m_fShootPower);
-		}
-		CFortress* FortressScene = static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS));
-		m_pBullet->Set_BulletID(BULLET_BASIC);
-		FortressScene->Get_JunBulletList()->push_back(m_pBullet);
-		FortressScene->Set_Target(FortressScene->Get_JunBulletList()->back());
-		m_fShootPower = 0.f;
-		m_fTempPower = 0.f;
+
 		//int i = 5;
 	}
 }
