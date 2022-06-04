@@ -263,20 +263,20 @@ void CJunPlayer::Shoot(void)
 
 		//fShootPower;
 		m_bGageRender = false;
-		Bullet = new CJunBullet;
-		Bullet->Initialize();
+		m_pBullet = new CJunBullet;
+		m_pBullet->Initialize();
 		if (m_vPo_One.x > m_vPo.x)
 		{
-			Bullet->Set_Pos_Dir(m_vPo.x, m_vPo.y, TempVec1, -1, m_fShootPower);
+			m_pBullet->Set_Pos_Dir(m_vPo.x, m_vPo.y, TempVec1, -1, m_fShootPower);
 		}
 		//	Bullet->Set_Pos_Dir(Po.x, Po.y, Po_Dir ,-1);
 		else
 		{
-			Bullet->Set_Pos_Dir(m_vPo.x, m_vPo.y, TempVec1, 1, m_fShootPower);
+			m_pBullet->Set_Pos_Dir(m_vPo.x, m_vPo.y, TempVec1, 1, m_fShootPower);
 		}
 		CFortress* FortressScene = static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS));
-		Bullet->Set_BulletID(BULLET_BASIC);
-		FortressScene->Get_JunBulletList()->push_back(Bullet);
+		m_pBullet->Set_BulletID(BULLET_BASIC);
+		FortressScene->Get_JunBulletList()->push_back(m_pBullet);
 		FortressScene->Set_Target(FortressScene->Get_JunBulletList()->back());
 		m_fShootPower = 0.f;
 		m_fTempPower = 0.f;
