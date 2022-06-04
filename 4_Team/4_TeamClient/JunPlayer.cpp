@@ -161,7 +161,7 @@ void CJunPlayer::Render(HDC hDC)
 
 	if (m_bGageRender && !m_pBullet)
 	{
-		Ellipse(hDC, (int)800/* + iScrollX*/, (int)400 - (m_fTempPower * 10) /*+ iScrollY*/, (int)850/* + iScrollX*/, (int)450 - (m_fTempPower * 10)/*+ iScrollY*/);
+		Ellipse(hDC, (int)800/* + iScrollX*/, (int)(400 - (m_fTempPower * 10)) /*+ iScrollY*/, (int)850/* + iScrollX*/, (int)(450 - (m_fTempPower * 10))/*+ iScrollY*/);
 	}
 
 	//임시 게이지 보게 끔 만든 렉트
