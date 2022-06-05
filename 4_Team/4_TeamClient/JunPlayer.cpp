@@ -47,7 +47,7 @@ void CJunPlayer::Initialize(void)
 	m_vLocalTankHead[1] = { 20.f, -50.f - 20.f - 29.f ,0.f };
 	m_vLocalTankHead[2] = { 20.f,-50.f + 20.f - 29.f ,0.f };
 	m_vLocalTankHead[3] = { -20.f, -50.f + 20.f - 29.f ,0.f };
-
+	
 	m_vLocal_Po_One = { 0, -79.f,0.f };
 	m_vLocal_Po = { 80.f, 0.f ,0.f };
 
