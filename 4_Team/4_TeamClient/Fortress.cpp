@@ -116,6 +116,7 @@ void CFortress::Late_Update(void)
 				Safe_Delete(*iter);
 				(iter) = JunBulletList.erase((iter));
 				FortressMonster->Set_Hp(1);
+				FortressMonster->Set_Move_On(true);
 				if (FortressMonster->Get_Hp() <= 0)
 				{
 					Safe_Delete<CFortress_Monster*>(FortressMonster);

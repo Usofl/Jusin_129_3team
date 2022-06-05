@@ -8,10 +8,12 @@
 CFortress_Monster::CFortress_Monster()
 	:m_iHp(5),
 	m_iRandom_Move(0),
+	m_fRandom(0.f),
 	m_bRandom(true),
 	m_bRandom_Move(true),
 	m_bShoot(true),
-	m_bMonster_Turn(true), m_fRandom(0),
+	m_bMonster_Turn(false),
+	m_bMove_On(true),
 	m_dwShootCount(GetTickCount()),
 	m_dwShootDelay(GetTickCount())
 	, Fortress_Monster_Bullet(nullptr)
@@ -30,7 +32,7 @@ void CFortress_Monster::Initialize(void)
 
 	srand(unsigned(time(NULL)));
 
-	m_tInfo.vPos = { 600.f , 400.f , 0.f };
+	m_tInfo.vPos = { 1200 , 200.f , 0.f };
 	m_tInfo.vDir = { 1.f, 0.f, 0.f };
 
 	m_tInfo_Body_Local[0].vPos = { -50.f , -30.f , 0.f };
@@ -87,7 +89,11 @@ const int CFortress_Monster::Update(void)
 	CFortress* pFortress = static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS));
 	if (pFortress->Get_Monster_Turn() == true && pFortress->Get_JunBulletList()->empty() && SCROLLMGR->Fix_Cheak(this))
 	{
-		Move();
+		if (m_bMove_On == true)
+		{
+			Move();
+			m_bMove_On = false;
+		}
 		Shoot_Bullet();
 	}
 
@@ -173,58 +179,52 @@ void CFortress_Monster::Shoot_Bullet()
 		m_dwShootCount = GetTickCount();
 	}*/
 	CFortress* pFortress = static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS));
-	if (m_bRandom == true)
+	if (0 >= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x && -300 <= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
 	{
-		m_fRandom = (float)(rand() % 91) + 1;
-		m_bRandom = false;
-
-	}
-	if (m_fAngle_Posin <= m_fRandom)
-	{
-		++m_fAngle_Posin;
-		if (m_fAngle_Posin >= m_fRandom)
+		if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
 		{
-			m_fAngle_Posin = m_fRandom;
-			if (m_fAngle_Posin == m_fRandom)
-			{
-				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
-				Fortress_Monster_Bullet->Initialize();
-				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
-				static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+			m_fAngle_Posin += 0.f;
 
-				pFortress->Set_Monster_Turn(false);
-				pFortress->Set_Player_Turn(true);
-				m_bRandom = true;
-			}
+			Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+			Fortress_Monster_Bullet->Initialize();
+			Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+			Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
+			static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+
+			pFortress->Set_Monster_Turn(false);
+			pFortress->Set_Player_Turn(true);
+
+		}
+		else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
+		{
+			m_fAngle_Posin += 70.f;
+
+			Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+			Fortress_Monster_Bullet->Initialize();
+			Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+			Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
+			static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+
+			pFortress->Set_Monster_Turn(false);
+			pFortress->Set_Player_Turn(true);
 		}
 	}
-	else if (m_fAngle_Posin >= m_fRandom)
+	else
 	{
-		--m_fAngle_Posin;
-		if (m_fAngle_Posin <= m_fRandom)
-		{
-			m_fAngle_Posin = m_fRandom;
-			if (m_fAngle_Posin == m_fRandom)
-			{
-				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
-				Fortress_Monster_Bullet->Initialize();
-				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
-				static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
-
-				pFortress->Set_Monster_Turn(false);
-				pFortress->Set_Player_Turn(true);
-				m_bRandom = true;
-			}
-		}
+		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+		Fortress_Monster_Bullet->Initialize();
+		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
+		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+		pFortress->Set_Monster_Turn(false);
+		pFortress->Set_Player_Turn(true);
 	}
 }
 void CFortress_Monster::Move()
 {
 	if (m_bRandom == true)
 	{
-		m_fRandom = (float)(rand() % 3) + 3;
+		m_fRandom = (float)(rand() % 10) + 100;
 		m_bRandom = false;
 	}
 	if (m_bRandom_Move == true)
@@ -237,27 +237,29 @@ void CFortress_Monster::Move()
 	case 4:
 		if (1 == m_iRandom_Move)
 		{
-			m_tInfo.vPos.x -= m_tInfo.vDir.x - 5;
+			m_tInfo.vPos.x -= m_tInfo.vDir.x * 200.f ;
 			m_bRandom = true;
 			m_bRandom_Move = true;
+
 		}
 		else if (2 == m_iRandom_Move)
 		{
-			m_tInfo.vPos.x += m_tInfo.vDir.x + 5;
+			m_tInfo.vPos.x += m_tInfo.vDir.x * 200.f;
 			m_bRandom = true;
 			m_bRandom_Move = true;
+
 		}
 		break;
 	case 3:
 		if (1 == m_iRandom_Move)
 		{
-			m_tInfo.vPos.x -= m_tInfo.vDir.x - 5;
+			m_tInfo.vPos.x -= m_tInfo.vDir.x  * 200.f;
 			m_bRandom = true;
 			m_bRandom_Move = true;
 		}
 		else if (2 == m_iRandom_Move)
 		{
-			m_tInfo.vPos.x += m_tInfo.vDir.x + 5;
+			m_tInfo.vPos.x += m_tInfo.vDir.x  * 200.f;
 			m_bRandom = true;
 			m_bRandom_Move = true;
 		}
@@ -265,30 +267,33 @@ void CFortress_Monster::Move()
 	case 2:
 		if (1 == m_iRandom_Move)
 		{
-			m_tInfo.vPos.x -= m_tInfo.vDir.x - 5;
+			m_tInfo.vPos.x -= m_tInfo.vDir.x  * 200.f;
 			m_bRandom = true;
 			m_bRandom_Move = true;
 		}
 		else if (2 == m_iRandom_Move)
 		{
-			m_tInfo.vPos.x += m_tInfo.vDir.x + 5;
+			m_tInfo.vPos.x += m_tInfo.vDir.x  * 200.f;
 			m_bRandom = true;
 			m_bRandom_Move = true;
 		}
+
 		break;
+
 	case 1:
 		if (1 == m_iRandom_Move)
 		{
-			m_tInfo.vPos.x -= m_tInfo.vDir.x - 5;
+			m_tInfo.vPos.x -= m_tInfo.vDir.x  * 200.f;
 			m_bRandom = true;
 			m_bRandom_Move = true;
 		}
 		else if (2 == m_iRandom_Move)
 		{
-			m_tInfo.vPos.x += m_tInfo.vDir.x + 5;
+			m_tInfo.vPos.x += m_tInfo.vDir.x  * 200.f;
 			m_bRandom = true;
 			m_bRandom_Move = true;
 		}
+
 		break;
 	}
 }

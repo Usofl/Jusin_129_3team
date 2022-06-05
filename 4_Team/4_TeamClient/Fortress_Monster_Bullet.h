@@ -15,7 +15,7 @@ public:
 	virtual void Release(void) override;
 
 public:
-	inline void	Set_Player(CObj* pPlayer) { m_pPlayer = pPlayer; }
+
 
 private:
 	INFO		m_tInfo_Bullet_Local[4];
@@ -26,6 +26,6 @@ private:
 	float		m_fAir_Shoot;
 	float		m_fShoot_Power;
 
-	CObj*		m_pPlayer = nullptr;
+
 };
 

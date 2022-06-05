@@ -24,7 +24,7 @@ void CFortress_Monster_Bullet::Initialize(void)
 	m_tInfo_Bullet_Local[2].vPos = { +10.f , +10.f , 0.f };
 	m_tInfo_Bullet_Local[3].vPos = { -10.f , +10.f , 0.f };*/
 
-	m_fSpeed = 10.f;
+	m_fSpeed = 20.f;
 }
 
 const int CFortress_Monster_Bullet::Update(void)

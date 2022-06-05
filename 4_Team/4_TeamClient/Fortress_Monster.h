@@ -25,6 +25,7 @@ public:
 	
 	const int&		Get_Hp() { return m_iHp; }
 	void			Set_Hp(const int& _Hp) { m_iHp -= _Hp; }
+	void			Set_Move_On(const int& _On) { m_bMove_On = _On; }
 
 private:
 	INFO			m_tInfo_Body_Local[4];
@@ -49,6 +50,7 @@ private:
 	bool			m_bRandom_Move;
 	bool			m_bShoot;
 	bool			m_bMonster_Turn;
+	bool			m_bMove_On;
 
 	DWORD			m_dwShootCount;
 	DWORD			m_dwShootDelay;
