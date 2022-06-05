@@ -55,15 +55,13 @@ void CFortress::Update(void)
 
 	if (nullptr != JunPlayer)
 	{
+		m_pHPBar->Set_Lest_HP(JunPlayer->Get_MaxHp(), JunPlayer->Get_Hp());
+		
 		if (OBJ_DEAD == JunPlayer->Update())
 		{
 			Safe_Delete<CJunPlayer*>(JunPlayer);
 
 			m_pTarget = FortressMonster;
-		}
-		else
-		{
-			m_pHPBar->Set_Lest_HP(JunPlayer->Get_MaxHp(), JunPlayer->Get_Hp());
 		}
 	}
 
@@ -170,13 +168,11 @@ void CFortress::Late_Update(void)
 
 				if ((fPlayerX - 50.f <= fX && fPlayerX + 50.f >= fX) && (fPlayerY - 60.f <= fY && fPlayerY + 30.f >= fY))
 				{
-					if (0 < JunPlayer->Get_Hp())
-					{
-						iter->Set_Dead(true);
-						JunPlayer->Minus_Hp(iEnemyDamage);
+					iter->Set_Dead(true);
+					JunPlayer->Minus_Hp(iEnemyDamage);
 
-						m_list_Boom_Effect.push_back(CFortressFactory::Create_Fortress_Boom_Effect((iter)->Get_Info().vPos.x, (iter)->Get_Info().vPos.y));
-					}
+					m_list_Boom_Effect.push_back(CFortressFactory::Create_Fortress_Boom_Effect((iter)->Get_Info().vPos.x, (iter)->Get_Info().vPos.y));
+					
 					continue;
 				}
 

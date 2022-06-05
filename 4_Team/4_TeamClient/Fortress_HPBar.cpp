@@ -67,18 +67,6 @@ const int CFortress_HPBar::Update(void)
 
 void CFortress_HPBar::Late_Update(void)
 {
-	// 변수 하나를 플레이어 iHp / iMaxHp 만들고 Render 할 때 이만큼 출력 하고 싶음..
-
-	//m_pTarget = Get_Instance()->Get_Player();
-
-	//if (m_pTarget)
-	//{
-	//	float a = dynamic_cast<CJunPlayer*>(m_pTarget)->Get_Hp();
-	//	float b = dynamic_cast<CJunPlayer*>(m_pTarget)->Get_MaxHp();
-
-	//	m_fGague = m_fXSize * (a / b);
-	//	//이 게이지를... 출력할때 POINT_RIGHT 의 x좌표로 넣고 싶은데요.. 계속 업데이트 되어야 하닉가..
-	//}
 }
 
 void CFortress_HPBar::Render(HDC hDC)
