@@ -1,6 +1,6 @@
 #pragma once
 #include "Scene.h"
-#include "MomodoraPlayer.h"]
+#include "MomodoraPlayer.h"
 #include "MomoSword.h"
 
 class CMomodora :

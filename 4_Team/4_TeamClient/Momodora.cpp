@@ -90,4 +90,6 @@ CObj* CMomodora::Set_Player(void)
 
 		return m_pPlayer;
 	}
+
+	return nullptr;
 }
