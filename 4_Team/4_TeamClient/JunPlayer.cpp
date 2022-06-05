@@ -18,8 +18,10 @@ CJunPlayer::CJunPlayer()
 	, m_iHp(100)
 	, m_bTargetLine(false)
 	, m_iMaxHp(100)
+	, m_fRenderPower(0.f)
 
 {
+	ZeroMemory(m_vAfter_RenderLine, sizeof(m_vAfter_RenderLine));
 	Initialize();
 }
 
@@ -70,7 +72,12 @@ void CJunPlayer::Initialize(void)
 const int CJunPlayer::Update(void)
 {
 	Key_Input();
+	if (nullptr == m_pBullet)
+	{
+		m_fRenderPower = 0.f;
 
+	}
+	
 	if (BeforeAngle != m_fAngle)
 	{
 		if (m_fAngle < BeforeAngle)
@@ -168,34 +175,43 @@ void CJunPlayer::Render(HDC hDC)
 		Ellipse(hDC, (int)(705 + (m_fTempPower * 10))/* + iScrollX*/, WINCY - (int)80 /*+ iScrollY*/, (int)(755 + (m_fTempPower * 10))/* + iScrollX*/, WINCY - (int)30/*+ iScrollY*/);
 	}
 
-	int iTempX = (int)m_vPo.x;
-	int iTempY = (int)m_vPo.y;
+	float fTempX = m_vPo.x;
+	float fTempY = m_vPo.y;
 	D3DXVECTOR3 TempVec1 = { m_vPo.x - m_vPo_One.x, m_vPo.y - m_vPo_One.y,0.f };
 	D3DXVECTOR3 TempVec2 = { 1.f,0.f,0.f };
 
 	D3DXVec3Normalize(&TempVec1, &TempVec1);
+
 	if(m_bTargetLine)
 	{
 		
 		//(int)m_vPo.x + iScrollX, (int)m_vPo.y + iScrollY
 		float fTempTime = 0.f;
 
-		for (int i = 0; i < 30; ++i)
+		if (m_bGageRender)
 		{
-
-			//Ellipse (hDC, (iTempX + m_fShootPower * TempVec1.x) + iScrollX - 10, ((int)iTempY + m_fShootPower *TempVec1.y) + (0.5f * 9.8f) * i * (fTempTime *  fTempTime) - 10 + iScrollY,
-			//	(iTempX + m_fShootPower * TempVec1.x) + iScrollX + 10 , (((int)m_vPo.y + m_fShootPower *TempVec1.y) + (0.5f * 9.8f) * i * (fTempTime *  fTempTime) + 10 + iScrollY));
-			//iTempX += 50 * TempVec1.x;
-			//iTempY += 50 * TempVec1.y;
-			//fTempTime += 0.016f;
-			Ellipse(hDC, iTempX + iScrollX - 10, iTempY + iScrollY - 10, iTempX + iScrollX + 10, iTempY + iScrollY  + 10);
-			iTempX+= 10 *TempVec1.x;
-			//iTempY+= 10 * (TempVec1.y -;
-				//	(iTempX + m_fShootPower * TempVec1.x) + iScrollX + 10 , (((int)m_vPo.y + m_fShootPower *TempVec1.y) + (0.5f * 9.8f) * i * (fTempTime *  fTempTime) + 10 + iScrollY));
-		}   
-		/*m_tInfo.vPos += m_fSpeed * m_tInfo.vDir;
-		m_tInfo.vPos.y += (0.5f * (9.8f) * m_fTempTime * m_fTempTime);*/
-
+			for (int i = 0; i < 30; ++i)
+			{
+				fTempX += 5 * (m_fShootPower * TempVec1.x);
+				fTempY += 5 * (m_fShootPower * TempVec1.y);
+				fTempY += 5 * (0.5f * (9.8f) * fTempTime * fTempTime);
+				fTempTime += 5 * 0.016f;
+				Ellipse(hDC, (int)(fTempX + iScrollX - 5), (int)(fTempY + iScrollY - 5), (int)(fTempX + iScrollX + 5), (int)(fTempY + iScrollY + 5));
+				
+			}
+		}
+		else
+		{
+			for (int i = 0; i < 30; ++i)
+			{
+				fTempX += 5 * (m_fRenderPower * TempVec1.x);
+				fTempY += 5 * (m_fRenderPower * TempVec1.y);
+				fTempY += 5 * (0.5f * (9.8f) * fTempTime * fTempTime);
+				fTempTime += 5 * 0.016f;
+				Ellipse(hDC, (int)(fTempX + iScrollX - 5), (int)(fTempY + iScrollY - 5), (int)(fTempX + iScrollX + 5), (int)(fTempY + iScrollY + 5));
+			}
+		}
+		
 	}
 	//임시 게이지 보게 끔 만든 렉트
 	Rectangle(hDC, (int)955/* + iScrollX*/, WINCY - (int)80 /*+ iScrollY*/, (int)960/* + iScrollX*/, WINCY - (int)30/*+ iScrollY*/);
@@ -302,18 +318,19 @@ void CJunPlayer::Shoot(void)
 	{
 		//fShootPower;
 		m_bGageRender = false;
+		m_fRenderPower = m_fShootPower;
 		if (m_pBullet == nullptr)
 		{
 			m_pBullet = new CJunBullet;
 			m_pBullet->Initialize();
 			if (m_vPo_One.x > m_vPo.x)
 			{
-				m_pBullet->Set_Pos_Dir(m_vPo.x, m_vPo.y, TempVec1, -1, m_fShootPower);
+				m_pBullet->Set_Pos_Dir(m_vPo.x, m_vPo.y, TempVec1, -1, m_fShootPower, m_vPo - m_vPo_One);
 			}
 			//	Bullet->Set_Pos_Dir(Po.x, Po.y, Po_Dir ,-1);
 			else
 			{
-				m_pBullet->Set_Pos_Dir(m_vPo.x, m_vPo.y, TempVec1, 1, m_fShootPower);
+				m_pBullet->Set_Pos_Dir(m_vPo.x, m_vPo.y, TempVec1, 1, m_fShootPower, m_vPo - m_vPo_One);
 			}
 
 			CFortress* FortressScene = static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS));

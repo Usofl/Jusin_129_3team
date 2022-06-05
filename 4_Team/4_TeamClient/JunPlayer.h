@@ -52,7 +52,8 @@ private:
 
 	D3DXVECTOR3 Po_Dir;
 	D3DXVECTOR3 OriPo_Dir;
-	
+	D3DXVECTOR3 m_vAfter_RenderLine[30];
+
 	D3DXMATRIX		m_matScale, m_matRotZ, m_matTrans;
 	D3DXMATRIX		m_HmatScale, m_HmatRotZ, m_HmatTrans;
 	
@@ -72,7 +73,7 @@ private:
 	float BeforePoAngle;
 	float BeforeAngle;
 	float m_fShootPower;
-
+	float m_fRenderPower;
 	float m_fFallenTime;
 
 	bool  m_bNextLine;
