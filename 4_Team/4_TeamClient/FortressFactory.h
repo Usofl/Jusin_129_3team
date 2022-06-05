@@ -3,6 +3,7 @@
 #include "Fortress_Monster.h"
 #include "Fortress_Monster_Bullet.h"
 #include "Fortress_Bullet_Effect.h"
+#include "Fortress_Boom_Effect.h"
 
 class CFortressFactory
 {
@@ -40,6 +41,13 @@ public:
 		CFortress_Bullet_Effect*	Fortress_Bullet_Effect = new CFortress_Bullet_Effect(_fX, _fY);
 
 		return Fortress_Bullet_Effect;
+	}
+
+	static	CFortress_Boom_Effect*	Create_Fortress_Boom_Effect(const float& _fX, const float& _fY)
+	{
+		CFortress_Boom_Effect*	Fortress_Boom_Effect = new CFortress_Boom_Effect(_fX, _fY);
+
+		return Fortress_Boom_Effect;
 	}
 };
 
