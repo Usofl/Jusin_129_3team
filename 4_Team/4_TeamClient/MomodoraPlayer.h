@@ -16,10 +16,19 @@ public:
 
 	void Key_Input(void);
 
+
+	void	Set_SwordList(list<CObj*>* pSword) { m_pMomoSword = pSword; }
+
 private:
 	D3DXVECTOR3		m_vPoint[4];
 	D3DXVECTOR3		m_vOriginalPoint[4];
 	D3DXMATRIX		matScale, matRotZ, matTrans;
 	D3DXVECTOR3		m_vLookX;
+
+	list<CObj*>*			m_pMomoSword;
+
+private:
+	CObj* CMomodoraPlayer::Create_Sword(void);
+
 };
 

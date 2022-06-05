@@ -6,6 +6,7 @@ CObj::CObj()
 	: m_eRender(RENDER_BACKGROUND)
 	, m_fAngle(0.f)
 	, m_fSpeed(0.f)
+	, m_pTarget(nullptr)
 {
 	ZeroMemory(&m_tInfo, sizeof(INFO));
 
