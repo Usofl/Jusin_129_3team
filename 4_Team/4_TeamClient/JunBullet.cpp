@@ -109,8 +109,8 @@ const int CJunBullet::Update(void)
 	{
 		D3DXVec3TransformCoord(&m_vWorldPoint[i], &m_vWorldPoint[i], &m_tInfo.matWorld);
 	}
-	int iArray[8];
-	for (int i = 0; 8 > i; i+= 2)
+	//int iArray[8];
+	for (int i = 0; 16 > i; i+= 2)
 	{
 		int iTemp = (rand() % 65) -62;
 		m_vWorldWind[i].x += iTemp;
@@ -196,13 +196,13 @@ void CJunBullet::Render(HDC hDC)
 	MoveToEx(hDC, (int)m_vWorldWind[14].x + iScrollX, (int)m_vWorldWind[14].y + iScrollY, nullptr);
 	LineTo(hDC, (int)m_vWorldWind[15].x + iScrollX, (int)m_vWorldWind[15].y + iScrollY);
 
-	//MoveToEx(hDC, (int)m_vWorldWind[4].x + iScrollX, (int)m_vWorldWind[4].y + iScrollY, nullptr);
-	//LineTo(hDC, (int)m_vWorldWind[5].x + iScrollX, (int)m_vWorldWind[5].y + iScrollY);
-	//MoveToEx(hDC, (int)m_vWorldPoint[8].x + iScrollX, (int)m_vWorldPoint[8].y + iScrollY, nullptr);
-	//LineTo(hDC, (int)m_vWorldPoint[9].x + iScrollX, (int)m_vWorldPoint[9].y + iScrollY);
+	MoveToEx(hDC, (int)m_vWorldWind[4].x + iScrollX, (int)m_vWorldWind[4].y + iScrollY, nullptr);
+	LineTo(hDC, (int)m_vWorldWind[5].x + iScrollX, (int)m_vWorldWind[5].y + iScrollY);
+	MoveToEx(hDC, (int)m_vWorldPoint[8].x + iScrollX, (int)m_vWorldPoint[8].y + iScrollY, nullptr);
+	LineTo(hDC, (int)m_vWorldPoint[9].x + iScrollX, (int)m_vWorldPoint[9].y + iScrollY);
 
-	//MoveToEx(hDC, (int)m_vWorldPoint[10].x + iScrollX, (int)m_vWorldPoint[10].y + iScrollY, nullptr);
-	//LineTo(hDC, (int)m_vWorldPoint[11].x + iScrollX, (int)m_vWorldPoint[11].y + iScrollY);
+	MoveToEx(hDC, (int)m_vWorldPoint[10].x + iScrollX, (int)m_vWorldPoint[10].y + iScrollY, nullptr);
+	LineTo(hDC, (int)m_vWorldPoint[11].x + iScrollX, (int)m_vWorldPoint[11].y + iScrollY);
 
 
 //	LineTo(hDC, (int)m_vWorldPoint[0].x+ iScrollX, (int)m_vWorldPoint[0].y+ iScrollY);
@@ -266,8 +266,8 @@ void CJunBullet::Local_Initialize(void)
 	m_vLocalWind[5] = { 18.f, 22.f,0.f };
 	m_vLocalWind[6] = {  13.f, 26.f,0.f };
 	m_vLocalWind[7] = { -10.f, 26.f,0.f };
-	m_vLocalWind[8] = { -23.f, -7.f,0.f };
-	m_vLocalWind[9] = {  22.f, -7.f,0.f };
+	m_vLocalWind[8] = { -33.f, -21.f,0.f };
+	m_vLocalWind[9] = {  12.f, -21.f,0.f };
 	m_vLocalWind[10] = { -38.f, 26.f,0.f };
 	m_vLocalWind[11] = { -10.f, 26.f,0.f };
 	m_vLocalWind[12] = { 14.f, -18.f,0.f };
