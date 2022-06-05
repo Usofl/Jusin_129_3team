@@ -52,6 +52,11 @@ void CFortress_Monster::Initialize(void)
 
 const int CFortress_Monster::Update(void)
 {
+	if (m_iHp <= 0)
+	{
+		return OBJ_DEAD;
+	}
+
 	D3DXMatrixRotationZ(&m_tMatInfo.matRotZ, D3DXToRadian(m_fAngle));
 
 	m_tInfo.matWorld = m_tMatInfo.matRotZ;
@@ -105,7 +110,6 @@ const int CFortress_Monster::Update(void)
 
 void CFortress_Monster::Late_Update(void)
 {
-	
 }
 
 void CFortress_Monster::Render(HDC hDC)

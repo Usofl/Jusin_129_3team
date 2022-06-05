@@ -41,6 +41,11 @@ void CJunBullet::Initialize(void)
 
 const int CJunBullet::Update(void)
 {
+	if (m_bDead)
+	{
+		return OBJ_DEAD;
+	}
+
 	vPoint[0] = { -20.f,-20.f,0.f };
 	vPoint[1] = { 20.f, -20.f,0.f };
 	vPoint[2] = { 20.f, 20.f,0.f };
