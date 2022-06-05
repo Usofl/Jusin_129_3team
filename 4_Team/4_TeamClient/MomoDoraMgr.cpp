@@ -3,6 +3,7 @@
 #include "MomoAbstractFactory.h"
 #include "MomoGun.h"
 #include "MomoSword.h"
+#include "Obj.h"
 
 CMomoDoraMgr* CMomoDoraMgr::m_pInstance = nullptr;
 
@@ -107,11 +108,11 @@ void CMomoDoraMgr::Weapon_Change(MOMO_WEAPONID _eID)
 		switch (m_eCurWeapon)
 		{
 		case MOMOWEAPON_GUN:
-			Add_Object(MOMO_WEAPON, CMomoAbstractFactory<CMomoGun>::Create(0, 0));
+			Add_Object(MOMO_WEAPON, CMomoAbstractFactory<CMomoGun>::Create());
 			break;
 
 		case MOMOWEAPON_SWORD:
-			Add_Object(MOMO_WEAPON, CMomoAbstractFactory<CMomoSword>::Create(0, 0));
+			Add_Object(MOMO_WEAPON, CMomoAbstractFactory<CMomoSword>::Create());
 			break;
 		}
 	}

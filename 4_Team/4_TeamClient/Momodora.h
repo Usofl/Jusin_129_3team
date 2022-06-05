@@ -1,6 +1,7 @@
 #pragma once
 #include "Scene.h"
-#include "MomodoraPlayer.h"
+#include "MomodoraPlayer.h"]
+#include "MomoSword.h"
 
 class CMomodora :
 	public CScene
@@ -17,7 +18,12 @@ public:
 	virtual void Release(void) override;
 	virtual void Key_Input(void) override;
 
+	CObj*	Set_Player(void);
+
 private:
 	CMomodoraPlayer*	m_pPlayer;
+	CMomoSword*			m_pMomoSword;
+	list<CMomoSword*>	MomoSwordList;
+	list<CObj*>	m_ObjList[MOMO_END];
 };
 
