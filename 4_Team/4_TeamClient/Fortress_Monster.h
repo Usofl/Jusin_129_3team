@@ -19,7 +19,7 @@ public:
 public:
 	inline const int&	Get_Hp() { return m_iHp; }
 
-	inline void			Set_Player(CJunPlayer* _pPlayer) { pJunPlayer = _pPlayer; }
+	inline void			Set_Player(CJunPlayer* _pPlayer) { pJunPlayer = _pPlayer; }		// 플레이어를 선언을했지만 동적할당(new)를 하지않아서 원본값을 가지고올수없다. 그래서 함수를 사용해서 주소값을 가지고와야됨
 
 	inline void			Set_Hp(const int& _Hp) { m_iHp -= _Hp; }
 	inline void			Set_Move_On(const bool& _bOn) { m_bMove_On = _bOn; }
@@ -62,6 +62,6 @@ private:
 
 	CFortress_Monster_Bullet*	Fortress_Monster_Bullet;
 
-	CJunPlayer*		pJunPlayer;
+	CJunPlayer*		pJunPlayer;		// 플레이어 포인터로 플레이어 선언( nullptr 로 초기화 해야됨 , 쓰래기 값이 들어가있음 ), (객체 생성( new ) 할당을 안하면 원본에 있는 값을 가지고올수없다 )
 };
 
