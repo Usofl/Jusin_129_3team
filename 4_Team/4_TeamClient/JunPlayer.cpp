@@ -15,7 +15,7 @@ CJunPlayer::CJunPlayer()
 	, m_bNextLine(false)
 	, m_pBullet(nullptr)
 	, m_bPlayer_Turn(true)
-	, m_iHp(100)
+	, m_iMaxHp(100)
 
 {
 	Initialize();
@@ -62,6 +62,7 @@ void CJunPlayer::Initialize(void)
 	m_fTempPower = 0.f;
 	m_bMaxPower = true;
 	m_bGageRender = false;
+	m_iHp = m_iMaxHp;
 }
 
 const int CJunPlayer::Update(void)
@@ -161,7 +162,8 @@ void CJunPlayer::Render(HDC hDC)
 
 	if (m_bGageRender && !m_pBullet)
 	{
-		Ellipse(hDC, (int)800/* + iScrollX*/, (int)(400 - (m_fTempPower * 10)) /*+ iScrollY*/, (int)850/* + iScrollX*/, (int)(450 - (m_fTempPower * 10))/*+ iScrollY*/);
+		//Ellipse(hDC, (int)800/* + iScrollX*/, (int)(400 - (m_fTempPower * 10)) /*+ iScrollY*/, (int)850/* + iScrollX*/, (int)(450 - (m_fTempPower * 10))/*+ iScrollY*/);
+		Ellipse(hDC, (int)(705 + (m_fTempPower * 10))/* + iScrollX*/, WINCY - (int)80 /*+ iScrollY*/, (int)(755 + (m_fTempPower * 10))/* + iScrollX*/, WINCY - (int)30/*+ iScrollY*/);
 	}
 
 	//임시 게이지 보게 끔 만든 렉트

@@ -83,6 +83,7 @@ private:
 	CJunBullet* m_pBullet;
 
 	int m_iHp;
+	int m_iMaxHp;
 
 
 	//list<CJunBullet*> BulletList;
