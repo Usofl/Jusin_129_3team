@@ -16,6 +16,7 @@ CJunPlayer::CJunPlayer()
 	, m_pBullet(nullptr)
 	, m_bPlayer_Turn(true)
 	, m_iHp(100)
+	, m_bTargetLine(false)
 
 {
 	Initialize();
@@ -167,6 +168,35 @@ void CJunPlayer::Render(HDC hDC)
 
 	}
 
+	int iTempX = (int)m_vPo.x;
+	int iTempY = (int)m_vPo.y;
+	D3DXVECTOR3 TempVec1 = { m_vPo.x - m_vPo_One.x, m_vPo.y - m_vPo_One.y,0.f };
+	D3DXVECTOR3 TempVec2 = { 1.f,0.f,0.f };
+
+	D3DXVec3Normalize(&TempVec1, &TempVec1);
+	if(m_bTargetLine)
+	{
+		
+		//(int)m_vPo.x + iScrollX, (int)m_vPo.y + iScrollY
+		float fTempTime = 0.f;
+
+		for (int i = 0; i < 30; ++i)
+		{
+
+			//Ellipse (hDC, (iTempX + m_fShootPower * TempVec1.x) + iScrollX - 10, ((int)iTempY + m_fShootPower *TempVec1.y) + (0.5f * 9.8f) * i * (fTempTime *  fTempTime) - 10 + iScrollY,
+			//	(iTempX + m_fShootPower * TempVec1.x) + iScrollX + 10 , (((int)m_vPo.y + m_fShootPower *TempVec1.y) + (0.5f * 9.8f) * i * (fTempTime *  fTempTime) + 10 + iScrollY));
+			//iTempX += 50 * TempVec1.x;
+			//iTempY += 50 * TempVec1.y;
+			//fTempTime += 0.016f;
+			Ellipse(hDC, iTempX + iScrollX - 10, iTempY + iScrollY - 10, iTempX + iScrollX + 10, iTempY + iScrollY  + 10);
+			iTempX+= 10 *TempVec1.x;
+			//iTempY+= 10 * (TempVec1.y -;
+				//	(iTempX + m_fShootPower * TempVec1.x) + iScrollX + 10 , (((int)m_vPo.y + m_fShootPower *TempVec1.y) + (0.5f * 9.8f) * i * (fTempTime *  fTempTime) + 10 + iScrollY));
+		}   
+		/*m_tInfo.vPos += m_fSpeed * m_tInfo.vDir;
+		m_tInfo.vPos.y += (0.5f * (9.8f) * m_fTempTime * m_fTempTime);*/
+
+	}
 	//임시 게이지 보게 끔 만든 렉트
 	
 
@@ -205,6 +235,13 @@ void CJunPlayer::Key_Input(void)
 	if (KEYMGR->Key_Pressing(VK_DOWN))
 	{
 		m_fPoAngle += D3DXToRadian(3.f);
+	}
+
+
+	if (KEYMGR->Key_Up('T'))
+	{
+		
+		m_bTargetLine = !m_bTargetLine;
 	}
 
 	if (KEYMGR->Key_Pressing('A'))
