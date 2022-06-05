@@ -190,6 +190,9 @@
     <Filter Include="03. Game\01. Obj\01. Other_Object\02. Fortress_Obj\01. Fortress_Monster_Bullet">
       <UniqueIdentifier>{6ee45655-c669-4591-8a3a-caf33313142f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Game\01. Obj\01. Other_Object\02. Fortress_Obj\04. Fortress_Boom_Effect">
+      <UniqueIdentifier>{9ed62789-52f1-4d67-b124-738701817b41}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -375,6 +378,9 @@
     <ClInclude Include="CameraMgr.h">
       <Filter>03. Game\98. Manager\07. CameraMgr</Filter>
     </ClInclude>
+    <ClInclude Include="Fortress_Boom_Effect.h">
+      <Filter>03. Game\01. Obj\01. Other_Object\02. Fortress_Obj\04. Fortress_Boom_Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="4_TeamClient.cpp">
@@ -538,6 +544,9 @@
     </ClCompile>
     <ClCompile Include="CameraMgr.cpp">
       <Filter>03. Game\98. Manager\07. CameraMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Fortress_Boom_Effect.cpp">
+      <Filter>03. Game\01. Obj\01. Other_Object\02. Fortress_Obj\04. Fortress_Boom_Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

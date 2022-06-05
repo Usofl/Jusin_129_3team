@@ -6,7 +6,6 @@
 CFortress_Bullet_Effect::CFortress_Bullet_Effect()
 	: m_bDead(false)
 	, m_iSize(0)
-	, m_fAngle(0.f)
 	, m_iRed(0)
 	, m_fPower(0.f)
 	, m_fTime(0.f)
@@ -19,11 +18,11 @@ CFortress_Bullet_Effect::CFortress_Bullet_Effect(const float & _fX, const float 
 	: m_bDead(false)
 	, m_iSize(Random_Num(5, 20))
 	, m_iRed(Random_Num(150, 200))
-	, m_fAngle(D3DXToRadian((float)Random_Num(-60, 60)))
 	, m_fPower((float)Random_Num(10, 15))
 	, m_fTime(0.f)
 	, m_fGravity((float)Random_Num(4, 8))
 {
+	m_fAngle = D3DXToRadian((float)Random_Num(-60, 60));
 	m_tInfo.vPos = { _fX, _fY, 0.f };
 	Initialize();
 }
@@ -86,15 +85,25 @@ void CFortress_Bullet_Effect::Render(HDC hDC)
 	int	iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 	int	iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
-	HBRUSH MyBrush, OldBrush;
-	MyBrush = (HBRUSH)CreateSolidBrush(RGB(m_iRed, 30, 30));
-	OldBrush = (HBRUSH)SelectObject(hDC, MyBrush);
+	//HBRUSH MyBrush, OldBrush;
+	//MyBrush = (HBRUSH)CreateSolidBrush(RGB(m_iRed, 30, 30));
+	//OldBrush = (HBRUSH)SelectObject(hDC, MyBrush);
+
+	//Ellipse(hDC, (int)m_tInfo.vPos.x - m_iSize + iScrollX, (int)m_tInfo.vPos.y - m_iSize + iScrollY,
+	//	(int)m_tInfo.vPos.x + m_iSize + iScrollX, (int)m_tInfo.vPos.y + m_iSize + iScrollY);
+
+	//SelectObject(hDC, OldBrush);
+	//DeleteObject(MyBrush);
+
+	HPEN MyPen, OldPen;
+	MyPen = (HPEN)CreatePen(PS_SOLID, 3, RGB(m_iRed, 0, 0));
+	OldPen = (HPEN)::SelectObject(hDC, (HGDIOBJ)MyPen);
 
 	Ellipse(hDC, (int)m_tInfo.vPos.x - m_iSize + iScrollX, (int)m_tInfo.vPos.y - m_iSize + iScrollY,
 		(int)m_tInfo.vPos.x + m_iSize + iScrollX, (int)m_tInfo.vPos.y + m_iSize + iScrollY);
 
-	SelectObject(hDC, OldBrush);
-	DeleteObject(MyBrush);
+	SelectObject(hDC, OldPen);
+	DeleteObject(MyPen);
 }
 
 void CFortress_Bullet_Effect::Release(void)

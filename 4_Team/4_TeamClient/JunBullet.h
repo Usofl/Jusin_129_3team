@@ -1,7 +1,6 @@
 #pragma once
 #include "Obj.h"
-class CJunBullet :
-	public CObj
+class CJunBullet : public CObj
 {
 public:
 	CJunBullet();
@@ -14,8 +13,9 @@ public:
 	virtual void Render(HDC hDC) override;
 	virtual void Release(void) override;
 
-public:
+private:
 	void Move(void);
+
 public:
 	inline void Set_Pos_Dir(const float& _x, const float& _y, const D3DXVECTOR3& _vDir, const int& _iBullDir, const float& _fSpeed,  D3DXVECTOR3 _vOne)
 	{

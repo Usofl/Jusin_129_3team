@@ -3,8 +3,7 @@
 #include "JunPlayer.h"
 #include "Fortress_Monster_Bullet.h"
 
-class CFortress_Monster :
-	public CObj
+class CFortress_Monster : public CObj
 {
 public:
 	CFortress_Monster();
@@ -18,13 +17,19 @@ public:
 	virtual void Release(void) override;
 
 public:
+	inline const int&	Get_Hp() { return m_iHp; }
+
+	inline void			Set_Player(CJunPlayer* _pPlayer) { pJunPlayer = _pPlayer; }
+
+	inline void			Set_Hp(const int& _Hp) { m_iHp -= _Hp; }
+	inline void			Set_Move_On(const bool& _bOn) { m_bMove_On = _bOn; }
+
+public:
 	void		Shoot_Bullet();
 	void		Move();
 
 	void		Set_Angle(float _f) {	m_fAngle = (_f);}
 	
-	const int&		Get_Hp() { return m_iHp; }
-	void			Set_Hp(const int& _Hp) { m_iHp -= _Hp; }
 
 private:
 	INFO			m_tInfo_Body_Local[4];
@@ -49,13 +54,14 @@ private:
 	bool			m_bRandom_Move;
 	bool			m_bShoot;
 	bool			m_bMonster_Turn;
+	bool			m_bMove_On;
 
 	DWORD			m_dwShootCount;
 	DWORD			m_dwShootDelay;
 	D3DXMATRIX		m_PosinWorld;
 
 	CFortress_Monster_Bullet*	Fortress_Monster_Bullet;
-	CJunPlayer*		pJunPlayer;
 
+	CJunPlayer*		pJunPlayer;
 };
 

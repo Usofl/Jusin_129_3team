@@ -24,11 +24,15 @@ void CFortress_Monster_Bullet::Initialize(void)
 	m_tInfo_Bullet_Local[2].vPos = { +10.f , +10.f , 0.f };
 	m_tInfo_Bullet_Local[3].vPos = { -10.f , +10.f , 0.f };*/
 
-	m_fSpeed = 10.f;
+	m_fSpeed = 20.f;
 }
 
 const int CFortress_Monster_Bullet::Update(void)
 {	
+	if (m_bDead)
+	{
+		return OBJ_DEAD;
+	}
 	/*D3DXMatrixTranslation(&m_tMatInfo.matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
 	D3DXMatrixRotationZ(&m_tMatInfo.matRotZ, D3DXToRadian(m_fAngle));
 
@@ -46,7 +50,7 @@ const int CFortress_Monster_Bullet::Update(void)
 	m_tInfo.vPos -= m_fSpeed * m_tInfo.vLook;
 	m_tInfo.vPos.y -= m_fShoot_Power * m_fAir_Shoot - 9.8f * m_fAir_Shoot * m_fAir_Shoot * 0.5f;
 	
-	return 0;
+	return OBJ_NOEVENT;
 }
 
 void CFortress_Monster_Bullet::Late_Update(void)

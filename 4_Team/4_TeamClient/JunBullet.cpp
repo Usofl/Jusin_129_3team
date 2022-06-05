@@ -47,6 +47,11 @@ void CJunBullet::Initialize(void)
 
 const int CJunBullet::Update(void)
 {
+	if (m_bDead)
+	{
+		return OBJ_DEAD;
+	}
+
 	for (int i = 0; 7 > i; ++i)
 	{
 		m_vWorldPoint[i] = m_vLocalPoint[i];

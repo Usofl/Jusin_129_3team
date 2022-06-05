@@ -1,11 +1,11 @@
 #pragma once
 #include "Obj.h"
-class CFortress_Bullet_Effect : public CObj
+class CFortress_Boom_Effect : public CObj
 {
 public:
-	CFortress_Bullet_Effect();
-	CFortress_Bullet_Effect(const float& _fX, const float& _fY);
-	virtual ~CFortress_Bullet_Effect();
+	CFortress_Boom_Effect();
+	CFortress_Boom_Effect(const float & _fX, const float & _fY);
+	virtual ~CFortress_Boom_Effect();
 
 public:
 	// CObj을(를) 통해 상속됨
@@ -18,14 +18,12 @@ public:
 private:
 	bool m_bDead;
 
-	int m_iSize;
 	int m_iRed;
 
-	float m_fTime;
-	float m_fGravity;
-	float m_fPower;
+	float m_fMagnify;
 
-	D3DXVECTOR3		m_vPoint;
-	D3DXVECTOR3		m_vDrawPoint;
+	std::vector<float> m_vecSize;
+	std::vector<D3DXVECTOR3> m_vecPoint;
+	std::vector<D3DXVECTOR3> m_vecDrawPoint;
 };
 
