@@ -26,7 +26,6 @@ private:
 private:
 	D3DXVECTOR3		m_vPoint[4];
 	D3DXVECTOR3		m_vOriginalPoint[4];
-	D3DXMATRIX		matScale, matRotZ, matTrans;
 	D3DXVECTOR3		m_vLookX;
 
 	list<CMomoSword*>*			m_pMomoSword;

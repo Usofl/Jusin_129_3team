@@ -44,7 +44,9 @@ const int CMomoSword::Update(void)
 
 	//D3DXMatrixRotationZ(&m_matRotZ, m_fAngle);
 
-	D3DXMatrixTranslation(&m_matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
+	D3DXMatrixScaling(&m_tMatInfo.matScale, 1.f, 1.f, 1.f);
+	D3DXMatrixRotationZ(&m_tMatInfo.matRotZ, m_fAngle);
+	D3DXMatrixTranslation(&m_tMatInfo.matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
 
 	Update_Matrix();
 
