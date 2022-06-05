@@ -47,8 +47,48 @@ const int CFortress_Monster_Bullet::Update(void)
 
 	m_fAir_Shoot += 0.1f;
 
-	m_tInfo.vPos -= m_fSpeed * m_tInfo.vLook;
-	m_tInfo.vPos.y -= m_fShoot_Power * m_fAir_Shoot - 9.8f * m_fAir_Shoot * m_fAir_Shoot * 0.5f;
+	if (0 >= pJunPlayer->Get_Info().vPos.x - m_fMonster_PosX && -300 < pJunPlayer->Get_Info().vPos.x - m_fMonster_PosX)
+	{
+		m_fSpeed = 5;
+		m_tInfo.vPos -= m_fSpeed * m_tInfo.vLook;
+	}
+	else if (0 < pJunPlayer->Get_Info().vPos.x - m_fMonster_PosX && 300 >= pJunPlayer->Get_Info().vPos.x - m_fMonster_PosX)
+	{
+		m_fSpeed = 5;
+		m_tInfo.vPos += m_fSpeed * m_tInfo.vLook;
+	}
+	else if (-300 >= pJunPlayer->Get_Info().vPos.x - m_fMonster_PosX && -600 < pJunPlayer->Get_Info().vPos.x - m_fMonster_PosX)
+	{
+		m_fSpeed = 10;
+		m_tInfo.vPos -= m_fSpeed * m_tInfo.vLook;
+	}
+	else if (300 >= pJunPlayer->Get_Info().vPos.x - m_fMonster_PosX && 600 < pJunPlayer->Get_Info().vPos.x - m_fMonster_PosX)
+	{
+		m_fSpeed = 10;
+		m_tInfo.vPos += m_fSpeed * m_tInfo.vLook;
+	}
+	else if (-600 >= pJunPlayer->Get_Info().vPos.x - m_fMonster_PosX && -900 < pJunPlayer->Get_Info().vPos.x - m_fMonster_PosX)
+	{
+		m_fSpeed = 15;
+		m_tInfo.vPos -= m_fSpeed * m_tInfo.vLook;
+	}
+	else if (600 >= pJunPlayer->Get_Info().vPos.x - m_fMonster_PosX && 900 < pJunPlayer->Get_Info().vPos.x - m_fMonster_PosX)
+	{
+		m_fSpeed = 15;
+		m_tInfo.vPos += m_fSpeed * m_tInfo.vLook;
+	}
+	else if (-900 >= pJunPlayer->Get_Info().vPos.x - m_fMonster_PosX)
+	{
+		m_fSpeed = 40;
+		m_tInfo.vPos -= m_fSpeed * m_tInfo.vLook;
+	}
+	else if (900 <= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
+	{
+		m_fSpeed = 40;
+		m_tInfo.vPos += m_fSpeed * m_tInfo.vLook;
+	}
+
+	m_tInfo.vPos.y -= 9.8f * m_fAir_Shoot * m_fAir_Shoot * 0.5f;
 	
 	return OBJ_NOEVENT;
 }
