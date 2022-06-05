@@ -78,6 +78,7 @@ private:
 	bool  m_bNextLine;
 	bool  m_bMaxPower;
 	bool  m_bGageRender;
+	bool  m_bTargetLine;
 	float  m_fTempPower;
 	bool m_bPlayer_Turn;
 	CJunBullet* m_pBullet;
