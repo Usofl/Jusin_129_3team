@@ -189,7 +189,7 @@ void CJunPlayer::Render(HDC hDC)
 			//iTempY += 50 * TempVec1.y;
 			//fTempTime += 0.016f;
 			Ellipse(hDC, iTempX + iScrollX - 10, iTempY + iScrollY - 10, iTempX + iScrollX + 10, iTempY + iScrollY  + 10);
-			iTempX+= 10 *TempVec1.x;
+			iTempX += (int)(10 *TempVec1.x);
 			//iTempY+= 10 * (TempVec1.y -;
 				//	(iTempX + m_fShootPower * TempVec1.x) + iScrollX + 10 , (((int)m_vPo.y + m_fShootPower *TempVec1.y) + (0.5f * 9.8f) * i * (fTempTime *  fTempTime) + 10 + iScrollY));
 		}   

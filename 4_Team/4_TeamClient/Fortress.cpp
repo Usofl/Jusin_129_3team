@@ -67,6 +67,7 @@ void CFortress::Update(void)
 	{
 		iter->Update();
 	}
+
 	for (auto& iter : Monster_Bullet_List)
 	{
 		iter->Update();
@@ -90,6 +91,19 @@ void CFortress::Update(void)
 		HPBar->Update();
 	}
 
+	for (auto iter = m_list_Boom_Effect.begin(); iter != m_list_Boom_Effect.end();)
+	{
+		if (OBJ_DEAD == (*iter)->Update())
+		{
+			Safe_Delete(*iter);
+			(iter) = m_list_Boom_Effect.erase((iter));
+		}
+		else
+		{
+			iter++;
+		}
+	}
+
 	OffSet();
 }
 
@@ -99,70 +113,146 @@ void CFortress::Late_Update(void)
 	{
 		JunPlayer->Late_Update();
 		//RENDERMGR->Add_Render_Obj(JunPlayer);
+		float fPlayerX = JunPlayer->Get_Info().vPos.x;
+		float fPlayerY = JunPlayer->Get_Info().vPos.y;
+		float fAngle(0.f);
+
+		if (LINEMGR->Collision_JunLine(fPlayerX, fPlayerY, fAngle))
+		{
+			JunPlayer->Set_Angle(fAngle);
+			JunPlayer->Set_Pos(fPlayerX, fPlayerY);
+			JunPlayer->Set_State(CJunPlayer::IDLE);
+		//	RENDERMGR->Add_Render_Obj(JunPlayer);
+		}
+		else
+		{
+			JunPlayer->Set_State(CJunPlayer::FALLEN);
+		}
+
+		if (!Monster_Bullet_List.empty())
+		{
+			auto iter = Monster_Bullet_List.begin();
+			(*iter)->Late_Update();
+			//if (FortressMonster->Get_Info().vPos.x < iter->Get_Info().vPos.x)
+			float fX = (*iter)->Get_Info().vPos.x;
+			float fY = (*iter)->Get_Info().vPos.y;
+
+			bool bX = false, bY = false;
+
+			if (fPlayerX - 50.f <= fX && fPlayerX + 50.f >= fX)
+			{
+				bX = true;
+			}
+
+			if (fPlayerY - 60.f <= fY && fPlayerY + 30.f >= fY)
+			{
+				bY = true;
+			}
+			if (bX&&bY)
+			{
+				if (0 < JunPlayer->Get_Hp())
+				{
+					JunPlayer->Minus_Hp(iEnemyDamage);
+					JunPlayer->Get_Hp();
+					int i = 5;
+					RENDERMGR->Add_Render_Obj(JunPlayer);
+				}
+				else
+				{
+					Safe_Delete(JunPlayer);
+				}
+			}
+			if (LINEMGR->Collision_DeLine(fX, fY))
+			{
+				int num = Random_Num(7, 10);
+				for (int i = 0; i < num; ++i)
+				{
+					m_list_Bullet_Effect.push_back(CFortressFactory::Create_Fortress_Bullet_Effect((*iter)->Get_Info().vPos.x, (*iter)->Get_Info().vPos.y));
+				}
+				m_list_Boom_Effect.push_back(CFortressFactory::Create_Fortress_Boom_Effect((*iter)->Get_Info().vPos.x, (*iter)->Get_Info().vPos.y));
+
+				Safe_Delete(*iter);
+				(iter) = Monster_Bullet_List.erase((iter));
+
+				if (nullptr != JunPlayer)
+				{
+					RENDERMGR->Add_Render_Obj(JunPlayer);
+					m_pTarget = JunPlayer;
+				}
+				else
+				{
+					m_pTarget = FortressMonster;
+				}
+			}
+			else if (fY >= WINCY)
+			{
+				Safe_Delete(*iter);
+				(iter) = Monster_Bullet_List.erase((iter));
+
+				if (nullptr != JunPlayer)
+				{
+					RENDERMGR->Add_Render_Obj(JunPlayer);
+					m_pTarget = JunPlayer;
+				}
+				else
+				{
+					m_pTarget = FortressMonster;
+				}
+			}
+			else
+			{
+				RENDERMGR->Add_Render_Obj(JunPlayer);
+				RENDERMGR->Add_Render_Obj(*iter);
+				iter++;
+			}
+			//iter->Set_Pos(1000.f, 1000.f);
+		}
+		else
+		{
+			RENDERMGR->Add_Render_Obj(JunPlayer);
+		}
 	}
-	
 
 	if (nullptr != FortressMonster)
 	{
 		FortressMonster->Late_Update();
-	}
 
-	float fMonsterX2(0.f), fMonsterY2(0.f);
-	if (nullptr != FortressMonster)
-	{
 		D3DXVECTOR3 vMonster = FortressMonster->Get_Info().vPos;
-		fMonsterX2 = vMonster.x;
-		fMonsterY2 = vMonster.y;
-	}
+		float fMonsterX = vMonster.x;
+		float fMonsterY = vMonster.y;
 
-	//임시 총알 - 몬스터 충돌처리(몬스터 1마리 기준이라 추후 수정 필요)
-	if (fMonsterX2 != 0.f && fMonsterY2 != 0.f)
-	{
-		for (auto iter = JunBulletList.begin(); iter != JunBulletList.end();)
+		if(!JunBulletList.empty())
 		{
-			(*iter)->Late_Update();
+			auto iter = JunBulletList.begin();
 
-			if (MonsterCollision_Check(fMonsterX2, fMonsterY2, (*iter)->Get_Info().vPos.x, (*iter)->Get_Info().vPos.y))
+			(*iter)->Late_Update();
+			float fX = (*iter)->Get_Info().vPos.x;
+			float fY = (*iter)->Get_Info().vPos.y;
+
+			if (MonsterCollision_Check(fMonsterX, fMonsterY, (*iter)->Get_Info().vPos.x, (*iter)->Get_Info().vPos.y))
 			{
+				m_list_Boom_Effect.push_back(CFortressFactory::Create_Fortress_Boom_Effect((*iter)->Get_Info().vPos.x, (*iter)->Get_Info().vPos.y));
+
 				Safe_Delete(*iter);
 				(iter) = JunBulletList.erase((iter));
 				FortressMonster->Set_Hp(1);
+
 				if (FortressMonster->Get_Hp() <= 0)
 				{
 					Safe_Delete<CFortress_Monster*>(FortressMonster);
-				}
-
-				JunPlayer->ReSet_Bullet(); // 삭제 했으니 플레이어의 총알 포인터 초기화 -> 현재는 총알 포인터가 Nullptr이면 새로 생성 못하게 끔 해놨음(한 발만 쏘게)
-				
-				if (nullptr != FortressMonster)
-				{
-					m_pTarget = FortressMonster;
+					m_pTarget = JunPlayer;
+					goto Monster_Over;
 				}
 				else
 				{
-					m_pTarget = JunPlayer;
+					RENDERMGR->Add_Render_Obj(FortressMonster);
+					m_pTarget = FortressMonster;
 				}
+
+				JunPlayer->ReSet_Bullet(); // 삭제 했으니 플레이어의 총알 포인터 초기화 -> 현재는 총알 포인터가 Nullptr이면 새로 생성 못하게 끔 해놨음(한 발만 쏘게)
+				goto Bullet_Over;
 			}
 
-			else
-			{
-				iter++;
-			}
-		}
-	}
-
-	//총알 충돌 했으면 몬스터가 없을테니 렌더를 안하게 해서 오류 없애기
-	if (nullptr != FortressMonster)
-	{
-		RENDERMGR->Add_Render_Obj(FortressMonster);
-	}
-
-	if (JunBulletList.size() > 0)
-	{
-		for (auto iter = JunBulletList.begin(); iter != JunBulletList.end();)
-		{
-			float fX = (*iter)->Get_Info().vPos.x;
-			float fY = (*iter)->Get_Info().vPos.y;
 			/*if((*iter)->Get_Info)*/
 			if (LINEMGR->Collision_DeLine(fX, fY))
 			{
@@ -171,6 +261,7 @@ void CFortress::Late_Update(void)
 				{
 					m_list_Bullet_Effect.push_back(CFortressFactory::Create_Fortress_Bullet_Effect((*iter)->Get_Info().vPos.x, (*iter)->Get_Info().vPos.y));
 				}
+				m_list_Boom_Effect.push_back(CFortressFactory::Create_Fortress_Boom_Effect((*iter)->Get_Info().vPos.x, (*iter)->Get_Info().vPos.y));
 
 				Safe_Delete(*iter);
 				(iter) = JunBulletList.erase((iter));
@@ -184,7 +275,6 @@ void CFortress::Late_Update(void)
 				{
 					m_pTarget = JunPlayer;
 				}
-
 			}
 			else if (fY >= WINCY)
 			{
@@ -207,91 +297,19 @@ void CFortress::Late_Update(void)
 				iter++;
 			}
 		}
+
+	Bullet_Over:
+		if (LINEMGR->Collision_Line(fMonsterX, &fMonsterY))
+		{
+			float fSour = LINEMGR->Collision_Monster_Line(fMonsterX, &fMonsterY);
+			FortressMonster->Set_Angle(fSour);
+			FortressMonster->Set_Pos(fMonsterX, fMonsterY - 20);
+		}
+
+		RENDERMGR->Add_Render_Obj(FortressMonster);
 	}
 
-
-
-	
-
-	for (auto iter = Monster_Bullet_List.begin(); iter != Monster_Bullet_List.end();)
-	{
-		if (JunPlayer == nullptr)
-		{
-			return;
-		}
-		
-		float fPlayerX = JunPlayer->Get_Info().vPos.x;
-		float fPlayerY = JunPlayer->Get_Info().vPos.y;
-		(*iter)->Late_Update();
-		//if (FortressMonster->Get_Info().vPos.x < iter->Get_Info().vPos.x)
-		float fX = (*iter)->Get_Info().vPos.x;
-		float fY = (*iter)->Get_Info().vPos.y;
-
-		bool bX = false, bY = false;
-
-		if (fPlayerX - 50.f <= fX && fPlayerX + 50.f >= fX )
-		{
-			bX = true;
-		}
-
-		if (fPlayerY - 60.f <= fY && fPlayerY + 30.f >= fY )
-		{
-			bY = true;
-		}
-		if (bX&&bY)
-		{
-			if (0 < JunPlayer->Get_Hp())
-			{
-				JunPlayer->Minus_Hp(iEnemyDamage);
-				JunPlayer->Get_Hp();
-				int i = 5;
-			}
-			else
-			{
-				Safe_Delete(JunPlayer);
-			}
-		}
-		if (LINEMGR->Collision_DeLine(fX, fY))
-		{
-			int num = Random_Num(7, 10);
-			for (int i = 0; i < num; ++i)
-			{
-				m_list_Bullet_Effect.push_back(CFortressFactory::Create_Fortress_Bullet_Effect((*iter)->Get_Info().vPos.x, (*iter)->Get_Info().vPos.y));
-			}
-
-			Safe_Delete(*iter);
-			(iter) = Monster_Bullet_List.erase((iter));
-
-			if (nullptr != JunPlayer)
-			{
-				m_pTarget = JunPlayer;
-			}
-			else
-			{
-				m_pTarget = FortressMonster;
-			}
-		}
-		else if (fY >= WINCY)
-		{
-			Safe_Delete(*iter);
-			(iter) = Monster_Bullet_List.erase((iter));
-
-			if (nullptr != JunPlayer)
-			{
-				m_pTarget = JunPlayer;
-			}
-			else
-			{
-				m_pTarget = FortressMonster;
-			}
-		}
-		else
-		{
-			RENDERMGR->Add_Render_Obj(*iter);
-			iter++;
-		}
-		//iter->Set_Pos(1000.f, 1000.f);
-	}
+Monster_Over:
 
 	for (auto& iter : m_list_Bullet_Effect)
 	{
@@ -300,45 +318,12 @@ void CFortress::Late_Update(void)
 		RENDERMGR->Add_Render_Obj(iter);
 	}
 
-	if (JunPlayer == nullptr)
+	for (auto& iter : m_list_Boom_Effect)
 	{
-		return;
+		iter->Late_Update();
+
+		RENDERMGR->Add_Render_Obj(iter);
 	}
-
-		float fX = JunPlayer->Get_Info().vPos.x;
-		float fY = JunPlayer->Get_Info().vPos.y;
-	
-	
-
-	float fAngle(0.f);
-
-	if (LINEMGR->Collision_JunLine(fX, fY, fAngle))
-	{
-		JunPlayer->Set_Angle(fAngle);
-		JunPlayer->Set_Pos(fX, fY);
-		JunPlayer->Set_State(CJunPlayer::IDLE);
-	}
-	else
-	{
-		JunPlayer->Set_State(CJunPlayer::FALLEN);
-	}
-
-	if (nullptr == FortressMonster)
-	{
-		return;
-	}
-
-	float fMonsterX = FortressMonster->Get_Info().vPos.x;
-	float fMonsterY = FortressMonster->Get_Info().vPos.y;
-
-	if (LINEMGR->Collision_Line(fMonsterX, &fMonsterY))
-	{
-		float fSour = LINEMGR->Collision_Monster_Line(fMonsterX, &fMonsterY);
-		FortressMonster->Set_Angle(fSour);
-		FortressMonster->Set_Pos(fMonsterX, fMonsterY - 20);
-	}
-
-	RENDERMGR->Add_Render_Obj(JunPlayer);
 }
 
 void CFortress::Render(HDC _hDC)
@@ -406,6 +391,14 @@ void CFortress::Release(void)
 		Safe_Delete<CFortress_Bullet_Effect*>(*iter);
 
 		iter = m_list_Bullet_Effect.erase(iter);
+	}
+
+	for (auto iter = m_list_Boom_Effect.begin(); iter != m_list_Boom_Effect.end();)
+	{
+		(*iter)->Release();
+		Safe_Delete<CFortress_Boom_Effect*>(*iter);
+
+		iter = m_list_Boom_Effect.erase(iter);
 	}
 
 	LINEMGR->Destroy_Instance();
