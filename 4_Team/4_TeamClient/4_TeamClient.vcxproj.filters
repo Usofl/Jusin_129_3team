@@ -193,6 +193,9 @@
     <Filter Include="03. Game\01. Obj\01. Other_Object\02. Fortress_Obj\04. Fortress_Boom_Effect">
       <UniqueIdentifier>{9ed62789-52f1-4d67-b124-738701817b41}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Game\97. Factory\01. MomoFactory">
+      <UniqueIdentifier>{f832d443-18cc-4dc5-b683-047ee8249506}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -306,9 +309,6 @@
     <ClInclude Include="MomoDoraMgr.h">
       <Filter>03. Game\01. Obj\01. Other_Object\01.Momo_Obj</Filter>
     </ClInclude>
-    <ClInclude Include="MomoAbstractFactory.h">
-      <Filter>03. Game\01. Obj\01. Other_Object\01.Momo_Obj</Filter>
-    </ClInclude>
     <ClInclude Include="ZeldaFactory.h">
       <Filter>03. Game\97. Factory\03. ZeldaFactory</Filter>
     </ClInclude>
@@ -380,6 +380,9 @@
     </ClInclude>
     <ClInclude Include="Fortress_Boom_Effect.h">
       <Filter>03. Game\01. Obj\01. Other_Object\02. Fortress_Obj\04. Fortress_Boom_Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="MomoAbstractFactory.h">
+      <Filter>03. Game\97. Factory\01. MomoFactory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

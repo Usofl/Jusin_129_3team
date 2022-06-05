@@ -1,7 +1,9 @@
 #pragma once
 #include "Momo_Obj.h"
+#include "MomoSword.h"
 
-template<typename T>
+class CMomodoraPlayer;
+
 class CMomoAbstractFactory
 {
 public:
@@ -9,31 +11,9 @@ public:
 	~CMomoAbstractFactory(){}
 
 public:
-	static CMomo_Obj*	Create(void)
+	static CMomoSword*	Create_Momo_Sword(void)
 	{
-		CMomo_Obj*	pObj = new T;
-		pObj->Initialize();
-
-		return pObj;
-	}
-
-	static CMomo_Obj*	Create(float _fX, float _fY)
-	{
-		CMomo_Obj*	pObj = new T;
-
-		pObj->Initialize();
-		pObj->Set_Pos(_fX, _fY);
-
-		return pObj;
-	}
-
-	static CMomo_Obj*	Create(float _fX, float _fY, float _fAngle)
-	{
-		CMomo_Obj*	pObj = new T;
-
-		pObj->Initialize();
-		pObj->Set_Pos(_fX, _fY);
-		pObj->Set_Angle(_fAngle);
+		CMomoSword*	pObj = new CMomoSword;
 
 		return pObj;
 	}

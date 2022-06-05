@@ -105,7 +105,7 @@ void CMomoDoraMgr::Weapon_Change(MOMO_WEAPONID _eID)
 
 		m_MomodoraList[MOMO_WEAPON].clear();
 
-		switch (m_eCurWeapon)
+		/*switch (m_eCurWeapon)
 		{
 		case MOMOWEAPON_GUN:
 			Add_Object(MOMO_WEAPON, CMomoAbstractFactory<CMomoGun>::Create());
@@ -114,7 +114,7 @@ void CMomoDoraMgr::Weapon_Change(MOMO_WEAPONID _eID)
 		case MOMOWEAPON_SWORD:
 			Add_Object(MOMO_WEAPON, CMomoAbstractFactory<CMomoSword>::Create());
 			break;
-		}
+		}*/
 	}
 
 	m_ePreWeapon = m_eCurWeapon;

@@ -7,7 +7,6 @@ CObj::CObj()
 	, m_fAngle(0.f)
 	, m_fSpeed(0.f)
 	, m_bDead(false)
-	, m_pTarget(nullptr)
 {
 	ZeroMemory(&m_tInfo, sizeof(INFO));
 

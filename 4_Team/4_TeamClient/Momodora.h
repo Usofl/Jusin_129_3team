@@ -18,12 +18,14 @@ public:
 	virtual void Release(void) override;
 	virtual void Key_Input(void) override;
 
-	CObj*	Set_Player(void);
+public:
+	inline CMomodoraPlayer* Get_Player(void) { return m_pPlayer; }
 
 private:
+	CObj* m_pTarget;
+
 	CMomodoraPlayer*	m_pPlayer;
-	CMomoSword*			m_pMomoSword;
+
 	list<CMomoSword*>	MomoSwordList;
-	list<CObj*>	m_ObjList[MOMO_END];
 };
 

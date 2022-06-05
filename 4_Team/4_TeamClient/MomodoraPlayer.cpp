@@ -3,7 +3,6 @@
 #include "MomoDoraMgr.h"
 #include "KeyMgr.h"
 #include "MomoSword.h"
-#include "MomoAbstractFactory.h"
 
 
 CMomodoraPlayer::CMomodoraPlayer()
@@ -133,20 +132,5 @@ void CMomodoraPlayer::Key_Input(void)
 
 	}
 
-	else if (KEYMGR->Key_Down('D'))
-	{
-		//CMomoDoraMgr::Get_Instance()->Weapon_Change(MOMOWEAPON_SWORD);
-		m_pMomoSword->push_back(Create_Sword());
-	}
-
-}
-
-CObj * CMomodoraPlayer::Create_Sword(void)
-{
-	CObj*	pMomoSword = new CMomoSword;
-	pMomoSword->Initialize();
-	pMomoSword->Set_Target(this);
-
-	return pMomoSword;
 	
 }

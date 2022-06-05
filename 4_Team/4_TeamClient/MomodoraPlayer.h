@@ -1,5 +1,7 @@
 #pragma once
 #include "Momo_Obj.h"
+#include "MomoSword.h"
+
 class CMomodoraPlayer :
 	public CMomo_Obj
 {
@@ -17,7 +19,9 @@ public:
 	void Key_Input(void);
 
 
-	void	Set_SwordList(list<CObj*>* pSword) { m_pMomoSword = pSword; }
+	void	Set_SwordList(list<CMomoSword*>* pSword) { m_pMomoSword = pSword; }
+private:
+	CMomoSword* CMomodoraPlayer::Create_Sword(void);
 
 private:
 	D3DXVECTOR3		m_vPoint[4];
@@ -25,10 +29,8 @@ private:
 	D3DXMATRIX		matScale, matRotZ, matTrans;
 	D3DXVECTOR3		m_vLookX;
 
-	list<CObj*>*			m_pMomoSword;
+	list<CMomoSword*>*			m_pMomoSword;
 
-private:
-	CObj* CMomodoraPlayer::Create_Sword(void);
 
 };
 

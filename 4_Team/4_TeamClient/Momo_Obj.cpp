@@ -3,7 +3,6 @@
 
 
 CMomo_Obj::CMomo_Obj()
-	:m_bDead(false)
 {
 }
 

@@ -2,10 +2,13 @@
 #include "Momodora.h"
 #include "MomoDoraMgr.h"
 #include "RenderMgr.h"
+#include "KeyMgr.h"
+#include "MomoAbstractFactory.h"
 
 
 CMomodora::CMomodora()
-	: m_pPlayer(nullptr), m_pMomoSword(nullptr)
+	: m_pPlayer(nullptr)
+	, m_pTarget(nullptr)
 {
 }
 
@@ -17,41 +20,48 @@ CMomodora::~CMomodora()
 
 void CMomodora::Initialize(void)
 {
-	m_ObjList[MOMO_PLAYER].push_back(Set_Player());
-	((CMomodoraPlayer*)(m_ObjList[MOMO_PLAYER].front()))->Set_SwordList(&m_ObjList[MOMO_WEAPON]);
+	if (nullptr == m_pPlayer)
+	{
+		m_pPlayer = new CMomodoraPlayer;
+	}
 }
 
 void CMomodora::Update(void)
 {
-	//m_pPlayer->Update();
-	for (int i = 0; i < MOMO_END; ++i)
+	Key_Input();
+	if (nullptr != m_pPlayer)
 	{
-		for (auto& iter = m_ObjList[i].begin();
-			iter != m_ObjList[i].end(); )
-		{
-			int iResult = (*iter)->Update();
-
-			if (OBJ_DEAD == iResult)
-			{
-				Safe_Delete<CObj*>(*iter);
-				iter = m_ObjList[i].erase(iter);
-			}
-			else
-				++iter;
-		}
+		m_pPlayer->Update();
 	}
 
+	for (auto& iter = MomoSwordList.begin();
+		iter != MomoSwordList.end(); )
+	{
+		if (OBJ_DEAD == (*iter)->Update())
+		{
+			Safe_Delete<CMomoSword*>(*iter);
+			iter = MomoSwordList.erase(iter);
+		}
+		else
+		{
+			++iter;
+		}
+	}
 }
 
 void CMomodora::Late_Update(void)
 {
-	//m_pPlayer->Late_Update();
-	for (int i = 0; i < MOMO_END; ++i)
+	if (nullptr != m_pPlayer)
 	{
-		for (auto& iter : m_ObjList[i])
-			iter->Late_Update();
+		m_pPlayer->Late_Update();
+		RENDERMGR->Add_Render_Obj(m_pPlayer);
 	}
-	RENDERMGR->Add_Render_Obj(m_pPlayer);
+
+	for (auto& iter : MomoSwordList)
+	{
+		iter->Late_Update();
+		RENDERMGR->Add_Render_Obj(iter);
+	}
 }
 
 void CMomodora::Render(HDC _hDC)
@@ -67,29 +77,21 @@ void CMomodora::Render(HDC _hDC)
 
 void CMomodora::Release(void)
 {
-	//Safe_Delete<CMomodoraPlayer*>(m_pPlayer);
-	for (int i = 0; i < MOMO_END; ++i)
-	{
-		for (auto& iter : m_ObjList[i])
-			Safe_Delete<CObj*>(iter);
+	Safe_Delete<CMomodoraPlayer*>(m_pPlayer);
 
-		m_ObjList[i].clear();
+	for (auto& iter : MomoSwordList)
+	{
+		Safe_Delete<CMomoSword*>(iter);
 	}
+	MomoSwordList.clear();
 }
 
 void CMomodora::Key_Input(void)
 {
-}
-
-CObj* CMomodora::Set_Player(void)
-{
-	if (!m_pPlayer)
+	if (KEYMGR->Key_Up('D'))
 	{
-		m_pPlayer = new CMomodoraPlayer;
-		m_pPlayer->Initialize();
-
-		return m_pPlayer;
+		//CMomoDoraMgr::Get_Instance()->Weapon_Change(MOMOWEAPON_SWORD);0
+		MomoSwordList.push_back(CMomoAbstractFactory::Create_Momo_Sword());
 	}
 
-	return nullptr;
 }
