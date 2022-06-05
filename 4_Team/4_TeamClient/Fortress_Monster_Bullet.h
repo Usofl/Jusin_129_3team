@@ -16,12 +16,9 @@ public:
 
 public:
 
-
 private:
 	INFO		m_tInfo_Bullet_Local[4];
 	INFO		m_tInfo_Bullet_World[4];
-
-	float		m_fSpeed;
 
 	float		m_fAir_Shoot;
 	float		m_fShoot_Power;

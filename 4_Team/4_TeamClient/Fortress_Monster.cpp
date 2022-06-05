@@ -6,17 +6,18 @@
 
 
 CFortress_Monster::CFortress_Monster()
-	:m_iHp(5),
-	m_iRandom_Move(0),
-	m_fRandom(0.f),
-	m_bRandom(true),
-	m_bRandom_Move(true),
-	m_bShoot(true),
-	m_bMonster_Turn(false),
-	m_bMove_On(true),
-	m_dwShootCount(GetTickCount()),
-	m_dwShootDelay(GetTickCount())
+	: m_iHp(100)
+	, m_iRandom_Move(0)
+	, m_fRandom(0.f)
+	, m_bRandom(true)
+	, m_bRandom_Move(true)
+	, m_bShoot(true)
+	, m_bMonster_Turn(false)
+	, m_bMove_On(true)
+	, m_dwShootCount(GetTickCount())
+	, m_dwShootDelay(GetTickCount())
 	, Fortress_Monster_Bullet(nullptr)
+	, pJunPlayer(nullptr)
 {
 }
 
@@ -183,47 +184,55 @@ void CFortress_Monster::Shoot_Bullet()
 		m_dwShootCount = GetTickCount();
 	}*/
 	CFortress* pFortress = static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS));
-	if (0 >= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x && -300 <= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
+	if (pJunPlayer != nullptr)
 	{
-		if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
+		if (0 >= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x && -300 <= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
 		{
-			m_fAngle_Posin += 0.f;
+			if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
+			{
+				m_fAngle_Posin += 0.f;
 
+				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+				Fortress_Monster_Bullet->Initialize();
+				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
+				static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+				pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+
+				pFortress->Set_Monster_Turn(false);
+				pFortress->Set_Player_Turn(true);
+
+			}
+			else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
+			{
+				m_fAngle_Posin += 70.f;
+
+				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+				Fortress_Monster_Bullet->Initialize();
+				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
+				static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+				pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+
+				pFortress->Set_Monster_Turn(false);
+				pFortress->Set_Player_Turn(true);
+			}
+		}
+		else
+		{
 			Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 			Fortress_Monster_Bullet->Initialize();
 			Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
 			Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
 			static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
-
-			pFortress->Set_Monster_Turn(false);
-			pFortress->Set_Player_Turn(true);
-
-		}
-		else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
-		{
-			m_fAngle_Posin += 70.f;
-
-			Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
-			Fortress_Monster_Bullet->Initialize();
-			Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-			Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
-			static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+			pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
 
 			pFortress->Set_Monster_Turn(false);
 			pFortress->Set_Player_Turn(true);
 		}
-	}
-	else
-	{
-		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
-		Fortress_Monster_Bullet->Initialize();
-		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
-		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
-		pFortress->Set_Monster_Turn(false);
-		pFortress->Set_Player_Turn(true);
 	}
 }
+
 void CFortress_Monster::Move()
 {
 	if (m_bRandom == true)

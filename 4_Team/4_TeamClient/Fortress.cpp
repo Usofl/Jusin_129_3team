@@ -36,6 +36,7 @@ void CFortress::Initialize(void)
 	{
 		FortressMonster = new CFortress_Monster;
 		FortressMonster->Initialize();
+		FortressMonster->Set_Player(JunPlayer);
 	}
 
 	if (nullptr == m_pHPBar)
@@ -60,6 +61,7 @@ void CFortress::Update(void)
 		if (OBJ_DEAD == JunPlayer->Update())
 		{
 			Safe_Delete<CJunPlayer*>(JunPlayer);
+			FortressMonster->Set_Player(nullptr);
 
 			m_pTarget = FortressMonster;
 		}
@@ -228,6 +230,7 @@ void CFortress::Late_Update(void)
 
 					iter->Set_Dead(true);
 					FortressMonster->Set_Hp(iPlayerDamage);
+					FortressMonster->Set_Move_On(true);
 
 					m_pTarget = FortressMonster;
 
