@@ -30,7 +30,9 @@ public:
 	void    Minus_Hp(const int& _iDamage) { m_iHp -= _iDamage; };
 	void    Plus_Hp(const int& _iHeal) { m_iHp += _iHeal; };
 	void    Reset_Hp(void) { m_iHp = 100; };
-	const int& Get_Hp(void) { return m_iHp; };
+	int Get_Hp(void) { return m_iHp; };
+	int Get_MaxHp(void) { return m_iMaxHp; }
+	CJunPlayer*	Get_Player(void) {return m_pJunPlayer;}
 private:
 	virtual void Key_Input(void) override;
 
@@ -82,6 +84,7 @@ private:
 	float  m_fTempPower;
 	bool m_bPlayer_Turn;
 	CJunBullet* m_pBullet;
+	CJunPlayer* m_pJunPlayer;
 
 	int m_iHp;
 	int m_iMaxHp;

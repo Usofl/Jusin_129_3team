@@ -5,6 +5,7 @@
 #include "Fortress_Monster.h"
 #include "Fortress_Bullet_Effect.h"
 #include "LineMgr.h"
+#include "Fortress_HPBar.h"
 class CFortress :
 	public CScene
 {
@@ -47,6 +48,8 @@ private:
 	list<CJunBullet*> JunBulletList;
 	list<CFortress_Bullet_Effect*> m_list_Bullet_Effect;
 	list<CFortress_Monster_Bullet*> Monster_Bullet_List;
+
+	CFortress_HPBar	* HPBar;
 
 	//static list<CJunBullet*>* BulletList;
 	/*LINEPOINT TempLine = { 50,100 };

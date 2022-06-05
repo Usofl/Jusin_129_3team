@@ -38,6 +38,12 @@ void CFortress::Initialize(void)
 
 	}
 
+	if (nullptr == HPBar)
+	{
+		HPBar = new CFortress_HPBar;
+		HPBar->Initialize();
+	}
+
 	m_Line.tLPoint = { 0.f,0.f };
 	m_Line.tRPoint = { 300.f,0.f };
 
@@ -77,6 +83,11 @@ void CFortress::Update(void)
 		{
 			iter++;
 		}
+	}
+
+	if (nullptr != HPBar)
+	{
+		HPBar->Update();
 	}
 
 	OffSet();
