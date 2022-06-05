@@ -25,14 +25,16 @@ public:
 
 
 public:
-	void    ReSet_Bullet(void) { m_pBullet = nullptr; };
-	CJunBullet* Get_Bullet(void) { return m_pBullet; };
-	void    Minus_Hp(const int& _iDamage) { m_iHp -= _iDamage; };
-	void    Plus_Hp(const int& _iHeal) { m_iHp += _iHeal; };
-	void    Reset_Hp(void) { m_iHp = 100; };
-	int Get_Hp(void) { return m_iHp; };
-	int Get_MaxHp(void) { return m_iMaxHp; }
-	CJunPlayer*	Get_Player(void) {return m_pJunPlayer;}
+	inline void			ReSet_Bullet(void)	{ m_pBullet = nullptr; };
+	inline CJunBullet*	Get_Bullet(void)	{ return m_pBullet; };
+	inline void			Minus_Hp(const int& _iDamage) { m_iHp -= _iDamage; };
+	inline void			Plus_Hp(const int& _iHeal) { m_iHp += _iHeal; };
+	inline void			Reset_Hp(void)		{ m_iHp = 100; };
+	inline const int&	Get_Hp(void)		{ return m_iHp; };
+	inline const int&	Get_MaxHp(void)		{ return m_iMaxHp; }
+
+	inline CJunPlayer* Get_Player(void) { return this; }
+
 private:
 	virtual void Key_Input(void) override;
 
@@ -84,7 +86,6 @@ private:
 	float  m_fTempPower;
 	bool m_bPlayer_Turn;
 	CJunBullet* m_pBullet;
-	CJunPlayer* m_pJunPlayer;
 
 	int m_iHp;
 	int m_iMaxHp;

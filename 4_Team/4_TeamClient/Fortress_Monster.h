@@ -3,8 +3,7 @@
 #include "JunPlayer.h"
 #include "Fortress_Monster_Bullet.h"
 
-class CFortress_Monster :
-	public CObj
+class CFortress_Monster : public CObj
 {
 public:
 	CFortress_Monster();

@@ -31,8 +31,11 @@ public:
 	const bool MonsterCollision_Check(float _fMonX, float _fMonY,float _fBulletX, float _fBulletY);
 	
 public:
+	inline CJunPlayer*& Get_Player(void) { return JunPlayer; };
+
 	inline list<CJunBullet*>* Get_JunBulletList(void) { return &JunBulletList;	};
 	inline list<CFortress_Monster_Bullet*>* Get_Monster_Bullet_List(void) { return &Monster_Bullet_List; };
+
 	inline const bool&	Get_Player_Turn() { return m_bPlayer_Turn; }
 	inline const bool&	Get_Monster_Turn() { return m_bMonster_Turn; }
 
@@ -45,13 +48,14 @@ private:
 	
 	CJunPlayer * JunPlayer;
 	CJunBullet * JunBullet;
+	CFortress_HPBar	* m_pHPBar;
 	CFortress_Monster * FortressMonster;
+
 	list<CJunBullet*> JunBulletList;
 	list<CFortress_Bullet_Effect*> m_list_Bullet_Effect;
 	list<CFortress_Monster_Bullet*> Monster_Bullet_List;
 	list<CFortress_Boom_Effect*> m_list_Boom_Effect;
 
-	CFortress_HPBar	* HPBar;
 
 	//static list<CJunBullet*>* BulletList;
 	/*LINEPOINT TempLine = { 50,100 };

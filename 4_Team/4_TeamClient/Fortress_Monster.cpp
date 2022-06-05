@@ -6,14 +6,15 @@
 
 
 CFortress_Monster::CFortress_Monster()
-	:m_iHp(5),
-	m_iRandom_Move(0),
-	m_bRandom(true),
-	m_bRandom_Move(true),
-	m_bShoot(true),
-	m_bMonster_Turn(true), m_fRandom(0),
-	m_dwShootCount(GetTickCount()),
-	m_dwShootDelay(GetTickCount())
+	: m_iHp(100)
+	, m_iRandom_Move(0)
+	, m_bRandom(true)
+	, m_bRandom_Move(true)
+	, m_bShoot(true)
+	, m_bMonster_Turn(true)
+	, m_fRandom(0)
+	, m_dwShootCount(GetTickCount())
+	, m_dwShootDelay(GetTickCount())
 	, Fortress_Monster_Bullet(nullptr)
 {
 }
@@ -50,6 +51,11 @@ void CFortress_Monster::Initialize(void)
 
 const int CFortress_Monster::Update(void)
 {
+	if (m_iHp <= 0)
+	{
+		return OBJ_DEAD;
+	}
+
 	D3DXMatrixRotationZ(&m_tMatInfo.matRotZ, D3DXToRadian(m_fAngle));
 
 	m_tInfo.matWorld = m_tMatInfo.matRotZ;
@@ -99,7 +105,6 @@ const int CFortress_Monster::Update(void)
 
 void CFortress_Monster::Late_Update(void)
 {
-	
 }
 
 void CFortress_Monster::Render(HDC hDC)

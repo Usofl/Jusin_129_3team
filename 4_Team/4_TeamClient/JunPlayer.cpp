@@ -69,6 +69,11 @@ void CJunPlayer::Initialize(void)
 
 const int CJunPlayer::Update(void)
 {
+	if (m_iHp <= 0)
+	{
+		return OBJ_DEAD;
+	}
+
 	Key_Input();
 
 	if (BeforeAngle != m_fAngle)

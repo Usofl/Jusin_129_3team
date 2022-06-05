@@ -19,23 +19,31 @@ public:
 	virtual void Render(HDC hDC) override;
 	virtual void Release(void) override;
 
-	/*CJunPlayer*		Get_Instance(void)
+public:
+	inline void Set_Lest_HP(const int& _MaxHP, const int& _LestHP) 
 	{
-		if (!m_pInstance)
+		if (0 < _LestHP)
 		{
-			m_pInstance = new CJunPlayer;
+			m_fLest_HP = (float)((_LestHP * 100 / _MaxHP)) * 0.01f;
 		}
+		else
+		{
+			m_fLest_HP = 0.f;
+		}
+	}
 
-		return m_pInstance;
-	}*/
 private:
-	D3DXVECTOR3		m_vHPPoint[4];
-	D3DXVECTOR3		m_vOriginalPoint[4];
-	D3DXMATRIX		matScale, matRotZ, matTrans;
-	D3DXVECTOR3		m_vLookX;
+	D3DXVECTOR3		m_vHP_Point[POINT_END];
+	D3DXVECTOR3		m_vOriginalPoint[POINT_END];
+
+	D3DXVECTOR3		m_vLest_HP_Point;
+	D3DXVECTOR3		m_vLest_OriginalPoint;
+
+	float			m_fLest_HP;
 
 	float			m_fXSize;
 	float			m_fYSize;
+
 	float			m_fGague;
 
 //	CJunPlayer * JunPlayer;
