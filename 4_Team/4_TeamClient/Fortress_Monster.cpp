@@ -33,7 +33,7 @@ void CFortress_Monster::Initialize(void)
 
 	srand(unsigned(time(NULL)));
 
-	m_tInfo.vPos = { 1800 , 200.f , 0.f };
+	m_tInfo.vPos = { 1200 , 200.f , 0.f };
 	m_tInfo.vDir = { 1.f, 0.f, 0.f };
 
 	m_tInfo_Body_Local[0].vPos = { -50.f , -30.f , 0.f };
@@ -48,7 +48,7 @@ void CFortress_Monster::Initialize(void)
 	m_fSpeed = 5.f;
 	m_fAngle = 0.f;
 	m_fAngle_Body = 0.f;
-	m_fAngle_Posin = 30.f;
+	m_fAngle_Posin = 50.f;
 
 }
 
@@ -266,7 +266,7 @@ void CFortress_Monster::Shoot_Bullet()
 		{
 			if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
 			{
-				m_fAngle_Posin = 60.f;
+				m_fAngle_Posin = 70.f;
 
 				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 				Fortress_Monster_Bullet->Initialize();
@@ -282,7 +282,7 @@ void CFortress_Monster::Shoot_Bullet()
 			}
 			else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
 			{
-				m_fAngle_Posin = 10.f;
+				m_fAngle_Posin = 20.f;
 
 				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 				Fortress_Monster_Bullet->Initialize();
@@ -302,7 +302,7 @@ void CFortress_Monster::Shoot_Bullet()
 		{
 			if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
 			{
-				m_fAngle_Posin = 120.f;
+				m_fAngle_Posin = 110.f;
 
 				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 				Fortress_Monster_Bullet->Initialize();
@@ -318,7 +318,7 @@ void CFortress_Monster::Shoot_Bullet()
 			}
 			else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
 			{
-				m_fAngle_Posin = 170.f;
+				m_fAngle_Posin = 160.f;
 
 				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 				Fortress_Monster_Bullet->Initialize();
@@ -337,7 +337,7 @@ void CFortress_Monster::Shoot_Bullet()
 		{
 			if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
 			{
-				m_fAngle_Posin = 45.f;
+				m_fAngle_Posin = 60.f;
 
 				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 				Fortress_Monster_Bullet->Initialize();
@@ -353,7 +353,7 @@ void CFortress_Monster::Shoot_Bullet()
 			}
 			else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
 			{
-				m_fAngle_Posin = 45.f;
+				m_fAngle_Posin = 60.f;
 
 				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 				Fortress_Monster_Bullet->Initialize();
@@ -372,7 +372,7 @@ void CFortress_Monster::Shoot_Bullet()
 		{
 			if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
 			{
-				m_fAngle_Posin = 135.f;
+				m_fAngle_Posin = 120.f;
 
 				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 				Fortress_Monster_Bullet->Initialize();
@@ -388,7 +388,7 @@ void CFortress_Monster::Shoot_Bullet()
 			}
 			else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
 			{
-				m_fAngle_Posin = 135.f;
+				m_fAngle_Posin = 120.f;
 
 				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 				Fortress_Monster_Bullet->Initialize();
@@ -407,7 +407,7 @@ void CFortress_Monster::Shoot_Bullet()
 		{
 			if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
 			{
-				m_fAngle_Posin = 45.f;
+				m_fAngle_Posin = 50.f;
 
 				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 				Fortress_Monster_Bullet->Initialize();
@@ -423,7 +423,7 @@ void CFortress_Monster::Shoot_Bullet()
 			}
 			else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
 			{
-				m_fAngle_Posin = 45.f;
+				m_fAngle_Posin = 50.f;
 
 				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 				Fortress_Monster_Bullet->Initialize();
@@ -442,7 +442,7 @@ void CFortress_Monster::Shoot_Bullet()
 		{
 			if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
 			{
-				m_fAngle_Posin = 120.f;
+				m_fAngle_Posin = 130.f;
 
 				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 				Fortress_Monster_Bullet->Initialize();
@@ -458,7 +458,7 @@ void CFortress_Monster::Shoot_Bullet()
 			}
 			else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
 			{
-				m_fAngle_Posin = 120.f;
+				m_fAngle_Posin = 130.f;
 
 				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 				Fortress_Monster_Bullet->Initialize();

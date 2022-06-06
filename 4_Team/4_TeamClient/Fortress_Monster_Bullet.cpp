@@ -3,7 +3,7 @@
 #include "ScrollMgr.h"
 
 CFortress_Monster_Bullet::CFortress_Monster_Bullet()
-	: m_fShoot_Power(15.f)
+	: m_fShoot_Power(10.f)
 	, m_fAir_Shoot(0.f)
 {
 }
@@ -24,7 +24,7 @@ void CFortress_Monster_Bullet::Initialize(void)
 	m_tInfo_Bullet_Local[2].vPos = { +10.f , +10.f , 0.f };
 	m_tInfo_Bullet_Local[3].vPos = { -10.f , +10.f , 0.f };*/
 
-	m_fSpeed = 20.f;
+	m_fSpeed = 1.f;
 }
 
 const int CFortress_Monster_Bullet::Update(void)
@@ -45,9 +45,9 @@ const int CFortress_Monster_Bullet::Update(void)
 
 	D3DXVec3TransformNormal(&m_tInfo.vDir, &m_tInfo.vLook, &m_tInfo.matWorld);*/
 
-	m_fAir_Shoot += 0.1f;
+	m_fAir_Shoot += 0.02f;
 
-	if (0 >= pJunPlayer->Get_Info().vPos.x - m_fMonster_PosX && -300 < pJunPlayer->Get_Info().vPos.x - m_fMonster_PosX)
+	/*if (0 >= pJunPlayer->Get_Info().vPos.x - m_fMonster_PosX && -300 < pJunPlayer->Get_Info().vPos.x - m_fMonster_PosX)
 	{
 		m_fSpeed = 5;
 		m_tInfo.vPos -= m_fSpeed * m_tInfo.vLook;
@@ -76,19 +76,19 @@ const int CFortress_Monster_Bullet::Update(void)
 	{
 		m_fSpeed = 15;
 		m_tInfo.vPos += m_fSpeed * m_tInfo.vLook;
-	}
-	else if (-900 >= pJunPlayer->Get_Info().vPos.x - m_fMonster_PosX)
+	}*/
+	if (-900 >= pJunPlayer->Get_Info().vPos.x - m_fMonster_PosX)
 	{
-		m_fSpeed = 40;
-		m_tInfo.vPos -= m_fSpeed * m_tInfo.vLook;
+		m_fSpeed = 20;
+		m_tInfo.vPos.x -= m_tInfo.vLook.x;
 	}
 	else if (900 <= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
 	{
-		m_fSpeed = 40;
-		m_tInfo.vPos += m_fSpeed * m_tInfo.vLook;
+		m_fSpeed = 20;
+		m_tInfo.vPos +=  m_tInfo.vLook;
 	}
 
-	m_tInfo.vPos.y -= 9.8f * m_fAir_Shoot * m_fAir_Shoot * 0.5f;
+	m_tInfo.vPos.y -= m_fShoot_Power * m_fAir_Shoot - 0.5f *9.8f * m_fAir_Shoot * m_fAir_Shoot;
 	
 	return OBJ_NOEVENT;
 }
