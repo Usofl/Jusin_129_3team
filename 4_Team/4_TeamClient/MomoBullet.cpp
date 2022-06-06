@@ -3,6 +3,7 @@
 #include "SceneMgr.h"
 #include "Momodora.h"
 #include "MomodoraPlayer.h"
+#include "ScrollMgr.h"
 
 
 CMomoBullet::CMomoBullet()
@@ -19,7 +20,7 @@ CMomoBullet::~CMomoBullet()
 void CMomoBullet::Initialize(void)
 {
 	m_eRender = RENDER_GAMEOBJECT;
-	m_tInfo.vDir = { 1.f, 0.f, 0.f };
+	//m_tInfo.vDir = { 1.f, 0.f, 0.f };
 	m_fSpeed = 7.f;
 
 	D3DXVECTOR3 vPlayer_pos = static_cast<CMomodora*>(SCENEMGR->Get_Scene(SC_MOMO))->Get_Player()->Get_Info().vPos;
@@ -27,6 +28,16 @@ void CMomoBullet::Initialize(void)
 
 	m_tInfo.vPos = vPlayer_pos;
 	m_fAngle = fAngle;
+
+	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
+	D3DXVECTOR3 Mouse_pos = ::Get_Mouse() + D3DXVECTOR3{ (float)(-iScrollX), float(-iScrollY), 0.f };
+
+	m_tInfo.vDir = Mouse_pos - m_tInfo.vPos;
+
+	D3DXVec3Normalize(&m_tInfo.vDir, &m_tInfo.vDir);
+
 }
 
 const int CMomoBullet::Update(void)
@@ -34,8 +45,16 @@ const int CMomoBullet::Update(void)
 	if (m_bDead)
 		return OBJ_DEAD;
 
-	m_tInfo.vPos.x += m_fSpeed * cosf((m_fAngle * D3DX_PI) / 180.f);
-	m_tInfo.vPos.y -= m_fSpeed * sinf((m_fAngle * D3DX_PI) / 180.f);
+	m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
+
+	m_fAngle = acosf(m_tInfo.vDir.x * m_tInfo.vLook.x + m_tInfo.vDir.y * m_tInfo.vLook.y);
+
+	if (m_tInfo.vPos.x > m_tInfo.vDir.x)
+	{
+		m_fAngle = -m_fAngle;
+	}
+	//m_tInfo.vPos.x += m_fSpeed * cosf((m_fAngle * D3DX_PI) / 180.f);
+	//m_tInfo.vPos.y -= m_fSpeed * sinf((m_fAngle * D3DX_PI) / 180.f);
 
 	return OBJ_NOEVENT;
 }
