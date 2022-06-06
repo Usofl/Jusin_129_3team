@@ -241,6 +241,7 @@
     <ClInclude Include="MomoDoraMgr.h" />
     <ClInclude Include="MomodoraPlayer.h" />
     <ClInclude Include="MomoSword.h" />
+    <ClInclude Include="Momo_HpBar.h" />
     <ClInclude Include="Momo_Obj.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MultiTexture.h" />
@@ -307,6 +308,7 @@
     <ClCompile Include="MomoDoraMgr.cpp" />
     <ClCompile Include="MomodoraPlayer.cpp" />
     <ClCompile Include="MomoSword.cpp" />
+    <ClCompile Include="Momo_HpBar.cpp" />
     <ClCompile Include="Momo_Obj.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MultiTexture.cpp" />

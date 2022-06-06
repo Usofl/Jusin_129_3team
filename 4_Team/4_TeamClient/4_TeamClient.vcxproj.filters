@@ -211,6 +211,9 @@
     <Filter Include="03. Game\01. Obj\01. Other_Object\01.Momo_Obj\01. Monster\01. Shooter">
       <UniqueIdentifier>{d937ce97-c329-4809-afac-e5ad0d1d86c3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Game\01. Obj\01. Other_Object\01.Momo_Obj\02.Momo_HPBar">
+      <UniqueIdentifier>{c99c6a2a-618e-4d5f-9448-b71b20afb66c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -417,6 +420,9 @@
     <ClInclude Include="Shooter_Monster.h">
       <Filter>03. Game\01. Obj\01. Other_Object\01.Momo_Obj\01. Monster\01. Shooter</Filter>
     </ClInclude>
+    <ClInclude Include="Momo_HpBar.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="4_TeamClient.cpp">
@@ -601,6 +607,9 @@
     </ClCompile>
     <ClCompile Include="Shooter_Monster.cpp">
       <Filter>03. Game\01. Obj\01. Other_Object\01.Momo_Obj\01. Monster\01. Shooter</Filter>
+    </ClCompile>
+    <ClCompile Include="Momo_HpBar.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -5,7 +5,6 @@
 #include "MomoSword.h"
 #include "ScrollMgr.h"
 
-
 CMomodoraPlayer::CMomodoraPlayer()
 {
 	Initialize();
@@ -35,7 +34,8 @@ void CMomodoraPlayer::Initialize(void)
 	//m_vOriginalHeadPoint[1] = { 5.f, -25.f, 0.f };
 
 	m_fSpeed = 4.f;
-	m_iHP = 50;
+	m_iMaxHP = 200;
+	m_iHP = m_iMaxHP;
 }
 
 const int CMomodoraPlayer::Update(void)

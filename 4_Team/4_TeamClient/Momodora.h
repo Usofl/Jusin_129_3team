@@ -4,6 +4,7 @@
 #include "MomoSword.h"
 #include "Monster.h"
 #include "MomoBullet.h"
+#include "Momo_HpBar.h"
 
 class CMomodora : public CScene
 {
@@ -26,6 +27,7 @@ private:
 	CObj* m_pTarget;
 
 	CMomodoraPlayer*	m_pPlayer;
+	CMomo_HpBar	* m_pHPBar;
 
 	list<CMomoSword*>	MomoSwordList;
 	list<CMonster*>		m_listMonsterList;

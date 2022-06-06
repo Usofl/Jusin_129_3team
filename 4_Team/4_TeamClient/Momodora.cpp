@@ -34,6 +34,10 @@ void CMomodora::Initialize(void)
 
 	m_listMonsterList.push_back(CMomoAbstractFactory::Create_Shoter());
 
+	if (nullptr == m_pHPBar)
+	{
+		m_pHPBar = new CMomo_HpBar;
+	}
 }
 
 void CMomodora::Update(void)
@@ -41,6 +45,7 @@ void CMomodora::Update(void)
 	Key_Input();
 	if (nullptr != m_pPlayer)
 	{
+		m_pHPBar->Set_Lest_HP(m_pPlayer->Get_MaxHp(), m_pPlayer->Get_Hp());
 		m_pPlayer->Update();
 	}
 
@@ -98,10 +103,14 @@ void CMomodora::Update(void)
 			++iter;
 		}
 	}
+
+	m_pHPBar->Update();
 }
 
 void CMomodora::Late_Update(void)
 {
+	m_pHPBar->Late_Update();
+
 	if (nullptr != m_pPlayer)
 	{
 		m_pPlayer->Late_Update();
@@ -259,6 +268,8 @@ void CMomodora::Render(HDC _hDC)
 {
 	RENDERMGR->Render(_hDC);
 
+	m_pHPBar->Render(_hDC);
+
 	RECT rc1 = { -100, 0, WINCX, 110 };
 	RECT rc2 = { -100, WINCY - 110, WINCX, WINCY };
 
@@ -269,6 +280,8 @@ void CMomodora::Render(HDC _hDC)
 void CMomodora::Release(void)
 {
 	Safe_Delete<CMomodoraPlayer*>(m_pPlayer);
+
+	Safe_Delete<CMomo_HpBar*>(m_pHPBar);
 
 	for (auto& iter : MomoSwordList)
 	{

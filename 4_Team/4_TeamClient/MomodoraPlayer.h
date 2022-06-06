@@ -19,6 +19,8 @@ public:
 	void Key_Input(void);
 
 	inline void Set_HP(const int& _iHP) { m_iHP -= _iHP; }
+	inline const int&	Get_Hp(void) { return m_iHP; };
+	inline const int&	Get_MaxHp(void) { return m_iMaxHP; }
 
 private:
 	D3DXVECTOR3		m_vPoint[4];
@@ -28,6 +30,7 @@ private:
 	D3DXVECTOR3		m_vLookX;
 
 	int		m_iHP;
+	int		m_iMaxHP;
 
 };
 
