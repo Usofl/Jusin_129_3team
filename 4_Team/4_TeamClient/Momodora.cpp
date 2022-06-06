@@ -28,6 +28,7 @@ void CMomodora::Initialize(void)
 	}
 	m_listMonsterList.push_back(CMomoAbstractFactory::Create_Follower());
 	m_listMonsterList.push_back(CMomoAbstractFactory::Create_Shoter());
+
 }
 
 void CMomodora::Update(void)
@@ -93,6 +94,38 @@ void CMomodora::Late_Update(void)
 	{
 		iter->Late_Update();
 		RENDERMGR->Add_Render_Obj(iter);
+
+		D3DXVECTOR3 v_LeftFirst = iter->Get_Point(0);
+		D3DXVECTOR3 v_LeftEnd = iter->Get_Point(1);
+		
+		D3DXVECTOR3 v_RightFirst = iter->Get_Point(2);
+		D3DXVECTOR3 v_RightEnd = iter->Get_Point(3);
+
+
+
+		for (auto iter2 = m_listMonsterList.begin(); iter2 != m_listMonsterList.end(); iter2++)
+		{
+			//if ((*iter2)->Get_MonsterID() == MOMO_FOLLOW)
+			//{
+			//	if (((*iter2)->Get_Info().vPos.x - 20 < fX && (*iter2)->Get_Info().vPos.x + 20 > fX)
+			//		&& ((*iter2)->Get_Info().vPos.y - 20 < fY && (*iter2)->Get_Info().vPos.y + 20 > fY))
+			//	{
+			//		(*iter2)->Set_Dead(true); // 삭제 처리한 부분인데 여기서 이제 HP까는걸로 바꾸면 됨
+
+			//	}
+			//}
+
+
+			//else if ((*iter2)->Get_MonsterID() == MOMO_ROTATION)
+			//{
+			//	if (((*iter2)->Get_Info().vPos.x - 40 < fX && (*iter2)->Get_Info().vPos.x + 40 > fX)
+			//		&& ((*iter2)->Get_Info().vPos.y - 40 < fY && (*iter2)->Get_Info().vPos.y + 40 > fY))
+			//	{
+			//		(*iter2)->Set_Dead(true); // 삭제 처리한 부분인데 여기서 이제 HP까는걸로 바꾸면 됨
+
+			//	}
+			//}
+		}
 	}
 
 	for (auto& iter : m_listMonsterList)
@@ -108,15 +141,25 @@ void CMomodora::Late_Update(void)
 		float fY = iter->Get_Info().vPos.y;
 		for (auto iter2 = m_listMonsterList.begin(); iter2 != m_listMonsterList.end(); iter2++)
 		{
-			if (((*iter2)->Get_Info().vPos.x - 30 < fX && (*iter2)->Get_Info().vPos.x + 30 > fX)
-				&& ((*iter2)->Get_Info().vPos.y - 30 < fY && (*iter2)->Get_Info().vPos.y + 30 > fY) )
+			if ((*iter2)->Get_MonsterID() == MOMO_FOLLOW)
 			{
-				(*iter2)->Set_Dead(true); // 삭제 처리한 부분인데 여기서 이제 HP까는걸로 바꾸면 됨
-				
+				if (((*iter2)->Get_Info().vPos.x - 20 < fX && (*iter2)->Get_Info().vPos.x + 20 > fX)
+					&& ((*iter2)->Get_Info().vPos.y - 20 < fY && (*iter2)->Get_Info().vPos.y + 20 > fY))
+				{
+					(*iter2)->Set_Dead(true); // 삭제 처리한 부분인데 여기서 이제 HP까는걸로 바꾸면 됨
+					(iter)->Set_Dead(true);
+				}
 			}
-			else
+
+
+			else if ((*iter2)->Get_MonsterID() == MOMO_ROTATION)
 			{
-				//(*iter2)->Set_Dead(true);
+				if (((*iter2)->Get_Info().vPos.x - 40 < fX && (*iter2)->Get_Info().vPos.x + 40 > fX)
+					&& ((*iter2)->Get_Info().vPos.y - 40 < fY && (*iter2)->Get_Info().vPos.y + 40 > fY))
+				{
+					(*iter2)->Set_Dead(true); // 삭제 처리한 부분인데 여기서 이제 HP까는걸로 바꾸면 됨
+					(iter)->Set_Dead(true);
+				}
 			}
 		}
 

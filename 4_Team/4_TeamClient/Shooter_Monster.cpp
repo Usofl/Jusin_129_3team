@@ -49,6 +49,7 @@ void CShooter_Monster::Initialize(void)
 {
 	m_eRender = RENDER_GAMEOBJECT;
 
+	m_MonsterID = MOMO_ROTATION;
 	m_iHP = 20;
 
 	m_fSpeed = 3.f;

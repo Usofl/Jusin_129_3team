@@ -17,7 +17,9 @@ public:
 	virtual void Release(void) override;
 
 public:
-	inline void Set_Player(CMomodoraPlayer* _pPlayer) { m_pPlayer = _pPlayer; }
+	inline void Set_Player(CMomodoraPlayer* _pPlayer) { m_pPlayer = _pPlayer; };
+	D3DXVECTOR3 Get_Point(int _iIndex) { return m_vLocalSwordPoint[_iIndex]; };
+
 
 private:
 	D3DXVECTOR3		m_vSwordPoint[4];
