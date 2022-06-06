@@ -396,10 +396,10 @@ void CFortress::Key_Input(void)
 
 const bool CFortress::MonsterCollision_Check(float _fMonsterX, float _fMonsterY, float _fBulletX, float _fBulletY)
 {
-	if ((_fMonsterX - 50 <= _fBulletX &&
-		_fMonsterX + 50 >= _fBulletX) &&
-		(_fMonsterY - 30 <= _fBulletY &&
-			_fMonsterY + 30 >= _fBulletY))
+	if ((_fMonsterX - 125 <= _fBulletX &&
+		_fMonsterX + 125 >= _fBulletX) &&
+		(_fMonsterY - 70 <= _fBulletY &&
+			_fMonsterY + 70 >= _fBulletY))
 	{
 		return true;
 	}

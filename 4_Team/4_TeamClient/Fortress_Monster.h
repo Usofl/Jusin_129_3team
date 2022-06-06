@@ -32,8 +32,8 @@ public:
 	
 
 private:
-	INFO			m_tInfo_Body_Local[16];
-	INFO			m_tInfo_Body_World[16];
+	INFO			m_tInfo_Body_Local[22];
+	INFO			m_tInfo_Body_World[22];
 
 	INFO			m_tInfo_Head_Local[4];
 	INFO			m_tInfo_Head_World[4];
