@@ -92,22 +92,36 @@ const int CShooter_Monster::Update(void)
 	{
 		D3DXMatrixIdentity(&m_tMatInfo.matParents);
 		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
-		m_fRevolutionAngle = 0.f;
+		m_fRevolutionAngle += D3DXToRadian(1.5f);
+		// 이동 행렬 생성 함수
+		// z축 회전 행렬 생성 함수
+		D3DXMatrixRotationZ(&m_tMatInfo.matRotZ, m_fAngle);
+
+		//D3DXMatrixTranslation(&m_tMatInfo.matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
 	}
-	else
+	else if (fDigonal <= 280.f)
 	{
-		D3DXMatrixTranslation(&m_tMatInfo.matParents, vPlayer_pos.x, vPlayer_pos.y, 0.f);
-		m_fRevolutionAngle += D3DXToRadian(0.1f);
+		D3DXMatrixIdentity(&m_tMatInfo.matParents);
+		m_tInfo.vPos -= m_tInfo.vDir * m_fSpeed;
+		m_fRevolutionAngle += D3DXToRadian(1.5f);
+		// 이동 행렬 생성 함수
+		// z축 회전 행렬 생성 함수
+		D3DXMatrixRotationZ(&m_tMatInfo.matRotZ, m_fAngle);
+
+		//D3DXMatrixTranslation(&m_tMatInfo.matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
 	}
+	else 
+	{
 
-	// z축 회전 행렬 생성 함수
-	D3DXMatrixRotationZ(&m_tMatInfo.matRotZ, m_fAngle - m_fRevolutionAngle);
-
-	// 이동 행렬 생성 함수
-	D3DXMatrixTranslation(&m_tMatInfo.matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
+		m_fRevolutionAngle += D3DXToRadian(1.5f);
+		// 이동 행렬 생성 함수
+	}
+	D3DXVECTOR3 vTarget = m_tInfo.vPos - vPlayer_pos;
 
 	// z축 회전 행렬 생성 함수
 	D3DXMatrixRotationZ(&m_tMatInfo.matRevolutionZ, m_fRevolutionAngle);
+	D3DXMatrixTranslation(&m_tMatInfo.matTrans, vTarget.x, vTarget.y, 0.f);
+	D3DXMatrixTranslation(&m_tMatInfo.matParents, vPlayer_pos.x, vPlayer_pos.y, 0.f);
 
 	Update_Matrix();
 
