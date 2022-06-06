@@ -229,8 +229,8 @@ void CMomodora::Late_Update(void)
 
 			else if ((*iter2)->Get_MonsterID() == MOMO_ROTATION)
 			{
-				if (((*iter2)->Get_Info().vPos.x - 40 < fX && (*iter2)->Get_Info().vPos.x + 40 > fX)
-					&& ((*iter2)->Get_Info().vPos.y - 40 < fY && (*iter2)->Get_Info().vPos.y + 40 > fY))
+				if (((*iter2)->Get_Info().vPos.x - 60 < fX && (*iter2)->Get_Info().vPos.x + 60 > fX)
+					&& ((*iter2)->Get_Info().vPos.y - 160 < fY && (*iter2)->Get_Info().vPos.y + 160 > fY))
 				{
 					(*iter2)->Set_Dead(true); // 삭제 처리한 부분인데 여기서 이제 HP까는걸로 바꾸면 됨
 					(iter)->Set_Dead(true);
