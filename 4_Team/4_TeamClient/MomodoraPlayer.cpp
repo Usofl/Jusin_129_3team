@@ -3,6 +3,7 @@
 #include "MomoDoraMgr.h"
 #include "KeyMgr.h"
 #include "MomoSword.h"
+#include "ScrollMgr.h"
 
 
 CMomodoraPlayer::CMomodoraPlayer()
@@ -41,37 +42,25 @@ const int CMomodoraPlayer::Update(void)
 	if (m_bDead)
 		return OBJ_DEAD;
 
+	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
 	 //Key_Input으로 상하좌우로 움직이는 코드
 
 	Key_Input();
 
-	m_tInfo.vDir = ::Get_Mouse() - m_tInfo.vPos;
+	D3DXVECTOR3 Mouse_pos = ::Get_Mouse() + D3DXVECTOR3{(float)(-iScrollX), float(-iScrollY), 0.f};
 
-	float fLength = sqrtf(m_tInfo.vDir.x * m_tInfo.vDir.x + m_tInfo.vDir.y * m_tInfo.vDir.y);
-	m_tInfo.vDir.x /= fLength;
-	m_tInfo.vDir.y /= fLength;
-	m_tInfo.vDir.z = 0.f;
+	m_tInfo.vDir = Mouse_pos - m_tInfo.vPos;
 
-	float	fDiagonal2 = sqrtf(m_tInfo.vLook.x * m_tInfo.vLook.x + m_tInfo.vLook.y * m_tInfo.vLook.y);
+	D3DXVec3Normalize(&m_tInfo.vDir, &m_tInfo.vDir);
 
-	m_tInfo.vLook.x /= fDiagonal2;
-	m_tInfo.vLook.y /= fDiagonal2;
-	m_tInfo.vLook.z = 0.f;
+	m_fAngle = acosf(m_tInfo.vDir.x * m_tInfo.vLook.x + m_tInfo.vDir.y * m_tInfo.vLook.y);
 
-	float	fDot = m_tInfo.vDir.x * m_tInfo.vLook.x + m_tInfo.vDir.y * m_tInfo.vLook.y;
-
-	float	fAngle = acosf(fDot);
-
-	if (m_tInfo.vPos.x < Get_Mouse().x)
+	if (m_tInfo.vPos.x > Mouse_pos.x)
 	{
-		m_fAngle = fAngle;
+		m_fAngle = -m_fAngle;
 	}
-
-	else if (m_tInfo.vPos.x > Get_Mouse().x)
-	{
-		m_fAngle = -fAngle;
-	}
-
 
 	D3DXMatrixScaling(&m_tMatInfo.matScale, 1.f, 1.f, 1.f);
 	D3DXMatrixRotationZ(&m_tMatInfo.matRotZ, m_fAngle);

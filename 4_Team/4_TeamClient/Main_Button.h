@@ -18,13 +18,63 @@ public:
 	virtual void Render(HDC hDC) override;
 	virtual void Release(void) override;
 
+	void Selected_Button(void);
+
 public:
 	inline	const SCENEID& Get_SceneId(void) { return m_eSceneId; }
-	inline	void Set_SceneId(const SCENEID& _eSceneId) { m_eSceneId = _eSceneId; }
+	inline	void Set_SceneId(const SCENEID& _eSceneId) 
+	{ 
+		m_eSceneId = _eSceneId;
+		switch (m_eSceneId)
+		{
+		case SC_START:
+			swprintf_s(m_szButton_Name, L"START");
+			m_iTextSize = 5;
+			break;
+		case SC_MAIN:
+			swprintf_s(m_szButton_Name, L"MAIN");
+			m_iTextSize = 4;
+			break;
+		case SC_ZELDA:
+			swprintf_s(m_szButton_Name, L"ZELDA");
+			m_iTextSize = 5;
+			break;
+		case SC_FLASHMAN:
+			swprintf_s(m_szButton_Name, L"FLASHMAN");
+			m_iTextSize = 8;
+			break;
+		case SC_ZELDA_EDIT:
+			swprintf_s(m_szButton_Name, L"ZELDA_EDIT");
+			m_iTextSize = 10;
+			break;
+		case SC_FORTRESS:
+			swprintf_s(m_szButton_Name, L"FORTRESS");
+			m_iTextSize = 8;
+			break;
+		case SC_BRAWL_STARS:
+			swprintf_s(m_szButton_Name, L"BRAWL_STARS");
+			m_iTextSize = 11;
+			break;
+		case SC_MOMO:
+			swprintf_s(m_szButton_Name, L"UNTITLE");
+			m_iTextSize = 7;
+			break; 
+		case SC_END:
+			swprintf_s(m_szButton_Name, L"EXIT");
+			m_iTextSize = 4;
+			break;
+		}
+	}
 
 private:
 	float			m_fXSize;
 	float			m_fYSize;
+
+	int				m_iWidth;
+	int				m_iRed;
+	int				m_iTextSize;
+
+	TCHAR			m_szButton_Name[32];
 
 	SCENEID			m_eSceneId;
 

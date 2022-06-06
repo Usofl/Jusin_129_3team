@@ -53,6 +53,13 @@ void CFortress_Monster::Initialize(void)
 	m_tInfo_Body_Local[13].vPos = { +25.f , -35.f , 0.f };
 	m_tInfo_Body_Local[14].vPos = { +25.f , 0.f , 0.f };
 	m_tInfo_Body_Local[15].vPos = { -25.f , 0.f , 0.f };
+	m_tInfo_Body_Local[16].vPos = { +125.f , +0.f , 0.f };
+	m_tInfo_Body_Local[17].vPos = { +150.f , +35.f , 0.f };
+	m_tInfo_Body_Local[18].vPos = { +150.f , +90.f , 0.f };
+	m_tInfo_Body_Local[19].vPos = { +125.f , +90.f , 0.f };
+	m_tInfo_Body_Local[20].vPos = { +125.f , +50.f , 0.f };
+	m_tInfo_Body_Local[21].vPos = { +80.f , +30.f , 0.f };
+
 
 
 
@@ -97,7 +104,7 @@ const int CFortress_Monster::Update(void)
 	// 월드 변환을 위한 행렬에 matRotZ 와 matTrans 곱한후에 더한다.
 	m_tInfo.matWorld = m_tMatInfo.matRotZ * m_tMatInfo.matTrans;
 
-	for (int i = 0; i < 16; ++i)
+	for (int i = 0; i < 22; ++i)
 	{
 		// 최종적인 위치벡터를 반환 해준다 (월드 변환을 위한 행렬에 인포타입 바디 로컬의 포스를 곱하기를 한후에 바디 월드의 포스에 대입 )
 		D3DXVec3TransformCoord(&m_tInfo_Body_World[i].vPos, &m_tInfo_Body_Local[i].vPos, &m_tInfo.matWorld);
@@ -121,16 +128,25 @@ const int CFortress_Monster::Update(void)
 	CFortress* pFortress = static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS));
 	if (pFortress->Get_Monster_Turn() == true && pFortress->Get_JunBulletList()->empty() && SCROLLMGR->Fix_Cheak(this))
 	{
-		if (m_bMove_On == true)
+		if (m_bMove_On == true && m_dwShootCount + 1000 < GetTickCount())
 		{
 			Move();
+			m_dwShootCount = GetTickCount();
 			m_bMove_On = false;
 		}
-		Shoot_Bullet();
+		if (m_dwShootDelay + 5000 < GetTickCount())
+		{
+			Shoot_Bullet();
+			m_dwShootDelay = GetTickCount();
+		}
+
 	}
 
-	m_tInfo_Test_Dir = pJunPlayer->Get_Info().vPos - m_tInfo_Posin_World[1].vPos;
-	D3DXVec3Normalize(&m_tInfo_Test_Dir, &m_tInfo_Test_Dir);
+	if (nullptr != pJunPlayer)
+	{
+		m_tInfo_Test_Dir = pJunPlayer->Get_Info().vPos - m_tInfo_Posin_World[1].vPos;
+		D3DXVec3Normalize(&m_tInfo_Test_Dir, &m_tInfo_Test_Dir);
+	}
 	
 	// 앵글값을 0으로 초기화를 안 시키면 계속 회전함
 	m_fAngle = 0.f;
@@ -161,6 +177,12 @@ void CFortress_Monster::Render(HDC hDC)
 		LineTo(hDC, (int)m_tInfo_Body_World[i].vPos.x + iScrollX, (int)m_tInfo_Body_World[i].vPos.y + iScrollY);
 	}
 	LineTo(hDC, (int)m_tInfo_Body_World[12].vPos.x + iScrollX, (int)m_tInfo_Body_World[12].vPos.y + iScrollY);
+
+	MoveToEx(hDC, (int)m_tInfo_Body_World[16].vPos.x + iScrollX, (int)m_tInfo_Body_World[16].vPos.y + iScrollY, nullptr);
+	for (int i = 16; i < 22; ++i)
+	{
+		LineTo(hDC, (int)m_tInfo_Body_World[i].vPos.x + iScrollX, (int)m_tInfo_Body_World[i].vPos.y + iScrollY);
+	}
 
 
 
@@ -229,7 +251,7 @@ void CFortress_Monster::Shoot_Bullet()
 	
 
 	CFortress* pFortress = static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS));
-	if (pJunPlayer != nullptr)
+	if (nullptr != pJunPlayer)
 	{
 		// 플레이어 - 몬스터 == 0 ~ -300
 		if (0 >= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x && -300 < pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)

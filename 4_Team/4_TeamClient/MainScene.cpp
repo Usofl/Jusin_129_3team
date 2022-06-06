@@ -211,6 +211,7 @@ void CMainScene::Selete_Button(CMain_Button*& _pButton)
 		{
 			m_bReady = true;
 			m_eScene_Id = _pButton->Get_SceneId();
+			_pButton->Selected_Button();
 		}
 		else
 		{

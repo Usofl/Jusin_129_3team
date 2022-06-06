@@ -24,6 +24,7 @@ void CMomodora::Initialize(void)
 	{
 		m_pPlayer = new CMomodoraPlayer;
 	}
+	m_listMonsterList.push_back(CMomoAbstractFactory::Create_Follower());
 }
 
 void CMomodora::Update(void)
@@ -46,6 +47,22 @@ void CMomodora::Update(void)
 		{
 			++iter;
 		}
+	}
+
+	for (auto& iter = m_listMonsterList.begin();
+		iter != m_listMonsterList.end(); )
+	{
+		if (OBJ_DEAD == (*iter)->Update())
+		{
+			Safe_Delete<CMonster*>(*iter);
+			iter = m_listMonsterList.erase(iter);
+		}
+		else
+		{
+			++iter;
+		}
+	}
+}
 	}
 
 	for (auto& iter = MomoBulletList.begin();
@@ -72,6 +89,12 @@ void CMomodora::Late_Update(void)
 	}
 
 	for (auto& iter : MomoSwordList)
+	{
+		iter->Late_Update();
+		RENDERMGR->Add_Render_Obj(iter);
+	}
+
+	for (auto& iter : m_listMonsterList)
 	{
 		iter->Late_Update();
 		RENDERMGR->Add_Render_Obj(iter);
@@ -104,6 +127,12 @@ void CMomodora::Release(void)
 		Safe_Delete<CMomoSword*>(iter);
 	}
 	MomoSwordList.clear();
+
+	for (auto& iter : m_listMonsterList)
+	{
+		Safe_Delete<CMonster*>(iter);
+	}
+	m_listMonsterList.clear();
 
 	for (auto& iter : MomoBulletList)
 	{
