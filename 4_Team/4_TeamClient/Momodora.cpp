@@ -88,7 +88,7 @@ void CMomodora::Release(void)
 
 void CMomodora::Key_Input(void)
 {
-	if (KEYMGR->Key_Up('D'))
+	if (KEYMGR->Key_Up('F'))
 	{
 		//CMomoDoraMgr::Get_Instance()->Weapon_Change(MOMOWEAPON_SWORD);0
 		MomoSwordList.push_back(CMomoAbstractFactory::Create_Momo_Sword());

@@ -26,6 +26,8 @@ private:
 private:
 	D3DXVECTOR3		m_vPoint[4];
 	D3DXVECTOR3		m_vOriginalPoint[4];
+	D3DXVECTOR3		m_vHeadPoint[2];
+	D3DXVECTOR3		m_vOriginalHeadPoint[2];
 	D3DXVECTOR3		m_vLookX;
 
 	list<CMomoSword*>*			m_pMomoSword;

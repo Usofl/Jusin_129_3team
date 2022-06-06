@@ -24,8 +24,8 @@ void CMomoSword::Initialize(void)
 	m_fDistance = 100.f;
 
 	m_vLocalSwordPoint[0] = { -120.f, 0.f, 0.f };
-	m_vLocalSwordPoint[1] = { -80.f, 0.f, 0.f };
-	m_vLocalSwordPoint[2] = { 80.f, 0.f, 0.f };
+	m_vLocalSwordPoint[1] = { -50.f, 0.f, 0.f };
+	m_vLocalSwordPoint[2] = { 50.f, 0.f, 0.f };
 	m_vLocalSwordPoint[3] = { 120.f, 0.f, 0.f };
 }
 
@@ -76,10 +76,10 @@ void CMomoSword::Render(HDC hDC)
 	MoveToEx(hDC, (int)m_vSwordPoint[2].x + iScrollX, (int)m_vSwordPoint[2].y + iScrollY, nullptr);
 	LineTo(hDC, (int)m_vSwordPoint[3].x + iScrollX, (int)m_vSwordPoint[3].y + iScrollY);
 
-	Ellipse(hDC, (int)m_vSwordPoint[0].x - 50, (int)m_vSwordPoint[0].y - 50, (int)m_vSwordPoint[0].x + 50, (int)m_vSwordPoint[0].y + 50);
-	Ellipse(hDC, (int)m_vSwordPoint[1].x - 50, (int)m_vSwordPoint[1].y - 50, (int)m_vSwordPoint[1].x + 50, (int)m_vSwordPoint[1].y + 50);
-	Ellipse(hDC, (int)m_vSwordPoint[2].x - 50, (int)m_vSwordPoint[2].y - 50, (int)m_vSwordPoint[2].x + 50, (int)m_vSwordPoint[2].y + 50);
-	Ellipse(hDC, (int)m_vSwordPoint[3].x - 50, (int)m_vSwordPoint[3].y - 50, (int)m_vSwordPoint[3].x + 50, (int)m_vSwordPoint[3].y + 50);
+	//Ellipse(hDC, (int)m_vSwordPoint[0].x - 50, (int)m_vSwordPoint[0].y - 50, (int)m_vSwordPoint[0].x + 50, (int)m_vSwordPoint[0].y + 50);
+	//Ellipse(hDC, (int)m_vSwordPoint[1].x - 50, (int)m_vSwordPoint[1].y - 50, (int)m_vSwordPoint[1].x + 50, (int)m_vSwordPoint[1].y + 50);
+	//Ellipse(hDC, (int)m_vSwordPoint[2].x - 50, (int)m_vSwordPoint[2].y - 50, (int)m_vSwordPoint[2].x + 50, (int)m_vSwordPoint[2].y + 50);
+	//Ellipse(hDC, (int)m_vSwordPoint[3].x - 50, (int)m_vSwordPoint[3].y - 50, (int)m_vSwordPoint[3].x + 50, (int)m_vSwordPoint[3].y + 50);
 
 }
 
