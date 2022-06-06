@@ -43,6 +43,7 @@ const int CFortress_Monster_Bullet::Update(void)
 	{
 		return OBJ_DEAD;
 	}
+
 	D3DXMatrixTranslation(&m_tMatInfo.matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
 	D3DXMatrixRotationZ(&m_tMatInfo.matRotZ, D3DXToRadian(m_fAngle));
 

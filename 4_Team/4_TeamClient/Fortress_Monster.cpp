@@ -78,9 +78,14 @@ const int CFortress_Monster::Update(void)
 	{
 		return OBJ_DEAD;
 	}
+	if (nullptr != pJunPlayer)
+	{
+		m_tInfo_Test_Dir = pJunPlayer->Get_Info().vPos - m_tInfo_Posin_World[1];
+		D3DXVec3Normalize(&m_tInfo_Test_Dir, &m_tInfo_Test_Dir);
+	}
 
 	Move();
-	Shoot_Bullet();
+	
 
 	D3DXMatrixRotationZ(&m_tMatInfo.matRotZ, D3DXToRadian(m_fAngle));
 
@@ -122,7 +127,7 @@ const int CFortress_Monster::Update(void)
 	/*CFortress* pFortress = static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS));*/
 	/*if (m_pFortress->Get_Monster_Turn() == true && m_pFortress->Get_JunBulletList()->empty() && SCROLLMGR->Fix_Cheak(this))*/
 	{
-		if (m_bMove_On == true && m_dwShootCount + 1000 < GetTickCount())
+		/*if (m_bMove_On == true && m_dwShootCount + 1000 < GetTickCount())
 		{
 			Move();
 			m_dwShootCount = GetTickCount();
@@ -132,19 +137,19 @@ const int CFortress_Monster::Update(void)
 		{
 			Shoot_Bullet();
 			m_dwShootDelay = GetTickCount();
-		}
+		}*/
 
 	}
 
-	if (nullptr != pJunPlayer)
-	{
-		m_tInfo_Test_Dir = pJunPlayer->Get_Info().vPos - m_tInfo_Posin_World[1];
-		D3DXVec3Normalize(&m_tInfo_Test_Dir, &m_tInfo_Test_Dir);
-	}
-	
+	//if (nullptr != pJunPlayer)
+	//{
+	//	m_tInfo_Test_Dir = pJunPlayer->Get_Info().vPos - m_tInfo_Posin_World[1];
+	//	D3DXVec3Normalize(&m_tInfo_Test_Dir, &m_tInfo_Test_Dir);
+	//}
+	//
 	// 앵글값을 0으로 초기화를 안 시키면 계속 회전함
 	m_fAngle = 0.f;
-
+	Shoot_Bullet();
 	return 0;
 }
 
@@ -206,6 +211,12 @@ void CFortress_Monster::Shoot_Bullet()
 		Fortress_Monster_Bullet->Initialize();
 		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
 		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+		//Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+		CFortress* pFortress = static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS));
+		pFortress->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
 	}
 	
 
