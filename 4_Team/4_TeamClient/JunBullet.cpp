@@ -109,7 +109,9 @@ const int CJunBullet::Update(void)
 	{
 		D3DXVec3TransformCoord(&m_vWorldPoint[i], &m_vWorldPoint[i], &m_tInfo.matWorld);
 	}
-	int iArray[8];
+
+	//int iArray[8]; 노력의 결과니까 혼내지 말기~
+
 	for (int i = 0; 8 > i; i+= 2)
 	{
 		int iTemp = (rand() % 65) -62;

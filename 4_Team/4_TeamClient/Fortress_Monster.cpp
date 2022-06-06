@@ -3,6 +3,7 @@
 #include "FortressFactory.h"
 #include "ScrollMgr.h"
 #include "SceneMgr.h"
+#include "Fortress.h"
 
 
 CFortress_Monster::CFortress_Monster()
