@@ -105,6 +105,18 @@ void CMomodora::Late_Update(void)
 	if (nullptr != m_pPlayer)
 	{
 		m_pPlayer->Late_Update();
+		float fX = m_pPlayer->Get_Info().vPos.x;
+		float fY = m_pPlayer->Get_Info().vPos.y;
+		for (auto iter = m_listMonsterList.begin(); iter != m_listMonsterList.end(); iter++)
+		{
+			if (((*iter)->Get_Info().vPos.x - 50 < fX && (*iter)->Get_Info().vPos.x + 50 > fX)
+				&& ((*iter)->Get_Info().vPos.y - 50 < fY && (*iter)->Get_Info().vPos.y + 50 > fY))
+			{
+				m_pPlayer->Set_HP(10);
+				(*iter)->Set_Dead(true); //계속 충돌해서 피 쭈루룩 깎일까봐 방지용.. 피를 주고 몹 지우기
+				int i = 5;
+			}	
+		}
 		RENDERMGR->Add_Render_Obj(m_pPlayer);
 	}
 
@@ -221,7 +233,7 @@ void CMomodora::Late_Update(void)
 				if (((*iter2)->Get_Info().vPos.x - 20 < fX && (*iter2)->Get_Info().vPos.x + 20 > fX)
 					&& ((*iter2)->Get_Info().vPos.y - 20 < fY && (*iter2)->Get_Info().vPos.y + 20 > fY))
 				{
-					(*iter2)->Set_Dead(true); // 삭제 처리한 부분인데 여기서 이제 HP까는걸로 바꾸면 됨
+					(*iter2)->Set_HP(5);// 삭제 처리한 부분인데 여기서 이제 HP까는걸로 바꾸면 됨
 					(iter)->Set_Dead(true);
 				}
 			}
@@ -232,7 +244,7 @@ void CMomodora::Late_Update(void)
 				if (((*iter2)->Get_Info().vPos.x - 60 < fX && (*iter2)->Get_Info().vPos.x + 60 > fX)
 					&& ((*iter2)->Get_Info().vPos.y - 160 < fY && (*iter2)->Get_Info().vPos.y + 160 > fY))
 				{
-					(*iter2)->Set_Dead(true); // 삭제 처리한 부분인데 여기서 이제 HP까는걸로 바꾸면 됨
+					(*iter2)->Set_HP(5); // 삭제 처리한 부분인데 여기서 이제 HP까는걸로 바꾸면 됨
 					(iter)->Set_Dead(true);
 				}
 			}

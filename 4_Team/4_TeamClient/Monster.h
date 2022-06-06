@@ -17,7 +17,7 @@ public:
 	virtual		void		Release(void)		PURE;
 
 public:
-	inline void Set_HP(const int& _iHP) { m_iHP = _iHP; }
+	inline void Set_HP(const int& _iHP) { m_iHP -= _iHP; }
 	
 	inline const int& Get_HP(void) { return m_iHP; }
 	

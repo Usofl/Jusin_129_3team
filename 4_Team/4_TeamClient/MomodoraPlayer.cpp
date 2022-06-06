@@ -40,8 +40,10 @@ void CMomodoraPlayer::Initialize(void)
 
 const int CMomodoraPlayer::Update(void)
 {
-	if (m_bDead)
+	if (0 >= m_iHP)
+	{
 		return OBJ_DEAD;
+	}
 
 	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
