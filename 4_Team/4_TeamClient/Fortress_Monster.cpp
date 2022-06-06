@@ -124,10 +124,9 @@ const int CFortress_Monster::Update(void)
 	CFortress* pFortress = static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS));
 	if (pFortress->Get_Monster_Turn() == true && pFortress->Get_JunBulletList()->empty() && SCROLLMGR->Fix_Cheak(this))
 	{
-		if (m_bMove_On == true && m_dwShootCount + 1000 < GetTickCount())
+		if (m_bMove_On == true)
 		{
 			Move();
-			m_dwShootCount = GetTickCount();
 			m_bMove_On = false;
 		}
 		if (m_dwShootDelay + 5000 < GetTickCount())
@@ -455,7 +454,7 @@ void CFortress_Monster::Shoot_Bullet()
 			}
 			else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
 			{
-				//m_fAngle_Posin = 120.f;
+				m_fAngle_Posin = 120.f;
 
 				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 				Fortress_Monster_Bullet->Initialize();
@@ -575,7 +574,7 @@ void CFortress_Monster::Move()
 			m_tInfo.vPos.x += m_tInfo.vDir.x * 200.f;
 			m_bRandom = true;
 			m_bRandom_Move = true;
-
+			
 		}
 		break;
 	case 60:
