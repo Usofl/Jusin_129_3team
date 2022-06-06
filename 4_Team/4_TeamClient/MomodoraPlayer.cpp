@@ -121,7 +121,7 @@ void CMomodoraPlayer::Render(HDC _hDC)
 	}
 	LineTo(_hDC, (int)m_vPoint[0].x, (int)m_vPoint[0].y);
 
-	Ellipse(_hDC, m_vHeadPoint[0].x - 5.f, m_vHeadPoint[0].y - 5.f, m_vHeadPoint[0].x + 5.f, m_vHeadPoint[0].y + 5.f);
+	Ellipse(_hDC, (int)m_vHeadPoint[0].x - 5, (int)m_vHeadPoint[0].y - 5, (int)m_vHeadPoint[0].x + 5, (int)m_vHeadPoint[0].y + 5);
 }
 
 void CMomodoraPlayer::Release(void)
@@ -133,25 +133,21 @@ void CMomodoraPlayer::Key_Input(void)
 
 	if (GetAsyncKeyState('W'))
 	{
-		D3DXVec3TransformNormal(&m_tInfo.vDir, &m_tInfo.vLook, &m_tInfo.matWorld);
-		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
+		m_tInfo.vPos.y -= m_fSpeed;
 	}
 
 	if (GetAsyncKeyState('S'))
 	{
-		D3DXVec3TransformNormal(&m_tInfo.vDir, &m_tInfo.vLook, &m_tInfo.matWorld);
-		m_tInfo.vPos -= m_tInfo.vDir * m_fSpeed;
+		m_tInfo.vPos.y += m_fSpeed;
 	}
 
 	if (GetAsyncKeyState('A'))
 	{
-		D3DXVec3TransformNormal(&m_tInfo.vDir, &m_vLookX, &m_tInfo.matWorld);
-		m_tInfo.vPos -= m_tInfo.vDir * m_fSpeed;
+		m_tInfo.vPos.x -= m_fSpeed;
 	}
 
 	if (GetAsyncKeyState('D'))
 	{
-		D3DXVec3TransformNormal(&m_tInfo.vDir, &m_vLookX, &m_tInfo.matWorld);
-		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
+		m_tInfo.vPos.x += m_fSpeed;
 	}
 }

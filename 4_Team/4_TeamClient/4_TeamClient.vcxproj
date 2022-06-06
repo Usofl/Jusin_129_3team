@@ -229,7 +229,6 @@
     <ClInclude Include="MainScene.h" />
     <ClInclude Include="Main_Button.h" />
     <ClInclude Include="MomoAbstractFactory.h" />
-    <ClInclude Include="MomoGun.h" />
     <ClInclude Include="JunBullet.h" />
     <ClInclude Include="JunPlayer.h" />
     <ClInclude Include="KeyMgr.h" />
@@ -293,7 +292,6 @@
     <ClCompile Include="JunBullet_Dp.cpp" />
     <ClCompile Include="MainScene.cpp" />
     <ClCompile Include="Main_Button.cpp" />
-    <ClCompile Include="MomoGun.cpp" />
     <ClCompile Include="JunBullet.cpp" />
     <ClCompile Include="JunPlayer.cpp" />
     <ClCompile Include="KeyMgr.cpp" />

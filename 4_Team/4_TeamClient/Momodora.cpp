@@ -47,6 +47,20 @@ void CMomodora::Update(void)
 			++iter;
 		}
 	}
+
+	for (auto& iter = MomoBulletList.begin();
+		iter != MomoBulletList.end(); )
+	{
+		if (OBJ_DEAD == (*iter)->Update())
+		{
+			Safe_Delete<CMomoBullet*>(*iter);
+			iter = MomoBulletList.erase(iter);
+		}
+		else
+		{
+			++iter;
+		}
+	}
 }
 
 void CMomodora::Late_Update(void)
@@ -58,6 +72,12 @@ void CMomodora::Late_Update(void)
 	}
 
 	for (auto& iter : MomoSwordList)
+	{
+		iter->Late_Update();
+		RENDERMGR->Add_Render_Obj(iter);
+	}
+
+	for (auto& iter : MomoBulletList)
 	{
 		iter->Late_Update();
 		RENDERMGR->Add_Render_Obj(iter);
@@ -84,6 +104,12 @@ void CMomodora::Release(void)
 		Safe_Delete<CMomoSword*>(iter);
 	}
 	MomoSwordList.clear();
+
+	for (auto& iter : MomoBulletList)
+	{
+		Safe_Delete<CMomoBullet*>(iter);
+	}
+	MomoBulletList.clear();
 }
 
 void CMomodora::Key_Input(void)
@@ -94,4 +120,8 @@ void CMomodora::Key_Input(void)
 		MomoSwordList.push_back(CMomoAbstractFactory::Create_Momo_Sword());
 	}
 
+	if (KEYMGR->Key_Up(VK_LBUTTON))
+	{
+		MomoBulletList.push_front(CMomoAbstractFactory::Create_Momo_Bullet());
+	}
 }

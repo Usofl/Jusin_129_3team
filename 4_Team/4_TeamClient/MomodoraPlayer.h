@@ -18,20 +18,12 @@ public:
 
 	void Key_Input(void);
 
-
-	void	Set_SwordList(list<CMomoSword*>* pSword) { m_pMomoSword = pSword; }
-private:
-	CMomoSword* CMomodoraPlayer::Create_Sword(void);
-
 private:
 	D3DXVECTOR3		m_vPoint[4];
 	D3DXVECTOR3		m_vOriginalPoint[4];
 	D3DXVECTOR3		m_vHeadPoint[2];
 	D3DXVECTOR3		m_vOriginalHeadPoint[2];
 	D3DXVECTOR3		m_vLookX;
-
-	list<CMomoSword*>*			m_pMomoSword;
-
 
 };
 

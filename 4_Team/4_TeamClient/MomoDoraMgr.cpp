@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "MomoDoraMgr.h"
 #include "MomoAbstractFactory.h"
-#include "MomoGun.h"
 #include "MomoSword.h"
 #include "Obj.h"
 

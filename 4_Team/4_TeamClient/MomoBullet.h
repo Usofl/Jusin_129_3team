@@ -13,5 +13,9 @@ public:
 	virtual	void Late_Update(void);
 	virtual void Render(HDC hDC) override;
 	virtual void Release(void) override;
+
+private:
+	D3DXVECTOR3 m_vBulletPoint[12];
+	D3DXVECTOR3 m_vOriginalBulletPoint[12];
 };
 
