@@ -196,6 +196,9 @@
     <Filter Include="03. Game\97. Factory\01. MomoFactory">
       <UniqueIdentifier>{f832d443-18cc-4dc5-b683-047ee8249506}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Game\02. Scene\06. MainScene">
+      <UniqueIdentifier>{192dee9e-96c6-4188-af80-7ba6c9d078dd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -384,6 +387,9 @@
     <ClInclude Include="MomoAbstractFactory.h">
       <Filter>03. Game\97. Factory\01. MomoFactory</Filter>
     </ClInclude>
+    <ClInclude Include="MainScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="4_TeamClient.cpp">
@@ -550,6 +556,9 @@
     </ClCompile>
     <ClCompile Include="Fortress_Boom_Effect.cpp">
       <Filter>03. Game\01. Obj\01. Other_Object\02. Fortress_Obj\04. Fortress_Boom_Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="MainScene.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
