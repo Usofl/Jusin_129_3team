@@ -30,5 +30,9 @@ private:
 	list<CMomoSword*>	MomoSwordList;
 	list<CMonster*>		m_listMonsterList;
 	list<CMomoBullet*>	MomoBulletList;
+
+	DWORD				m_dwSpawn;
+
+	int					m_iRandom_Spawn;
 };
 

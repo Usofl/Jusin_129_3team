@@ -9,6 +9,8 @@
 CMomodora::CMomodora()
 	: m_pPlayer(nullptr)
 	, m_pTarget(nullptr)
+	, m_dwSpawn(GetTickCount())
+	, m_iRandom_Spawn(0)
 {
 }
 
@@ -25,6 +27,11 @@ void CMomodora::Initialize(void)
 		m_pPlayer = new CMomodoraPlayer;
 	}
 	m_listMonsterList.push_back(CMomoAbstractFactory::Create_Follower());
+	m_listMonsterList.push_back(CMomoAbstractFactory::Create_Follower());
+	m_listMonsterList.push_back(CMomoAbstractFactory::Create_Follower());
+	m_listMonsterList.push_back(CMomoAbstractFactory::Create_Follower());
+	m_listMonsterList.push_back(CMomoAbstractFactory::Create_Follower());
+
 	m_listMonsterList.push_back(CMomoAbstractFactory::Create_Shoter());
 }
 
@@ -61,6 +68,19 @@ void CMomodora::Update(void)
 		else
 		{
 			++iter;
+		}
+	}
+
+	if (m_listMonsterList.size() < 5)
+	{
+		m_iRandom_Spawn = unsigned(rand() % 2) + 1;
+		if (1 == m_iRandom_Spawn)
+		{
+			m_listMonsterList.push_back(CMomoAbstractFactory::Create_Follower());
+		}
+		else if (2 == m_iRandom_Spawn)
+		{
+			m_listMonsterList.push_back(CMomoAbstractFactory::Create_Shoter());
 		}
 	}
 

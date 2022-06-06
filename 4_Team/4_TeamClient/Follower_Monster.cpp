@@ -26,6 +26,7 @@ CFollower_Monster::CFollower_Monster()
 		m_tInfo.vPos = { (float)(WINCX - iScrollX),  (float)(Random_Num(0, WINCY) - iScrollY), 0.f };
 		break;
 	}
+
 	Initialize();
 }
 
