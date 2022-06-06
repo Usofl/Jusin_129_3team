@@ -33,7 +33,7 @@ private:
 
 	DWORD				m_dwSpawn;
 
-
+	int					m_i;
 	int					m_iRandom_Spawn;
 };
 
