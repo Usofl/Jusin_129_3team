@@ -202,6 +202,15 @@
     <Filter Include="03. Game\01. Obj\01. Other_Object\05. Main_Obj">
       <UniqueIdentifier>{7fb84a39-a984-442e-8b4d-256d07a3f23f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Game\01. Obj\01. Other_Object\01.Momo_Obj\01. Monster">
+      <UniqueIdentifier>{160fa509-bbbb-4114-8a74-55878a0ec857}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj\01. Other_Object\01.Momo_Obj\01. Monster\00. Follower">
+      <UniqueIdentifier>{1afdbed3-3515-4d6f-bab0-a459732ed09e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Game\01. Obj\01. Other_Object\01.Momo_Obj\01. Monster\01. Shooter">
+      <UniqueIdentifier>{d937ce97-c329-4809-afac-e5ad0d1d86c3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -402,6 +411,12 @@
     <ClInclude Include="Main_Button.h">
       <Filter>03. Game\01. Obj\01. Other_Object\05. Main_Obj</Filter>
     </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>03. Game\01. Obj\01. Other_Object\01.Momo_Obj\01. Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Follower_Monster.h">
+      <Filter>03. Game\01. Obj\01. Other_Object\01.Momo_Obj\01. Monster\00. Follower</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="4_TeamClient.cpp">
@@ -580,6 +595,12 @@
     </ClCompile>
     <ClCompile Include="Main_Button.cpp">
       <Filter>03. Game\01. Obj\01. Other_Object\05. Main_Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>03. Game\01. Obj\01. Other_Object\01.Momo_Obj\01. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Follower_Monster.cpp">
+      <Filter>03. Game\01. Obj\01. Other_Object\01.Momo_Obj\01. Monster\00. Follower</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

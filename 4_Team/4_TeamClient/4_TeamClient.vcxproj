@@ -217,6 +217,7 @@
     <ClInclude Include="FlashmanRed.h" />
     <ClInclude Include="FlashmanScene.h" />
     <ClInclude Include="FlashmanYellow.h" />
+    <ClInclude Include="Follower_Monster.h" />
     <ClInclude Include="Fortress.h" />
     <ClInclude Include="FortressFactory.h" />
     <ClInclude Include="Fortress_Boom_Effect.h" />
@@ -242,6 +243,7 @@
     <ClInclude Include="MomodoraPlayer.h" />
     <ClInclude Include="MomoSword.h" />
     <ClInclude Include="Momo_Obj.h" />
+    <ClInclude Include="Monster.h" />
     <ClInclude Include="MultiTexture.h" />
     <ClInclude Include="Obj.h" />
     <ClInclude Include="Player.h" />
@@ -283,6 +285,7 @@
     <ClCompile Include="FlashmanRed.cpp" />
     <ClCompile Include="FlashmanScene.cpp" />
     <ClCompile Include="FlashmanYellow.cpp" />
+    <ClCompile Include="Follower_Monster.cpp" />
     <ClCompile Include="Fortress.cpp" />
     <ClCompile Include="Fortress_Boom_Effect.cpp" />
     <ClCompile Include="Fortress_Bullet_Effect.cpp" />
@@ -306,6 +309,7 @@
     <ClCompile Include="MomodoraPlayer.cpp" />
     <ClCompile Include="MomoSword.cpp" />
     <ClCompile Include="Momo_Obj.cpp" />
+    <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MultiTexture.cpp" />
     <ClCompile Include="Obj.cpp" />
     <ClCompile Include="Player.cpp" />

@@ -34,6 +34,8 @@ void CMain_Button::Initialize(void)
 
 	m_tInfo.vLook = { 0.f, -1.f, 0.f };
 
+	swprintf_s(m_szButton_Name, L"");
+
 	m_vPoint[POINT_LEFT_TOP] = { -m_fXSize, -m_fYSize, 0.f };
 	m_vPoint[POINT_RIGHT_TOP] = { m_fXSize, -m_fYSize, 0.f };
 	m_vPoint[POINT_RIGHT_BOTTOM] = { m_fXSize, m_fYSize, 0.f };
@@ -66,8 +68,9 @@ void CMain_Button::Late_Update(void)
 
 void CMain_Button::Render(HDC hDC)
 {
+	RECT rect{ (LONG)m_vDrawPoint[POINT_LEFT_TOP].x, (LONG)m_vDrawPoint[POINT_LEFT_TOP].y + 20, (LONG)m_vDrawPoint[POINT_RIGHT_BOTTOM].x, (LONG)m_vDrawPoint[POINT_RIGHT_BOTTOM].y };
 	MoveToEx(hDC, (int)m_vDrawPoint[POINT_LEFT_TOP].x, (int)m_vDrawPoint[POINT_LEFT_TOP].y, nullptr);
-
+	
 	HPEN MyPen, OldPen;
 	MyPen = (HPEN)CreatePen(PS_SOLID, m_iWidth, RGB(m_iRed, 0, 0));
 	OldPen = (HPEN)::SelectObject(hDC, (HGDIOBJ)MyPen);
@@ -80,6 +83,8 @@ void CMain_Button::Render(HDC hDC)
 
 	SelectObject(hDC, OldPen);
 	DeleteObject(MyPen);
+
+	DrawText(hDC, m_szButton_Name, m_iTextSize, &rect, DT_CENTER);
 }
 
 void CMain_Button::Release(void)
