@@ -41,7 +41,10 @@ public:
 	inline const bool& Get_RenderLine(void) { return m_bTargetLine; };
 	inline void Set_RenderLine(void) { m_bTargetLine = false; };
 
+
 public:
+	inline void Set_MyTurn(bool _bTurn) { m_bMyTurn = _bTurn; };
+	inline const bool Get_MyTurn(void) { return m_bMyTurn; };
 	
 
 private:
@@ -97,6 +100,7 @@ private:
 	bool  m_bTargetLine;
 	float  m_fTempPower;
 	bool m_bPlayer_Turn;
+	bool m_bMyTurn;
 	CJunBullet* m_pBullet;
 	CFortress_TargetLine* m_pTargetLine ;
 	int m_iHp;

@@ -23,6 +23,7 @@ CJunPlayer::CJunPlayer()
 	, m_bTargetLine(false)
 	, m_iMaxHp(100)
 	, m_fRenderPower(0.f)
+	, m_bMyTurn(true)
 
 {
 	ZeroMemory(m_vAfter_RenderLine, sizeof(m_vAfter_RenderLine));
@@ -263,6 +264,8 @@ void CJunPlayer::Release(void)
 
 void CJunPlayer::Key_Input(void)
 {
+	if (!m_bMyTurn)
+		return;
 	if (KEYMGR->Key_Pressing(VK_LEFT))
 	{
 		//m_fAngle -= D3DXToRadian(3.f);
@@ -314,6 +317,9 @@ void CJunPlayer::Key_Input(void)
 
 void CJunPlayer::Shoot(void)
 {
+	if (!m_bMyTurn)
+		return;
+
 	D3DXVECTOR3 TempVec1 = { m_vPo.x - m_vPo_One.x, m_vPo.y - m_vPo_One.y,0.f };
 	D3DXVECTOR3 TempVec2 = { 1.f,0.f,0.f };
 

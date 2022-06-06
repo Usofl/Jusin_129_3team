@@ -19,6 +19,9 @@ CFortress_Monster::CFortress_Monster()
 	, m_dwShootDelay(GetTickCount())
 	, Fortress_Monster_Bullet(nullptr)
 	, pJunPlayer(nullptr)
+	, m_bMyTurn(false)
+
+	/*, m_pFortress(nullptr)*/
 {
 }
 
@@ -33,7 +36,7 @@ void CFortress_Monster::Initialize(void)
 	m_eRender = RENDER_GAMEOBJECT;
 
 	srand(unsigned(time(NULL)));
-
+	//m_pFortress = dynamic_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS));
 	m_tInfo.vPos = { 1200 , 200.f , 0.f };
 	m_tInfo.vDir = { 1.f, 0.f, 0.f };
 
@@ -54,19 +57,11 @@ void CFortress_Monster::Initialize(void)
 	m_tInfo_Body_Local[14] = { +25.f , 0.f , 0.f };
 	m_tInfo_Body_Local[15] = { -25.f , 0.f , 0.f };
 
-
-
-
-
-
-
 	m_tInfo_Posin_Local[0] = { -17.f, -140.f, 0.f };
 	m_tInfo_Posin_Local[1] = {	+0.f, -140.f, 0.f };
 	m_tInfo_Posin_Local[2] = { +17.f, -140.f, 0.f };
 	m_tInfo_Posin_Local[3] = { +20.f , -35.f, 0.f };
 	m_tInfo_Posin_Local[4] = { -20.f , -35.f, 0.f };
-
-
 
 	m_tInfo_Test_Dir = { 0.f , 0.f , 0.f };
 
@@ -83,6 +78,14 @@ const int CFortress_Monster::Update(void)
 	{
 		return OBJ_DEAD;
 	}
+	if (nullptr != pJunPlayer)
+	{
+		m_tInfo_Test_Dir = pJunPlayer->Get_Info().vPos - m_tInfo_Posin_World[1];
+		D3DXVec3Normalize(&m_tInfo_Test_Dir, &m_tInfo_Test_Dir);
+	}
+
+	Move();
+	
 
 	D3DXMatrixRotationZ(&m_tMatInfo.matRotZ, D3DXToRadian(m_fAngle));
 
@@ -121,10 +124,10 @@ const int CFortress_Monster::Update(void)
 		D3DXVec3TransformCoord(&m_tInfo_Posin_World[i], &m_tInfo_Posin_Local[i], &m_PosinWorld);
 	}
 
-	CFortress* pFortress = static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS));
-	if (pFortress->Get_Monster_Turn() == true && pFortress->Get_JunBulletList()->empty() && SCROLLMGR->Fix_Cheak(this))
+	/*CFortress* pFortress = static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS));*/
+	/*if (m_pFortress->Get_Monster_Turn() == true && m_pFortress->Get_JunBulletList()->empty() && SCROLLMGR->Fix_Cheak(this))*/
 	{
-		if (m_bMove_On == true)
+		/*if (m_bMove_On == true && m_dwShootCount + 1000 < GetTickCount())
 		{
 			Move();
 			m_bMove_On = false;
@@ -133,19 +136,19 @@ const int CFortress_Monster::Update(void)
 		{
 			Shoot_Bullet();
 			m_dwShootDelay = GetTickCount();
-		}
+		}*/
 
 	}
 
-	if (nullptr != pJunPlayer)
-	{
-		m_tInfo_Test_Dir = pJunPlayer->Get_Info().vPos - m_tInfo_Posin_World[1];
-		D3DXVec3Normalize(&m_tInfo_Test_Dir, &m_tInfo_Test_Dir);
-	}
-	
+	//if (nullptr != pJunPlayer)
+	//{
+	//	m_tInfo_Test_Dir = pJunPlayer->Get_Info().vPos - m_tInfo_Posin_World[1];
+	//	D3DXVec3Normalize(&m_tInfo_Test_Dir, &m_tInfo_Test_Dir);
+	//}
+	//
 	// 앵글값을 0으로 초기화를 안 시키면 계속 회전함
 	m_fAngle = 0.f;
-
+	Shoot_Bullet();
 	return 0;
 }
 
@@ -198,430 +201,774 @@ void CFortress_Monster::Release(void)
 
 void CFortress_Monster::Shoot_Bullet()
 {
+	if (!m_bMyTurn)
+		return;
+
+	if (nullptr == Fortress_Monster_Bullet)
+	{
+		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+		Fortress_Monster_Bullet->Initialize();
+		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+		//Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+		CFortress* pFortress = static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS));
+		pFortress->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+	}
+	
+
+#pragma region 민성이 코드
+	// 플레이어 - 몬스터 == 0 ~ -300
+	//if (0 >= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x && -300 < pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
+	//{
+	//	if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
+	//	{
+	//		//m_fAngle_Posin = 80.f;
+	//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+	//		Fortress_Monster_Bullet->Initialize();
+	//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+	//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+	//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+	//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+	//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+	//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+	//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+
+
+	//		pFortress->Set_Monster_Turn(false);
+	//		pFortress->Set_Player_Turn(true);
+
+	//	}
+	//	else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
+	//	{
+	//		//m_fAngle_Posin = 0.f;
+
+	//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+	//		Fortress_Monster_Bullet->Initialize();
+	//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+	//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+	//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+	//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+	//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+	//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+	//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+
+	//		pFortress->Set_Monster_Turn(false);
+	//		pFortress->Set_Player_Turn(true);
+	//	}
+	//}
+	//// 플레이어 - 몬스터 == 0 ~ 300
+	//else if (0 < pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x && 300 >= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
+	//{
+	//	if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
+	//	{
+	//		//m_fAngle_Posin = 100.f;
+
+	//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+	//		Fortress_Monster_Bullet->Initialize();
+	//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+	//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+	//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+	//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+	//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+	//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+	//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+
+	//		pFortress->Set_Monster_Turn(false);
+	//		pFortress->Set_Player_Turn(true);
+
+	//	}
+	//	else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
+	//	{
+	//		//m_fAngle_Posin = 170.f;
+
+	//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+	//		Fortress_Monster_Bullet->Initialize();
+	//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+	//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+	//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+	//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+	//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+	//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+	//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+
+	//		pFortress->Set_Monster_Turn(false);
+	//		pFortress->Set_Player_Turn(true);
+	//	}
+	//}
+	//// 플레이어 - 몬스터 == -300 ~ -600
+	//else if (-300 >= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x && -600 < pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
+	//{
+	//	if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
+	//	{
+	//		//m_fAngle_Posin = 70.f;
+
+	//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+	//		Fortress_Monster_Bullet->Initialize();
+	//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+	//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+	//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+	//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+	//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+	//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+	//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+
+	//		pFortress->Set_Monster_Turn(false);
+	//		pFortress->Set_Player_Turn(true);
+	//	}
+	//	else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
+	//	{
+	//		//m_fAngle_Posin = 20.f;
+
+	//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+	//		Fortress_Monster_Bullet->Initialize();
+	//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+	//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+	//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+	//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+	//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+	//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+	//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+
+	//		pFortress->Set_Monster_Turn(false);
+	//		pFortress->Set_Player_Turn(true);
+	//	}
+	//}
+	//// 플레이어 - 몬슽터 == 300 ~ 600
+	//else if (300 >= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x && 600 < pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
+	//{
+	//	if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
+	//	{
+	//		//m_fAngle_Posin = 110.f;
+
+	//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+	//		Fortress_Monster_Bullet->Initialize();
+	//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+	//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+	//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+	//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+	//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+	//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+	//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+
+	//		pFortress->Set_Monster_Turn(false);
+	//		pFortress->Set_Player_Turn(true);
+	//	}
+	//	else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
+	//	{
+	//		//m_fAngle_Posin = 160.f;
+
+	//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+	//		Fortress_Monster_Bullet->Initialize();
+	//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+	//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+	//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+	//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+	//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+	//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+	//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+
+	//		pFortress->Set_Monster_Turn(false);
+	//		pFortress->Set_Player_Turn(true);
+	//	}
+	//}
+	//else if (-600 >= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x && -900 < pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
+	//{
+	//	if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
+	//	{
+	//		//m_fAngle_Posin = 60.f;
+
+	//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+	//		Fortress_Monster_Bullet->Initialize();
+	//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+	//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+	//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+	//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+	//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+	//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+	//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+
+	//		pFortress->Set_Monster_Turn(false);
+	//		pFortress->Set_Player_Turn(true);
+	//	}
+	//	else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
+	//	{
+	//		//m_fAngle_Posin = 60.f;
+
+	//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+	//		Fortress_Monster_Bullet->Initialize();
+	//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+	//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+	//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+	//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+	//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+	//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+	//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+
+	//		pFortress->Set_Monster_Turn(false);
+	//		pFortress->Set_Player_Turn(true);
+	//	}
+	//}
+	//else if (600 >= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x && 900 < pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
+	//{
+	//	if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
+	//	{
+	//		//m_fAngle_Posin = 120.f;
+
+	//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+	//		Fortress_Monster_Bullet->Initialize();
+	//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+	//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+	//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+	//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+	//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+	//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+	//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+
+	//		pFortress->Set_Monster_Turn(false);
+	//		pFortress->Set_Player_Turn(true);
+	//	}
+	//	else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
+	//	{
+	//		//m_fAngle_Posin = 120.f;
+
+	//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+	//		Fortress_Monster_Bullet->Initialize();
+	//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+	//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+	//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+	//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+	//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+	//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+	//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+
+	//		pFortress->Set_Monster_Turn(false);
+	//		pFortress->Set_Player_Turn(true);
+	//	}
+	//}
+	//else if (-900 >= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
+	//{
+	//	if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
+	//	{
+	//		//m_fAngle_Posin = 50.f;
+
+	//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+	//		Fortress_Monster_Bullet->Initialize();
+	//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+	//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+	//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+	//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+	//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+	//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+	//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+
+	//		pFortress->Set_Monster_Turn(false);
+	//		pFortress->Set_Player_Turn(true);
+	//	}
+	//	else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
+	//	{
+	//		//m_fAngle_Posin = 50.f;
+
+	//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+	//		Fortress_Monster_Bullet->Initialize();
+	//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+	//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+	//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+	//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+	//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+	//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+	//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+
+	//		pFortress->Set_Monster_Turn(false);
+	//		pFortress->Set_Player_Turn(true);
+	//	}
+	//}
+	//else if (900 <= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
+	//{
+	//	if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
+	//	{
+	//		//m_fAngle_Posin = 130.f;
+
+	//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+	//		Fortress_Monster_Bullet->Initialize();
+	//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+	//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+	//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+	//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+	//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+	//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+	//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+
+	//		pFortress->Set_Monster_Turn(false);
+	//		pFortress->Set_Player_Turn(true);
+	//	}
+	//	else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
+	//	{
+	//		//m_fAngle_Posin = 130.f;
+
+	//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+	//		Fortress_Monster_Bullet->Initialize();
+	//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+	//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+	//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+	//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+	//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+	//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+	//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+
+	//		pFortress->Set_Monster_Turn(false);
+	//		pFortress->Set_Player_Turn(true);
+	//	}
+	//}
+#pragma endregion 민성이 코드
+	
+
+#pragma endregion 민성이 코드
+
+#pragma region 코드
 	/*if (m_dwCount + 500 < GetTickCount())
 	{
-		m_iRandom = rand() % 360;
-		m_fAngle_Posin = m_iRandom;
-		m_pMonster_Bullet->push_back(CFortressFactory::Create_Fortress_Bullet(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y, m_fAngle_Posin));
+	m_iRandom = rand() % 360;
+	m_fAngle_Posin = m_iRandom;
+	m_pMonster_Bullet->push_back(CFortressFactory::Create_Fortress_Bullet(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y, m_fAngle_Posin));
 
-		m_dwCount = GetTickCount();
+	m_dwCount = GetTickCount();
 	}*/
 
 	/*if (m_dwShootCount + 1000 < GetTickCount())
 	{
-		m_fRandom = (float)(rand() % 90);
-		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
-		Fortress_Monster_Bullet->Initialize();
-		if (m_fAngle_Posin < m_fRandom)
-		{
-			++m_fAngle_Posin;
-		}
-		else if (m_fAngle > m_fRandom)
-		{
-			--m_fAngle_Posin;
-		}
-	
-		if (m_dwShootDelay + 5000 < GetTickCount())
-		{
-			Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin + m_fAngle_Body);
-			Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
-			static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+	m_fRandom = (float)(rand() % 90);
+	Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+	Fortress_Monster_Bullet->Initialize();
+	if (m_fAngle_Posin < m_fRandom)
+	{
+	++m_fAngle_Posin;
+	}
+	else if (m_fAngle > m_fRandom)
+	{
+	--m_fAngle_Posin;
+	}
 
-			m_dwShootDelay = GetTickCount();
-		}
-		else
-		{
-			Safe_Delete<CFortress_Monster_Bullet*>(Fortress_Monster_Bullet);
-		}
+	if (m_dwShootDelay + 5000 < GetTickCount())
+	{
+	Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin + m_fAngle_Body);
+	Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
+	static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+
+	m_dwShootDelay = GetTickCount();
+	}
+	else
+	{
+	Safe_Delete<CFortress_Monster_Bullet*>(Fortress_Monster_Bullet);
+	}
 
 
-		m_dwShootCount = GetTickCount();
+	m_dwShootCount = GetTickCount();
 	}*/
-	
 
-	CFortress* pFortress = static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS));
+
+	//CFortress* pFortress = static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS));
+#pragma endregion 코드
+	
 	if (nullptr != pJunPlayer)
 	{
+		if (m_bMyTurn)
+		{
+
+		}
+#pragma region 민성이 코드
 		// 플레이어 - 몬스터 == 0 ~ -300
-		if (0 >= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x && -300 < pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
-		{
-			if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
-			{
-				//m_fAngle_Posin = 80.f;
+		//if (0 >= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x && -300 < pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
+		//{
+		//	if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
+		//	{
+		//		//m_fAngle_Posin = 80.f;
+		//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+		//		Fortress_Monster_Bullet->Initialize();
+		//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+		//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+		//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+		//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+		//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+		//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+		//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
 
-				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
-				Fortress_Monster_Bullet->Initialize();
-				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
-				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
-				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
-				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
-				static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
-				pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
 
-				pFortress->Set_Monster_Turn(false);
-				pFortress->Set_Player_Turn(true);
+		//		pFortress->Set_Monster_Turn(false);
+		//		pFortress->Set_Player_Turn(true);
 
-			}
-			else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
-			{
-				//m_fAngle_Posin = 0.f;
+		//	}
+		//	else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
+		//	{
+		//		//m_fAngle_Posin = 0.f;
 
-				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
-				Fortress_Monster_Bullet->Initialize();
-				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
-				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
-				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
-				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
-				static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
-				pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+		//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+		//		Fortress_Monster_Bullet->Initialize();
+		//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+		//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+		//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+		//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+		//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+		//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+		//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
 
-				pFortress->Set_Monster_Turn(false);
-				pFortress->Set_Player_Turn(true);
-			}
-		}
-		// 플레이어 - 몬스터 == 0 ~ 300
-		else if (0 < pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x && 300 >= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
-		{
-			if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
-			{
-				//m_fAngle_Posin = 100.f;
+		//		pFortress->Set_Monster_Turn(false);
+		//		pFortress->Set_Player_Turn(true);
+		//	}
+		//}
+		//// 플레이어 - 몬스터 == 0 ~ 300
+		//else if (0 < pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x && 300 >= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
+		//{
+		//	if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
+		//	{
+		//		//m_fAngle_Posin = 100.f;
 
-				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
-				Fortress_Monster_Bullet->Initialize();
-				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
-				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
-				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
-				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
-				static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
-				pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+		//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+		//		Fortress_Monster_Bullet->Initialize();
+		//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+		//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+		//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+		//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+		//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+		//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+		//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
 
-				pFortress->Set_Monster_Turn(false);
-				pFortress->Set_Player_Turn(true);
+		//		pFortress->Set_Monster_Turn(false);
+		//		pFortress->Set_Player_Turn(true);
 
-			}
-			else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
-			{
-				//m_fAngle_Posin = 170.f;
+		//	}
+		//	else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
+		//	{
+		//		//m_fAngle_Posin = 170.f;
 
-				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
-				Fortress_Monster_Bullet->Initialize();
-				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
-				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
-				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
-				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
-				static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
-				pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+		//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+		//		Fortress_Monster_Bullet->Initialize();
+		//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+		//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+		//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+		//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+		//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+		//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+		//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
 
-				pFortress->Set_Monster_Turn(false);
-				pFortress->Set_Player_Turn(true);
-			}
-		}
-		// 플레이어 - 몬스터 == -300 ~ -600
-		else if (-300 >= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x && -600 < pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
-		{
-			if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
-			{
-				//m_fAngle_Posin = 70.f;
+		//		pFortress->Set_Monster_Turn(false);
+		//		pFortress->Set_Player_Turn(true);
+		//	}
+		//}
+		//// 플레이어 - 몬스터 == -300 ~ -600
+		//else if (-300 >= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x && -600 < pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
+		//{
+		//	if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
+		//	{
+		//		//m_fAngle_Posin = 70.f;
 
-				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
-				Fortress_Monster_Bullet->Initialize();
-				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
-				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
-				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
-				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
-				static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
-				pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+		//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+		//		Fortress_Monster_Bullet->Initialize();
+		//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+		//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+		//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+		//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+		//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+		//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+		//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
 
-				pFortress->Set_Monster_Turn(false);
-				pFortress->Set_Player_Turn(true);
-			}
-			else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
-			{
-				//m_fAngle_Posin = 20.f;
+		//		pFortress->Set_Monster_Turn(false);
+		//		pFortress->Set_Player_Turn(true);
+		//	}
+		//	else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
+		//	{
+		//		//m_fAngle_Posin = 20.f;
 
-				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
-				Fortress_Monster_Bullet->Initialize();
-				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
-				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
-				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
-				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
-				static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
-				pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+		//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+		//		Fortress_Monster_Bullet->Initialize();
+		//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+		//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+		//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+		//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+		//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+		//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+		//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
 
-				pFortress->Set_Monster_Turn(false);
-				pFortress->Set_Player_Turn(true);
-			}
-		}
-		// 플레이어 - 몬슽터 == 300 ~ 600
-		else if (300 >= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x && 600 < pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
-		{
-			if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
-			{
-				//m_fAngle_Posin = 110.f;
+		//		pFortress->Set_Monster_Turn(false);
+		//		pFortress->Set_Player_Turn(true);
+		//	}
+		//}
+		//// 플레이어 - 몬슽터 == 300 ~ 600
+		//else if (300 >= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x && 600 < pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
+		//{
+		//	if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
+		//	{
+		//		//m_fAngle_Posin = 110.f;
 
-				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
-				Fortress_Monster_Bullet->Initialize();
-				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
-				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
-				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
-				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
-				static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
-				pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+		//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+		//		Fortress_Monster_Bullet->Initialize();
+		//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+		//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+		//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+		//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+		//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+		//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+		//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
 
-				pFortress->Set_Monster_Turn(false);
-				pFortress->Set_Player_Turn(true);
-			}
-			else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
-			{
-				//m_fAngle_Posin = 160.f;
+		//		pFortress->Set_Monster_Turn(false);
+		//		pFortress->Set_Player_Turn(true);
+		//	}
+		//	else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
+		//	{
+		//		//m_fAngle_Posin = 160.f;
 
-				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
-				Fortress_Monster_Bullet->Initialize();
-				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
-				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
-				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
-				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
-				static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
-				pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+		//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+		//		Fortress_Monster_Bullet->Initialize();
+		//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+		//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+		//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+		//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+		//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+		//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+		//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
 
-				pFortress->Set_Monster_Turn(false);
-				pFortress->Set_Player_Turn(true);
-			}
-		}
-		else if (-600 >= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x && -900 < pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
-		{
-			if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
-			{
-				//m_fAngle_Posin = 60.f;
+		//		pFortress->Set_Monster_Turn(false);
+		//		pFortress->Set_Player_Turn(true);
+		//	}
+		//}
+		//else if (-600 >= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x && -900 < pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
+		//{
+		//	if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
+		//	{
+		//		//m_fAngle_Posin = 60.f;
 
-				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
-				Fortress_Monster_Bullet->Initialize();
-				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
-				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
-				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
-				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
-				static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
-				pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+		//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+		//		Fortress_Monster_Bullet->Initialize();
+		//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+		//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+		//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+		//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+		//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+		//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+		//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
 
-				pFortress->Set_Monster_Turn(false);
-				pFortress->Set_Player_Turn(true);
-			}
-			else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
-			{
-				//m_fAngle_Posin = 60.f;
+		//		pFortress->Set_Monster_Turn(false);
+		//		pFortress->Set_Player_Turn(true);
+		//	}
+		//	else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
+		//	{
+		//		//m_fAngle_Posin = 60.f;
 
-				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
-				Fortress_Monster_Bullet->Initialize();
-				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
-				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
-				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
-				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
-				static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
-				pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+		//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+		//		Fortress_Monster_Bullet->Initialize();
+		//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+		//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+		//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+		//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+		//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+		//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+		//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
 
-				pFortress->Set_Monster_Turn(false);
-				pFortress->Set_Player_Turn(true);
-			}
-		}
-		else if (600 >= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x && 900 < pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
-		{
-			if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
-			{
-				//m_fAngle_Posin = 120.f;
+		//		pFortress->Set_Monster_Turn(false);
+		//		pFortress->Set_Player_Turn(true);
+		//	}
+		//}
+		//else if (600 >= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x && 900 < pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
+		//{
+		//	if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
+		//	{
+		//		//m_fAngle_Posin = 120.f;
 
-				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
-				Fortress_Monster_Bullet->Initialize();
-				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
-				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
-				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
-				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
-				static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
-				pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+		//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+		//		Fortress_Monster_Bullet->Initialize();
+		//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+		//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+		//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+		//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+		//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+		//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+		//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
 
-				pFortress->Set_Monster_Turn(false);
-				pFortress->Set_Player_Turn(true);
-			}
-			else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
-			{
-				m_fAngle_Posin = 120.f;
+		//		pFortress->Set_Monster_Turn(false);
+		//		pFortress->Set_Player_Turn(true);
+		//	}
+		//	else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
+		//	{
+		//		//m_fAngle_Posin = 120.f;
 
-				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
-				Fortress_Monster_Bullet->Initialize();
-				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
-				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
-				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
-				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
-				static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
-				pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+		//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+		//		Fortress_Monster_Bullet->Initialize();
+		//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+		//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+		//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+		//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+		//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+		//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+		//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
 
-				pFortress->Set_Monster_Turn(false);
-				pFortress->Set_Player_Turn(true);
-			}
-		}
-		else if (-900 >= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
-		{
-			if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
-			{
-				//m_fAngle_Posin = 50.f;
+		//		pFortress->Set_Monster_Turn(false);
+		//		pFortress->Set_Player_Turn(true);
+		//	}
+		//}
+		//else if (-900 >= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
+		//{
+		//	if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
+		//	{
+		//		//m_fAngle_Posin = 50.f;
 
-				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
-				Fortress_Monster_Bullet->Initialize();
-				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
-				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
-				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
-				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
-				static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
-				pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+		//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+		//		Fortress_Monster_Bullet->Initialize();
+		//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+		//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+		//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+		//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+		//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+		//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+		//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
 
-				pFortress->Set_Monster_Turn(false);
-				pFortress->Set_Player_Turn(true);
-			}
-			else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
-			{
-				//m_fAngle_Posin = 50.f;
+		//		pFortress->Set_Monster_Turn(false);
+		//		pFortress->Set_Player_Turn(true);
+		//	}
+		//	else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
+		//	{
+		//		//m_fAngle_Posin = 50.f;
 
-				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
-				Fortress_Monster_Bullet->Initialize();
-				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
-				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
-				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
-				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
-				static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
-				pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+		//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+		//		Fortress_Monster_Bullet->Initialize();
+		//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+		//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+		//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+		//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+		//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+		//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+		//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
 
-				pFortress->Set_Monster_Turn(false);
-				pFortress->Set_Player_Turn(true);
-			}
-		}
-		else if (900 <= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
-		{
-			if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
-			{
-				//m_fAngle_Posin = 130.f;
+		//		pFortress->Set_Monster_Turn(false);
+		//		pFortress->Set_Player_Turn(true);
+		//	}
+		//}
+		//else if (900 <= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
+		//{
+		//	if (pJunPlayer->Get_Info().vPos.y <= m_tInfo.vPos.y)
+		//	{
+		//		//m_fAngle_Posin = 130.f;
 
-				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
-				Fortress_Monster_Bullet->Initialize();
-				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
-				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
-				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
-				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
-				static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
-				pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+		//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+		//		Fortress_Monster_Bullet->Initialize();
+		//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+		//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+		//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+		//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+		//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+		//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+		//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
 
-				pFortress->Set_Monster_Turn(false);
-				pFortress->Set_Player_Turn(true);
-			}
-			else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
-			{
-				//m_fAngle_Posin = 130.f;
+		//		pFortress->Set_Monster_Turn(false);
+		//		pFortress->Set_Player_Turn(true);
+		//	}
+		//	else if (pJunPlayer->Get_Info().vPos.y > m_tInfo.vPos.y)
+		//	{
+		//		//m_fAngle_Posin = 130.f;
 
-				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
-				Fortress_Monster_Bullet->Initialize();
-				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
-				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
-				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
-				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
-				static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
-				pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+		//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+		//		Fortress_Monster_Bullet->Initialize();
+		//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+		//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+		//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+		//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+		//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+		//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+		//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
 
-				pFortress->Set_Monster_Turn(false);
-				pFortress->Set_Player_Turn(true);
-			}
-		}
+		//		pFortress->Set_Monster_Turn(false);
+		//		pFortress->Set_Player_Turn(true);
+		//	}
+		//}
+
+#pragma endregion 민성이 코드
+
+		
 	}
 }
 
 void CFortress_Monster::Move()
 {
-	if (m_bRandom == true)
+	if (!m_bMyTurn)
+		return;
+	m_tInfo.vPos += {1.f, 1.f,0.f};
+#pragma region 민성이 코드
+	/*if (m_bRandom == true)
 	{
-		m_fRandom = (float)(rand() % 10) + 100;
-		m_bRandom = false;
+	m_fRandom = (float)(rand() % 10) + 100;
+	m_bRandom = false;
 	}
 	if (m_bRandom_Move == true)
 	{
-		m_iRandom_Move = (rand() % 2) + 1;
-		m_bRandom_Move = false;
+	m_iRandom_Move = (rand() % 2) + 1;
+	m_bRandom_Move = false;
 	}
 	switch (m_iHp)
 	{
 	case 80:
-		if (1 == m_iRandom_Move)
-		{
-			m_tInfo.vPos.x -= m_tInfo.vDir.x * 200.f ;
-			m_bRandom = true;
-			m_bRandom_Move = true;
+	if (1 == m_iRandom_Move)
+	{
+	m_tInfo.vPos.x -= m_tInfo.vDir.x * 200.f ;
+	m_bRandom = true;
+	m_bRandom_Move = true;
 
-		}
-		else if (2 == m_iRandom_Move)
-		{
-			m_tInfo.vPos.x += m_tInfo.vDir.x * 200.f;
-			m_bRandom = true;
-			m_bRandom_Move = true;
-			
-		}
-		break;
+	}
+	else if (2 == m_iRandom_Move)
+	{
+	m_tInfo.vPos.x += m_tInfo.vDir.x * 200.f;
+	m_bRandom = true;
+	m_bRandom_Move = true;
+
+	}
+	break;
 	case 60:
-		if (1 == m_iRandom_Move)
-		{
-			m_tInfo.vPos.x -= m_tInfo.vDir.x  * 200.f;
-			m_bRandom = true;
-			m_bRandom_Move = true;
-		}
-		else if (2 == m_iRandom_Move)
-		{
-			m_tInfo.vPos.x += m_tInfo.vDir.x  * 200.f;
-			m_bRandom = true;
-			m_bRandom_Move = true;
-		}
-		break;
+	if (1 == m_iRandom_Move)
+	{
+	m_tInfo.vPos.x -= m_tInfo.vDir.x  * 200.f;
+	m_bRandom = true;
+	m_bRandom_Move = true;
+	}
+	else if (2 == m_iRandom_Move)
+	{
+	m_tInfo.vPos.x += m_tInfo.vDir.x  * 200.f;
+	m_bRandom = true;
+	m_bRandom_Move = true;
+	}
+	break;
 	case 40:
-		if (1 == m_iRandom_Move)
-		{
-			m_tInfo.vPos.x -= m_tInfo.vDir.x  * 200.f;
-			m_bRandom = true;
-			m_bRandom_Move = true;
-		}
-		else if (2 == m_iRandom_Move)
-		{
-			m_tInfo.vPos.x += m_tInfo.vDir.x  * 200.f;
-			m_bRandom = true;
-			m_bRandom_Move = true;
-		}
+	if (1 == m_iRandom_Move)
+	{
+	m_tInfo.vPos.x -= m_tInfo.vDir.x  * 200.f;
+	m_bRandom = true;
+	m_bRandom_Move = true;
+	}
+	else if (2 == m_iRandom_Move)
+	{
+	m_tInfo.vPos.x += m_tInfo.vDir.x  * 200.f;
+	m_bRandom = true;
+	m_bRandom_Move = true;
+	}
 
-		break;
+	break;
 
 	case 20:
-		if (1 == m_iRandom_Move)
-		{
-			m_tInfo.vPos.x -= m_tInfo.vDir.x  * 200.f;
-			m_bRandom = true;
-			m_bRandom_Move = true;
-		}
-		else if (2 == m_iRandom_Move)
-		{
-			m_tInfo.vPos.x += m_tInfo.vDir.x  * 200.f;
-			m_bRandom = true;
-			m_bRandom_Move = true;
-		}
-
-		break;
+	if (1 == m_iRandom_Move)
+	{
+	m_tInfo.vPos.x -= m_tInfo.vDir.x  * 200.f;
+	m_bRandom = true;
+	m_bRandom_Move = true;
 	}
+	else if (2 == m_iRandom_Move)
+	{
+	m_tInfo.vPos.x += m_tInfo.vDir.x  * 200.f;
+	m_bRandom = true;
+	m_bRandom_Move = true;
+	}
+
+	break;
+	}*/
+#pragma endregion 민성이 코드
+	
 }
 // 난수값을 받고 rnad 값이 포신값보다 작으면 ++포신각도 같아지면 멈추고, 총알 쏘고-> 다른 난수값을 받으면 포신값보다 작으면 내려가고 같아지면 총알 쏘고

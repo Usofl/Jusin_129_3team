@@ -65,7 +65,6 @@ void CFortress::Update(void)
 		{
 			Safe_Delete<CJunPlayer*>(JunPlayer);
 			FortressMonster->Set_Player(nullptr);
-
 			m_pTarget = FortressMonster;
 		}
 	}
@@ -75,7 +74,6 @@ void CFortress::Update(void)
 		if (OBJ_DEAD == FortressMonster->Update())
 		{
 			Safe_Delete<CFortress_Monster*>(FortressMonster);
-
 			m_pTarget = JunPlayer;
 		}
 	}
@@ -86,11 +84,15 @@ void CFortress::Update(void)
 		{
 			Safe_Delete<CJunBullet*>(*iter);
 			(iter) = JunBulletList.erase((iter));
+			JunPlayer->Set_MyTurn(false);
+			FortressMonster->Set_MyTurn(true);
 		}
+
 		else
 		{
 			iter++;
 		}
+
 	}
 
 	for (auto iter = Monster_Bullet_List.begin(); iter != Monster_Bullet_List.end();)
@@ -99,11 +101,15 @@ void CFortress::Update(void)
 		{
 			Safe_Delete<CFortress_Monster_Bullet*>(*iter);
 			(iter) = Monster_Bullet_List.erase((iter));
+			JunPlayer->Set_MyTurn(true);
+			FortressMonster->Set_MyTurn(false);
 		}
+
 		else
 		{
 			iter++;
 		}
+
 	}
 
 	for (auto iter = m_list_Bullet_Effect.begin(); iter != m_list_Bullet_Effect.end();)
@@ -113,6 +119,7 @@ void CFortress::Update(void)
 			Safe_Delete<CFortress_Bullet_Effect*>(*iter);
 			(iter) = m_list_Bullet_Effect.erase((iter));
 		}
+
 		else
 		{
 			iter++;
@@ -135,6 +142,7 @@ void CFortress::Update(void)
 	m_pHPBar->Update();
 
 	OffSet();
+
 }
 
 void CFortress::Late_Update(void)
@@ -171,6 +179,7 @@ void CFortress::Late_Update(void)
 			JunPlayer->Set_Pos(fPlayerX, fPlayerY);
 			JunPlayer->Set_State(CJunPlayer::IDLE);
 		}
+
 		else
 		{
 			JunPlayer->Set_State(CJunPlayer::FALLEN);
