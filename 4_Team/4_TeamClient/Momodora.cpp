@@ -307,10 +307,14 @@ void CMomodora::Release(void)
 
 void CMomodora::Key_Input(void)
 {
-	if (KEYMGR->Key_Up('F') && m_bSword_On == true && MomoSwordList.size() == 0)	// 
+	if (KEYMGR->Key_Up('Q') &&  MomoSwordList.size() == 0)	// 
 	{
 		//CMomoDoraMgr::Get_Instance()->Weapon_Change(MOMOWEAPON_SWORD);0
 		MomoSwordList.push_back(CMomoAbstractFactory::Create_Momo_Sword());
+	}
+	if (KEYMGR->Key_Up('E') && MomoSwordList.size() == 1)
+	{
+		MomoSwordList.pop_front();
 	}
 
 	if (KEYMGR->Key_Up(VK_LBUTTON))
