@@ -73,6 +73,11 @@ const int CShooter_Monster::Update(void)
 		return OBJ_DEAD;
 	}
 
+	if (m_bDead == true)
+	{
+		return OBJ_DEAD;
+	}
+
 	D3DXVECTOR3 vPlayer_pos = static_cast<CMomodora*>(SCENEMGR->Get_Scene(SC_MOMO))->Get_Player()->Get_Info().vPos;
 
 	m_tInfo.vDir = vPlayer_pos - m_tInfo.vPos;

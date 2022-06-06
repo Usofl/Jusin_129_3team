@@ -104,6 +104,23 @@ void CMomodora::Late_Update(void)
 	for (auto& iter : MomoBulletList)
 	{
 		iter->Late_Update();
+		float fX = iter->Get_Info().vPos.x;
+		float fY = iter->Get_Info().vPos.y;
+		for (auto iter2 = m_listMonsterList.begin(); iter2 != m_listMonsterList.end(); iter2++)
+		{
+			if (((*iter2)->Get_Info().vPos.x - 30 < fX && (*iter2)->Get_Info().vPos.x + 30 > fX)
+				&& ((*iter2)->Get_Info().vPos.y - 30 < fY && (*iter2)->Get_Info().vPos.y + 30 > fY) )
+			{
+				(*iter2)->Set_Dead(true); // 삭제 처리한 부분인데 여기서 이제 HP까는걸로 바꾸면 됨
+				
+			}
+			else
+			{
+				//(*iter2)->Set_Dead(true);
+			}
+		}
+
+		//iter->Set_Dead(true);
 		RENDERMGR->Add_Render_Obj(iter);
 	}
 }
@@ -127,6 +144,7 @@ void CMomodora::Release(void)
 	{
 		Safe_Delete<CMomoSword*>(iter);
 	}
+
 	MomoSwordList.clear();
 
 	for (auto& iter : m_listMonsterList)
@@ -139,7 +157,9 @@ void CMomodora::Release(void)
 	{
 		Safe_Delete<CMomoBullet*>(iter);
 	}
+
 	MomoBulletList.clear();
+
 }
 
 void CMomodora::Key_Input(void)

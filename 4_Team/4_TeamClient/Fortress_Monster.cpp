@@ -20,6 +20,8 @@ CFortress_Monster::CFortress_Monster()
 	, Fortress_Monster_Bullet(nullptr)
 	, pJunPlayer(nullptr)
 	, m_bMyTurn(false)
+	, m_iMoveCount(0)
+	, m_iRandomDir(0)
 
 	/*, m_pFortress(nullptr)*/
 {
@@ -201,10 +203,12 @@ void CFortress_Monster::Release(void)
 
 void CFortress_Monster::Shoot_Bullet()
 {
-	if (!m_bMyTurn)
+	if (!m_bMyTurn || m_iMoveCount < 300)
 		return;
 
-	if (nullptr == Fortress_Monster_Bullet)
+	
+	
+	if (nullptr == Fortress_Monster_Bullet/*pFortress->Get_Monster_Bullet_List()->empty()*/)
 	{
 		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 		Fortress_Monster_Bullet->Initialize();
@@ -217,8 +221,8 @@ void CFortress_Monster::Shoot_Bullet()
 		pFortress->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
 		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
 	}
-	
-
+	m_iMoveCount = 0;
+	m_iRandomDir = rand() % 2;
 #pragma region 민성이 코드
 	// 플레이어 - 몬스터 == 0 ~ -300
 	//if (0 >= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x && -300 < pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
@@ -892,7 +896,21 @@ void CFortress_Monster::Move()
 {
 	if (!m_bMyTurn)
 		return;
-	m_tInfo.vPos += {1.f, 1.f,0.f};
+	if (m_iMoveCount < 300)
+	{
+		if (m_iRandomDir == 0)
+		{
+			m_tInfo.vPos += {1.f, 0.f, 0.f};
+
+		}
+		else
+		{
+			m_tInfo.vPos += {1.f, 0.f, 0.f};
+
+		}
+		m_iMoveCount++;
+	}
+	
 #pragma region 민성이 코드
 	/*if (m_bRandom == true)
 	{

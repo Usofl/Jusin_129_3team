@@ -101,6 +101,7 @@ void CFortress::Update(void)
 		{
 			Safe_Delete<CFortress_Monster_Bullet*>(*iter);
 			(iter) = Monster_Bullet_List.erase((iter));
+			(FortressMonster)->Set_Reset_Fortress_Monster_Bullet();
 			JunPlayer->Set_MyTurn(true);
 			FortressMonster->Set_MyTurn(false);
 		}
