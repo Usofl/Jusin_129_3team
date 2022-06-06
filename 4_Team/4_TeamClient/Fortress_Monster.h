@@ -32,14 +32,17 @@ public:
 	
 
 private:
-	INFO			m_tInfo_Body_Local[4];
-	INFO			m_tInfo_Body_World[4];
+	INFO			m_tInfo_Body_Local[16];
+	INFO			m_tInfo_Body_World[16];
 
 	INFO			m_tInfo_Head_Local[4];
 	INFO			m_tInfo_Head_World[4];
 		
-	INFO			m_tInfo_Posin_Local[2];
-	INFO			m_tInfo_Posin_World[2];
+	INFO			m_tInfo_Posin_Local[5];
+	INFO			m_tInfo_Posin_World[5];
+
+	D3DXVECTOR3		m_tInfo_Test_Dir;
+	D3DXMATRIX		matTrans_Posin;
 
 private:
 	int				m_iHp;
@@ -59,6 +62,8 @@ private:
 	DWORD			m_dwShootCount;
 	DWORD			m_dwShootDelay;
 	D3DXMATRIX		m_PosinWorld;
+
+	D3DXMATRIX		m_Po;		// 포신값실험중
 
 	CFortress_Monster_Bullet*	Fortress_Monster_Bullet;
 

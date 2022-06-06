@@ -269,7 +269,7 @@ void CFortress::Late_Update(void)
 		{
 			float fSour = LINEMGR->Collision_Monster_Line(fMonsterX, &fMonsterY);
 			FortressMonster->Set_Angle(fSour);
-			FortressMonster->Set_Pos(fMonsterX, fMonsterY - 20);
+			FortressMonster->Set_Pos(fMonsterX, fMonsterY - 70);
 		}
 	}
 
