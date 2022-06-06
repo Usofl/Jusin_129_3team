@@ -47,8 +47,6 @@ void CFortress::Initialize(void)
 		m_pHPBar = new CFortress_HPBar;
 	}
 
-	
-
 	m_Line.tLPoint = { 0.f,0.f };
 	m_Line.tRPoint = { 300.f,0.f };
 
@@ -62,7 +60,7 @@ void CFortress::Update(void)
 	if (nullptr != JunPlayer)
 	{
 		m_pHPBar->Set_Lest_HP(JunPlayer->Get_MaxHp(), JunPlayer->Get_Hp());
-		
+
 		if (OBJ_DEAD == JunPlayer->Update())
 		{
 			Safe_Delete<CJunPlayer*>(JunPlayer);
@@ -81,7 +79,7 @@ void CFortress::Update(void)
 			m_pTarget = JunPlayer;
 		}
 	}
-	
+
 	for (auto iter = JunBulletList.begin(); iter != JunBulletList.end();)
 	{
 		if (OBJ_DEAD == (*iter)->Update())
@@ -99,7 +97,7 @@ void CFortress::Update(void)
 	{
 		if (OBJ_DEAD == (*iter)->Update())
 		{
-			Safe_Delete<CFortress_Monster_Bullet*>(*iter); 
+			Safe_Delete<CFortress_Monster_Bullet*>(*iter);
 			(iter) = Monster_Bullet_List.erase((iter));
 		}
 		else
@@ -120,7 +118,7 @@ void CFortress::Update(void)
 			iter++;
 		}
 	}
-		
+
 	for (auto iter = m_list_Boom_Effect.begin(); iter != m_list_Boom_Effect.end();)
 	{
 		if (OBJ_DEAD == (*iter)->Update())
@@ -142,9 +140,9 @@ void CFortress::Update(void)
 void CFortress::Late_Update(void)
 {
 	m_pHPBar->Late_Update();
-	
-	
-	if (JunPlayer !=nullptr)
+
+
+	if (JunPlayer != nullptr)
 	{
 		JunPlayer->Late_Update();
 		RENDERMGR->Add_Render_Obj(JunPlayer);
@@ -161,8 +159,8 @@ void CFortress::Late_Update(void)
 				JunPlayer->Set_ReSetLine();
 			}
 		}
-		
-		
+
+
 		float fPlayerX = JunPlayer->Get_Info().vPos.x;
 		float fPlayerY = JunPlayer->Get_Info().vPos.y;
 		float fAngle(0.f);
@@ -194,7 +192,8 @@ void CFortress::Late_Update(void)
 					JunPlayer->Minus_Hp(iEnemyDamage);
 
 					m_list_Boom_Effect.push_back(CFortressFactory::Create_Fortress_Boom_Effect((iter)->Get_Info().vPos.x, (iter)->Get_Info().vPos.y));
-					
+
+					m_pTarget = JunPlayer;
 					continue;
 				}
 
@@ -222,7 +221,7 @@ void CFortress::Late_Update(void)
 					continue;
 				}
 			}
-		}	
+		}
 	}
 
 	if (nullptr != FortressMonster)
@@ -234,7 +233,7 @@ void CFortress::Late_Update(void)
 		float fMonsterX = vMonster.x;
 		float fMonsterY = vMonster.y;
 
-		for(auto& iter : JunBulletList)
+		for (auto& iter : JunBulletList)
 		{
 			if (!iter->Get_Dead())
 			{
@@ -353,6 +352,8 @@ void CFortress::Release(void)
 
 	Safe_Delete<CFortress_Monster*>(FortressMonster);
 
+	Safe_Delete<CFortress_TargetLine*>(m_TargetLine);
+
 	for (auto iter = JunBulletList.begin(); iter != JunBulletList.end();)
 	{
 		(*iter)->Release();
@@ -390,7 +391,7 @@ void CFortress::Release(void)
 
 void CFortress::Key_Input(void)
 {
-	
+
 }
 
 const bool CFortress::MonsterCollision_Check(float _fMonsterX, float _fMonsterY, float _fBulletX, float _fBulletY)

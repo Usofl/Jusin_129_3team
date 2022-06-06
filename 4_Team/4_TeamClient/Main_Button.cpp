@@ -5,6 +5,8 @@
 CMain_Button::CMain_Button()
 	: m_fXSize(0.f)
 	, m_fYSize(0.f)
+	, m_iWidth(2)
+	, m_iRed(0)
 {
 	Initialize();
 }
@@ -12,6 +14,8 @@ CMain_Button::CMain_Button()
 CMain_Button::CMain_Button(const float & _fX, const float & _fY)
 	: m_fXSize(100.f)
 	, m_fYSize(30.f)
+	, m_iWidth(2)
+	, m_iRed(0)
 {
 	m_tInfo.vPos = { _fX, _fY, 0.f };
 
@@ -65,7 +69,7 @@ void CMain_Button::Render(HDC hDC)
 	MoveToEx(hDC, (int)m_vDrawPoint[POINT_LEFT_TOP].x, (int)m_vDrawPoint[POINT_LEFT_TOP].y, nullptr);
 
 	HPEN MyPen, OldPen;
-	MyPen = (HPEN)CreatePen(PS_SOLID, 2, RGB(0, 0, 0));
+	MyPen = (HPEN)CreatePen(PS_SOLID, m_iWidth, RGB(m_iRed, 0, 0));
 	OldPen = (HPEN)::SelectObject(hDC, (HGDIOBJ)MyPen);
 
 	for (int i = POINT_RIGHT_TOP; i < POINT_END; ++i)
@@ -80,4 +84,10 @@ void CMain_Button::Render(HDC hDC)
 
 void CMain_Button::Release(void)
 {
+}
+
+void CMain_Button::Selected_Button(void)
+{
+	m_iWidth = 5;
+	m_iRed = 255;
 }

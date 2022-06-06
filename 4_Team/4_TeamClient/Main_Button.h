@@ -18,6 +18,8 @@ public:
 	virtual void Render(HDC hDC) override;
 	virtual void Release(void) override;
 
+	void Selected_Button(void);
+
 public:
 	inline	const SCENEID& Get_SceneId(void) { return m_eSceneId; }
 	inline	void Set_SceneId(const SCENEID& _eSceneId) { m_eSceneId = _eSceneId; }
@@ -25,6 +27,9 @@ public:
 private:
 	float			m_fXSize;
 	float			m_fYSize;
+
+	int				m_iWidth;
+	int				m_iRed;
 
 	SCENEID			m_eSceneId;
 

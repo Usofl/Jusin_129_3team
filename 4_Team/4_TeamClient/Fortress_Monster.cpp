@@ -129,8 +129,11 @@ const int CFortress_Monster::Update(void)
 		Shoot_Bullet();
 	}
 
-	m_tInfo_Test_Dir = pJunPlayer->Get_Info().vPos - m_tInfo_Posin_World[1].vPos;
-	D3DXVec3Normalize(&m_tInfo_Test_Dir, &m_tInfo_Test_Dir);
+	if (nullptr != pJunPlayer)
+	{
+		m_tInfo_Test_Dir = pJunPlayer->Get_Info().vPos - m_tInfo_Posin_World[1].vPos;
+		D3DXVec3Normalize(&m_tInfo_Test_Dir, &m_tInfo_Test_Dir);
+	}
 	
 	// 앵글값을 0으로 초기화를 안 시키면 계속 회전함
 	m_fAngle = 0.f;
@@ -229,7 +232,7 @@ void CFortress_Monster::Shoot_Bullet()
 	
 
 	CFortress* pFortress = static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS));
-	if (pJunPlayer != nullptr)
+	if (nullptr != pJunPlayer)
 	{
 		// 플레이어 - 몬스터 == 0 ~ -300
 		if (0 >= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x && -300 < pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
