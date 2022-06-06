@@ -103,28 +103,85 @@ void CMomodora::Late_Update(void)
 
 
 
+		float	LX = v_LeftFirst.x;
+		float	RX = v_LeftEnd.x;
+		float	LX2 = v_RightFirst.x;
+		float	RX2 = v_RightEnd.x;
+
+		float	LY = v_LeftFirst.y;
+		float	RY = v_LeftEnd.y;
+		float	LY2 = v_RightFirst.y;
+		float	RY2 = v_RightEnd.y;
+
+	//	float	pY(0.f);
+	
+
+		
+		/*	if ((_fX <= LX + 10 && _fX >= RX - 10) || (_fX <= RX + 10  && _fX >= LX - 10))
+			{
+				bX = true;
+			}
+
+			if ((_fY <= LX + 10 && _fX >= RX - 10) || (_fX <= RX + 10 && _fX >= LX - 10))
+			{
+				bY = true;
+			}
+		*/
+	/*	if ((_fX >= LX - 20.f && _fX <= RX + 20.f) || (_fX >= RX + 20.f && _fX <= LX - 20.f))
+		{
+			bX = true;
+		}
+
+		if ((_fY <= LY + 20.f && _fY >= RY - 20.f) || (_fY <= RY - 20.f && _fY >= LY + 20.f))
+		{
+			bY = true;
+		}*/
+
 		for (auto iter2 = m_listMonsterList.begin(); iter2 != m_listMonsterList.end(); iter2++)
 		{
-			//if ((*iter2)->Get_MonsterID() == MOMO_FOLLOW)
-			//{
-			//	if (((*iter2)->Get_Info().vPos.x - 20 < fX && (*iter2)->Get_Info().vPos.x + 20 > fX)
-			//		&& ((*iter2)->Get_Info().vPos.y - 20 < fY && (*iter2)->Get_Info().vPos.y + 20 > fY))
-			//	{
-			//		(*iter2)->Set_Dead(true); // 삭제 처리한 부분인데 여기서 이제 HP까는걸로 바꾸면 됨
+			if ((*iter2)->Get_MonsterID() == MOMO_FOLLOW)
+			{
 
-			//	}
-			//}
+				float fX = (*iter2)->Get_Info().vPos.x;
+				float fY = (*iter2)->Get_Info().vPos.y;
 
+				//	float	pY(0.f);
+				
+				bool bX = false, bY = false;
+				bool bX2 = false, bY2 = false;
 
-			//else if ((*iter2)->Get_MonsterID() == MOMO_ROTATION)
-			//{
-			//	if (((*iter2)->Get_Info().vPos.x - 40 < fX && (*iter2)->Get_Info().vPos.x + 40 > fX)
-			//		&& ((*iter2)->Get_Info().vPos.y - 40 < fY && (*iter2)->Get_Info().vPos.y + 40 > fY))
-			//	{
-			//		(*iter2)->Set_Dead(true); // 삭제 처리한 부분인데 여기서 이제 HP까는걸로 바꾸면 됨
+				if ((fX <= LX + 20 && fX >= RX - 20) || (fX <= RX + 20 && fX >= LX - 20))
+				{
+					bX = true;
+				}
 
-			//	}
-			//}
+				if ((fY <= LY + 20 && fY >= RY - 20) || (fY <= RY + 20 && fY >= LY - 20))
+				{
+					bY = true;
+				}
+
+				if (bX&&bY)
+				{
+					(*iter2)->Set_Dead(true);
+				}
+
+				if ((fX <= LX2 + 20 && fX >= RX2 - 20) || (fX <= RX2 + 20 && fX >= LX2 - 20))
+				{
+					bX2 = true;
+				}
+
+				if ((fY <= LY2 + 20 && fY >= RY2 - 20) || (fY <= RY2 + 20 && fY >= LY2 - 20))
+				{
+					bY2 = true;
+				}
+
+				if (bX2&&bY2)
+				{
+					(*iter2)->Set_Dead(true);
+				}
+
+			}
+
 		}
 	}
 

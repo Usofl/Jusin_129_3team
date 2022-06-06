@@ -18,7 +18,7 @@ public:
 
 public:
 	inline void Set_Player(CMomodoraPlayer* _pPlayer) { m_pPlayer = _pPlayer; };
-	D3DXVECTOR3 Get_Point(int _iIndex) { return m_vLocalSwordPoint[_iIndex]; };
+	D3DXVECTOR3 Get_Point(int _iIndex) { return m_vSwordPoint[_iIndex]; };
 
 
 private:
