@@ -65,7 +65,6 @@ void CFortress::Update(void)
 		{
 			Safe_Delete<CJunPlayer*>(JunPlayer);
 			FortressMonster->Set_Player(nullptr);
-
 			m_pTarget = FortressMonster;
 		}
 	}
@@ -75,7 +74,6 @@ void CFortress::Update(void)
 		if (OBJ_DEAD == FortressMonster->Update())
 		{
 			Safe_Delete<CFortress_Monster*>(FortressMonster);
-
 			m_pTarget = JunPlayer;
 		}
 	}
@@ -86,6 +84,9 @@ void CFortress::Update(void)
 		{
 			Safe_Delete<CJunBullet*>(*iter);
 			(iter) = JunBulletList.erase((iter));
+			JunPlayer->Set_MyTurn(false);
+			FortressMonster->Set_MyTurn(true);
+
 		}
 		else
 		{
@@ -99,6 +100,8 @@ void CFortress::Update(void)
 		{
 			Safe_Delete<CFortress_Monster_Bullet*>(*iter);
 			(iter) = Monster_Bullet_List.erase((iter));
+			JunPlayer->Set_MyTurn(true);
+			FortressMonster->Set_MyTurn(false);
 		}
 		else
 		{

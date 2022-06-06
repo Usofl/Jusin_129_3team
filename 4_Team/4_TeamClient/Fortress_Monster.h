@@ -29,6 +29,10 @@ public:
 	void		Move();
 
 	void		Set_Angle(float _f) {	m_fAngle = (_f);}
+
+public:
+	inline void Set_MyTurn(bool _bTurn) { m_bMyTurn = _bTurn; };
+	inline const bool Get_MyTurn(void) { return m_bMyTurn; };
 	
 
 private:
@@ -58,6 +62,7 @@ private:
 	bool			m_bShoot;
 	bool			m_bMonster_Turn;
 	bool			m_bMove_On;
+	bool			m_bMyTurn;
 
 	DWORD			m_dwShootCount;
 	DWORD			m_dwShootDelay;
@@ -67,6 +72,7 @@ private:
 
 	CFortress_Monster_Bullet*	Fortress_Monster_Bullet;
 
-	CJunPlayer*		pJunPlayer;		// 플레이어 포인터로 플레이어 선언( nullptr 로 초기화 해야됨 , 쓰래기 값이 들어가있음 ), (객체 생성( new ) 할당을 안하면 원본에 있는 값을 가지고올수없다 )
+	CJunPlayer*		pJunPlayer;		
+//	CFortress* m_pFortress;// 플레이어 포인터로 플레이어 선언( nullptr 로 초기화 해야됨 , 쓰래기 값이 들어가있음 ), (객체 생성( new ) 할당을 안하면 원본에 있는 값을 가지고올수없다 )
 };
 
