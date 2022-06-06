@@ -24,8 +24,8 @@ public:
 	void				Bullet_Move();
 
 private:
-	D3DXVECTOR3		m_tInfo_Bullet_Local[11];
-	D3DXVECTOR3		m_tInfo_Bullet_World[11];
+	D3DXVECTOR3		m_tInfo_Bullet_Local[12];
+	D3DXVECTOR3		m_tInfo_Bullet_World[12];
 
 	D3DXVECTOR3		m_vDir_X;
 
