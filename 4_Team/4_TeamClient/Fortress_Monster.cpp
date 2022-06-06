@@ -37,38 +37,34 @@ void CFortress_Monster::Initialize(void)
 	m_tInfo.vPos = { 1200 , 200.f , 0.f };
 	m_tInfo.vDir = { 1.f, 0.f, 0.f };
 
-	m_tInfo_Body_Local[0].vPos = { -144.f , -70.f , 0.f };
-	m_tInfo_Body_Local[1].vPos = { -70.f , -70.f , 0.f };
-	m_tInfo_Body_Local[2].vPos = { -35.f , 0.f , 0.f };
-	m_tInfo_Body_Local[3].vPos = { +35.f , 0.f , 0.f };
-	m_tInfo_Body_Local[4].vPos = { +70.f , -70.f , 0.f };
-	m_tInfo_Body_Local[5].vPos = { +140.f , -70.f , 0.f };
-	m_tInfo_Body_Local[6].vPos = { +125.f , 0.f , 0.f };
-	m_tInfo_Body_Local[7].vPos = { +105.f , 0.f , 0.f };
-	m_tInfo_Body_Local[8].vPos = { +70.f , +70.f , 0.f };
-	m_tInfo_Body_Local[9].vPos = { -70.f , +70.f , 0.f };
-	m_tInfo_Body_Local[10].vPos = { -105.f , +0.f , 0.f };
-	m_tInfo_Body_Local[11].vPos = { -125.f , +0.f , 0.f };
-	m_tInfo_Body_Local[12].vPos = { -25.f , -35.f , 0.f };
-	m_tInfo_Body_Local[13].vPos = { +25.f , -35.f , 0.f };
-	m_tInfo_Body_Local[14].vPos = { +25.f , 0.f , 0.f };
-	m_tInfo_Body_Local[15].vPos = { -25.f , 0.f , 0.f };
-	m_tInfo_Body_Local[16].vPos = { +125.f , +0.f , 0.f };
-	m_tInfo_Body_Local[17].vPos = { +150.f , +35.f , 0.f };
-	m_tInfo_Body_Local[18].vPos = { +150.f , +90.f , 0.f };
-	m_tInfo_Body_Local[19].vPos = { +125.f , +90.f , 0.f };
-	m_tInfo_Body_Local[20].vPos = { +125.f , +50.f , 0.f };
-	m_tInfo_Body_Local[21].vPos = { +80.f , +30.f , 0.f };
+	m_tInfo_Body_Local[0] = { -144.f , -70.f , 0.f };
+	m_tInfo_Body_Local[1] = { -70.f , -70.f , 0.f };
+	m_tInfo_Body_Local[2] = { -35.f , 0.f , 0.f };
+	m_tInfo_Body_Local[3] = { +35.f , 0.f , 0.f };
+	m_tInfo_Body_Local[4] = { +70.f , -70.f , 0.f };
+	m_tInfo_Body_Local[5] = { +140.f , -70.f , 0.f };
+	m_tInfo_Body_Local[6] = { +125.f , 0.f , 0.f };
+	m_tInfo_Body_Local[7] = { +105.f , 0.f , 0.f };
+	m_tInfo_Body_Local[8] = { +70.f , +70.f , 0.f };
+	m_tInfo_Body_Local[9] = { -70.f , +70.f , 0.f };
+	m_tInfo_Body_Local[10] = { -105.f , +0.f , 0.f };
+	m_tInfo_Body_Local[11] = { -125.f , +0.f , 0.f };
+	m_tInfo_Body_Local[12] = { -25.f , -35.f , 0.f };
+	m_tInfo_Body_Local[13] = { +25.f , -35.f , 0.f };
+	m_tInfo_Body_Local[14] = { +25.f , 0.f , 0.f };
+	m_tInfo_Body_Local[15] = { -25.f , 0.f , 0.f };
 
 
 
 
 
-	m_tInfo_Posin_Local[0].vPos = { -17.f, -140.f, 0.f };
-	m_tInfo_Posin_Local[1].vPos = {	+0.f, -140.f, 0.f };
-	m_tInfo_Posin_Local[2].vPos = { +17.f, -140.f, 0.f };
-	m_tInfo_Posin_Local[3].vPos = { +20.f , -35.f, 0.f };
-	m_tInfo_Posin_Local[4].vPos = { -20.f , -35.f, 0.f };
+
+
+	m_tInfo_Posin_Local[0] = { -17.f, -140.f, 0.f };
+	m_tInfo_Posin_Local[1] = {	+0.f, -140.f, 0.f };
+	m_tInfo_Posin_Local[2] = { +17.f, -140.f, 0.f };
+	m_tInfo_Posin_Local[3] = { +20.f , -35.f, 0.f };
+	m_tInfo_Posin_Local[4] = { -20.f , -35.f, 0.f };
 
 
 
@@ -104,10 +100,10 @@ const int CFortress_Monster::Update(void)
 	// 월드 변환을 위한 행렬에 matRotZ 와 matTrans 곱한후에 더한다.
 	m_tInfo.matWorld = m_tMatInfo.matRotZ * m_tMatInfo.matTrans;
 
-	for (int i = 0; i < 22; ++i)
+	for (int i = 0; i < 16; ++i)
 	{
 		// 최종적인 위치벡터를 반환 해준다 (월드 변환을 위한 행렬에 인포타입 바디 로컬의 포스를 곱하기를 한후에 바디 월드의 포스에 대입 )
-		D3DXVec3TransformCoord(&m_tInfo_Body_World[i].vPos, &m_tInfo_Body_Local[i].vPos, &m_tInfo.matWorld);
+		D3DXVec3TransformCoord(&m_tInfo_Body_World[i], &m_tInfo_Body_Local[i], &m_tInfo.matWorld);
 	}
 
 	D3DXMatrixTranslation(&matTrans_Posin, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
@@ -122,7 +118,7 @@ const int CFortress_Monster::Update(void)
 	for (int i = 0; i < 5; ++i)
 	{
 		// 최종적인 위치 벡터를 반환 해준다 ( 월드 변환을 위한 행렬에 인포포신 로컬을 곱한후에 포신월드에 대입
-		D3DXVec3TransformCoord(&m_tInfo_Posin_World[i].vPos, &m_tInfo_Posin_Local[i].vPos, &m_PosinWorld);
+		D3DXVec3TransformCoord(&m_tInfo_Posin_World[i], &m_tInfo_Posin_Local[i], &m_PosinWorld);
 	}
 
 	CFortress* pFortress = static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS));
@@ -144,7 +140,7 @@ const int CFortress_Monster::Update(void)
 
 	if (nullptr != pJunPlayer)
 	{
-		m_tInfo_Test_Dir = pJunPlayer->Get_Info().vPos - m_tInfo_Posin_World[1].vPos;
+		m_tInfo_Test_Dir = pJunPlayer->Get_Info().vPos - m_tInfo_Posin_World[1];
 		D3DXVec3Normalize(&m_tInfo_Test_Dir, &m_tInfo_Test_Dir);
 	}
 	
@@ -164,25 +160,19 @@ void CFortress_Monster::Render(HDC hDC)
 	int	iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
 	//  배 몸통
-	MoveToEx(hDC, (int)m_tInfo_Body_World[0].vPos.x + iScrollX, (int)m_tInfo_Body_World[0].vPos.y + iScrollY, nullptr);
+	MoveToEx(hDC, (int)m_tInfo_Body_World[0].x + iScrollX, (int)m_tInfo_Body_World[0].y + iScrollY, nullptr);
 	for (int i = 0; i < 12; ++i)
 	{
-		LineTo(hDC, (int)m_tInfo_Body_World[i].vPos.x + iScrollX, (int)m_tInfo_Body_World[i].vPos.y + iScrollY);
+		LineTo(hDC, (int)m_tInfo_Body_World[i].x + iScrollX, (int)m_tInfo_Body_World[i].y + iScrollY);
 	}
-	LineTo(hDC, (int)m_tInfo_Body_World[0].vPos.x + iScrollX, (int)m_tInfo_Body_World[0].vPos.y + iScrollY);
+	LineTo(hDC, (int)m_tInfo_Body_World[0].x + iScrollX, (int)m_tInfo_Body_World[0].y + iScrollY);
 
-	MoveToEx(hDC, (int)m_tInfo_Body_World[12].vPos.x + iScrollX, (int)m_tInfo_Body_World[12].vPos.y + iScrollY, nullptr);
+	MoveToEx(hDC, (int)m_tInfo_Body_World[12].x + iScrollX, (int)m_tInfo_Body_World[12].y + iScrollY, nullptr);
 	for (int i = 12; i < 16; ++i)
 	{
-		LineTo(hDC, (int)m_tInfo_Body_World[i].vPos.x + iScrollX, (int)m_tInfo_Body_World[i].vPos.y + iScrollY);
+		LineTo(hDC, (int)m_tInfo_Body_World[i].x + iScrollX, (int)m_tInfo_Body_World[i].y + iScrollY);
 	}
-	LineTo(hDC, (int)m_tInfo_Body_World[12].vPos.x + iScrollX, (int)m_tInfo_Body_World[12].vPos.y + iScrollY);
-
-	MoveToEx(hDC, (int)m_tInfo_Body_World[16].vPos.x + iScrollX, (int)m_tInfo_Body_World[16].vPos.y + iScrollY, nullptr);
-	for (int i = 16; i < 22; ++i)
-	{
-		LineTo(hDC, (int)m_tInfo_Body_World[i].vPos.x + iScrollX, (int)m_tInfo_Body_World[i].vPos.y + iScrollY);
-	}
+	LineTo(hDC, (int)m_tInfo_Body_World[12].x + iScrollX, (int)m_tInfo_Body_World[12].y + iScrollY);
 
 
 
@@ -191,16 +181,16 @@ void CFortress_Monster::Render(HDC hDC)
 	//Ellipse(hDC, (int)m_tInfo.vPos.x + 25, (int)m_tInfo.vPos.y + 25, (int)m_tInfo.vPos.x + 45, (int)m_tInfo.vPos.y + 45);
 
 	// 전면부를 나타내는 조그마한 점 2개
-	Ellipse(hDC, (int)m_tInfo_Body_World[0].vPos.x - 5 + iScrollX, (int)m_tInfo_Body_World[0].vPos.y - 5 + iScrollY, (int)m_tInfo_Body_World[0].vPos.x + 5 + iScrollX, (int)m_tInfo_Body_World[0].vPos.y + 5 + iScrollY);
+	Ellipse(hDC, (int)m_tInfo_Body_World[0].x - 5 + iScrollX, (int)m_tInfo_Body_World[0].y - 5 + iScrollY, (int)m_tInfo_Body_World[0].x + 5 + iScrollX, (int)m_tInfo_Body_World[0].y + 5 + iScrollY);
 	
 
 	// 포신
-	MoveToEx(hDC, (int)m_tInfo_Posin_World[0].vPos.x + iScrollX, (int)m_tInfo_Posin_World[0].vPos.y + iScrollY, nullptr);
+	MoveToEx(hDC, (int)m_tInfo_Posin_World[0].x + iScrollX, (int)m_tInfo_Posin_World[0].y + iScrollY, nullptr);
 	for (int i = 0; i < 5; ++i)
 	{
-		LineTo(hDC, (int)m_tInfo_Posin_World[i].vPos.x + iScrollX, (int)m_tInfo_Posin_World[i].vPos.y + iScrollY);
+		LineTo(hDC, (int)m_tInfo_Posin_World[i].x + iScrollX, (int)m_tInfo_Posin_World[i].y + iScrollY);
 	}
-	LineTo(hDC, (int)m_tInfo_Posin_World[0].vPos.x + iScrollX, (int)m_tInfo_Posin_World[0].vPos.y + iScrollY);
+	LineTo(hDC, (int)m_tInfo_Posin_World[0].x + iScrollX, (int)m_tInfo_Posin_World[0].y + iScrollY);
 }
 
 void CFortress_Monster::Release(void)
@@ -263,7 +253,7 @@ void CFortress_Monster::Shoot_Bullet()
 				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 				Fortress_Monster_Bullet->Initialize();
 				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
+				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
 				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
 				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
 				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
@@ -281,7 +271,7 @@ void CFortress_Monster::Shoot_Bullet()
 				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 				Fortress_Monster_Bullet->Initialize();
 				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
+				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
 				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
 				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
 				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
@@ -302,7 +292,7 @@ void CFortress_Monster::Shoot_Bullet()
 				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 				Fortress_Monster_Bullet->Initialize();
 				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
+				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
 				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
 				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
 				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
@@ -320,7 +310,7 @@ void CFortress_Monster::Shoot_Bullet()
 				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 				Fortress_Monster_Bullet->Initialize();
 				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
+				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
 				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
 				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
 				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
@@ -341,7 +331,7 @@ void CFortress_Monster::Shoot_Bullet()
 				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 				Fortress_Monster_Bullet->Initialize();
 				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
+				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
 				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
 				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
 				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
@@ -358,7 +348,7 @@ void CFortress_Monster::Shoot_Bullet()
 				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 				Fortress_Monster_Bullet->Initialize();
 				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
+				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
 				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
 				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
 				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
@@ -379,7 +369,7 @@ void CFortress_Monster::Shoot_Bullet()
 				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 				Fortress_Monster_Bullet->Initialize();
 				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
+				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
 				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
 				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
 				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
@@ -396,7 +386,7 @@ void CFortress_Monster::Shoot_Bullet()
 				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 				Fortress_Monster_Bullet->Initialize();
 				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
+				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
 				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
 				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
 				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
@@ -416,7 +406,7 @@ void CFortress_Monster::Shoot_Bullet()
 				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 				Fortress_Monster_Bullet->Initialize();
 				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
+				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
 				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
 				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
 				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
@@ -433,7 +423,7 @@ void CFortress_Monster::Shoot_Bullet()
 				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 				Fortress_Monster_Bullet->Initialize();
 				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
+				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
 				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
 				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
 				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
@@ -453,7 +443,7 @@ void CFortress_Monster::Shoot_Bullet()
 				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 				Fortress_Monster_Bullet->Initialize();
 				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
+				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
 				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
 				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
 				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
@@ -470,7 +460,7 @@ void CFortress_Monster::Shoot_Bullet()
 				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 				Fortress_Monster_Bullet->Initialize();
 				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
+				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
 				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
 				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
 				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
@@ -490,7 +480,7 @@ void CFortress_Monster::Shoot_Bullet()
 				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 				Fortress_Monster_Bullet->Initialize();
 				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
+				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
 				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
 				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
 				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
@@ -507,7 +497,7 @@ void CFortress_Monster::Shoot_Bullet()
 				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 				Fortress_Monster_Bullet->Initialize();
 				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
+				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
 				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
 				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
 				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
@@ -527,7 +517,7 @@ void CFortress_Monster::Shoot_Bullet()
 				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 				Fortress_Monster_Bullet->Initialize();
 				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
+				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
 				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
 				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
 				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
@@ -544,7 +534,7 @@ void CFortress_Monster::Shoot_Bullet()
 				Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
 				Fortress_Monster_Bullet->Initialize();
 				Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].vPos.x, m_tInfo_Posin_World[1].vPos.y);
+				Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
 				Fortress_Monster_Bullet->Set_Player(pJunPlayer);
 				Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
 				Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);

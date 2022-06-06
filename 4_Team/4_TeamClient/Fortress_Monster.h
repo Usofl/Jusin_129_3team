@@ -32,14 +32,14 @@ public:
 	
 
 private:
-	INFO			m_tInfo_Body_Local[22];
-	INFO			m_tInfo_Body_World[22];
+	D3DXVECTOR3				m_tInfo_Body_Local[22];
+	D3DXVECTOR3				m_tInfo_Body_World[22];
 
-	INFO			m_tInfo_Head_Local[4];
-	INFO			m_tInfo_Head_World[4];
-		
-	INFO			m_tInfo_Posin_Local[5];
-	INFO			m_tInfo_Posin_World[5];
+	D3DXVECTOR3				m_tInfo_Head_Local[4];
+	D3DXVECTOR3				m_tInfo_Head_World[4];
+
+	D3DXVECTOR3				m_tInfo_Posin_Local[5];
+	D3DXVECTOR3				m_tInfo_Posin_World[5];
 
 	D3DXVECTOR3		m_tInfo_Test_Dir;
 	D3DXMATRIX		matTrans_Posin;

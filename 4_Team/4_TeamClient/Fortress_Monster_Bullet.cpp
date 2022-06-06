@@ -20,10 +20,19 @@ void CFortress_Monster_Bullet::Initialize(void)
 	m_tInfo.vLook = { 1.f, 0.f, 0.f };
 	m_tInfo.vDir = { 1.f , 1.f , 0.f };
 
-	/*m_tInfo_Bullet_Local[0].vPos = { -10.f , -10.f , 0.f };
-	m_tInfo_Bullet_Local[1].vPos = { +10.f , -10.f , 0.f };
-	m_tInfo_Bullet_Local[2].vPos = { +10.f , +10.f , 0.f };
-	m_tInfo_Bullet_Local[3].vPos = { -10.f , +10.f , 0.f };*/
+	m_tInfo_Bullet_Local[0] = { 0.f , -40.f , 0.f };
+	m_tInfo_Bullet_Local[1] = { +4.f , -33.f , 0.f };
+	m_tInfo_Bullet_Local[2] = { +8.f , -26.f , 0.f };
+	m_tInfo_Bullet_Local[3] = { +12.f , -19.f , 0.f };
+	m_tInfo_Bullet_Local[4] = { +17.f , -12.f , 0.f };
+	m_tInfo_Bullet_Local[5] = { +17.f , +40.f , 0.f };
+	m_tInfo_Bullet_Local[6] = { -17.f , +40.f , 0.f };
+	m_tInfo_Bullet_Local[7] = { -17.f , -12.f , 0.f };
+	m_tInfo_Bullet_Local[8] = { -12.f , -19.f , 0.f };
+	m_tInfo_Bullet_Local[9] = { -8.f , -26.f , 0.f };
+	m_tInfo_Bullet_Local[10] = { -4.f , -33.f , 0.f };
+
+
 
 	m_fSpeed = 1.f;
 }
@@ -34,17 +43,17 @@ const int CFortress_Monster_Bullet::Update(void)
 	{
 		return OBJ_DEAD;
 	}
-	/*D3DXMatrixTranslation(&m_tMatInfo.matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
+	D3DXMatrixTranslation(&m_tMatInfo.matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
 	D3DXMatrixRotationZ(&m_tMatInfo.matRotZ, D3DXToRadian(m_fAngle));
 
 	m_tInfo.matWorld = m_tMatInfo.matScale * m_tMatInfo.matRotZ * m_tMatInfo.matTrans;
 
-	for (int i = 0; i < 4; ++i)
+	for (int i = 0; i < 11; ++i)
 	{
-		D3DXVec3TransformCoord(&m_tInfo_Bullet_World[i].vPos, &m_tInfo_Bullet_Local[i].vPos, &m_tInfo.matWorld);
+		D3DXVec3TransformCoord(&m_tInfo_Bullet_World[i], &m_tInfo_Bullet_Local[i], &m_tInfo.matWorld);
 	}
 
-	D3DXVec3TransformNormal(&m_tInfo.vDir, &m_tInfo.vLook, &m_tInfo.matWorld);*/
+	D3DXVec3TransformNormal(&m_tInfo.vDir, &m_tInfo.vLook, &m_tInfo.matWorld);
 
 	m_fAir_Shoot += 0.016f;
 
@@ -191,14 +200,17 @@ void CFortress_Monster_Bullet::Render(HDC hDC)
 	int	iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 	int	iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
-	/*MoveToEx(hDC, (int)m_tInfo_Bullet_World[0].vPos.x, (int)m_tInfo_Bullet_World[0].vPos.y, nullptr);
-	for (int i = 0; i < 4; ++i)
+	MoveToEx(hDC, (int)m_tInfo_Bullet_World[0].x + iScrollX, (int)m_tInfo_Bullet_World[0].y + iScrollY, nullptr);
+	for (int i = 0; i < 10; ++i)
 	{
-		LineTo(hDC, (int)m_tInfo_Bullet_World[i].vPos.x, (int)m_tInfo_Bullet_World[i].vPos.y);
+		LineTo(hDC, (int)m_tInfo_Bullet_World[i].x + iScrollX, (int)m_tInfo_Bullet_World[i].y + iScrollY);
 	}
-	LineTo(hDC, (int)m_tInfo_Bullet_World[0].vPos.x, (int)m_tInfo_Bullet_World[0].vPos.y);*/
+	LineTo(hDC, (int)m_tInfo_Bullet_World[0].x + iScrollX, (int)m_tInfo_Bullet_World[0].y + iScrollY);
+	
+	MoveToEx(hDC, (int)m_tInfo_Bullet_World[4].x + iScrollX, (int)m_tInfo_Bullet_World[4].y + iScrollY, nullptr);
+	LineTo(hDC, (int)m_tInfo_Bullet_World[7].x + iScrollX, (int)m_tInfo_Bullet_World[7].y + iScrollY);
 
-	Ellipse(hDC, (int)m_tInfo.vPos.x - 10 + iScrollX, (int)m_tInfo.vPos.y - 10 + iScrollY, (int)m_tInfo.vPos.x + 10 + iScrollX, (int)m_tInfo.vPos.y + 10 + iScrollY);
+	//Ellipse(hDC, (int)m_tInfo.vPos.x - 10 + iScrollX, (int)m_tInfo.vPos.y - 10 + iScrollY, (int)m_tInfo.vPos.x + 10 + iScrollX, (int)m_tInfo.vPos.y + 10 + iScrollY);
 }
 
 void CFortress_Monster_Bullet::Release(void)

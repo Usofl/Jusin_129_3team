@@ -21,8 +21,8 @@ public:
 	void				Get_Monster_Dir(const D3DXVECTOR3& _Dir) { m_tInfo.vLook = _Dir; }		// 플레이어 - 몬스터 단위 벡터 가저오는 함수
 
 private:
-	INFO		m_tInfo_Bullet_Local[4];
-	INFO		m_tInfo_Bullet_World[4];
+	D3DXVECTOR3		m_tInfo_Bullet_Local[11];
+	D3DXVECTOR3		m_tInfo_Bullet_World[11];
 
 	float		m_fAir_Shoot;
 	float		m_fShoot_Power;
