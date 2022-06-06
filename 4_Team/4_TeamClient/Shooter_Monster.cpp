@@ -49,6 +49,7 @@ void CShooter_Monster::Initialize(void)
 {
 	m_eRender = RENDER_GAMEOBJECT;
 
+	m_MonsterID = MOMO_ROTATION;
 	m_iHP = 20;
 
 	m_fSpeed = 3.f;
@@ -69,6 +70,11 @@ void CShooter_Monster::Initialize(void)
 const int CShooter_Monster::Update(void)
 {
 	if (0 >= m_iHP)
+	{
+		return OBJ_DEAD;
+	}
+
+	if (m_bDead == true)
 	{
 		return OBJ_DEAD;
 	}

@@ -25,5 +25,7 @@ private:
 	D3DXVECTOR3		m_vOriginalHeadPoint[2];
 	D3DXVECTOR3		m_vLookX;
 
+	int		m_iHP;
+
 };
 

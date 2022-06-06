@@ -47,6 +47,7 @@ void CFollower_Monster::Initialize(void)
 {
 	m_eRender = RENDER_GAMEOBJECT;
 
+	m_MonsterID = MOMO_FOLLOW;
 	m_iHP = 20;
 
 	m_fSpeed = 3.f;
@@ -71,6 +72,10 @@ const int CFollower_Monster::Update(void)
 		return OBJ_DEAD;
 	}
 
+	if (m_bDead == true)
+	{
+		return OBJ_DEAD;
+	}
 	D3DXVECTOR3 vPlayer_pos = static_cast<CMomodora*>(SCENEMGR->Get_Scene(SC_MOMO))->Get_Player()->Get_Info().vPos;
 
 	m_tInfo.vDir = vPlayer_pos - m_tInfo.vPos;

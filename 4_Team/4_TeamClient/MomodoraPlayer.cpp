@@ -35,6 +35,7 @@ void CMomodoraPlayer::Initialize(void)
 	//m_vOriginalHeadPoint[1] = { 5.f, -25.f, 0.f };
 
 	m_fSpeed = 4.f;
+	m_iHP = 50;
 }
 
 const int CMomodoraPlayer::Update(void)

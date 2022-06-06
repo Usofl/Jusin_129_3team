@@ -20,8 +20,11 @@ public:
 	inline void Set_HP(const int& _iHP) { m_iHP = _iHP; }
 	
 	inline const int& Get_HP(void) { return m_iHP; }
+	
+	MOMO_MONSTERID Get_MonsterID(void) { return m_MonsterID; };
 
 protected:
 	int		m_iHP;
+	MOMO_MONSTERID m_MonsterID;
 };
 

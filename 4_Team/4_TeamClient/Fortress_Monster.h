@@ -23,7 +23,7 @@ public:
 
 	inline void			Set_Hp(const int& _Hp) { m_iHp -= _Hp; }
 	inline void			Set_Move_On(const bool& _bOn) { m_bMove_On = _bOn; }
-
+	inline void         Set_Reset_Fortress_Monster_Bullet(void) { Fortress_Monster_Bullet = nullptr; };
 public:
 	void		Shoot_Bullet();
 	void		Move();
@@ -51,6 +51,8 @@ private:
 private:
 	int				m_iHp;
 	int				m_iRandom_Move;
+	int				m_iMoveCount;
+	int				m_iRandomDir;
 
 	float			m_fRandom;
 		
