@@ -18,6 +18,8 @@ public:
 
 	void Key_Input(void);
 
+	inline void Set_HP(const int& _iHP) { m_iHP -= _iHP; }
+
 private:
 	D3DXVECTOR3		m_vPoint[4];
 	D3DXVECTOR3		m_vOriginalPoint[4];

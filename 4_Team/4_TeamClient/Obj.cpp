@@ -32,4 +32,3 @@ void CObj::Update_Matrix(void)
 {
 	m_tInfo.matWorld = m_tMatInfo.matScale * m_tMatInfo.matRotZ * m_tMatInfo.matTrans * m_tMatInfo.matRevolutionZ * m_tMatInfo.matParents;
 }
-
