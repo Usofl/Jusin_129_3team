@@ -169,7 +169,10 @@ void CFortress_Monster_Bullet::Release(void)
 void CFortress_Monster_Bullet::Bullet_Move()
 {
 
-
+	if (pJunPlayer == nullptr)
+	{
+		return;
+	}
 	if (0 >= pJunPlayer->Get_Info().vPos.x - m_fMonster_PosX && -100 < pJunPlayer->Get_Info().vPos.x - m_fMonster_PosX)
 	{
 		m_fSpeed = 2;

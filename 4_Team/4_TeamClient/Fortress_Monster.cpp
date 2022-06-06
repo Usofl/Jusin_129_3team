@@ -71,6 +71,7 @@ void CFortress_Monster::Initialize(void)
 	m_fAngle = 0.f;
 	m_fAngle_Body = 0.f;
 	m_fAngle_Posin = 0.f;
+	//m_iRandomDir
 
 }
 
@@ -203,7 +204,7 @@ void CFortress_Monster::Release(void)
 
 void CFortress_Monster::Shoot_Bullet()
 {
-	if (!m_bMyTurn || m_iMoveCount < 300)
+	if (!m_bMyTurn || m_iMoveCount < 200)
 		return;
 
 	
@@ -216,13 +217,16 @@ void CFortress_Monster::Shoot_Bullet()
 		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
 		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
 		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+		
+		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
 		//Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
 		CFortress* pFortress = static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS));
 		pFortress->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
 		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+		m_iRandomDir = rand() % 2;
 	}
 	m_iMoveCount = 0;
-	m_iRandomDir = rand() % 2;
+	
 #pragma region 민성이 코드
 	// 플레이어 - 몬스터 == 0 ~ -300
 	//if (0 >= pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x && -300 < pJunPlayer->Get_Info().vPos.x - m_tInfo.vPos.x)
@@ -384,15 +388,15 @@ void CFortress_Monster::Shoot_Bullet()
 	//	{
 	//		//m_fAngle_Posin = 60.f;
 
-	//		Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
-	//		Fortress_Monster_Bullet->Initialize();
-	//		Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
-	//		Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
-	//		Fortress_Monster_Bullet->Set_Player(pJunPlayer);
-	//		Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
-	//		Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
-	//		static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
-	//		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
+		/*	Fortress_Monster_Bullet = new CFortress_Monster_Bullet;
+			Fortress_Monster_Bullet->Initialize();
+			Fortress_Monster_Bullet->Set_Angle(m_fAngle_Posin);
+			Fortress_Monster_Bullet->Set_Pos(m_tInfo_Posin_World[1].x, m_tInfo_Posin_World[1].y);
+			Fortress_Monster_Bullet->Set_Player(pJunPlayer);
+			Fortress_Monster_Bullet->Get_Monster_Dir(m_tInfo_Test_Dir);
+			Fortress_Monster_Bullet->Get_Monster_PosX(m_tInfo.vPos.x);
+			static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS))->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
+			pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());*/
 
 	//		pFortress->Set_Monster_Turn(false);
 	//		pFortress->Set_Player_Turn(true);
@@ -896,16 +900,16 @@ void CFortress_Monster::Move()
 {
 	if (!m_bMyTurn)
 		return;
-	if (m_iMoveCount < 300)
+	if (m_iMoveCount < 200)
 	{
 		if (m_iRandomDir == 0)
 		{
-			m_tInfo.vPos += {1.f, 0.f, 0.f};
+			m_tInfo.vPos += {1.5f, 0.f, 0.f};
 
 		}
 		else
 		{
-			m_tInfo.vPos += {1.f, 0.f, 0.f};
+			m_tInfo.vPos -= {1.5f, 0.f, 0.f};
 
 		}
 		m_iMoveCount++;
