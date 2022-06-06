@@ -31,9 +31,8 @@ private:
 	list<CMonster*>		m_listMonsterList;
 	list<CMomoBullet*>	MomoBulletList;
 
-	DWORD				m_dwSpawn;
-
-	int					m_i;
 	int					m_iRandom_Spawn;
+
+	bool				m_bSword_On;
 };
 

@@ -9,8 +9,8 @@
 CMomodora::CMomodora()
 	: m_pPlayer(nullptr)
 	, m_pTarget(nullptr)
-	, m_dwSpawn(GetTickCount())
 	, m_iRandom_Spawn(0)
+	, m_bSword_On(true)
 {
 }
 
@@ -74,14 +74,14 @@ void CMomodora::Update(void)
 
 	if (m_listMonsterList.size() < 5)
 	{
-		m_iRandom_Spawn = unsigned(rand() % 2) + 1;
-		if (1 == m_iRandom_Spawn)
-		{
-			m_listMonsterList.push_back(CMomoAbstractFactory::Create_Follower());
-		}
-		else if (2 == m_iRandom_Spawn)
+		m_iRandom_Spawn = unsigned(rand() % 4) + 1;
+		if (m_iRandom_Spawn == 4)
 		{
 			m_listMonsterList.push_back(CMomoAbstractFactory::Create_Shoter());
+		}
+		else
+		{
+			m_listMonsterList.push_back(CMomoAbstractFactory::Create_Follower());
 		}
 	}
 
@@ -225,7 +225,7 @@ void CMomodora::Release(void)
 
 void CMomodora::Key_Input(void)
 {
-	if (KEYMGR->Key_Up('F'))
+	if (KEYMGR->Key_Up('F') && m_bSword_On == true && MomoSwordList.size() == 0)	// 
 	{
 		//CMomoDoraMgr::Get_Instance()->Weapon_Change(MOMOWEAPON_SWORD);0
 		MomoSwordList.push_back(CMomoAbstractFactory::Create_Momo_Sword());
