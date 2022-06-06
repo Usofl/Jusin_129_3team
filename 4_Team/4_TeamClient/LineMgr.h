@@ -18,6 +18,11 @@ public:
 	bool		Collision_DeLine(const float& _fX, const float& _fY);
 	void		Load_Line();
 	void		Create_Line(const float& _fLX, const float& _fLY, const float& _fRX, const float& _fRY);
+	
+public:
+	list<CLine*> Get_LineList(void) {
+		return m_LineList;
+	}
 		
 	
 public:

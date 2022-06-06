@@ -390,6 +390,12 @@
     <ClInclude Include="MomoAbstractFactory.h">
       <Filter>03. Game\97. Factory\01. MomoFactory</Filter>
     </ClInclude>
+    <ClInclude Include="Fortress_TargetLine.h">
+      <Filter>03. Game\01. Obj\01. Other_Object\02. Fortress_Obj\03. Fortress_UI</Filter>
+    </ClInclude>
+    <ClInclude Include="JunBullet_Dp.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
     <ClInclude Include="MainScene.h">
       <Filter>03. Game\02. Scene\06. MainScene</Filter>
     </ClInclude>
@@ -562,6 +568,12 @@
     </ClCompile>
     <ClCompile Include="Fortress_Boom_Effect.cpp">
       <Filter>03. Game\01. Obj\01. Other_Object\02. Fortress_Obj\04. Fortress_Boom_Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Fortress_TargetLine.cpp">
+      <Filter>03. Game\01. Obj\01. Other_Object\02. Fortress_Obj\03. Fortress_UI</Filter>
+    </ClCompile>
+    <ClCompile Include="JunBullet_Dp.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="MainScene.cpp">
       <Filter>03. Game\02. Scene\06. MainScene</Filter>

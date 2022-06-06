@@ -1,6 +1,8 @@
 #pragma once
 #include "Player.h"
 #include "JunBullet.h"
+#include "Fortress_TargetLine.h"
+
 class CJunPlayer : public CPlayer
 {
 public:
@@ -22,6 +24,7 @@ public:
 
 	inline void Set_NextLine(const bool& _bNextLine) { m_bNextLine = _bNextLine; };
 	inline void Set_State(const STATE& _eState) { m_eCurState = _eState; };
+	inline void Set_TargetLine(CFortress_TargetLine* _pTargetLine) { m_pTargetLine = _pTargetLine; };
 
 
 public:
@@ -34,12 +37,19 @@ public:
 	inline const int&	Get_MaxHp(void)		{ return m_iMaxHp; }
 
 	inline CJunPlayer* Get_Player(void) { return this; }
+	inline void Set_ReSetLine(void) { m_fShootPower = 0.f; m_fTempPower = 0.f; m_bTargetLine = false; }
+	inline const bool& Get_RenderLine(void) { return m_bTargetLine; };
+	inline void Set_RenderLine(void) { m_bTargetLine = false; };
+
+public:
+	
 
 private:
 	virtual void Key_Input(void) override;
 
 	void Shoot(void);
 	void Fallen(void);
+	void Line_Calculation(void);
 
 private:
 	D3DXVECTOR3 m_vLocalTank[4];
@@ -61,6 +71,7 @@ private:
 	D3DXMATRIX		m_matScale, m_matRotZ, m_matTrans;
 	D3DXMATRIX		m_HmatScale, m_HmatRotZ, m_HmatTrans;
 	
+	D3DXVECTOR3 m_vLineArray[30] ;
 	D3DXVECTOR3 vHeadPos;
 	
 	INFO	m_HeadInfo;
@@ -87,11 +98,11 @@ private:
 	float  m_fTempPower;
 	bool m_bPlayer_Turn;
 	CJunBullet* m_pBullet;
-
+	CFortress_TargetLine* m_pTargetLine ;
 	int m_iHp;
 	int m_iMaxHp;
 
-
+	
 	//list<CJunBullet*> BulletList;
 };
 

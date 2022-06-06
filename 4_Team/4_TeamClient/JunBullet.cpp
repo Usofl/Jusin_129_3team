@@ -13,6 +13,8 @@ CJunBullet::CJunBullet():
 {
 	ZeroMemory(m_vLocalPoint, sizeof(m_vLocalPoint));
 	ZeroMemory(m_vLocalWind, sizeof(m_vLocalWind));
+	ZeroMemory(m_DpINFO_Local, sizeof(m_DpINFO_Local));
+	ZeroMemory(m_DpINFO_World, sizeof(m_DpINFO_World));
 	
 }
 
@@ -47,6 +49,17 @@ const int CJunBullet::Update(void)
 	{
 		return OBJ_DEAD;
 	}
+
+	if(m_BulletID == BULLET_DP)
+	{
+		for (int i = 0; i < (sizeof(m_DpINFO_Local) / sizeof(INFO)); ++i)
+		{
+			//m_DpINFO_World[i] = m_DpINFO_Local[i];
+			
+			m_DpINFO_World[i].vPos += m_DpINFO_World[i].vDir;
+		}
+	}
+
 
 	for (int i = 0; sizeof(m_vWorldPoint) / sizeof(D3DXVECTOR3)> i; ++i)
 	{
@@ -98,7 +111,7 @@ const int CJunBullet::Update(void)
 	//D3DXMatrixScaling(&m_matScale, 1.f, 1.f, 0.f);
 	D3DXMatrixRotationZ(&m_matRotZ, m_fAngle);
 	D3DXMatrixTranslation(&m_matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
-
+	
 	m_tInfo.matWorld = m_matScale * m_matRotZ * m_matTrans;
 
 	//D3DXMatrixScaling();
@@ -110,9 +123,10 @@ const int CJunBullet::Update(void)
 		D3DXVec3TransformCoord(&m_vWorldPoint[i], &m_vWorldPoint[i], &m_tInfo.matWorld);
 	}
 
-	//int iArray[8]; 노력의 결과니까 혼내지 말기~
+	
 
-	for (int i = 0; 8 > i; i+= 2)
+	//int iArray[8];
+	for (int i = 0; 16 > i; i+= 2)
 	{
 		int iTemp = (rand() % 65) -62;
 		m_vWorldWind[i].x += iTemp;
@@ -125,6 +139,17 @@ const int CJunBullet::Update(void)
 	{
 		D3DXVec3TransformCoord(&m_vWorldWind[i], &m_vWorldWind[i], &m_tInfo.matWorld);
 	}
+
+	//Dp_Test
+
+	for (int i = 0; i < (sizeof(m_DpINFO_Local) / sizeof(INFO)); ++i)
+	{
+		//D3DXMatrixTranslation(&m_matTrans, m_DpINFO_World[i].vPos.x, m_DpINFO_World[i].vPos.y , 0.f);
+
+		//m_tInfo.matWorld = m_matScale * m_matRotZ * m_matTrans;
+		//D3DXVec3TransformCoord(&m_DpINFO_World[i].vPos, &m_DpINFO_World[i].vPos, &m_tInfo.matWorld);
+	}
+
 	return 0;
 }
 
@@ -132,7 +157,11 @@ void CJunBullet::Late_Update(void)
 {
 	if (KEYMGR->Key_Down('F'))
 	{
-		//D3DXVECTOR3 vTemp = { 0.3f,0.3f,0.f };
+
+		m_BulletID = BULLET_DP;
+		Dp_Local_Initialize();
+
+		//m_tInfo.vPos = { 300.f,300.f,0.f };//D3DXVECTOR3 vTemp = { 0.3f,0.3f,0.f };
 	}
 }
 
@@ -141,14 +170,19 @@ void CJunBullet::Render(HDC hDC)
 	//Ellipse(hDC, (int)m_tInfo.vPos.x - 10, (int)m_tInfo.vPos.y - 10, (int)m_tInfo.vPos.x + 10, (int)m_tInfo.vPos.y + 10);
 	int	iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 	int	iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+	D3DXVECTOR3 vTemp = m_tInfo.vPos;
+
 	switch (m_BulletID)
 	{
-	case BULLET_BASIC:
 		
+	case BULLET_BASIC:
 		break;
 	case BULLET_DP:
-		//테스트용 DP
-		//Ellipse(hDC, (int)m_tInfo.vPos.x - 10 + iScrollX + 100, (int)m_tInfo.vPos.y - 10 + iScrollY, (int)m_tInfo.vPos.x + 10 + iScrollX + 100, (int)m_tInfo.vPos.y + 10 + iScrollY);
+		for (int i = 0; i < (sizeof(m_DpINFO_World) / sizeof(INFO)); ++i)
+		{
+			Ellipse(hDC, (int)(m_DpINFO_World[i].vPos.x - 5), (int)(m_DpINFO_World[i].vPos.y - 5),
+				(int)(m_DpINFO_World[i].vPos.x + 5), (int)(m_DpINFO_World[i].vPos.y + 5));
+		}
 		break;
 	case BULLET_END:
 		break;
@@ -198,13 +232,13 @@ void CJunBullet::Render(HDC hDC)
 	MoveToEx(hDC, (int)m_vWorldWind[14].x + iScrollX, (int)m_vWorldWind[14].y + iScrollY, nullptr);
 	LineTo(hDC, (int)m_vWorldWind[15].x + iScrollX, (int)m_vWorldWind[15].y + iScrollY);
 
-	//MoveToEx(hDC, (int)m_vWorldWind[4].x + iScrollX, (int)m_vWorldWind[4].y + iScrollY, nullptr);
-	//LineTo(hDC, (int)m_vWorldWind[5].x + iScrollX, (int)m_vWorldWind[5].y + iScrollY);
-	//MoveToEx(hDC, (int)m_vWorldPoint[8].x + iScrollX, (int)m_vWorldPoint[8].y + iScrollY, nullptr);
-	//LineTo(hDC, (int)m_vWorldPoint[9].x + iScrollX, (int)m_vWorldPoint[9].y + iScrollY);
+	MoveToEx(hDC, (int)m_vWorldWind[4].x + iScrollX, (int)m_vWorldWind[4].y + iScrollY, nullptr);
+	LineTo(hDC, (int)m_vWorldWind[5].x + iScrollX, (int)m_vWorldWind[5].y + iScrollY);
+	MoveToEx(hDC, (int)m_vWorldPoint[8].x + iScrollX, (int)m_vWorldPoint[8].y + iScrollY, nullptr);
+	LineTo(hDC, (int)m_vWorldPoint[9].x + iScrollX, (int)m_vWorldPoint[9].y + iScrollY);
 
-	//MoveToEx(hDC, (int)m_vWorldPoint[10].x + iScrollX, (int)m_vWorldPoint[10].y + iScrollY, nullptr);
-	//LineTo(hDC, (int)m_vWorldPoint[11].x + iScrollX, (int)m_vWorldPoint[11].y + iScrollY);
+	MoveToEx(hDC, (int)m_vWorldPoint[10].x + iScrollX, (int)m_vWorldPoint[10].y + iScrollY, nullptr);
+	LineTo(hDC, (int)m_vWorldPoint[11].x + iScrollX, (int)m_vWorldPoint[11].y + iScrollY);
 
 
 //	LineTo(hDC, (int)m_vWorldPoint[0].x+ iScrollX, (int)m_vWorldPoint[0].y+ iScrollY);
@@ -226,16 +260,19 @@ void CJunBullet::Move(void)
 		m_tInfo.vPos.y -= (m_fSpeed * sinf(m_fAngle) * m_fTempTime) - (0.5f * (9.8f) * m_fTempTime * m_fTempTime);
 	*/
 	//int i;
+	m_tInfo.vPos += m_fSpeed * m_tInfo.vDir;
+	m_tInfo.vPos.y += (0.5f * (9.8f) * m_fTempTime * m_fTempTime);
+
 	switch (m_BulletID)
 	{
 	case BULLET_BASIC:
-		m_tInfo.vPos += m_fSpeed * m_tInfo.vDir;
-		m_tInfo.vPos.y += (0.5f * (9.8f) * m_fTempTime * m_fTempTime);
+		
 		//i = 5;
 		break;
 	case BULLET_DP:
-		m_tInfo.vPos += m_fSpeed* m_tInfo.vDir;
-		m_tInfo.vPos.y += (0.5f * (9.8f) * m_fTempTime * m_fTempTime);
+		/*m_tInfo.vPos += m_fSpeed* m_tInfo.vDir;
+		m_tInfo.vPos.y += (0.5f * (9.8f) * m_fTempTime * m_fTempTime);*/
+		
 		break;
 	case BULLET_END:
 		break;
@@ -268,8 +305,8 @@ void CJunBullet::Local_Initialize(void)
 	m_vLocalWind[5] = { 18.f, 22.f,0.f };
 	m_vLocalWind[6] = {  13.f, 26.f,0.f };
 	m_vLocalWind[7] = { -10.f, 26.f,0.f };
-	m_vLocalWind[8] = { -23.f, -7.f,0.f };
-	m_vLocalWind[9] = {  22.f, -7.f,0.f };
+	m_vLocalWind[8] = { -33.f, -21.f,0.f };
+	m_vLocalWind[9] = {  12.f, -21.f,0.f };
 	m_vLocalWind[10] = { -38.f, 26.f,0.f };
 	m_vLocalWind[11] = { -10.f, 26.f,0.f };
 	m_vLocalWind[12] = { 14.f, -18.f,0.f };
@@ -278,5 +315,27 @@ void CJunBullet::Local_Initialize(void)
 	m_vLocalWind[15] = { -39.f, 11.f,0.f };
 	/*m_vLocalWind[15] = { 3.f, -19.f,0.f };
 	m_vLocalWind[16] = {  24.f, -19.f,0.f };*/
+
+}
+
+void CJunBullet::Dp_Local_Initialize(void)
+{
+	srand((unsigned)time(NULL));
+	for (int i = 0; 6 > i; ++i)
+	{
+		int iRandom = rand() % 60;
+		/*m_DpINFO_Local[i].vPos = { m_vLocalPoint[i].x + iRandom , m_vLocalPoint[i].y + iRandom, 0.f };
+		float fTemp = (float)iRandom * 0.1f;
+		m_DpINFO_Local[i].vDir.x = m_tInfo.vDir.x += iRandom;
+		m_DpINFO_Local[i].vDir.y = m_tInfo.vDir.y += iRandom;
+*/
+		//int iRandom = rand() % 60;
+		m_DpINFO_World[i].vPos = { m_vWorldPoint[i].x + iRandom , m_vWorldPoint[i].y + iRandom, 0.f };
+		float fTemp = (float)iRandom * 0.1f;
+		m_DpINFO_World[i].vDir.x = m_tInfo.vDir.x += iRandom;
+		m_DpINFO_World[i].vDir.y = m_tInfo.vDir.y += iRandom;
+	}
+	
+	int i = 5;
 
 }

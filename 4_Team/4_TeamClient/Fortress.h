@@ -7,6 +7,7 @@
 #include "Fortress_Boom_Effect.h"
 #include "LineMgr.h"
 #include "Fortress_HPBar.h"
+#include "Fortress_TargetLine.h"
 class CFortress :
 	public CScene
 {
@@ -50,6 +51,7 @@ private:
 	CJunBullet * JunBullet;
 	CFortress_HPBar	* m_pHPBar;
 	CFortress_Monster * FortressMonster;
+	CFortress_TargetLine* m_TargetLine;
 
 	list<CJunBullet*> JunBulletList;
 	list<CFortress_Bullet_Effect*> m_list_Bullet_Effect;
@@ -60,6 +62,7 @@ private:
 	//static list<CJunBullet*>* BulletList;
 	/*LINEPOINT TempLine = { 50,100 };
 	LINEPOINT TempLine2 = { 270,100 };*/
+
 
 	LINE m_Line;
 	//CLine TempL = {};

@@ -6,6 +6,8 @@
 #include "MainScene.h"
 #include "ScrollMgr.h"
 #include "CameraMgr.h"
+#include "LineMgr.h"
+#include "Fortress_TargetLine.h"
 
 CJunPlayer::CJunPlayer()
 	: m_iAngleCount(0)
@@ -24,6 +26,7 @@ CJunPlayer::CJunPlayer()
 
 {
 	ZeroMemory(m_vAfter_RenderLine, sizeof(m_vAfter_RenderLine));
+	ZeroMemory(m_vLineArray, sizeof(m_vLineArray));
 	Initialize();
 }
 
@@ -147,7 +150,7 @@ const int CJunPlayer::Update(void)
 
 void CJunPlayer::Late_Update(void)
 {
-
+	Line_Calculation();
 }
 
 void CJunPlayer::Render(HDC hDC)
@@ -176,55 +179,79 @@ void CJunPlayer::Render(HDC hDC)
 	MoveToEx(hDC, (int)m_vPo_One.x + iScrollX, (int)m_vPo_One.y + iScrollY, nullptr);
 	LineTo(hDC, (int)m_vPo.x + iScrollX, (int)m_vPo.y + iScrollY);
 
+
+	//임시 게이지 보게 끔 만든 렉트
+	//색상 변경점
+	HPEN MyPen, OldPen;
+	MyPen = (HPEN)CreatePen(PS_SOLID, 3, RGB(255, 0, 0));
+	OldPen = (HPEN)::SelectObject(hDC, (HGDIOBJ)MyPen);
+
+	Rectangle(hDC, (int)700/* + iScrollX*/, WINCY - (int)80 /*+ iScrollY*/, (int)960/* + iScrollX*/, WINCY - (int)30/*+ iScrollY*/);
+	Rectangle(hDC, (int)955/* + iScrollX*/, WINCY - (int)80 /*+ iScrollY*/, (int)960/* + iScrollX*/, WINCY - (int)30/*+ iScrollY*/);
+	Rectangle(hDC, (int)700/* + iScrollX*/, WINCY - (int)80 /*+ iScrollY*/, (int)705/* + iScrollX*/, WINCY - (int)30/*+ iScrollY*/);
+
+
+
 	if (m_bGageRender && !m_pBullet)
 	{
 		//Ellipse(hDC, (int)800/* + iScrollX*/, (int)(400 - (m_fTempPower * 10)) /*+ iScrollY*/, (int)850/* + iScrollX*/, (int)(450 - (m_fTempPower * 10))/*+ iScrollY*/);
 		Ellipse(hDC, (int)(705 + (m_fTempPower * 10))/* + iScrollX*/, WINCY - (int)80 /*+ iScrollY*/, (int)(755 + (m_fTempPower * 10))/* + iScrollX*/, WINCY - (int)30/*+ iScrollY*/);
 	}
-
+	
 	float fTempX = m_vPo.x;
 	float fTempY = m_vPo.y;
 	D3DXVECTOR3 TempVec1 = { m_vPo.x - m_vPo_One.x, m_vPo.y - m_vPo_One.y,0.f };
 	D3DXVECTOR3 TempVec2 = { 1.f,0.f,0.f };
 
 	D3DXVec3Normalize(&TempVec1, &TempVec1);
+	//펜 삭제인데 잘 몰라서 그냥 삭제했다가 재생성 함
+	SelectObject(hDC, OldPen);
+	DeleteObject(MyPen);
 
-	if(m_bTargetLine)
-	{
-		
-		//(int)m_vPo.x + iScrollX, (int)m_vPo.y + iScrollY
-		float fTempTime = 0.f;
+	//HPEN MyPen2, OldPen2;
+	//MyPen2 = (HPEN)CreatePen(PS_SOLID, 3, RGB(125, 0, 0));
+	//OldPen2 = (HPEN)::SelectObject(hDC, (HGDIOBJ)MyPen2);
+	//if(m_bTargetLine)
+	//{
+	//	//(int)m_vPo.x + iScrollX, (int)m_vPo.y + iScrollY
+	//	float fTempTime = 0.f;
 
-		if (m_bGageRender)
-		{
-			for (int i = 0; i < 30; ++i)
-			{
-				fTempX += 5 * (m_fShootPower * TempVec1.x);
-				fTempY += 5 * (m_fShootPower * TempVec1.y);
-				fTempY += 5 * (0.5f * (9.8f) * fTempTime * fTempTime);
-				fTempTime += 5 * 0.016f;
-				Ellipse(hDC, (int)(fTempX + iScrollX - 5), (int)(fTempY + iScrollY - 5), (int)(fTempX + iScrollX + 5), (int)(fTempY + iScrollY + 5));
-				
-			}
-		}
-		else
-		{
-			for (int i = 0; i < 30; ++i)
-			{
-				fTempX += 5 * (m_fRenderPower * TempVec1.x);
-				fTempY += 5 * (m_fRenderPower * TempVec1.y);
-				fTempY += 5 * (0.5f * (9.8f) * fTempTime * fTempTime);
-				fTempTime += 5 * 0.016f;
-				Ellipse(hDC, (int)(fTempX + iScrollX - 5), (int)(fTempY + iScrollY - 5), (int)(fTempX + iScrollX + 5), (int)(fTempY + iScrollY + 5));
-			}
-		}
-		
-	}
-	//임시 게이지 보게 끔 만든 렉트
-	Rectangle(hDC, (int)955/* + iScrollX*/, WINCY - (int)80 /*+ iScrollY*/, (int)960/* + iScrollX*/, WINCY - (int)30/*+ iScrollY*/);
-	Rectangle(hDC, (int)700/* + iScrollX*/, WINCY-(int)80 /*+ iScrollY*/, (int)705/* + iScrollX*/, WINCY-(int)30/*+ iScrollY*/);
+	//	if (m_bGageRender)
+	//	{
+	//		for (int i = 0; i < 30; ++i)
+	//		{
+	//			fTempX += 5 * (m_fShootPower * TempVec1.x);
+	//			fTempY += 5 * (m_fShootPower * TempVec1.y);
+	//			fTempY += 5 * (0.5f * (9.8f) * fTempTime * fTempTime);
+	//			fTempTime += 5 * 0.016f;
+	//			D3DXVECTOR3 vTemp = { fTempX + iScrollX ,fTempY + iScrollY, 0.f };
+	//			float fTemp = 0.f;
+	//			/*if (vTemp.y <   100)*/
+	//			Ellipse(hDC, (int)(fTempX + iScrollX - 5), (int)(fTempY + iScrollY - 5), (int)(fTempX + iScrollX + 5), (int)(fTempY + iScrollY + 5));
+	//		}
+	//	}
+	//	else
+	//	{
+	//		for (int i = 0; i < 30; ++i)
+	//		{
+	//			fTempX += 5 * (m_fRenderPower * TempVec1.x);
+	//			fTempY += 5 * (m_fRenderPower * TempVec1.y);
+	//			fTempY += 5 * (0.5f * (9.8f) * fTempTime * fTempTime);
+	//			fTempTime += 5 * 0.016f;
+	//			D3DXVECTOR3 vTemp = { fTempX + iScrollX ,fTempY + iScrollY, 0.f };
+	//			float fTemp = 0.f;
+	//			Ellipse(hDC, (int)(fTempX + iScrollX - 5), (int)(fTempY + iScrollY - 5), (int)(fTempX + iScrollX + 5), (int)(fTempY + iScrollY + 5));
 
+	//		}
+	//	}
+	//	
+	//}
 
+	//SelectObject(hDC, OldPen2);
+	//DeleteObject(MyPen2);
+	
+//	Rectangle(hDC, )
+	 
 	/*MoveToEx(hDC, (int)m_tInfo.vPos.x, (int)m_tInfo.vPos.y, nullptr);
 	LineTo(hDC, (int)Po.x, (int)Po.y);*/
 }
@@ -347,7 +374,7 @@ void CJunPlayer::Shoot(void)
 				FortressScene->Get_JunBulletList()->push_back(m_pBullet);
 				FortressScene->Set_Target(FortressScene->Get_JunBulletList()->back());
 				m_fShootPower = 0.f;
-				m_fTempPower = 0.f;
+				//m_fTempPower = 0.f;
 
 				FortressScene->Set_Monster_Turn(true);
 				FortressScene->Set_Player_Turn(false);
@@ -375,4 +402,47 @@ void CJunPlayer::Fallen(void)
 	m_tInfo.vPos.y += (0.5f * 3.8f * (m_fFallenTime * m_fFallenTime));
 
 	m_fAngle -= D3DXToRadian(1.f);
+}
+
+void CJunPlayer::Line_Calculation(void)
+{
+
+	float fTempX = m_vPo.x;
+	float fTempY = m_vPo.y;
+	D3DXVECTOR3 TempVec1 = { m_vPo.x - m_vPo_One.x, m_vPo.y - m_vPo_One.y,0.f };
+	D3DXVECTOR3 TempVec2 = { 1.f,0.f,0.f };
+
+	D3DXVec3Normalize(&TempVec1, &TempVec1);
+	//펜 삭제인데 잘 몰라서 그냥 삭제했다가 재생성 함
+	
+	
+		//(int)m_vPo.x + iScrollX, (int)m_vPo.y + iScrollY
+		float fTempTime = 0.f;
+
+		if (m_bGageRender)
+		{
+			for (int i = 0; i < 30; ++i)
+			{
+				fTempX += 5 * (m_fShootPower * TempVec1.x);
+				fTempY += 5 * (m_fShootPower * TempVec1.y);
+				fTempY += 5 * (0.5f * (9.8f) * fTempTime * fTempTime);
+				fTempTime += 5 * 0.016f;
+				m_vLineArray[i] = { fTempX,fTempY,0.f };
+			}
+		}
+
+		else
+		{
+			for (int i = 0; i < 30; ++i)
+			{
+				fTempX += 5 * (m_fTempPower * TempVec1.x);
+				fTempY += 5 * (m_fTempPower * TempVec1.y);
+				fTempY += 5 * (0.5f * (9.8f) * fTempTime * fTempTime);
+				fTempTime += 5 * 0.016f;
+				m_vLineArray[i] = { fTempX,fTempY,0.f };
+			}
+		}
+			
+			m_pTargetLine->Set_RenderArray(m_vLineArray, m_bTargetLine);
+		
 }
