@@ -225,6 +225,7 @@
     <ClInclude Include="Fortress_Monster.h" />
     <ClInclude Include="Fortress_Monster_Bullet.h" />
     <ClInclude Include="MainScene.h" />
+    <ClInclude Include="Main_Button.h" />
     <ClInclude Include="MomoAbstractFactory.h" />
     <ClInclude Include="MomoGun.h" />
     <ClInclude Include="JunBullet.h" />
@@ -287,6 +288,7 @@
     <ClCompile Include="Fortress_Monster.cpp" />
     <ClCompile Include="Fortress_Monster_Bullet.cpp" />
     <ClCompile Include="MainScene.cpp" />
+    <ClCompile Include="Main_Button.cpp" />
     <ClCompile Include="MomoGun.cpp" />
     <ClCompile Include="JunBullet.cpp" />
     <ClCompile Include="JunPlayer.cpp" />

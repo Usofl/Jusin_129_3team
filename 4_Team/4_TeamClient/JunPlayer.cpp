@@ -2,6 +2,8 @@
 #include "JunPlayer.h"
 #include "KeyMgr.h"
 #include "SceneMgr.h"
+#include "Fortress.h"
+#include "MainScene.h"
 #include "ScrollMgr.h"
 #include "CameraMgr.h"
 
@@ -338,15 +340,29 @@ void CJunPlayer::Shoot(void)
 				m_pBullet->Set_Pos_Dir(m_vPo.x, m_vPo.y, TempVec1, 1, m_fShootPower, m_vPo - m_vPo_One);
 			}
 
-			CFortress* FortressScene = static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS));
-			m_pBullet->Set_BulletID(BULLET_BASIC);
-			FortressScene->Get_JunBulletList()->push_back(m_pBullet);
-			FortressScene->Set_Target(FortressScene->Get_JunBulletList()->back());
-			m_fShootPower = 0.f;
-			m_fTempPower = 0.f;
+			if (SC_FORTRESS == SCENEMGR->Get_Scene_ID())
+			{
+				CFortress* FortressScene = static_cast<CFortress*>(SCENEMGR->Get_Scene(SC_FORTRESS));
+				m_pBullet->Set_BulletID(BULLET_BASIC);
+				FortressScene->Get_JunBulletList()->push_back(m_pBullet);
+				FortressScene->Set_Target(FortressScene->Get_JunBulletList()->back());
+				m_fShootPower = 0.f;
+				m_fTempPower = 0.f;
 
-			FortressScene->Set_Monster_Turn(true);
-			FortressScene->Set_Player_Turn(false);
+				FortressScene->Set_Monster_Turn(true);
+				FortressScene->Set_Player_Turn(false);
+			}
+
+			if (SC_MAIN == SCENEMGR->Get_Scene_ID())
+			{
+				CMainScene* MainScene = static_cast<CMainScene*>(SCENEMGR->Get_Scene(SC_MAIN));
+				m_pBullet->Set_BulletID(BULLET_BASIC);
+
+				MainScene->Set_Bullet(m_pBullet);
+
+				m_fShootPower = 0.f;
+				m_fTempPower = 0.f;
+			}
 		}
 
 		//int i = 5;

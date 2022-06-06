@@ -1,6 +1,5 @@
 #pragma once
 #include "Scene.h"
-#include "Fortress.h"
 
 class CSceneMgr
 {
@@ -37,6 +36,8 @@ public:
 
 public:
 	inline CScene*&	Get_Scene(const SCENEID& _SceneID) { return m_pScene[_SceneID]; }
+
+	inline const SCENEID&	Get_Scene_ID(void) { return m_eCurScene; }
 
 private:
 	static CSceneMgr*		m_pInstance;

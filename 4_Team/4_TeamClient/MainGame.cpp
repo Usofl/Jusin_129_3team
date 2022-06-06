@@ -8,6 +8,7 @@
 #include "TextureMgr.h"
 #include "CameraMgr.h"
 
+
 CMainGame::CMainGame()
 	: m_dwFPSTime(GetTickCount())
 	, m_iFPS(0)
@@ -25,11 +26,12 @@ void CMainGame::Initialize(void)
 	m_hDC = GetDC(g_hWnd);
 	m_hBackDC = GetDC(g_hWnd);
 
+	SCENEMGR->Scene_Change(SC_MAIN);
 	//SCENEMGR->Scene_Change(SC_ZELDA);
 	//SCENEMGR->Scene_Change(SC_ZELDA_EDIT);
 	//SCENEMGR->Scene_Change(SC_FORTRESS);
 	//SCENEMGR->Scene_Change(SC_FLASHMAN);
-	SCENEMGR->Scene_Change(SC_MOMO);
+	//SCENEMGR->Scene_Change(SC_MOMO);
 	//SCENEMGR->Scene_Change(SC_BRAWL_STARS);
 	 
 	if (FAILED(DEVICE->Initialize()))

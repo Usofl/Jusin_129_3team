@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "SceneMgr.h"
+#include "ScrollMgr.h"
+#include "MainScene.h"
 #include "ZeldaScene.h"
+#include "Fortress.h"
 #include "Brawl_Stars_Scene.h"
 #include "Momodora.h"
 #include "ZeldaEditScene.h"
@@ -13,6 +16,7 @@ CSceneMgr::CSceneMgr()
 	, m_eCurScene(SC_END)
 	, m_ePreScene(SC_END)
 {
+	m_pScene[SC_MAIN] = new CMainScene;
 	m_pScene[SC_BRAWL_STARS] = new CBrawl_Stars_Scene;
 	m_pScene[SC_MOMO] = new CMomodora;
 	//m_pScene[SC_FORTRESS] = nullptr;
@@ -35,6 +39,8 @@ void CSceneMgr::Scene_Change(const SCENEID& eID)
 	{
 		m_pScene[m_eCurScene]->Initialize();
 		m_ePreScene = m_eCurScene;
+		SCROLLMGR->Set_ScrollX(0.f);
+		SCROLLMGR->Set_ScrollY(0.f);
 	}
 }
 

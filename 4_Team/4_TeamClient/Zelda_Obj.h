@@ -26,7 +26,7 @@ protected:
 	float			m_fXSize;
 	float			m_fYSize;
 
-	D3DXVECTOR3		m_vPoint[4];
-	D3DXVECTOR3		m_vDrawPoint[4];
+	D3DXVECTOR3		m_vPoint[POINT_END];
+	D3DXVECTOR3		m_vDrawPoint[POINT_END];
 };
 
