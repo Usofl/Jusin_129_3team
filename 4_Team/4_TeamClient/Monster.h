@@ -3,6 +3,9 @@
 class CMonster : public CObj
 {
 public:
+	enum POINT { POINT_LEFT_TOP, POINT_RIGHT_TOP, POINT_RIGHT_BOTTOM, POINT_LEFT_BOTTOM, POINT_END };
+
+public:
 	CMonster();
 	virtual ~CMonster();
 

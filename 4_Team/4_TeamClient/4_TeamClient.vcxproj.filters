@@ -414,6 +414,9 @@
     <ClInclude Include="Follower_Monster.h">
       <Filter>03. Game\01. Obj\01. Other_Object\01.Momo_Obj\01. Monster\00. Follower</Filter>
     </ClInclude>
+    <ClInclude Include="Shooter_Monster.h">
+      <Filter>03. Game\01. Obj\01. Other_Object\01.Momo_Obj\01. Monster\01. Shooter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="4_TeamClient.cpp">
@@ -595,6 +598,9 @@
     </ClCompile>
     <ClCompile Include="Follower_Monster.cpp">
       <Filter>03. Game\01. Obj\01. Other_Object\01.Momo_Obj\01. Monster\00. Follower</Filter>
+    </ClCompile>
+    <ClCompile Include="Shooter_Monster.cpp">
+      <Filter>03. Game\01. Obj\01. Other_Object\01.Momo_Obj\01. Monster\01. Shooter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

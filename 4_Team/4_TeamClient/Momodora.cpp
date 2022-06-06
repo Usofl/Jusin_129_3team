@@ -25,6 +25,7 @@ void CMomodora::Initialize(void)
 		m_pPlayer = new CMomodoraPlayer;
 	}
 	m_listMonsterList.push_back(CMomoAbstractFactory::Create_Follower());
+	m_listMonsterList.push_back(CMomoAbstractFactory::Create_Shoter());
 }
 
 void CMomodora::Update(void)

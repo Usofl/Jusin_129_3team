@@ -2,6 +2,7 @@
 #include "Momo_Obj.h"
 #include "MomoSword.h"
 #include "Follower_Monster.h"
+#include "Shooter_Monster.h"
 #include "MomoBullet.h"
 
 class CMomodoraPlayer;
@@ -23,6 +24,13 @@ public:
 	static CMonster*	Create_Follower(void)
 	{
 		CMonster*	pObj = new CFollower_Monster;
+
+		return pObj;
+	}
+
+	static CMonster*	Create_Shoter(void)
+	{
+		CMonster*	pObj = new CShooter_Monster;
 
 		return pObj;
 	}

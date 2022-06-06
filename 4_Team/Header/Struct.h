@@ -15,6 +15,8 @@ typedef	struct tagInfo_Mat
 	D3DXMATRIX matScale;
 	D3DXMATRIX matRotZ;
 	D3DXMATRIX matTrans;
+	D3DXMATRIX matRevolutionZ; 
+	D3DXMATRIX matParents;
 
 }MATINFO;
 
