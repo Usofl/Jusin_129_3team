@@ -62,8 +62,6 @@ void CMomodora::Update(void)
 			++iter;
 		}
 	}
-}
-	}
 
 	for (auto& iter = MomoBulletList.begin();
 		iter != MomoBulletList.end(); )
