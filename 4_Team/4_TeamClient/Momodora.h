@@ -30,5 +30,8 @@ private:
 	list<CMomoSword*>	MomoSwordList;
 	list<CMonster*>		m_listMonsterList;
 	list<CMomoBullet*>	MomoBulletList;
+
+	int iEnemyDamage;
+	int iPlayerDamage;
 };
 

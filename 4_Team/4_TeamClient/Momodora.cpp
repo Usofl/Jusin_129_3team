@@ -9,6 +9,8 @@
 CMomodora::CMomodora()
 	: m_pPlayer(nullptr)
 	, m_pTarget(nullptr)
+	, iEnemyDamage(5)
+	, iPlayerDamage(5)
 {
 }
 
