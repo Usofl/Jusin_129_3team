@@ -442,7 +442,11 @@ void CJunPlayer::Line_Calculation(void)
 				m_vLineArray[i] = { fTempX,fTempY,0.f };
 			}
 		}
-			
+
+
+		if (SC_FORTRESS == SCENEMGR->Get_Scene_ID())
+		{
 			m_pTargetLine->Set_RenderArray(m_vLineArray, m_bTargetLine);
+		}
 		
 }
