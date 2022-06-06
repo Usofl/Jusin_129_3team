@@ -44,7 +44,7 @@ void CFortress_TargetLine::Render(HDC hDC)
 		float fY = vRenderArray[i].y;
 		/*if (!LINEMGR->Collision_JunLine(fX, fY, fAngle))
 			continue;*/
-		Ellipse(hDC, vRenderArray[i].x + iScrollX - 2, vRenderArray[i].y + iScrollY - 2, vRenderArray[i].x + iScrollX + 2, vRenderArray[i].y + iScrollY + 2);
+		Ellipse(hDC, (int)vRenderArray[i].x + iScrollX - 2, (int)vRenderArray[i].y + iScrollY - 2, (int)vRenderArray[i].x + iScrollX + 2, (int)vRenderArray[i].y + iScrollY + 2);
 	}
 	SelectObject(hDC, OldPen);
 	DeleteObject(MyPen);
