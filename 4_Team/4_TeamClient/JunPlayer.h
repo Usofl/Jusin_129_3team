@@ -71,7 +71,7 @@ private:
 	D3DXMATRIX		m_matScale, m_matRotZ, m_matTrans;
 	D3DXMATRIX		m_HmatScale, m_HmatRotZ, m_HmatTrans;
 	
-	D3DXVECTOR3 m_vLineArray[30] ;
+	D3DXVECTOR3 m_vLineArray[200] ;
 	D3DXVECTOR3 vHeadPos;
 	
 	INFO	m_HeadInfo;

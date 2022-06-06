@@ -14,6 +14,7 @@ public:
 
 	bool		Collision_Line(float& _fX, float* _pY);
 	const bool  Collision_JunLine(float & _fX, float & _fY, float& _fAngle);
+	const bool  Collision_TargetLine(float _fX, float  _fY);
 	const float Collision_Monster_Line(float& _fX, float* _pY);
 	bool		Collision_DeLine(const float& _fX, const float& _fY);
 	void		Load_Line();
