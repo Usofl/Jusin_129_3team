@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Fortress_TargetLine.h"
 #include "ScrollMgr.h"
-
+#include "LineMgr.h"
 CFortress_TargetLine::CFortress_TargetLine():m_bRender(false)
 {
 	ZeroMemory(vRenderArray, sizeof(vRenderArray));
@@ -33,12 +33,21 @@ void CFortress_TargetLine::Render(HDC hDC)
 	int	iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 	int	iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
+	HPEN MyPen, OldPen;
+	MyPen = (HPEN)CreatePen(PS_SOLID, 3, RGB(0, 0, 255));
+	OldPen = (HPEN)::SelectObject(hDC, (HGDIOBJ)MyPen);
 	
-	for (int i = 0; 30 > i; ++i)
+	for (int i = 0; 200 > i; ++i)
 	{
-		Ellipse(hDC, vRenderArray[i].x + iScrollX - 5, vRenderArray[i].y + iScrollY - 5, vRenderArray[i].x + iScrollX + 5, vRenderArray[i].y + iScrollY + 5);
+		float fAngle = 0.f;
+		float fX = vRenderArray[i].x;
+		float fY = vRenderArray[i].y;
+		/*if (!LINEMGR->Collision_JunLine(fX, fY, fAngle))
+			continue;*/
+		Ellipse(hDC, vRenderArray[i].x + iScrollX - 2, vRenderArray[i].y + iScrollY - 2, vRenderArray[i].x + iScrollX + 2, vRenderArray[i].y + iScrollY + 2);
 	}
-
+	SelectObject(hDC, OldPen);
+	DeleteObject(MyPen);
 }
 
 void CFortress_TargetLine::Release(void)

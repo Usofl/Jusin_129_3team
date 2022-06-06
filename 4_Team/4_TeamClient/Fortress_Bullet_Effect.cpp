@@ -98,7 +98,7 @@ void CFortress_Bullet_Effect::Render(HDC hDC)
 	HPEN MyPen, OldPen;
 	MyPen = (HPEN)CreatePen(PS_SOLID, 3, RGB(m_iRed, 0, 0));
 	OldPen = (HPEN)::SelectObject(hDC, (HGDIOBJ)MyPen);
-
+	
 	Ellipse(hDC, (int)m_tInfo.vPos.x - m_iSize + iScrollX, (int)m_tInfo.vPos.y - m_iSize + iScrollY,
 		(int)m_tInfo.vPos.x + m_iSize + iScrollX, (int)m_tInfo.vPos.y + m_iSize + iScrollY);
 

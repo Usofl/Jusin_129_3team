@@ -380,6 +380,7 @@ void CJunPlayer::Shoot(void)
 				FortressScene->Set_Player_Turn(false);
 			}
 
+
 			if (SC_MAIN == SCENEMGR->Get_Scene_ID())
 			{
 				CMainScene* MainScene = static_cast<CMainScene*>(SCENEMGR->Get_Scene(SC_MAIN));
@@ -421,24 +422,31 @@ void CJunPlayer::Line_Calculation(void)
 
 		if (m_bGageRender)
 		{
-			for (int i = 0; i < 30; ++i)
-			{
+			for (int i = 0; i < 200; ++i) // 30ÀÌ¶û * 5
+			{/*
 				fTempX += 5 * (m_fShootPower * TempVec1.x);
 				fTempY += 5 * (m_fShootPower * TempVec1.y);
 				fTempY += 5 * (0.5f * (9.8f) * fTempTime * fTempTime);
 				fTempTime += 5 * 0.016f;
+				m_vLineArray[i] = { fTempX,fTempY,0.f };*/
+
+
+				fTempX += (m_fShootPower * TempVec1.x);
+				fTempY += (m_fShootPower * TempVec1.y);
+				fTempY += (0.5f * (9.8f) * fTempTime * fTempTime);
+				fTempTime +=  0.016f;
 				m_vLineArray[i] = { fTempX,fTempY,0.f };
 			}
 		}
 
 		else
 		{
-			for (int i = 0; i < 30; ++i)
+			for (int i = 0; i < 200; ++i)
 			{
-				fTempX += 5 * (m_fTempPower * TempVec1.x);
-				fTempY += 5 * (m_fTempPower * TempVec1.y);
-				fTempY += 5 * (0.5f * (9.8f) * fTempTime * fTempTime);
-				fTempTime += 5 * 0.016f;
+				fTempX +=  (m_fTempPower * TempVec1.x);
+				fTempY +=  (m_fTempPower * TempVec1.y);
+				fTempY +=  (0.5f * (9.8f) * fTempTime * fTempTime);
+				fTempTime +=  0.016f;
 				m_vLineArray[i] = { fTempX,fTempY,0.f };
 			}
 		}

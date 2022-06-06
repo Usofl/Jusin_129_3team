@@ -231,6 +231,19 @@ const bool CLineMgr::Collision_JunLine(float & _fX, float & _fY, float& _fAngle)
 	return true;
 }
 
+const bool CLineMgr::Collision_TargetLine(float _fX, float _fY)
+{
+	/*for (auto& iter : m_LineList)
+	{
+		if (_fX >= iter->Get_Info().tLPoint.fX &&
+			_fX <= iter->Get_Info().tRPoint.fX)
+		{
+			pTarget = iter;
+		}
+	}*/
+	return false;
+}
+
 const float CLineMgr::Collision_Monster_Line(float & _fX, float * pY)
 {
 	if (m_LineList.empty())

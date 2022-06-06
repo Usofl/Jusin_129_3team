@@ -243,18 +243,34 @@ void CFortress::Late_Update(void)
 				float fX = (iter)->Get_Info().vPos.x;
 				float fY = (iter)->Get_Info().vPos.y;
 
-				if (MonsterCollision_Check(fMonsterX, fMonsterY, (iter)->Get_Info().vPos.x, (iter)->Get_Info().vPos.y))
+				if (iter->Get_BulletID() == BULLET_BASIC)
 				{
-					m_list_Boom_Effect.push_back(CFortressFactory::Create_Fortress_Boom_Effect((iter)->Get_Info().vPos.x, (iter)->Get_Info().vPos.y));
-					iter->Set_Dead(true);
-					FortressMonster->Set_Hp(iPlayerDamage);
-					FortressMonster->Set_Move_On(true);
+					if (MonsterCollision_Check(fMonsterX, fMonsterY, (iter)->Get_Info().vPos.x, (iter)->Get_Info().vPos.y))
+					{
+						m_list_Boom_Effect.push_back(CFortressFactory::Create_Fortress_Boom_Effect((iter)->Get_Info().vPos.x, (iter)->Get_Info().vPos.y));
+						iter->Set_Dead(true);
+						FortressMonster->Set_Hp(iPlayerDamage);
+						FortressMonster->Set_Move_On(true);
 
-					m_pTarget = FortressMonster;
+						m_pTarget = FortressMonster;
 
-					JunPlayer->ReSet_Bullet(); // 삭제 했으니 플레이어의 총알 포인터 초기화 -> 현재는 총알 포인터가 Nullptr이면 새로 생성 못하게 끔 해놨음(한 발만 쏘게)
-					continue;
+						JunPlayer->ReSet_Bullet(); // 삭제 했으니 플레이어의 총알 포인터 초기화 -> 현재는 총알 포인터가 Nullptr이면 새로 생성 못하게 끔 해놨음(한 발만 쏘게)
+						continue;
+					}
 				}
+
+				else if (iter->Get_BulletID() == BULLET_DP)
+				{
+					for (int i = 0; 10 > i; ++i)
+					{
+						//필히 수정사항 정 안되면 빼고 DP부분 싹 다 주석처리
+						if (MonsterCollision_Check(fMonsterX, fMonsterY, (iter)->Get_DpBullet(i).x, (iter)->Get_DpBullet(i).y))
+						FortressMonster->Set_Hp(iPlayerDamage);
+						FortressMonster->Set_Move_On(true);
+						m_pTarget = FortressMonster;
+					}
+				}
+				
 
 				/*if((*iter)->Get_Info)*/
 				if (LINEMGR->Collision_DeLine(fX, fY))
