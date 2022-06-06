@@ -17,8 +17,8 @@ public:
 
 public:
 
-	inline void Set_RenderArray(D3DXVECTOR3 _Array[30], bool _bRender) {
-		for (int i = 0; 30 > i; ++i)
+	inline void Set_RenderArray(D3DXVECTOR3 _Array[200], bool _bRender) {
+		for (int i = 0; 200 > i; ++i)
 		{
 			vRenderArray[i] = _Array[i];
 			m_bRender = _bRender;
@@ -26,7 +26,7 @@ public:
 	}
 
 private:
-	D3DXVECTOR3 vRenderArray[30];
+	D3DXVECTOR3 vRenderArray[200];
 	bool m_bRender;
 	//CJunPlayer* m_pPlayer;
 

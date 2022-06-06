@@ -42,12 +42,15 @@ public:
 
 	inline BULLET_ID Get_BulletID(void) { return m_BulletID; };
 	inline void		 Set_BulletID(const BULLET_ID& _ID) { m_BulletID = _ID; };
+	D3DXVECTOR3		 Get_DpBullet(int _iIndex) { return m_vDpPoint[_iIndex]; }
 
 private:
 	/*D3DXVECTOR3 m_vLocalPoint[4];
 	D3DXVECTOR3 m_vWorldPoint[4];*/
 	D3DXVECTOR3 m_vLocalPoint[12];
 	D3DXVECTOR3 m_vWorldPoint[12];
+
+	D3DXVECTOR3 m_vDpPoint[10];
 
 	INFO m_DpINFO_Local[6];
 	INFO m_DpINFO_World[6];
@@ -65,6 +68,8 @@ private:
 	D3DXVECTOR3 vSu;
 	D3DXVECTOR3 m_vOne;
 	D3DXVECTOR3 m_vDpDir;
+	
+
 	D3DXMATRIX		m_matScale, m_matRotZ, m_matTrans;
 	CJunBullet* m_DpBullet[10];
 };
