@@ -84,8 +84,13 @@ void CFortress::Update(void)
 		{
 			Safe_Delete<CJunBullet*>(*iter);
 			(iter) = JunBulletList.erase((iter));
-			JunPlayer->Set_MyTurn(false);
-			FortressMonster->Set_MyTurn(true);
+
+			if (JunPlayer != nullptr && FortressMonster != nullptr)
+			{
+				JunPlayer->Set_MyTurn(false);
+				FortressMonster->Set_MyTurn(true);
+			}
+		
 		}
 
 		else
@@ -102,8 +107,15 @@ void CFortress::Update(void)
 			Safe_Delete<CFortress_Monster_Bullet*>(*iter);
 			(iter) = Monster_Bullet_List.erase((iter));
 			(FortressMonster)->Set_Reset_Fortress_Monster_Bullet();
-			JunPlayer->Set_MyTurn(true);
-			FortressMonster->Set_MyTurn(false);
+			if (JunPlayer != nullptr && FortressMonster != nullptr)
+			{
+				JunPlayer->Set_MyTurn(true);
+				FortressMonster->Set_MyTurn(false);
+			}
+		/*	if ()
+			{
+				
+			}*/
 		}
 
 		else
@@ -424,7 +436,7 @@ const bool CFortress::MonsterCollision_Check(float _fMonsterX, float _fMonsterY,
 {
 	if ((_fMonsterX - 125 <= _fBulletX &&
 		_fMonsterX + 125 >= _fBulletX) &&
-		(_fMonsterY - 70 <= _fBulletY &&
+		(_fMonsterY - 120 <= _fBulletY &&
 			_fMonsterY + 70 >= _fBulletY))
 	{
 		return true;
