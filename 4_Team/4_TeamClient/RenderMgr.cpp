@@ -19,6 +19,12 @@ void CRenderMgr::Add_Render_Obj(CObj* _obj)
 
 	RENDERID render_Id = _obj->Get_RenderID();
 	INFO render_Info = _obj->Get_Info();
+	
+	if (render_Id == RENDER_TARGETLINE)
+	{
+		m_RenderSort[render_Id].push_back(_obj);
+		return;
+	}
 
 	if (!(render_Info.vPos.x + iScrollX > (WINCX + 200) || render_Info.vPos.x + iScrollX <  - 200
 		|| render_Info.vPos.y + iScrollY >(WINCY + 200) || render_Info.vPos.y + iScrollY <  - 200))

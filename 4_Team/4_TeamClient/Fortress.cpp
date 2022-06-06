@@ -10,6 +10,7 @@ CFortress::CFortress()
 	, m_pTarget(nullptr)
 	, JunBullet(nullptr)
 	, m_pHPBar(nullptr)
+	, m_TargetLine(nullptr)
 	, m_bPlayer_Turn(true)
 	, m_bMonster_Turn(false)
 	, iEnemyDamage(50)
@@ -30,6 +31,8 @@ void CFortress::Initialize(void)
 	{
 		JunPlayer = new CJunPlayer;
 		m_pTarget = JunPlayer;
+		m_TargetLine = new CFortress_TargetLine;
+		JunPlayer->Set_TargetLine(m_TargetLine);
 	}
 
 	if (nullptr == FortressMonster)
@@ -43,6 +46,8 @@ void CFortress::Initialize(void)
 	{
 		m_pHPBar = new CFortress_HPBar;
 	}
+
+	
 
 	m_Line.tLPoint = { 0.f,0.f };
 	m_Line.tRPoint = { 300.f,0.f };
@@ -137,12 +142,27 @@ void CFortress::Update(void)
 void CFortress::Late_Update(void)
 {
 	m_pHPBar->Late_Update();
-
+	
+	
 	if (JunPlayer !=nullptr)
 	{
 		JunPlayer->Late_Update();
 		RENDERMGR->Add_Render_Obj(JunPlayer);
+		m_TargetLine->Late_Update();
 
+		if (JunPlayer->Get_RenderLine())
+		{
+			if (Monster_Bullet_List.empty())
+			{
+				RENDERMGR->Add_Render_Obj(m_TargetLine);
+			}
+			else
+			{
+				JunPlayer->Set_ReSetLine();
+			}
+		}
+		
+		
 		float fPlayerX = JunPlayer->Get_Info().vPos.x;
 		float fPlayerY = JunPlayer->Get_Info().vPos.y;
 		float fAngle(0.f);
@@ -227,7 +247,6 @@ void CFortress::Late_Update(void)
 				if (MonsterCollision_Check(fMonsterX, fMonsterY, (iter)->Get_Info().vPos.x, (iter)->Get_Info().vPos.y))
 				{
 					m_list_Boom_Effect.push_back(CFortressFactory::Create_Fortress_Boom_Effect((iter)->Get_Info().vPos.x, (iter)->Get_Info().vPos.y));
-
 					iter->Set_Dead(true);
 					FortressMonster->Set_Hp(iPlayerDamage);
 					FortressMonster->Set_Move_On(true);
@@ -371,7 +390,7 @@ void CFortress::Release(void)
 
 void CFortress::Key_Input(void)
 {
-
+	
 }
 
 const bool CFortress::MonsterCollision_Check(float _fMonsterX, float _fMonsterY, float _fBulletX, float _fBulletY)

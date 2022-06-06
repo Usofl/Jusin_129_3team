@@ -16,6 +16,7 @@ public:
 private:
 	void Move(void);
 	void Local_Initialize(void);
+	void Dp_Local_Initialize(void);
 
 public:
 	inline void Set_Pos_Dir(const float& _x, const float& _y, const D3DXVECTOR3& _vDir, const int& _iBullDir, const float& _fSpeed,  D3DXVECTOR3 _vOne)
@@ -47,6 +48,11 @@ private:
 	D3DXVECTOR3 m_vWorldPoint[4];*/
 	D3DXVECTOR3 m_vLocalPoint[12];
 	D3DXVECTOR3 m_vWorldPoint[12];
+
+	INFO m_DpINFO_Local[6];
+	INFO m_DpINFO_World[6];
+
+
 
 	D3DXVECTOR3 m_vLocalWind[16];
 	D3DXVECTOR3 m_vWorldWind[16];
