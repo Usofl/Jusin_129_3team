@@ -42,7 +42,16 @@ public:
 
 	inline BULLET_ID Get_BulletID(void) { return m_BulletID; };
 	inline void		 Set_BulletID(const BULLET_ID& _ID) { m_BulletID = _ID; };
-	D3DXVECTOR3		 Get_DpBullet(int _iIndex) { return m_vDpPoint[_iIndex]; }
+	D3DXVECTOR3		 Get_DpBullet(int _iIndex) { return m_vDpPoint[_iIndex]; };
+	void			 Set_DpBullet_Die(int _iIndex) {m_vDpPoint[_iIndex] -= {3000.f, 3000.f, 0.f }; m_bDp_Line = true; m_iDestroy_Count--;};
+	bool Get_Destroy_Count(void) { 
+		if (m_iDestroy_Count <= 0)
+		{
+			return true;
+		}
+		return false;
+	}
+	const bool		 Get_Dp_Line(void) { return m_bDp_Line; };
 
 private:
 	/*D3DXVECTOR3 m_vLocalPoint[4];
@@ -64,6 +73,8 @@ private:
 	float m_fTempTime;
 	float m_fFallValue;
 	int m_iBulletDir;
+	bool m_bDp_Line;
+	int m_iDestroy_Count;
 	BULLET_ID m_BulletID;
 	D3DXVECTOR3 vSu;
 	D3DXVECTOR3 m_vOne;

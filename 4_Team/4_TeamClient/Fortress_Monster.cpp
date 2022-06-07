@@ -22,6 +22,8 @@ CFortress_Monster::CFortress_Monster()
 	, m_bMyTurn(false)
 	, m_iMoveCount(0)
 	, m_iRandomDir(0)
+	, m_bMove(true)
+	
 
 	/*, m_pFortress(nullptr)*/
 {
@@ -72,6 +74,7 @@ void CFortress_Monster::Initialize(void)
 	m_fAngle_Body = 0.f;
 	m_fAngle_Posin = 0.f;
 	//m_iRandomDir
+	m_iBeforeHp = m_iHp;
 
 }
 
@@ -224,6 +227,8 @@ void CFortress_Monster::Shoot_Bullet()
 		pFortress->Get_Monster_Bullet_List()->push_back(Fortress_Monster_Bullet);
 		pFortress->Set_Target(pFortress->Get_Monster_Bullet_List()->back());
 		m_iRandomDir = rand() % 2;
+		m_bMove = false;
+		m_iBeforeHp = m_iHp;
 	}
 	m_iMoveCount = 0;
 	
@@ -898,19 +903,40 @@ void CFortress_Monster::Shoot_Bullet()
 
 void CFortress_Monster::Move()
 {
-	if (!m_bMyTurn)
+	if (!m_bMyTurn || !m_bMove)
 		return;
 	if (m_iMoveCount < 200)
 	{
+		if (m_iBeforeHp > m_iHp)
+		{
+			if (pJunPlayer->Get_Info().vPos.x > m_tInfo.vPos.x)
+			{
+				m_tInfo.vPos -= {6.0f, 0.f, 0.f};
+			}
+			else
+			{
+				m_tInfo.vPos += {6.0f, 0.f, 0.f};
+			}
+			m_iMoveCount+=4;
+			return;
+			
+		}
+
+		if (m_tInfo.vPos.x > 2700.f)
+		{
+			m_tInfo.vPos -= {1.5f, 0.f, 0.f};
+			m_iMoveCount++;
+			return;
+		}
+
 		if (m_iRandomDir == 0)
 		{
 			m_tInfo.vPos += {1.5f, 0.f, 0.f};
-
 		}
+
 		else
 		{
 			m_tInfo.vPos -= {1.5f, 0.f, 0.f};
-
 		}
 		m_iMoveCount++;
 	}

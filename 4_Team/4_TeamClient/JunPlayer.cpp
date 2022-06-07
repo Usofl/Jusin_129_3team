@@ -25,6 +25,7 @@ CJunPlayer::CJunPlayer()
 	, m_fRenderPower(0.f)
 	, m_bMyTurn(true)
 
+
 {
 	ZeroMemory(m_vAfter_RenderLine, sizeof(m_vAfter_RenderLine));
 	ZeroMemory(m_vLineArray, sizeof(m_vLineArray));
@@ -180,25 +181,37 @@ void CJunPlayer::Render(HDC hDC)
 	MoveToEx(hDC, (int)m_vPo_One.x + iScrollX, (int)m_vPo_One.y + iScrollY, nullptr);
 	LineTo(hDC, (int)m_vPo.x + iScrollX, (int)m_vPo.y + iScrollY);
 
-
 	//임시 게이지 보게 끔 만든 렉트
 	//색상 변경점
 	HPEN MyPen, OldPen;
-	MyPen = (HPEN)CreatePen(PS_SOLID, 3, RGB(255, 0, 0));
+	MyPen = (HPEN)CreatePen(PS_SOLID, 3 , RGB(255, 0, 0));
 	OldPen = (HPEN)::SelectObject(hDC, (HGDIOBJ)MyPen);
 
 	Rectangle(hDC, (int)700/* + iScrollX*/, WINCY - (int)80 /*+ iScrollY*/, (int)960/* + iScrollX*/, WINCY - (int)30/*+ iScrollY*/);
-	Rectangle(hDC, (int)955/* + iScrollX*/, WINCY - (int)80 /*+ iScrollY*/, (int)960/* + iScrollX*/, WINCY - (int)30/*+ iScrollY*/);
-	Rectangle(hDC, (int)700/* + iScrollX*/, WINCY - (int)80 /*+ iScrollY*/, (int)705/* + iScrollX*/, WINCY - (int)30/*+ iScrollY*/);
+	//Rectangle(hDC, (int)955/* + iScrollX*/, WINCY - (int)80 /*+ iScrollY*/, (int)960/* + iScrollX*/, WINCY - (int)30/*+ iScrollY*/);
+	//Rectangle(hDC, (int)700/* + iScrollX*/, WINCY - (int)80 /*+ iScrollY*/, (int)705/* + iScrollX*/, WINCY - (int)30/*+ iScrollY*/);
 
+	SelectObject(hDC, OldPen);
+	DeleteObject(MyPen);
 
+	//HPEN MyPen2, OldPen2;
+	//MyPen2 = (HPEN)CreatePen(PS_SOLID, 30, RGB(255, 0, 0));
+	//OldPen2 = (HPEN)::SelectObject(hDC, (HGDIOBJ)MyPen);
+	HBRUSH myBrush = (HBRUSH)CreateSolidBrush(RGB(255, 0, 0));
+	HBRUSH oldBrush = (HBRUSH)SelectObject(hDC, myBrush);
 
+	
+
+	 
+
+	
 	if (m_bGageRender && !m_pBullet)
 	{
 		//Ellipse(hDC, (int)800/* + iScrollX*/, (int)(400 - (m_fTempPower * 10)) /*+ iScrollY*/, (int)850/* + iScrollX*/, (int)(450 - (m_fTempPower * 10))/*+ iScrollY*/);
-		Ellipse(hDC, (int)(705 + (m_fTempPower * 10))/* + iScrollX*/, WINCY - (int)80 /*+ iScrollY*/, (int)(755 + (m_fTempPower * 10))/* + iScrollX*/, WINCY - (int)30/*+ iScrollY*/);
-	}
-	
+		Rectangle  (hDC, (int)(700)  /*(m_fTempPower * 10))*//* + iScrollX*/, WINCY - (int)80  /*+ iScrollY*/, (int)(700 + (m_fTempPower * 12.8f ))/* + iScrollX*/, WINCY - (int)30/*+ iScrollY*/);
+	} 
+	SelectObject(hDC, oldBrush);
+	DeleteObject(myBrush);
 	float fTempX = m_vPo.x;
 	float fTempY = m_vPo.y;
 	D3DXVECTOR3 TempVec1 = { m_vPo.x - m_vPo_One.x, m_vPo.y - m_vPo_One.y,0.f };
@@ -206,8 +219,8 @@ void CJunPlayer::Render(HDC hDC)
 
 	D3DXVec3Normalize(&TempVec1, &TempVec1);
 	//펜 삭제인데 잘 몰라서 그냥 삭제했다가 재생성 함
-	SelectObject(hDC, OldPen);
-	DeleteObject(MyPen);
+	/*SelectObject(hDC, OldPen2);
+	DeleteObject(MyPen2  );*/
 
 	//HPEN MyPen2, OldPen2;
 	//MyPen2 = (HPEN)CreatePen(PS_SOLID, 3, RGB(125, 0, 0));

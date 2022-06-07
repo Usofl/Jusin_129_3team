@@ -9,7 +9,9 @@ CJunBullet::CJunBullet():
 	m_BulletID(BULLET_END),
 	vSu(NORMALVECTOR_X),
 	m_vDpDir(NORMALVECTOR_X),
-	m_vOne(NORMALVECTOR_X)
+	m_vOne(NORMALVECTOR_X),
+	m_bDp_Line(false),
+	m_iDestroy_Count(0)
 {
 	ZeroMemory(m_vLocalPoint, sizeof(m_vLocalPoint));
 	ZeroMemory(m_vLocalWind, sizeof(m_vLocalWind));
@@ -41,6 +43,7 @@ void CJunBullet::Initialize(void)
 		m_DpBullet[i] = nullptr;
 	}
 	
+	m_iDestroy_Count = sizeof(m_vDpPoint) / sizeof(D3DXVECTOR3);
 }
 
 const int CJunBullet::Update(void)
@@ -142,11 +145,15 @@ const int CJunBullet::Update(void)
 		
 		for (int i = 0; i < (sizeof(m_vDpPoint) / sizeof(D3DXVECTOR3)); ++i)
 		{
-			if(i > 5)
-			m_vDpPoint[i].x += (0.3f * m_fSpeed) * m_tInfo.vDir.x * i * 1.5f;
+			
+			if (i > 4)
+			{
+				m_vDpPoint[i].x += (0.13f * m_fSpeed) * m_tInfo.vDir.x * i * 2 * 1.5f;
+			}
 			else
-				m_vDpPoint[i].x -= (0.3f * m_fSpeed)* m_tInfo.vDir.x * i * 1.5f;
-
+			{
+				m_vDpPoint[i].x -= (0.13f * m_fSpeed)* m_tInfo.vDir.x * i * 1.5f;
+			}
 			m_vDpPoint[i].y += (0.5f * (9.8f) *((m_fTempTime) * (m_fTempTime)));
 		}
 	}

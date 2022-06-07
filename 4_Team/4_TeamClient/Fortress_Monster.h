@@ -31,7 +31,9 @@ public:
 	void		Set_Angle(float _f) {	m_fAngle = (_f);}
 
 public:
-	inline void Set_MyTurn(bool _bTurn) { m_bMyTurn = _bTurn; };
+	inline void Set_MyTurn(bool _bTurn) {
+		m_bMyTurn = _bTurn; m_bMove = _bTurn;
+	};
 	inline const bool Get_MyTurn(void) { return m_bMyTurn; };
 	
 
@@ -50,6 +52,7 @@ private:
 
 private:
 	int				m_iHp;
+	int				m_iBeforeHp;
 	int				m_iRandom_Move;
 	int				m_iMoveCount;
 	int				m_iRandomDir;
@@ -65,6 +68,7 @@ private:
 	bool			m_bMonster_Turn;
 	bool			m_bMove_On;
 	bool			m_bMyTurn;
+	bool			m_bMove;
 
 	DWORD			m_dwShootCount;
 	DWORD			m_dwShootDelay;
