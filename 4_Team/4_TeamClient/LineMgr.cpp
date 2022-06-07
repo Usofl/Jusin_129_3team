@@ -112,13 +112,13 @@ bool CLineMgr::Collision_DeLine(const float& _fX, const float& _fY)
 
 		if (bX&&bY)
 		{
-			if (_fX - LX > 20.f && RX - _fX > 20.f)
+			if (_fX - LX > 30.f && RX - _fX > 30.f)
 			{
-				pY = (((RY - LY) / (RX - LX)) * (_fX - 20.f - LX)) + LY;
-				Create_Line(LX, LY, _fX - 20.f, pY);
+				pY = (((RY - LY) / (RX - LX)) * (_fX - 30.f - LX)) + LY;
+				Create_Line(LX, LY, _fX - 30.f, pY);
 
-				pY = (((RY - LY) / (RX - LX)) * (_fX + 20.f - LX)) + LY;
-				Create_Line(_fX + 20.f, pY, RX, RY);
+				pY = (((RY - LY) / (RX - LX)) * (_fX + 30.f - LX)) + LY;
+				Create_Line(_fX + 30.f, pY, RX, RY);
 			}
 			else if (_fX - LX > 30.f)
 			{
